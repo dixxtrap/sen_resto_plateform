@@ -1,0 +1,47 @@
+import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
+import * as crypto from 'crypto';
+import { User } from './typeorm/user';
+import { Company, Permission, Restaurant, Role, entities } from './typeorm';
+
+const encryptionKey = 'your-encryption-key';
+
+const config: MysqlConnectionOptions = {
+  type: 'mysql',
+  host: 'localhost',
+  port: 3306,
+  username: 'root',
+  password: '',
+  dateStrings: true,
+  entities: entities,
+  database: 'sen-resto-test',
+  synchronize: false,
+
+  //   ssl: {
+  //     // Enable SSL if required
+  //     ca: fs.readFileSync('path/to/ca.crt'),
+  //     key: fs.readFileSync('path/to/client.key'),
+  //     cert: fs.readFileSync('path/to/client.crt'),
+  //   },
+  // Enable encryption
+  //   extra: {
+  //     encrypt: true,
+  //     cipherOptions: {
+  //       secureProtocol: 'TLSv1_2_method',
+  //       checkServerIdentity: () => undefined,
+  //       // Custom SSL certificate validation
+  //       rejectUnauthorized: false,
+  //     },
+  //     // Custom connection string encryption
+  //     connectionConfig: {
+  //       encrypt: true,
+  //       encryptKey: crypto
+  //         .publicEncrypt(
+  //           fs.readFileSync('path/to/public.key'),
+  //           Buffer.from(encryptionKey)
+  //         )
+  //         .toString('base64'),
+  //     },
+  //   },
+};
+
+export default config;
