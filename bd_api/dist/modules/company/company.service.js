@@ -67,7 +67,7 @@ let CompanyService = class CompanyService {
     async getRestaurants() {
         return await this.restosService.find({
             where: { isDelecetd: false },
-            relations: { company: true, profile: true },
+            relations: { company: { profile: true }, profile: true },
         });
     }
     async getRestaurantParticulier() {

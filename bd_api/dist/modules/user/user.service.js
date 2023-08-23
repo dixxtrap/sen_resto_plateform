@@ -76,7 +76,7 @@ let UserService = class UserService {
     }
     async getAllUser() {
         return await this.userRepos.find({
-            relations: { profile: true },
+            relations: { profile: true, role: true },
         });
     }
     async getUserById(id) {
