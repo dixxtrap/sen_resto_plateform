@@ -1,4 +1,5 @@
 import 'package:mobile/cores/model/company.dart';
+import 'package:mobile/cores/model/document.dart';
 
 class Restaurant {
   int? id;
@@ -12,13 +13,13 @@ class Restaurant {
   String? phone;
   String? createdAt;
   String? updatedAt;
-  int? laltitude;
-  int? longitude;
+  double? laltitude;
+  double? longitude;
   bool? isDelecetd;
   String? openingTime;
   String? closingTime;
   Company? company;
-  Profile? profile;
+  Photo? profile;
 
   Restaurant(
       {this.id,
@@ -52,15 +53,15 @@ class Restaurant {
     phone = json['phone'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    laltitude = json['laltitude'];
-    longitude = json['longitude'];
+    laltitude = double.parse(json['laltitude'].toString());
+    longitude = double.parse(json['longitude'].toString());
     isDelecetd = json['isDelecetd'];
     openingTime = json['openingTime'];
     closingTime = json['closingTime'];
     company =
         json['company'] != null ? new Company.fromJson(json['company']) : null;
     profile =
-        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
+        json['profile'] != null ? new Photo.fromJson(json['profile']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -81,12 +82,6 @@ class Restaurant {
     data['isDelecetd'] = this.isDelecetd;
     data['openingTime'] = this.openingTime;
     data['closingTime'] = this.closingTime;
-    if (this.company != null) {
-      data['company'] = this.company!.toJson();
-    }
-    if (this.profile != null) {
-      data['profile'] = this.profile!.toJson();
-    }
     return data;
   }
 }

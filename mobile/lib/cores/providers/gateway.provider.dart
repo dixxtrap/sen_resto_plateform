@@ -3,6 +3,7 @@ import 'package:mobile/cores/gateway.dart';
 import 'package:mobile/cores/model/company.dart';
 import 'package:mobile/cores/model/restaurant.dart';
 import 'package:mobile/cores/model/tag.dart';
+import 'package:mobile/interfaces/utils/kprint.dart';
 import '../model/plat.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
@@ -20,9 +21,15 @@ class GatewayNotifier extends ChangeNotifier {
     try {
       if (refresh) {
         tags = await Gateway.getTag();
+        kprint('---------------------tag-------------------');
         plates = await Gateway.getPlat();
+        kprint('---------------------plat-------------------');
+
         restaurant = await Gateway.getRestos();
+        kprint('---------------------restos-------------------');
+
         companies = await Gateway.getCompany();
+        kprint('---------------------company-------------------');
       }
       plates ??= await Gateway.getPlat();
       restaurant ??= await Gateway.getRestos();
@@ -30,6 +37,8 @@ class GatewayNotifier extends ChangeNotifier {
       tags ??= await Gateway.getTag();
 
       notifyListeners();
-    } catch (e) {}
+    } catch (e) {
+      kprint(e);
+    }
   }
 }

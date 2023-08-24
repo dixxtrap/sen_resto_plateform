@@ -52,7 +52,7 @@ class _InitPageState extends State<InitPage> {
     if (Session.stateOfKyc != StateOfKyc.initiate) {
       Navigator.pushReplacementNamed(
         context,
-        "set_otp",
+        "home",
       );
     } else if (Session.stateOfKyc != StateOfKyc.initiate) {
       Navigator.pushReplacementNamed(

@@ -1,7 +1,5 @@
-import React from 'react'
 import { useGetCompanyQuery } from '../../../core/features/company.slice'
-import { Img, ImgUpdatable } from '../../components/image_updatable';
-import { ImgPreview } from '../../components/Img_preview';
+import { Img,  } from '../../components/image_updatable';
 import {Link} from "react-router-dom";
 import { TablePagination } from '../../components/table_pagination';
 import { BuildingStorefrontIcon } from '@heroicons/react/24/outline';
@@ -17,7 +15,8 @@ export const OrganisationList = () => {
                   <tr key={company.email}>
                     <td className="whitespace-nowrap py-3 pl-4 pr-3 text-sm sm:pl-0">
                       <div className="flex items-center">
-                        <div className="h-11 w-11 flex-shrink-0">
+                        <div className="  flex-shrink-0 ">
+                          {/* <ImgPreview name={`Prile_${company?.profile?.id}`} className='bg-blue-400 h-11' img={company.profile!}/> */}
                          <Img  hasImg={company?.profile?.path!=='' &&company?.profile?.path!==null && company?.profile!=null} icon={<BuildingStorefrontIcon  className='h-7'/>} className='h-8 aspect-square' imgId={company.profile?.id} />
                         </div>
                        

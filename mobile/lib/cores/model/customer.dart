@@ -25,8 +25,8 @@ class Customer {
     phone = json['phone'];
     isPhoneVeirified = json['isPhoneVeirified'];
     displayName = json['displayName'];
-    laltitude = json['laltitude'];
-    longitude = json['longitude'];
+    laltitude = double.parse(json['laltitude'].toString());
+    longitude = double.parse(json['longitude'].toString());
     updatedAt = json['updatedAt'];
     createdAt = json['createdAt'];
     token = json['token'];

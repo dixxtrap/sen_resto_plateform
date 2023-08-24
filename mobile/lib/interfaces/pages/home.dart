@@ -1,12 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/cores/env.dart';
-import 'package:mobile/cores/gateway.dart';
-import 'package:mobile/cores/model/company.dart';
-import 'package:mobile/cores/model/plat.dart';
-import 'package:mobile/cores/model/restaurant.dart';
 import 'package:mobile/cores/providers/gateway.provider.dart';
 import 'package:mobile/interfaces/component/plat_view_item.dart';
 import 'package:mobile/interfaces/component/resto_item.dart';
@@ -33,7 +26,7 @@ class _HomeState extends ConsumerState<Home> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       try {
         provider = ref.watch(gatewayProvider);
-        provider?.getData(refresh: false);
+        provider?.getData(refresh: true);
       } catch (e) {}
     });
   }
