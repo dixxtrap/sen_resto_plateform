@@ -1,17 +1,22 @@
 /// <reference types="multer" />
 import { PlateService } from './plate.service';
 import { PlateDto } from 'src/dto/plate.dto';
+import { Request } from 'express';
 export declare class PlateController {
     private service;
     constructor(service: PlateService);
     getS(): Promise<import("../../typeorm").Plate[]>;
     get(id: number): Promise<import("../../typeorm").Plate>;
     getByRestaurant(id: number): Promise<import("../../typeorm").Plate[]>;
-    create(item: PlateDto): Promise<import("../../typeorm").Plate>;
+    create(item: PlateDto, req: Request): Promise<{
+        message: string;
+        status: string;
+        code: number;
+    }>;
     update(id: number, item: PlateDto): Promise<{
         data: PlateDto;
         id: number;
-        resaturant: import("../../typeorm").Restaurant;
+        restaurant: import("../../typeorm").Restaurant;
         restaurantId: number;
         name: string;
         file: import("../../typeorm").PlateFile;

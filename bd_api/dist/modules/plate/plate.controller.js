@@ -20,6 +20,7 @@ const swagger_1 = require("@nestjs/swagger");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
 const path_1 = require("path");
+const local_auth_guard_1 = require("../../middleware/local_auth.guard");
 let PlateController = class PlateController {
     constructor(service) {
         this.service = service;
@@ -33,8 +34,8 @@ let PlateController = class PlateController {
     getByRestaurant(id) {
         return this.service.getByRestaurant(id);
     }
-    create(item) {
-        return this.service.create(item);
+    create(item, req) {
+        return this.service.create(item, req['user']);
     }
     update(id, item) {
         item.id = id;
@@ -69,9 +70,12 @@ __decorate([
 ], PlateController.prototype, "getByRestaurant", null);
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(local_auth_guard_1.LocalAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [plate_dto_1.PlateDto]),
+    __metadata("design:paramtypes", [plate_dto_1.PlateDto, Object]),
     __metadata("design:returntype", void 0)
 ], PlateController.prototype, "create", null);
 __decorate([

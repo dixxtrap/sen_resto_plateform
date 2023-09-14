@@ -5,15 +5,25 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { InjectRepository, getRepositoryToken } from '@nestjs/typeorm';
+import { promises } from 'dns';
+import { exceptionCode } from 'src/data/exception_code';
 import { tagData } from 'src/data/tag_data';
 import { PlateDto } from 'src/dto/plate.dto';
-import { FileDocument, Plate, PlateFile, Tag, TagPlate } from 'src/typeorm';
+import {
+  FileDocument,
+  Plate,
+  PlateFile,
+  PlateHistory,
+  Tag,
+  TagPlate,
+} from 'src/typeorm';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class PlateService {
   constructor(
     @InjectRepository(Plate) private repos: Repository<Plate>,
+    @InjectRepository(PlateHistory) private reposHis: Repository<PlateHistory>,
     @InjectRepository(PlateFile) private plateFileRepos: Repository<PlateFile>,
     @InjectRepository(TagPlate) private tagPlateRepos: Repository<TagPlate>,
     // @InjectRepository(Tag) private tagRepos: Repository<Tag>,
@@ -36,10 +46,41 @@ export class PlateService {
       relations: { file: { photo: true }, tag: true },
     });
   }
-  async create(data: PlateDto) {
+  async create(data: PlateDto, user: any) {
+    console.log(user);
+    if (!user.restaurantId)
+      throw new HttpException(
+        {
+          ...exceptionCode['FAILLURE'],
+          message: 'Vous n avez le droit ajouter un restaurant',
+        },
+        500,
+      );
     try {
-      return this.repos.save(this.repos.create(data));
+      const plate = await this.repos.save(
+        this.repos.create({ ...data, restaurantId: user.restaurantId }),
+      );
+
+      if (data.tagIds && data.tagIds.length > 0)
+        await data.tagIds.forEach(async (ele) => {
+          await this.tagPlateRepos.save(
+            this.tagPlateRepos.create({ tagId: ele, plateId: plate.id }),
+          );
+        });
+      const plateHist = await this.reposHis.save(
+        this.reposHis.create({
+          plateId: plate.id,
+          price: plate.price,
+          reduction: plate.reduction,
+        }),
+      );
+      console.log(plateHist);
+      return {
+        ...exceptionCode['SUCCEEDED'],
+        message: `Le plat ${plate.name} vient d étre creer avec succés pour votre restaurant`,
+      };
     } catch (error) {
+      console.log(error);
       throw new HttpException({ ...error }, 500);
     }
   }
@@ -47,14 +88,28 @@ export class PlateService {
     const old = await this.repos.findOne({ where: { id: data.id } });
     await this.tagPlateRepos.delete({ plateId: data.id });
     const { tag, id, ...plate } = data;
-    await tag.forEach(async (ele) => {
-      await this.tagPlateRepos.save(
-        this.tagPlateRepos.create({ tagId: ele.id, plateId: data.id }),
-      );
-    });
+    const t = await Promise.all(
+      tag.map(async (ele) => {
+        await this.tagPlateRepos.save(
+          this.tagPlateRepos.create({ tagId: ele.id, plateId: data.id }),
+        );
+      }),
+    );
 
     if (!old) throw new NotFoundException(`${data.name} not Found`);
     await this.repos.update({ id: data.id }, { ...plate });
+    if (
+      (old.price != null && old.price != data.price) ||
+      (old.reduction && old.reduction != data.reduction)
+    ) {
+      await this.reposHis.save(
+        this.reposHis.create({
+          plateId: old.id,
+          price: data.price,
+          reduction: data.reduction,
+        }),
+      );
+    }
     return { ...old, data };
   }
   async addPhoto(id: number, file: Express.Multer.File) {
@@ -63,5 +118,12 @@ export class PlateService {
       this.plateFileRepos.create({ photoId: img.id, plateId: id }),
     );
     return plateFile;
+  }
+  async getCurrentPlateHistory(id: number) {
+    return await this.reposHis
+      .createQueryBuilder('plate_history')
+      .where('plate_history.plateId = :plateId', { id })
+      .orderBy('plate_history.createdAt', 'DESC')
+      .getOne();
   }
 }

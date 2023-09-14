@@ -1,5 +1,5 @@
 import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import React, { FC, Fragment, ReactNode, useState } from 'react'
 import { Link } from 'react-router-dom';
 type TablePaginationProps={
@@ -29,14 +29,28 @@ export const TablePagination :FC<TablePaginationProps> = ({trs, title, subtitle,
             </Link>
           </div>}
         </div>
-        <div className='flex pt-5  justify-between'>
-        <input
-                  type="text"
-                  name="first-name"
-                  id="first-name"
-                  autoComplete="given-name"
-                  className="input max-w-xs"
-                />
+        <div className='flex pt-5  items-center relative justify-between'>
+          <div className='relative w-60'>
+        <div className="relative z-0 flex flex-1 items-center justify-center  sm:absolute sm:inset-0">
+                <div className="w-full sm:max-w-xs">
+                  <label htmlFor="search" className="sr-only">
+                    Search
+                  </label>
+                  <div className="relative">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                      <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </div>
+                    <input
+                      id="search"
+                      name="search"
+                      className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder="Search"
+                      type="search"
+                    />
+                  </div>
+                </div>
+              </div>
+              </div>
           <input type="date"  className='input max-w-xs' />
         </div>
         <div className="mt-4 flow-root">
@@ -45,7 +59,7 @@ export const TablePagination :FC<TablePaginationProps> = ({trs, title, subtitle,
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
-               {   th?.map(s=> <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+               {   th?.map((s, i)=> <th scope="col" key={i+"_th"} className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
                       {s}
                     </th>)}
                   </tr>

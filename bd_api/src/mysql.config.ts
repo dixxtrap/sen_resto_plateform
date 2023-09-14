@@ -1,10 +1,5 @@
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
-import * as crypto from 'crypto';
-import { User } from './typeorm/user';
-import { Company, Permission, Restaurant, Role, entities } from './typeorm';
-
-const encryptionKey = 'your-encryption-key';
-
+import { entities } from './typeorm';
 const config: MysqlConnectionOptions = {
   type: 'mysql',
   host: 'localhost',
@@ -14,8 +9,7 @@ const config: MysqlConnectionOptions = {
   dateStrings: true,
   entities: entities,
   database: 'sen-resto-test',
-  synchronize: false,
-
+  synchronize: true,
   //   ssl: {
   //     // Enable SSL if required
   //     ca: fs.readFileSync('path/to/ca.crt'),

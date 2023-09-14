@@ -28,6 +28,10 @@ __decorate([
 ], RestaurantDto.prototype, "companyId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], RestaurantDto.prototype, "description", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
 ], RestaurantDto.prototype, "laltitude", void 0);
 __decorate([

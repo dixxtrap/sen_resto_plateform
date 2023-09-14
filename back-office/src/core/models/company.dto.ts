@@ -3,28 +3,30 @@ import * as yup from "yup";
 import { text } from "./text";
 import { FileDocument } from "./file_document";
 export class CompanyDto {
-  id!: number;
-  name!: string;
-  email!: string;
-  short_name!: string;
-  description!: string;
-  address!: string;
-  city!: string;
-  country!: string;
-  postal_code!: string;
-  phone!: string;
-  laltitude!: number;
-  longitude!: number;
-  isActive!: boolean;
-  canPublish!: boolean;
-  createdAt!: Date;
-  updatedAt!: Date;
-  restaurants!: number | RestaurantDto[];
+  id?: number;
+  name?: string;
+  email?: string;
+  short_name?: string;
+  description?: string;
+  address?: string;
+  city?: string;
+  country?: string;
+  postal_code?: string;
+  phone?: string;
+  laltitude?: number;
+  longitude?: number;
+  isActive?: boolean;
+  canPublish?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  restaurants?: number | RestaurantDto[];
   profile?: FileDocument;
 }
 export const companySchema = yup.object({
   name: yup.string().max(30).required(),
   short_name: yup.string(),
+  description: yup.string(),
+  postal_code: yup.string(),
   phone: yup.string().max(20, text.caracter_max(20)).required(),
   address: yup
     .string()

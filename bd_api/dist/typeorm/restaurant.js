@@ -24,6 +24,10 @@ __decorate([
     __metadata("design:type", String)
 ], Restaurant.prototype, "name", void 0);
 __decorate([
+    (0, typeorm_1.Column)('varchar', { default: 'no Description' }),
+    __metadata("design:type", String)
+], Restaurant.prototype, "description", void 0);
+__decorate([
     (0, typeorm_1.Column)('varchar', { length: 30 }),
     __metadata("design:type", String)
 ], Restaurant.prototype, "email", void 0);
@@ -93,11 +97,11 @@ __decorate([
     __metadata("design:type", _1.RestaurantContact)
 ], Restaurant.prototype, "contact", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'time' }),
+    (0, typeorm_1.Column)({ type: 'time', default: '08:00' }),
     __metadata("design:type", String)
 ], Restaurant.prototype, "openingTime", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'time' }),
+    (0, typeorm_1.Column)({ type: 'time', default: '23:00' }),
     __metadata("design:type", String)
 ], Restaurant.prototype, "closingTime", void 0);
 Restaurant = __decorate([

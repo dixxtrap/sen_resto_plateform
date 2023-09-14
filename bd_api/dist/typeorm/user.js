@@ -16,8 +16,13 @@ const _1 = require(".");
 const _2 = require("./");
 let User = class User {
     async hashPassword() {
+        this.restaurantId = this.restaurantId == 0 ? null : this.restaurantId;
+        this.companyId = this.companyId == 0 ? null : this.companyId;
         this.pin = await crypto_service_1.CryptoService.createHash(this.pin);
         this.encryptedPin = await crypto_service_1.CryptoService.encrypt(this.pin);
+    }
+    async PermissionLenght() {
+        this.permissionLenght = this.permission.length;
     }
 };
 __decorate([
@@ -53,13 +58,33 @@ __decorate([
     __metadata("design:type", Boolean)
 ], User.prototype, "isAgent", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
-    __metadata("design:type", Boolean)
-], User.prototype, "isResto", void 0);
+    (0, typeorm_1.ManyToOne)(() => _1.Restaurant),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", _1.Restaurant)
+], User.prototype, "restaurant", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
-    __metadata("design:type", Boolean)
-], User.prototype, "isCompany", void 0);
+    (0, typeorm_1.Column)({ nullable: true, default: null }),
+    __metadata("design:type", Number)
+], User.prototype, "restaurantId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => _1.Company),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", _1.Company)
+], User.prototype, "company", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: null }),
+    __metadata("design:type", Number)
+], User.prototype, "companyId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToMany)(() => _1.Permission, {
+        cascade: true,
+        onUpdate: 'NO ACTION',
+        onDelete: 'NO ACTION',
+        eager: true,
+    }),
+    (0, typeorm_1.JoinTable)(),
+    __metadata("design:type", Array)
+], User.prototype, "permission", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', length: 40 }),
     __metadata("design:type", String)
@@ -110,15 +135,17 @@ __decorate([
     __metadata("design:type", Date)
 ], User.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => _1.PermissionUser, (pU) => pU.user),
-    __metadata("design:type", Array)
-], User.prototype, "permissionUser", void 0);
-__decorate([
     (0, typeorm_1.BeforeInsert)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], User.prototype, "hashPassword", null);
+__decorate([
+    (0, typeorm_1.AfterLoad)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], User.prototype, "PermissionLenght", null);
 User = __decorate([
     (0, typeorm_1.Entity)('user'),
     (0, typeorm_1.Index)(['email', 'phone'], { unique: true })

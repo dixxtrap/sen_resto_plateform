@@ -21,6 +21,8 @@ export class Restaurant {
   id: number;
   @Column('varchar')
   name: string;
+  @Column('varchar', { default: 'no Description' })
+  description: string;
   @Column('varchar', { length: 30 })
   email: string;
   @Column('int', { nullable: true })
@@ -60,9 +62,9 @@ export class Restaurant {
   company: Company;
   @OneToMany(() => RestaurantContact, (rest) => rest.restaurant)
   contact: RestaurantContact;
-  @Column({ type: 'time' })
+  @Column({ type: 'time', default: '08:00' })
   openingTime: string;
 
-  @Column({ type: 'time' })
+  @Column({ type: 'time', default: '23:00' })
   closingTime: string;
 }

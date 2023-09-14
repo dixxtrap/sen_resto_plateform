@@ -15,45 +15,23 @@ const _1 = require("./");
 let PermissionRole = class PermissionRole {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], PermissionRole.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.PrimaryColumn)(),
     __metadata("design:type", Number)
 ], PermissionRole.prototype, "permissionId", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.PrimaryColumn)(),
     __metadata("design:type", Number)
 ], PermissionRole.prototype, "roleId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => _1.Permission, (p) => p.permissionRole),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", _1.Permission)
 ], PermissionRole.prototype, "permission", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => _1.Role, (r) => r.permissionRole),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", _1.Role)
 ], PermissionRole.prototype, "role", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => _1.User, { cascade: true, onDelete: 'SET NULL' }),
-    (0, typeorm_1.JoinColumn)({ name: 'createById' }),
-    __metadata("design:type", _1.User)
-], PermissionRole.prototype, "createBy", void 0);
-__decorate([
-    (0, typeorm_1.Column)('bool', { default: 1 }),
-    __metadata("design:type", Boolean)
-], PermissionRole.prototype, "isActive", void 0);
-__decorate([
-    (0, typeorm_1.CreateDateColumn)(),
-    __metadata("design:type", Date)
-], PermissionRole.prototype, "createdAt", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", Date)
-], PermissionRole.prototype, "updatedAt", void 0);
 PermissionRole = __decorate([
-    (0, typeorm_1.Entity)({ orderBy: { permissionId: 'ASC' } }),
-    (0, typeorm_1.Index)(['role', 'permission'], { unique: true })
+    (0, typeorm_1.Entity)('role_permission_permission', { orderBy: { permissionId: 'ASC' } })
 ], PermissionRole);
 exports.PermissionRole = PermissionRole;
 //# sourceMappingURL=permission_role.js.map

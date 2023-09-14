@@ -1,13 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { Plate } from "../models/plate";
 import { url } from "inspector";
+import { errorTrasform } from "./error_transformer";
+import { WsMessage } from "../models/error.dto";
 
 export const plateApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/v1/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
   reducerPath: "plate",
   tagTypes: ["plate"],
   endpoints: (builder) => ({
-    getPlate: builder.query<Plate[], any>({
+    getPlate: builder.query<Plate[], string>({
       query: () => "plate",
       providesTags: ["plate"],
     }),
@@ -23,13 +25,14 @@ export const plateApi = createApi({
       }),
       invalidatesTags: ["plate"],
     }),
-    createPlate: builder.mutation<Plate[], any>({
+    createPlate: builder.mutation<WsMessage, Plate >({
       query: (plate) => ({
         url: "plate",
         method: "POST",
         body: plate,
       }),
       invalidatesTags: ["plate"],
+      transformErrorResponse: errorTrasform,
     }),
   }),
 });

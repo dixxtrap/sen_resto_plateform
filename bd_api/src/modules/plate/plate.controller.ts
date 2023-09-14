@@ -5,15 +5,19 @@ import {
   Param,
   Post,
   Put,
+  Req,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { PlateService } from './plate.service';
 import { GetPalteDto, PlateDto } from 'src/dto/plate.dto';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { LocalAuthGuard } from 'src/middleware/local_auth.guard';
+import { Request } from 'express';
 @ApiTags('plate')
 @Controller('plate')
 export class PlateController {
@@ -32,8 +36,10 @@ export class PlateController {
     return this.service.getByRestaurant(id);
   }
   @Post()
-  create(@Body() item: PlateDto) {
-    return this.service.create(item);
+  @UseGuards(LocalAuthGuard)
+  @ApiBearerAuth()
+  create(@Body() item: PlateDto, @Req() req: Request) {
+    return this.service.create(item, req['user']);
   }
   @Put('/:id')
   update(@Param('id') id: number, @Body() item: PlateDto) {

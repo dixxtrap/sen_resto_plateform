@@ -3,14 +3,14 @@ import { PermissionDto, PermissionRoleDto, RoleDto } from "../models/role.dto";
 import { WsMessage } from "../models/error.dto";
 
 export const roleApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/v1" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
   tagTypes: ["role"],
   endpoints: (builder) => ({
-    getRoles: builder.query<RoleDto[], undefined>({
+    getRoles: builder.query<RoleDto[], string>({
       query: () => `/role`,
       providesTags: ["role"],
     }),
-    getPermission: builder.query<PermissionDto[], undefined>({
+    getPermission: builder.query<PermissionDto[], string>({
       query: () => `/permission`,
       providesTags: ["role"],
     }),

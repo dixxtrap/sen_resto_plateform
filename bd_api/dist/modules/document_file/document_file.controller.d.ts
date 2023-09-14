@@ -7,5 +7,5 @@ export declare class DocumentController {
     private docService;
     constructor(doc: Repository<FileDocument>, docService: DocumentService);
     getFile(res: any, id: number): Promise<any>;
-    updateFile(file: Express.Multer.File, id: number, req: any): Promise<FileDocument>;
+    updateFile(file: Express.Multer.File, id: number, _req: unknown): Promise<FileDocument>;
 }

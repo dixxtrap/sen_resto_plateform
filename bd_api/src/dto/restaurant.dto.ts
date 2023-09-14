@@ -1,14 +1,15 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { Restaurant } from 'src/typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 import { FileDocumentDto } from './file.dto';
 
-export class RestaurantDto  {
+export class RestaurantDto {
   @ApiProperty()
   name: string;
   @ApiProperty()
   locality: string;
   @ApiProperty()
   companyId?: number;
+  @ApiProperty()
+  description: string;
   @ApiProperty()
   laltitude?: number;
   @ApiProperty()

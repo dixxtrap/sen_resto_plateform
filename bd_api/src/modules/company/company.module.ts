@@ -14,9 +14,11 @@ import { PermissionModule } from '../permission/permission.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { DocumentModule } from '../document_file/document_file.module';
+import { JWT } from 'src/jtw';
 
 @Module({
   imports: [
+    JWT,
     MulterModule.register({
       preservePath: false,
 

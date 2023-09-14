@@ -3,55 +3,66 @@ import { RestaurantContactDto } from "./restaurant_contact.dto";
 import * as yup from "yup";
 import { text } from "./text";
 import { FileDocument } from "./file_document";
-import { profile } from "console";
+
 export class RestaurantDto {
-  id!: number;
+  id?: number;
 
-  name!: string;
+  name?: string;
 
-  email!: string;
+  email?: string;
+  description?: string;
 
-  companyId!: number;
+  companyId?: number;
+  createdAt?: string;
 
-  createdAt!: String;
+  updatedAt?: string;
 
-  updatedAt!: String;
+  laltitude?: number;
 
-  laltitude!: number;
+  longitude?: number;
 
-  longitude!: number;
+  isDelecetd?: boolean;
 
-  isDelecetd!: boolean;
+  company?: CompanyDto;
 
-  company!: CompanyDto;
+  contact?: RestaurantContactDto | number;
 
-  contact!: RestaurantContactDto | number;
+  address?: string;
 
-  address!: string;
+  city?: string;
 
-  city!: string;
+  country?: string;
 
-  country!: string;
-
-  postal_code!: string;
-
-  phone!: string;
-  profile!: FileDocument;
+  postal_code?: string;
+  openingTime?: string;
+  closingTime?: string;
+  phone?: string;
+  profile?: FileDocument;
 }
 
 export const restaurantSchema = yup.object({
   name: yup.string().max(30).required(),
+  description: yup.string(),
   phone: yup.string().max(20, text.caracter_max(20)).required(),
   address: yup
     .string()
 
     .max(50, text.caracter_max(50))
-    .required(),
+ ,
   city: yup
     .string()
-    .min(4, text.caracter_min(4))
     .max(20, text.caracter_max(20))
-    .required(),
+  ,
+ openingTime:yup.string()
+    .matches(
+      /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/,
+      'Invalid time format. Use HH:MM:SS'
+  ),
+  closingTime:yup.string()
+    .matches(
+      /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/,
+      'Invalid time format. Use HH:MM:SS'
+    ),
   country: yup.string().max(20, text.caracter_max(20)),
   email: yup.string().max(30, text.caracter_max(30)).required(),
   laltitude: yup.number(),

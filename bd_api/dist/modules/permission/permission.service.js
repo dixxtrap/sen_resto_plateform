@@ -13,30 +13,30 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PermissionService = void 0;
-const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const permission_data_1 = require("../../data/permission.data");
 const role_data_1 = require("../../data/role.data");
 const typeorm_2 = require("../../typeorm");
 const typeorm_3 = require("typeorm");
 let PermissionService = class PermissionService {
-    constructor(permissionRepos, roleRepos, permiRoleRepos, permiUser) {
+    constructor(permissionRepos, roleRepos) {
         this.permissionRepos = permissionRepos;
         this.roleRepos = roleRepos;
-        this.permiRoleRepos = permiRoleRepos;
-        this.permiUser = permiUser;
     }
     onModuleInit() {
         console.log('-------------create permission --------------', process.env.API_KEY);
-    }
-    onInit() {
         try {
-            permission_data_1.permissions.forEach((permission) => {
+        }
+        catch (e) { }
+    }
+    async onInit() {
+        try {
+            await Promise.all(permission_data_1.permissions.map(async (permission) => {
                 try {
-                    this.createPermission(permission);
+                    await this.createPermission(permission);
                 }
                 catch (error) { }
-            });
+            }));
         }
         catch (error) { }
     }
@@ -70,39 +70,9 @@ let PermissionService = class PermissionService {
             where: { name: search.toUpperCase() },
             relations: {
                 user: true,
-                permissionRole: { permission: true },
+                permission: true,
             },
         });
-    }
-    async createRolePermissions(permissionRoles) {
-        try {
-            await permissionRoles.forEach(async (e) => await this.createRolePermission(e));
-            return 'yes';
-        }
-        catch (error) {
-            console.log(error);
-            throw new common_1.HttpException(Object.assign({}, error), 500);
-        }
-    }
-    async createRolePermission(permissionRole) {
-        try {
-            const oldPR = await this.permiRoleRepos.findOne({
-                where: {
-                    roleId: permissionRole.roleId,
-                    permissionId: permissionRole.permissionId,
-                    id: permissionRole.id,
-                },
-            });
-            if (permissionRole.id && oldPR) {
-                await this.permiRoleRepos.update({ id: permissionRole.id }, { isActive: permissionRole.isActive });
-                return Object.assign(Object.assign({}, oldPR), permissionRole);
-            }
-            return await this.permiRoleRepos.save(this.permiRoleRepos.create(permissionRole));
-        }
-        catch (error) {
-            console.log(error);
-            throw new common_1.HttpException(Object.assign({}, error), 500);
-        }
     }
     async getRolePermission(id) {
         return await this.roleRepos.findOne({
@@ -110,20 +80,18 @@ let PermissionService = class PermissionService {
                 id: id,
             },
             relations: {
-                permissionRole: {
-                    permission: true,
-                },
+                permission: true,
                 user: true,
             },
         });
     }
-    onInitRole() {
-        role_data_1.roleData.forEach(async (permission) => {
+    async onInitRole() {
+        Promise.all(await role_data_1.roleData.map(async (permission) => {
             try {
                 await this.createRole(permission);
             }
             catch (error) { }
-        });
+        }));
     }
     async createPermission(permisionTdo) {
         try {
@@ -132,7 +100,6 @@ let PermissionService = class PermissionService {
             return savedPermission;
         }
         catch (error) {
-            console.log(error);
         }
     }
     async getPermissions() {
@@ -143,11 +110,7 @@ let PermissionService = class PermissionService {
 PermissionService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(typeorm_2.Permission)),
     __param(1, (0, typeorm_1.InjectRepository)(typeorm_2.Role)),
-    __param(2, (0, typeorm_1.InjectRepository)(typeorm_2.PermissionRole)),
-    __param(3, (0, typeorm_1.InjectRepository)(typeorm_2.PermissionUser)),
     __metadata("design:paramtypes", [typeorm_3.Repository,
-        typeorm_3.Repository,
-        typeorm_3.Repository,
         typeorm_3.Repository])
 ], PermissionService);
 exports.PermissionService = PermissionService;

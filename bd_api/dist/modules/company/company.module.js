@@ -17,11 +17,13 @@ const permission_module_1 = require("../permission/permission.module");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
 const document_file_module_1 = require("../document_file/document_file.module");
+const jtw_1 = require("../../jtw");
 let CompanyModule = class CompanyModule {
 };
 CompanyModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            jtw_1.JWT,
             platform_express_1.MulterModule.register({
                 preservePath: false,
                 dest: 'upload',

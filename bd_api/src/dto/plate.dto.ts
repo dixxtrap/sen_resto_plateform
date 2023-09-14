@@ -22,6 +22,8 @@ export class PlateDto {
   @ApiProperty()
   tag: [TagDto];
   @ApiProperty()
+  tagIds: [number];
+  @ApiProperty()
   updatedAt: Date;
   @ApiProperty()
   createdAt: Date;

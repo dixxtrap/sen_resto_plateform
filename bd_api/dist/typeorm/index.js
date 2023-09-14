@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.entities = exports.Tag = exports.TagPlate = exports.PlateFile = exports.FileDocument = exports.Order = exports.Payment = exports.PaymentType = exports.CompanyUser = exports.RestaurantUser = exports.Contact = exports.CompanyContact = exports.Customer = exports.RestaurantContact = exports.Plate = exports.PermissionRole = exports.PermissionUser = exports.User = exports.Permission = exports.Restaurant = exports.Role = exports.Company = void 0;
+exports.entities = exports.PlateHistory = exports.OrderPlate = exports.Tag = exports.TagPlate = exports.PlateFile = exports.FileDocument = exports.Order = exports.Payment = exports.PaymentTypeHistory = exports.PaymentType = exports.Contact = exports.CompanyContact = exports.Customer = exports.RestaurantContact = exports.Plate = exports.PermissionRole = exports.PermissionUser = exports.User = exports.Permission = exports.Restaurant = exports.Role = exports.Company = void 0;
 const company_1 = require("./company");
 Object.defineProperty(exports, "Company", { enumerable: true, get: function () { return company_1.Company; } });
 const role_1 = require("./role");
@@ -23,10 +23,6 @@ const company_contact_1 = require("./company_contact");
 Object.defineProperty(exports, "CompanyContact", { enumerable: true, get: function () { return company_contact_1.CompanyContact; } });
 const contact_1 = require("./contact");
 Object.defineProperty(exports, "Contact", { enumerable: true, get: function () { return contact_1.Contact; } });
-const restaurant_user_1 = require("./restaurant_user");
-Object.defineProperty(exports, "RestaurantUser", { enumerable: true, get: function () { return restaurant_user_1.RestaurantUser; } });
-const company_user_1 = require("./company_user");
-Object.defineProperty(exports, "CompanyUser", { enumerable: true, get: function () { return company_user_1.CompanyUser; } });
 const payment_type_1 = require("./payment_type");
 Object.defineProperty(exports, "PaymentType", { enumerable: true, get: function () { return payment_type_1.PaymentType; } });
 const payment_1 = require("./payment");
@@ -43,6 +39,12 @@ const tag_plat_1 = require("./tag_plat");
 Object.defineProperty(exports, "TagPlate", { enumerable: true, get: function () { return tag_plat_1.TagPlate; } });
 const customer_1 = require("./customer");
 Object.defineProperty(exports, "Customer", { enumerable: true, get: function () { return customer_1.Customer; } });
+const order_plate_1 = require("./order_plate");
+Object.defineProperty(exports, "OrderPlate", { enumerable: true, get: function () { return order_plate_1.OrderPlate; } });
+const plate_amount_1 = require("./plate_amount");
+Object.defineProperty(exports, "PlateHistory", { enumerable: true, get: function () { return plate_amount_1.PlateHistory; } });
+const payment_type_history_1 = require("./payment_type_history");
+Object.defineProperty(exports, "PaymentTypeHistory", { enumerable: true, get: function () { return payment_type_history_1.PaymentTypeHistory; } });
 exports.entities = [
     company_1.Company,
     role_1.Role,
@@ -54,15 +56,16 @@ exports.entities = [
     plate_1.Plate,
     restaurant_contact_1.RestaurantContact,
     company_contact_1.CompanyContact,
-    company_user_1.CompanyUser,
     customer_1.Customer,
-    restaurant_user_1.RestaurantUser,
     payment_type_1.PaymentType,
+    payment_type_history_1.PaymentTypeHistory,
     payment_1.Payment,
     order_1.Order,
     document_1.FileDocument,
     plate_file_1.PlateFile,
     tag_plat_1.TagPlate,
     tag_1.Tag,
+    order_plate_1.OrderPlate,
+    plate_amount_1.PlateHistory,
 ];
 //# sourceMappingURL=index.js.map

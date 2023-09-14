@@ -3,6 +3,7 @@ import { FileDocument, RestaurantContact } from '.';
 export declare class Restaurant {
     id: number;
     name: string;
+    description: string;
     email: string;
     companyId: number;
     address: string;

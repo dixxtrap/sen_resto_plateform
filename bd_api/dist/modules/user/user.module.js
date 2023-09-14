@@ -15,23 +15,19 @@ const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
 const jwt_strategy_1 = require("./jwt.strategy");
 const typeorm_2 = require("../../typeorm");
+const jtw_1 = require("../../jtw");
 let UserModule = class UserModule {
 };
 UserModule = __decorate([
     (0, common_1.Module)({
         imports: [
             passport_1.PassportModule.register({ defaultStrategy: 'jwt' }),
-            jwt_1.JwtModule.register({
-                secret: process.env.API_KEY,
-                signOptions: {
-                    expiresIn: '2d',
-                },
-            }),
-            typeorm_1.TypeOrmModule.forFeature([typeorm_2.User, typeorm_2.CompanyUser, typeorm_2.RestaurantUser]),
+            jtw_1.JWT,
+            typeorm_1.TypeOrmModule.forFeature([typeorm_2.User]),
         ],
         controllers: [user_controller_1.UserController],
         providers: [jwt_strategy_1.JwtStrategy, user_service_1.UserService],
-        exports: [passport_1.PassportModule, jwt_1.JwtModule],
+        exports: [passport_1.PassportModule, jwt_1.JwtModule, user_service_1.UserService],
     })
 ], UserModule);
 exports.UserModule = UserModule;

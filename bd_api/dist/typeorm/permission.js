@@ -11,22 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Permission = void 0;
 const typeorm_1 = require("typeorm");
-const _1 = require("./");
-const permission_role_1 = require("./permission_role");
 let Permission = class Permission {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], Permission.prototype, "id", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => _1.PermissionUser, (pU) => pU.permission),
-    __metadata("design:type", _1.PermissionUser)
-], Permission.prototype, "permissionUser", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => permission_role_1.PermissionRole, (pU) => pU.permission),
-    __metadata("design:type", permission_role_1.PermissionRole)
-], Permission.prototype, "permissionRole", void 0);
 __decorate([
     (0, typeorm_1.Column)('varchar'),
     __metadata("design:type", String)

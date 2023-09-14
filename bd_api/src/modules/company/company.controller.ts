@@ -7,17 +7,17 @@ import {
   Put,
   Query,
   Delete,
-  UploadedFile,
-  UseInterceptors,
+  // UploadedFile,
+  // UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CompanyService } from './company.service';
 import { CompanyDto } from 'src/dto/company.dto';
 import { CompanyContactDto } from 'src/dto/contact.dto';
 import { RestaurantDto } from 'src/dto/restaurant.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
+// import { FileInterceptor } from '@nestjs/platform-express';
+// import { diskStorage } from 'multer';
+// import { extname } from 'path';
 @ApiTags('Company')
 @Controller('company')
 export class CompanyController {

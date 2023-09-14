@@ -2,7 +2,7 @@ import { PlateFile, Restaurant } from '.';
 import { Tag } from './tag';
 export declare class Plate {
     id: number;
-    resaturant: Restaurant;
+    restaurant: Restaurant;
     restaurantId: number;
     name: string;
     file: PlateFile;

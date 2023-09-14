@@ -18,7 +18,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Tag.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar'),
+    (0, typeorm_1.Column)('varchar', { unique: true }),
     __metadata("design:type", String)
 ], Tag.prototype, "name", void 0);
 __decorate([

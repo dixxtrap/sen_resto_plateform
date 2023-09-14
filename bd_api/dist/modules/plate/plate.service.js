@@ -26,11 +26,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlateService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const exception_code_1 = require("../../data/exception_code");
 const typeorm_2 = require("../../typeorm");
 const typeorm_3 = require("typeorm");
 let PlateService = class PlateService {
-    constructor(repos, plateFileRepos, tagPlateRepos, docRepos) {
+    constructor(repos, reposHis, plateFileRepos, tagPlateRepos, docRepos) {
         this.repos = repos;
+        this.reposHis = reposHis;
         this.plateFileRepos = plateFileRepos;
         this.tagPlateRepos = tagPlateRepos;
         this.docRepos = docRepos;
@@ -50,11 +52,26 @@ let PlateService = class PlateService {
             relations: { file: { photo: true }, tag: true },
         });
     }
-    async create(data) {
+    async create(data, user) {
+        console.log(user);
+        if (!user.restaurantId)
+            throw new common_1.HttpException(Object.assign(Object.assign({}, exception_code_1.exceptionCode['FAILLURE']), { message: 'Vous n avez le droit ajouter un restaurant' }), 500);
         try {
-            return this.repos.save(this.repos.create(data));
+            const plate = await this.repos.save(this.repos.create(Object.assign(Object.assign({}, data), { restaurantId: user.restaurantId })));
+            if (data.tagIds && data.tagIds.length > 0)
+                await data.tagIds.forEach(async (ele) => {
+                    await this.tagPlateRepos.save(this.tagPlateRepos.create({ tagId: ele, plateId: plate.id }));
+                });
+            const plateHist = await this.reposHis.save(this.reposHis.create({
+                plateId: plate.id,
+                price: plate.price,
+                reduction: plate.reduction,
+            }));
+            console.log(plateHist);
+            return Object.assign(Object.assign({}, exception_code_1.exceptionCode['SUCCEEDED']), { message: `Le plat ${plate.name} vient d étre creer avec succés pour votre restaurant` });
         }
         catch (error) {
+            console.log(error);
             throw new common_1.HttpException(Object.assign({}, error), 500);
         }
     }
@@ -62,12 +79,20 @@ let PlateService = class PlateService {
         const old = await this.repos.findOne({ where: { id: data.id } });
         await this.tagPlateRepos.delete({ plateId: data.id });
         const { tag, id } = data, plate = __rest(data, ["tag", "id"]);
-        await tag.forEach(async (ele) => {
+        const t = await Promise.all(tag.map(async (ele) => {
             await this.tagPlateRepos.save(this.tagPlateRepos.create({ tagId: ele.id, plateId: data.id }));
-        });
+        }));
         if (!old)
             throw new common_1.NotFoundException(`${data.name} not Found`);
         await this.repos.update({ id: data.id }, Object.assign({}, plate));
+        if ((old.price != null && old.price != data.price) ||
+            (old.reduction && old.reduction != data.reduction)) {
+            await this.reposHis.save(this.reposHis.create({
+                plateId: old.id,
+                price: data.price,
+                reduction: data.reduction,
+            }));
+        }
         return Object.assign(Object.assign({}, old), { data });
     }
     async addPhoto(id, file) {
@@ -75,14 +100,23 @@ let PlateService = class PlateService {
         const plateFile = await this.plateFileRepos.save(this.plateFileRepos.create({ photoId: img.id, plateId: id }));
         return plateFile;
     }
+    async getCurrentPlateHistory(id) {
+        return await this.reposHis
+            .createQueryBuilder('plate_history')
+            .where('plate_history.plateId = :plateId', { id })
+            .orderBy('plate_history.createdAt', 'DESC')
+            .getOne();
+    }
 };
 PlateService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(typeorm_2.Plate)),
-    __param(1, (0, typeorm_1.InjectRepository)(typeorm_2.PlateFile)),
-    __param(2, (0, typeorm_1.InjectRepository)(typeorm_2.TagPlate)),
-    __param(3, (0, typeorm_1.InjectRepository)(typeorm_2.FileDocument)),
+    __param(1, (0, typeorm_1.InjectRepository)(typeorm_2.PlateHistory)),
+    __param(2, (0, typeorm_1.InjectRepository)(typeorm_2.PlateFile)),
+    __param(3, (0, typeorm_1.InjectRepository)(typeorm_2.TagPlate)),
+    __param(4, (0, typeorm_1.InjectRepository)(typeorm_2.FileDocument)),
     __metadata("design:paramtypes", [typeorm_3.Repository,
+        typeorm_3.Repository,
         typeorm_3.Repository,
         typeorm_3.Repository,
         typeorm_3.Repository])

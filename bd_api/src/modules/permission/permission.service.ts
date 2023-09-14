@@ -5,7 +5,7 @@ import { roleData } from 'src/data/role.data';
 import { CompanyDto } from 'src/dto/company.dto';
 import { PermissionDto } from 'src/dto/permission.dto';
 import { PermissionRoleDto, RoleDto } from 'src/dto/role.dto';
-import { Permission, PermissionRole, PermissionUser, Role } from 'src/typeorm';
+import { Permission, Role } from 'src/typeorm';
 import { Repository } from 'typeorm';
 
 export class PermissionService implements OnModuleInit {
@@ -14,26 +14,26 @@ export class PermissionService implements OnModuleInit {
     private permissionRepos: Repository<Permission>,
     @InjectRepository(Role)
     private roleRepos: Repository<Role>,
-    @InjectRepository(PermissionRole)
-    private permiRoleRepos: Repository<PermissionRole>,
-    @InjectRepository(PermissionUser)
-    private permiUser: Repository<PermissionUser>,
   ) {}
   onModuleInit() {
     console.log(
       '-------------create permission --------------',
       process.env.API_KEY,
     );
-    //  this.onInitRole();
-    // this.onInit();
-  }
-  onInit() {
     try {
-      permissions.forEach((permission) => {
-        try {
-          this.createPermission(permission);
-        } catch (error) {}
-      });
+      //  this.onInitRole();
+      //  this.onInit();
+    } catch (e) {}
+  }
+  async onInit() {
+    try {
+      await Promise.all(
+        permissions.map(async (permission) => {
+          try {
+            await this.createPermission(permission);
+          } catch (error) {}
+        }),
+      );
     } catch (error) {}
   }
   async createRole(role: RoleDto) {
@@ -66,66 +66,67 @@ export class PermissionService implements OnModuleInit {
       where: { name: search.toUpperCase() },
       relations: {
         user: true,
-        permissionRole: { permission: true },
+        permission: true,
       },
     });
   }
-  async createRolePermissions(permissionRoles: PermissionRoleDto[]) {
-    try {
-      await permissionRoles.forEach(
-        async (e) => await this.createRolePermission(e),
-      );
-      return 'yes';
-    } catch (error) {
-      console.log(error);
-      throw new HttpException({ ...error }, 500);
-    }
-  }
-  async createRolePermission(permissionRole: PermissionRoleDto) {
-    try {
-      const oldPR = await this.permiRoleRepos.findOne({
-        where: {
-          roleId: permissionRole.roleId,
-          permissionId: permissionRole.permissionId,
-          id: permissionRole.id,
-        },
-      });
+  // async createRolePermissions(permissionRoles: PermissionRoleDto[]) {
+  //   try {
+  //     await permissionRoles.forEach(
+  //       async (e) => await this.createRolePermission(e),
+  //     );
+  //     return 'yes';
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw new HttpException({ ...error }, 500);
+  //   }
+  // }
+  // async createRolePermission(permissionRole: PermissionRoleDto) {
+  //   try {
+  //    const oldPR = await this.permiRoleRepos.findOne({
+  //       where: {
+  //         roleId: permissionRole.roleId,
+  //         perm issionId: permissionRole.permissionId,
+  //         id: permissionRole.id,
+  //       },
+  //     });
 
-      if (permissionRole.id && oldPR) {
-        await this.permiRoleRepos.update(
-          { id: permissionRole.id },
-          { isActive: permissionRole.isActive },
-        );
-        return { ...oldPR, ...permissionRole };
-      }
-      return await this.permiRoleRepos.save(
-        this.permiRoleRepos.create(permissionRole),
-      );
-    } catch (error) {
-      console.log(error);
-      throw new HttpException({ ...error }, 500);
-    }
-  }
+  //     if (permissionRole.id && oldPR) {
+  //       await this.permiRoleRepos.update(
+  //         { id: permissionRole.id },
+  //         { isActive: permissionRole.isActive },
+  //       );
+  //       return { ...oldPR, ...permissionRole };
+  //     }
+  //     return await this.permiRoleRepos.save(
+  //       this.permiRoleRepos.create(permissionRole),
+  //     );
+  //   } catch (error) {
+  //     // console.log(error);
+  //     // throw new HttpException({ ...error }, 500);
+  //   }
+  // }
   async getRolePermission(id: number) {
     return await this.roleRepos.findOne({
       where: {
         id: id,
       },
       relations: {
-        permissionRole: {
-          permission: true,
-        },
+        permission: true,
+
         user: true,
       },
     });
   }
   // TODO: ROLE
-  onInitRole() {
-    roleData.forEach(async (permission) => {
-      try {
-        await this.createRole(permission);
-      } catch (error) {}
-    });
+  async onInitRole() {
+    Promise.all(
+      await roleData.map(async (permission) => {
+        try {
+          await this.createRole(permission);
+        } catch (error) {}
+      }),
+    );
   }
 
   //TODO: PERMISSION
@@ -135,7 +136,7 @@ export class PermissionService implements OnModuleInit {
       const savedPermission = await this.permissionRepos.save(permissionDoc);
       return savedPermission;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 

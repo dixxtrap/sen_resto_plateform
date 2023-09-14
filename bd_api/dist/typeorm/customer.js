@@ -22,6 +22,10 @@ __decorate([
     __metadata("design:type", String)
 ], Customer.prototype, "phone", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Customer.prototype, "adresse", void 0);
+__decorate([
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)
 ], Customer.prototype, "isPhoneVeirified", void 0);
@@ -37,6 +41,10 @@ __decorate([
     (0, typeorm_1.Column)({ default: 0 }),
     __metadata("design:type", Number)
 ], Customer.prototype, "longitude", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: true }),
+    __metadata("design:type", Boolean)
+], Customer.prototype, "isEnable", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)

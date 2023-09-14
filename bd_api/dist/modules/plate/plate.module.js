@@ -14,11 +14,13 @@ const typeorm_2 = require("../../typeorm");
 const plate_service_1 = require("./plate.service");
 const multer_1 = require("@nestjs/platform-express/multer");
 const multer_2 = require("multer");
+const jtw_1 = require("../../jtw");
 let PlateModule = class PlateModule {
 };
 PlateModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            jtw_1.JWT,
             multer_1.MulterModule.register({
                 preservePath: false,
                 dest: 'upload',
@@ -26,7 +28,14 @@ PlateModule = __decorate([
                     destination: 'upload',
                 }),
             }),
-            typeorm_1.TypeOrmModule.forFeature([typeorm_2.Plate, typeorm_2.FileDocument, typeorm_2.PlateFile, typeorm_2.Tag, typeorm_2.TagPlate]),
+            typeorm_1.TypeOrmModule.forFeature([
+                typeorm_2.Plate,
+                typeorm_2.FileDocument,
+                typeorm_2.PlateHistory,
+                typeorm_2.PlateFile,
+                typeorm_2.Tag,
+                typeorm_2.TagPlate,
+            ]),
         ],
         controllers: [plate_controller_1.PlateController],
         providers: [plate_service_1.PlateService],

@@ -1,63 +1,58 @@
 import {
   Body,
   Controller,
-  FileTypeValidator,
   Get,
-  MaxFileSizeValidator,
+  OnModuleInit,
   Param,
-  ParseFilePipe,
   Post,
   Put,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/typeorm/user';
-import { Repository } from 'typeorm';
-import { SignInDto, UserDto } from '../../dto/user.dto';
 import { UserService } from './user.service';
 import { LocalAuthGuard } from 'src/middleware/local_auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
+import { UserDto } from 'src/dto/user.dto';
 
 @ApiTags('user')
 @Controller('user')
-export class UserController {
+export class UserController implements OnModuleInit {
   constructor(private readonly userService: UserService) {}
+  onModuleInit() {
+    this.createAdmin();
+  }
+  async createAdmin() {
+    const {
+      SUPER_ADMIN_EMAIL,
+      SUPER_ADMIN_PHONE,
+      SUPER_ADMIN_PASSWORD,
+      SUPER_ADMIN_FIRSTNAME,
+      SUPER_ADMIN_LASTNAME,
+    } = process.env;
+    console.log(
+      `-------------------------${SUPER_ADMIN_EMAIL}---------------------${process.env.SUPER_ADMIN_EMAIL}`,
+    );
+    const admin = new UserDto();
+    admin.firstname = SUPER_ADMIN_FIRSTNAME;
+    admin.lastname = SUPER_ADMIN_LASTNAME;
+    admin.email = SUPER_ADMIN_EMAIL;
+    admin.pin = SUPER_ADMIN_PASSWORD;
+    admin.isAdmin = true;
+    admin.isAgent = false;
+    admin.phone = SUPER_ADMIN_PHONE;
+    admin.roleId = 1;
+    try {
+    // await this.create(admin);
+    } catch (error) {
+      console.log(error)
+    }
+
+    // console.log(admin);
+  }
   @Post('')
   create(@Body() user: UserDto) {
     console.log('---------------------create user--------------------', user);
     return this.userService.create(user);
   }
-  // @Post('upload')
-  // @UseInterceptors(
-  //   FileInterceptor('file', {
-  //     dest: './upload/profile',
-  //     storage: diskStorage({
-  //       destination: './upload/profile', // Dossier de destination où les fichiers téléchargés seront stockés
-  //       filename: (req, file, callback) => {
-  //         const randomName = Array(32)
-  //           .fill(null)
-  //           .map(() => Math.round(Math.random() * 16).toString(16))
-  //           .join('');
 
-  //         return callback(null, `${randomName}${extname(file.originalname)}`);
-  //       },
-  //     }),
-  //   }),
-  // )
-  // upload(
-  //   @UploadedFile()
-  //   file: Express.Multer.File,
-  //   @Body() data: any,
-  // ) {
-  //   console.log(file, data);
-  //   return { path: file.path, url: file.destination, status: 'OK' };
-  // }
-  // @Post('signin')
-  // SigIn(@Body() credential: SignInDto) {
-  //   return this.userService.signIn(credential);
-  // }
   @Get()
   // @UseGuards(LocalAuthGuard)
   // @ApiBearerAuth()

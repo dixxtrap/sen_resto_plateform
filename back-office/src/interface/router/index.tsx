@@ -6,27 +6,32 @@ import { userRouter } from "./user.router";
 import { customerRouter } from "./costumer.router";
 import { restaurantRouter } from "./restaurant.router";
 import { plateRouter } from "./plateRouter";
+import { securityRouter } from "./secutrity.router";
+import { paymentTypeRouter } from "./payment_type.router";
+import { orderRouter } from "./order.router";
 
-export const  router=createBrowserRouter([
-        {
-path:"",
-index:true,
-element:<Login/>
-        },{
-                path:"",
-                element:<Public/>,
-                children:[{
-                        path:'dash',
-                        element:<div>
-                                Dash
-                        </div>
-                },
-                organisationRouter,
-                userRouter,
-                customerRouter,
-                restaurantRouter,
-                plateRouter
-        ]
-        }
-
+export const router = createBrowserRouter([
+  {
+    path: "",
+    index: true,
+    element: <Login />,
+  },
+  {
+    path: "",
+    element: <Public />,
+    children: [
+      {
+        path: "dash",
+        element: <div>Dash</div>,
+      },
+      organisationRouter,
+      userRouter,
+      customerRouter,
+      restaurantRouter,
+      plateRouter,
+      securityRouter,
+      paymentTypeRouter,
+      orderRouter,
+    ],
+  },
 ]);

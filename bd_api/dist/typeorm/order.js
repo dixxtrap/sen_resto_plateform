@@ -9,10 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Order = void 0;
+exports.Order = exports.OrderStatus = void 0;
 const typeorm_1 = require("typeorm");
-const user_1 = require("./user");
-const plate_1 = require("./plate");
+const _1 = require("./");
+var OrderStatus;
+(function (OrderStatus) {
+    OrderStatus["Preparing"] = "preparing";
+    OrderStatus["ReadyForDelivery"] = "ready_for_delivery";
+    OrderStatus["OutForDelivery"] = "out_for_delivery";
+    OrderStatus["Delivered"] = "delivered";
+    OrderStatus["DeliveryDelayed"] = "delivery_delayed";
+    OrderStatus["Cancelled"] = "cancelled";
+    OrderStatus["QualityIssue"] = "quality_issue";
+    OrderStatus["PaymentProcessing"] = "payment_processing";
+    OrderStatus["RefundInProgress"] = "refund_in_progress";
+    OrderStatus["OrderNotDelivered"] = "order_not_delivered";
+})(OrderStatus = exports.OrderStatus || (exports.OrderStatus = {}));
 let Order = class Order {
 };
 __decorate([
@@ -20,11 +32,45 @@ __decorate([
     __metadata("design:type", Number)
 ], Order.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => user_1.User),
-    __metadata("design:type", user_1.User)
-], Order.prototype, "user", void 0);
+    (0, typeorm_1.OneToOne)(() => _1.Customer),
+    __metadata("design:type", _1.Customer)
+], Order.prototype, "costumer", void 0);
 __decorate([
-    (0, typeorm_1.ManyToMany)(() => plate_1.Plate, {
+    (0, typeorm_1.Column)('datetime'),
+    __metadata("design:type", Date)
+], Order.prototype, "deliveryDate", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: OrderStatus,
+    }),
+    __metadata("design:type", String)
+], Order.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.ManyToMany)(() => _1.Plate, {
+        cascade: true,
+        onUpdate: 'NO ACTION',
+        onDelete: 'NO ACTION',
+        eager: true,
+    }),
+    (0, typeorm_1.Column)({ nullable: true, default: null }),
+    __metadata("design:type", Number)
+], Order.prototype, "paymentTypeHistoryId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => _1.PaymentTypeHistory),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", _1.PaymentTypeHistory)
+], Order.prototype, "paymentTypeHistory", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Order.prototype, "description", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Order.prototype, "message", void 0);
+__decorate([
+    (0, typeorm_1.ManyToMany)(() => _1.PlateHistory, {
         cascade: true,
         onUpdate: 'NO ACTION',
         onDelete: 'NO ACTION',

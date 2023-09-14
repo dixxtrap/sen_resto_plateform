@@ -22,7 +22,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.ManyToOne)(() => _1.Restaurant),
     __metadata("design:type", _1.Restaurant)
-], Plate.prototype, "resaturant", void 0);
+], Plate.prototype, "restaurant", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)

@@ -14,12 +14,33 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
-const user_dto_1 = require("../../dto/user.dto");
 const user_service_1 = require("./user.service");
 const swagger_1 = require("@nestjs/swagger");
+const user_dto_1 = require("../../dto/user.dto");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
+    }
+    onModuleInit() {
+        this.createAdmin();
+    }
+    async createAdmin() {
+        const { SUPER_ADMIN_EMAIL, SUPER_ADMIN_PHONE, SUPER_ADMIN_PASSWORD, SUPER_ADMIN_FIRSTNAME, SUPER_ADMIN_LASTNAME, } = process.env;
+        console.log(`-------------------------${SUPER_ADMIN_EMAIL}---------------------${process.env.SUPER_ADMIN_EMAIL}`);
+        const admin = new user_dto_1.UserDto();
+        admin.firstname = SUPER_ADMIN_FIRSTNAME;
+        admin.lastname = SUPER_ADMIN_LASTNAME;
+        admin.email = SUPER_ADMIN_EMAIL;
+        admin.pin = SUPER_ADMIN_PASSWORD;
+        admin.isAdmin = true;
+        admin.isAgent = false;
+        admin.phone = SUPER_ADMIN_PHONE;
+        admin.roleId = 1;
+        try {
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
     create(user) {
         console.log('---------------------create user--------------------', user);

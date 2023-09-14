@@ -48,6 +48,10 @@ __decorate([
 ], PlateDto.prototype, "tag", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Array)
+], PlateDto.prototype, "tagIds", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Date)
 ], PlateDto.prototype, "updatedAt", void 0);
 __decorate([

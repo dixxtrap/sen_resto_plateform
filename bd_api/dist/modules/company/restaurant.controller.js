@@ -18,12 +18,14 @@ const swagger_1 = require("@nestjs/swagger");
 const restaurant_dto_1 = require("../../dto/restaurant.dto");
 const company_service_1 = require("./company.service");
 const file_dto_1 = require("../../dto/file.dto");
+const local_auth_guard_1 = require("../../middleware/local_auth.guard");
 let RestaurantController = class RestaurantController {
     constructor(companyService) {
         this.companyService = companyService;
     }
-    async createRestaurant(restaurant) {
+    async createRestaurant(restaurant, req) {
         restaurant.profile = new file_dto_1.FileDocumentDto();
+        restaurant.companyId = req['user'].companyId;
         return await this.companyService.createRestaurant(restaurant);
     }
     async getRestaurants() {
@@ -41,9 +43,12 @@ let RestaurantController = class RestaurantController {
 };
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, common_1.UseGuards)(local_auth_guard_1.LocalAuthGuard),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [restaurant_dto_1.RestaurantDto]),
+    __metadata("design:paramtypes", [restaurant_dto_1.RestaurantDto, Object]),
     __metadata("design:returntype", Promise)
 ], RestaurantController.prototype, "createRestaurant", null);
 __decorate([

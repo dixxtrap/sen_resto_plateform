@@ -4,7 +4,8 @@ export class RoleDto {
   id!: number;
   name!: string;
   scope!: string;
-  createdAt!:string;
+  createdAt!: string;
+  isActive?: boolean;
   updatedAt!:string;
 permissionRole!:PermissionRoleDto[];
 user!:User[]

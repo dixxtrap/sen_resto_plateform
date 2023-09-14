@@ -11,30 +11,18 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  PrimaryColumn,
 } from 'typeorm';
 import { Permission, User } from './';
 
-@Entity()
+@Entity('user_permission_permission')
 export class PermissionUser {
-  @PrimaryGeneratedColumn()
-  id: number;
-  @ManyToOne(() => Permission, (p) => p.permissionUser, {
-    cascade: true,
-    onDelete: 'SET NULL',
-  })
-  permission: Permission[];
-  @ManyToOne(() => User, (u) => u.permissionUser, {
-    cascade: true,
-    onDelete: 'SET NULL',
-  })
-  user: User[];
-  @ManyToOne(() => User, { cascade: true, onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'createById' })
-  createBy: User;
-  @Column('bool', { default: 1 })
-  isActive: boolean;
-  @CreateDateColumn()
-  createdAt: Date;
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @PrimaryColumn()
+  permissionId: number;
+  @PrimaryColumn()
+  userId: number;
+  @JoinColumn()
+  permission: Permission;
+  @JoinColumn()
+  user: User;
 }

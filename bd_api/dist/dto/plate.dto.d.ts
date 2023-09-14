@@ -9,6 +9,7 @@ export declare class PlateDto {
     price: number;
     reduction: number;
     tag: [TagDto];
+    tagIds: [number];
     updatedAt: Date;
     createdAt: Date;
 }

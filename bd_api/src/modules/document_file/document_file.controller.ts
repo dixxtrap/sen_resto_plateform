@@ -67,7 +67,7 @@ export class DocumentController {
     @UploadedFile()
     file: Express.Multer.File,
     @Param('id') id: number,
-    @Req() req: any,
+    @Req() _req: unknown,
   ) {
     const resp = await this.docService.update({ ...file, id: id });
     const filePath = join(__dirname, '..', '..', '..', resp.path);

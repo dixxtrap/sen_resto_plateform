@@ -1,3 +1,4 @@
+import { OnModuleInit } from '@nestjs/common';
 import { CompanyDto } from 'src/dto/company.dto';
 import { CompanyContactDto } from 'src/dto/contact.dto';
 import { RestaurantDto } from 'src/dto/restaurant.dto';
@@ -5,7 +6,7 @@ import { Company, CompanyContact, Restaurant, User } from 'src/typeorm';
 import { Repository } from 'typeorm';
 import { PermissionService } from '../permission/permission.service';
 import { DocumentService } from '../document_file/document_file.service';
-export declare class CompanyService {
+export declare class CompanyService implements OnModuleInit {
     private restosService;
     private company;
     private companycontact;
@@ -13,7 +14,8 @@ export declare class CompanyService {
     private permission;
     private doc;
     constructor(restosService: Repository<Restaurant>, company: Repository<Company>, companycontact: Repository<CompanyContact>, user: Repository<User>, permission: PermissionService, doc: DocumentService);
-    getHello(): string;
+    onModuleInit(): void;
+    getHello(): void;
     createCompany(companyDto: CompanyDto): Promise<Company>;
     getCompanys(): Promise<Company[]>;
     getCompany(id: number): Promise<Company>;

@@ -10,7 +10,7 @@ export const tagApi = createApi({
   reducerPath: "tag",
   tagTypes: ["tag"],
   endpoints: (builder) => ({
-    getTags: builder.query<Tag[], any>({
+    getTags: builder.query<Tag[], string>({
       query: () => "tag",
       providesTags: ["tag"],
     }),

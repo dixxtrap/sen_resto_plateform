@@ -3,10 +3,13 @@
 @tailwind utilities;
 
 td,th{
-        @apply text-left
+        @apply text-left py-2
 }
 .bgInput{
         @apply bg-slate-100/60;
+}
+.switchBase{
+        @apply flex bgInput p-2 ring-1 ring-gray-300 ring-inset rounded-md gap-x-3 justify-between;
 }
 .input{
   @apply     block w-full rounded-md  border-0 py-1.5   px-2  bg-slate-100/40 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-[1.0px] focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6

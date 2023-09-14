@@ -15,42 +15,23 @@ const _1 = require("./");
 let PermissionUser = class PermissionUser {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryColumn)(),
     __metadata("design:type", Number)
-], PermissionUser.prototype, "id", void 0);
+], PermissionUser.prototype, "permissionId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => _1.Permission, (p) => p.permissionUser, {
-        cascade: true,
-        onDelete: 'SET NULL',
-    }),
-    __metadata("design:type", Array)
+    (0, typeorm_1.PrimaryColumn)(),
+    __metadata("design:type", Number)
+], PermissionUser.prototype, "userId", void 0);
+__decorate([
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", _1.Permission)
 ], PermissionUser.prototype, "permission", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => _1.User, (u) => u.permissionUser, {
-        cascade: true,
-        onDelete: 'SET NULL',
-    }),
-    __metadata("design:type", Array)
-], PermissionUser.prototype, "user", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => _1.User, { cascade: true, onDelete: 'SET NULL' }),
-    (0, typeorm_1.JoinColumn)({ name: 'createById' }),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", _1.User)
-], PermissionUser.prototype, "createBy", void 0);
-__decorate([
-    (0, typeorm_1.Column)('bool', { default: 1 }),
-    __metadata("design:type", Boolean)
-], PermissionUser.prototype, "isActive", void 0);
-__decorate([
-    (0, typeorm_1.CreateDateColumn)(),
-    __metadata("design:type", Date)
-], PermissionUser.prototype, "createdAt", void 0);
-__decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", Date)
-], PermissionUser.prototype, "updatedAt", void 0);
+], PermissionUser.prototype, "user", void 0);
 PermissionUser = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)('user_permission_permission')
 ], PermissionUser);
 exports.PermissionUser = PermissionUser;
 //# sourceMappingURL=permission_user.js.map

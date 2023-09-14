@@ -8,20 +8,30 @@ import {
   UploadedFile,
   ParseFilePipe,
   Param,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RestaurantDto } from 'src/dto/restaurant.dto';
 import { CompanyService } from './company.service';
 import { FileDocumentDto } from 'src/dto/file.dto';
+import { LocalAuthGuard } from 'src/middleware/local_auth.guard';
+import { Request } from 'express';
 @ApiTags('restaurant')
 @Controller('restaurant')
 export class RestaurantController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
-  async createRestaurant(@Body() restaurant: RestaurantDto) {
+  @ApiBearerAuth()
+  @UseGuards(LocalAuthGuard)
+  async createRestaurant(
+    @Body() restaurant: RestaurantDto,
+    @Req() req: Request,
+  ) {
     // console.log(file);
     restaurant.profile = new FileDocumentDto();
+    restaurant.companyId = req['user'].companyId;
     return await this.companyService.createRestaurant(restaurant);
   }
   @Get('')

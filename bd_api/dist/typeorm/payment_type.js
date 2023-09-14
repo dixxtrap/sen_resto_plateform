@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentType = void 0;
 const typeorm_1 = require("typeorm");
+const _1 = require(".");
 let PaymentType = class PaymentType {
 };
 __decorate([
@@ -22,9 +23,38 @@ __decorate([
     __metadata("design:type", String)
 ], PaymentType.prototype, "name", void 0);
 __decorate([
+    (0, typeorm_1.ManyToOne)(() => _1.User, {
+        cascade: true,
+        nullable: true,
+        onUpdate: 'NO ACTION',
+    }),
+    __metadata("design:type", _1.User)
+], PaymentType.prototype, "createBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], PaymentType.prototype, "createById", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => _1.FileDocument, {
+        cascade: true,
+        nullable: true,
+        onUpdate: 'NO ACTION',
+    }),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", _1.FileDocument)
+], PaymentType.prototype, "profile", void 0);
+__decorate([
     (0, typeorm_1.Column)('double', { default: 0 }),
     __metadata("design:type", Number)
-], PaymentType.prototype, "percent", void 0);
+], PaymentType.prototype, "fees", void 0);
+__decorate([
+    (0, typeorm_1.Column)('double', { default: 0 }),
+    __metadata("design:type", Number)
+], PaymentType.prototype, "feesInvert", void 0);
+__decorate([
+    (0, typeorm_1.Column)('bool', { default: false }),
+    __metadata("design:type", Boolean)
+], PaymentType.prototype, "isActive", void 0);
 __decorate([
     (0, typeorm_1.Column)('varchar', { length: 250 }),
     __metadata("design:type", String)

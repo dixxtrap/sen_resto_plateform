@@ -9,8 +9,7 @@ import { Plate } from './plate';
 import { RestaurantContact } from './restaurant_contact';
 import { CompanyContact } from './company_contact';
 import { Contact } from './contact';
-import { RestaurantUser } from './restaurant_user';
-import { CompanyUser } from './company_user';
+
 import { PaymentType } from './payment_type';
 import { Payment } from './payment';
 import { Order } from './order';
@@ -19,6 +18,9 @@ import { PlateFile } from './plate_file';
 import { Tag } from './tag';
 import { TagPlate } from './tag_plat';
 import { Customer } from './customer';
+import { OrderPlate } from './order_plate';
+import { PlateHistory } from './plate_amount';
+import { PaymentTypeHistory } from './payment_type_history';
 
 // export
 export {
@@ -34,15 +36,16 @@ export {
   Customer,
   CompanyContact,
   Contact,
-  RestaurantUser,
-  CompanyUser,
   PaymentType,
+  PaymentTypeHistory,
   Payment,
   Order,
   FileDocument,
   PlateFile,
   TagPlate,
   Tag,
+  OrderPlate,
+  PlateHistory,
 };
 export const entities = [
   Company,
@@ -55,14 +58,17 @@ export const entities = [
   Plate,
   RestaurantContact,
   CompanyContact,
-  CompanyUser,
+
   Customer,
-  RestaurantUser,
+
   PaymentType,
+  PaymentTypeHistory,
   Payment,
   Order,
   FileDocument,
   PlateFile,
   TagPlate,
   Tag,
+  OrderPlate,
+  PlateHistory,
 ];

@@ -36,7 +36,7 @@ let DocumentController = class DocumentController {
         const filePath = (0, path_1.join)(__dirname, '..', '..', '..', file.path);
         return res.sendFile(filePath);
     }
-    async updateFile(file, id, req) {
+    async updateFile(file, id, _req) {
         const resp = await this.docService.update(Object.assign(Object.assign({}, file), { id: id }));
         const filePath = (0, path_1.join)(__dirname, '..', '..', '..', resp.path);
         if (file.path && filePath)

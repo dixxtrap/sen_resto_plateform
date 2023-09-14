@@ -12,13 +12,16 @@ import { join } from 'path';
 import { DocumentModule } from './modules/document_file/document_file.module';
 import { OrderModule } from './modules/order/order.module';
 import { PlateModule } from './modules/plate/plate.module';
-import { CompanyUserModule } from './modules/company_agent/company_user.module';
 import { TagModule } from './modules/tag/tag.module';
-import { RestaurantUserModule } from './modules/restaurant_agent/restaurant_user.module';
 import { Customer } from './typeorm';
 import { CustomerModule } from './modules/customer/module';
+import { SecurityModule } from './modules/security/security.module';
+import { PaymentTypeModule } from './modules/payment_type/payment_type.module';
+import { JWT } from './jtw';
+import { RoleModule } from './modules/role/module';
 @Module({
   imports: [
+    JWT,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'upload'), // Path to the static files directory
     }),
@@ -31,13 +34,14 @@ import { CustomerModule } from './modules/customer/module';
     UserModule,
     CustomerModule,
     CompanyModule,
-    CompanyUserModule,
-    RestaurantUserModule,
 
     DocumentModule,
     OrderModule,
     PlateModule,
     TagModule,
+    SecurityModule,
+    PaymentTypeModule,
+    RoleModule,
   ],
 
   controllers: [AppController],

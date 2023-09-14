@@ -19,6 +19,7 @@ const typeorm_2 = require("../../typeorm");
 const typeorm_3 = require("typeorm");
 const permission_service_1 = require("../permission/permission.service");
 const document_file_service_1 = require("../document_file/document_file.service");
+const file_dto_1 = require("../../dto/file.dto");
 let CompanyService = class CompanyService {
     constructor(restosService, company, companycontact, user, permission, doc) {
         this.restosService = restosService;
@@ -28,8 +29,20 @@ let CompanyService = class CompanyService {
         this.permission = permission;
         this.doc = doc;
     }
+    onModuleInit() {
+    }
     getHello() {
-        return 'Heloo from companyService';
+        this.createCompany({
+            userId: 1,
+            description: 'no description',
+            email: 'senresto@gmail.com',
+            name: 'Sen Resto',
+            phone: '221772371668',
+            short_name: 'SR',
+            laltitude: 0,
+            longitude: 0,
+            profile: new file_dto_1.FileDocumentDto(),
+        });
     }
     async createCompany(companyDto) {
         const role = await this.permission.getRoleByName('ADMIN', 'COMPANY');
@@ -79,7 +92,7 @@ let CompanyService = class CompanyService {
     async getRestaurant(id) {
         return await this.restosService.findOne({
             where: { isDelecetd: false, id: id },
-            relations: { company: true, profile: true },
+            relations: { company: { profile: true }, profile: true },
         });
     }
     async createRestaurant(restos, company) {
@@ -90,9 +103,10 @@ let CompanyService = class CompanyService {
         return await this.restosService.update(id, { isDelecetd: true });
     }
     async updateRestaurant(id, restos) {
+        console.log(restos);
         const result = await this.restosService.findOneBy({ id });
         if (result) {
-            await this.restosService.update({ id }, Object.assign(Object.assign({}, result), restos));
+            await this.restosService.save(Object.assign(Object.assign({ id: id }, result), restos));
             return { message: 'Transaction affectuer avec success' };
         }
         throw new typeorm_3.MustBeEntityError('Oups!!! Something went wrong', 'message 2');

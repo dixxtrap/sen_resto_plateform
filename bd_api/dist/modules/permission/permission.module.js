@@ -12,20 +12,12 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("../../typeorm");
 const permission_service_1 = require("./permission.service");
 const permission_controller_1 = require("./permission.controller");
-const role_controller_1 = require("./role.controller");
 let PermissionModule = class PermissionModule {
 };
 PermissionModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            typeorm_1.TypeOrmModule.forFeature([
-                typeorm_2.Permission,
-                typeorm_2.Role,
-                typeorm_2.PermissionUser,
-                typeorm_2.PermissionRole,
-            ]),
-        ],
-        controllers: [permission_controller_1.PermissionController, role_controller_1.RoleController],
+        imports: [typeorm_1.TypeOrmModule.forFeature([typeorm_2.Permission, typeorm_2.Role])],
+        controllers: [permission_controller_1.PermissionController],
         providers: [permission_service_1.PermissionService],
         exports: [permission_service_1.PermissionService],
     })

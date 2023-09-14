@@ -8,6 +8,9 @@ import { plateApi } from "./plate.slice";
 import { companyAgentApi } from "./company_agent.slice";
 import { tagApi } from "./tag.slice";
 import { restaurantUserApi } from "./restaurant_user.slice";
+import { securityApi } from "./security.slice";
+import { customerApi } from "./customer.slice";
+import { paymentTypeApi } from "./payment_type.slice";
 const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
@@ -15,8 +18,11 @@ const store = configureStore({
     [companyApi.reducerPath]: companyApi.reducer,
     [roleApi.reducerPath]: roleApi.reducer,
     [plateApi.reducerPath]: plateApi.reducer,
+    [securityApi.reducerPath]: securityApi.reducer,
     [companyAgentApi.reducerPath]: companyAgentApi.reducer,
     [tagApi.reducerPath]: tagApi.reducer,
+    [customerApi.reducerPath]: customerApi.reducer,
+    [paymentTypeApi.reducerPath]: paymentTypeApi.reducer,
     [restaurantUserApi.reducerPath]: restaurantUserApi.reducer,
     theme: themeReducer,
   },
@@ -26,7 +32,10 @@ const store = configureStore({
       restaurantApi.middleware,
       companyApi.middleware,
       roleApi.middleware,
+      securityApi.middleware,
       plateApi.middleware,
+      paymentTypeApi.middleware,
+customerApi.middleware,
       companyAgentApi.middleware,
       tagApi.middleware,
       restaurantUserApi.middleware

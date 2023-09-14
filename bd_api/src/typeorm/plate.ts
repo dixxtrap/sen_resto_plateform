@@ -17,7 +17,7 @@ export class Plate {
   @PrimaryGeneratedColumn()
   id: number;
   @ManyToOne(() => Restaurant)
-  resaturant: Restaurant;
+  restaurant: Restaurant;
   @Column()
   restaurantId: number;
   @Column('varchar', { length: '35' })

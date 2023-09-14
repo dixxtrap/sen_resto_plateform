@@ -1,10 +1,13 @@
-import { PermissionRole, User } from './';
+import { Permission, User } from './';
 export declare class Role {
     id: number;
     scope: string;
+    isActive: boolean;
     name: string;
     user: User[];
-    permissionRole: PermissionRole[];
+    permission: Permission[];
     createdAt: Date;
     updatedAt: Date;
+    permissionLenght: number;
+    private PermissionLenght;
 }

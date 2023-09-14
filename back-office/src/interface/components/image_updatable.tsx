@@ -24,7 +24,7 @@ export const Img = ({
            
               {hasImg ? (
                 <img
-                  className={className}
+                  className={className+ " rounded-md"}
                   alt="djig"
                   src={`/v1/document/file/${imgId}`}
                 />

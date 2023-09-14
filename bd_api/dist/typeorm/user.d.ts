@@ -1,4 +1,4 @@
-import { PermissionUser, Role } from '.';
+import { Company, Permission, Restaurant, Role } from '.';
 import { FileDocument } from './';
 export declare class User {
     id: number;
@@ -9,8 +9,11 @@ export declare class User {
     encryptedPin: string;
     isAdmin: boolean;
     isAgent: boolean;
-    isResto: boolean;
-    isCompany: boolean;
+    restaurant: Restaurant;
+    restaurantId: number;
+    company: Company;
+    companyId: number;
+    permission: Permission[];
     address: string;
     country: string;
     city: string;
@@ -22,6 +25,7 @@ export declare class User {
     status: boolean;
     updatedAt: Date;
     createdAt: Date;
-    permissionUser: PermissionUser[];
     hashPassword(): Promise<void>;
+    permissionLenght: number;
+    private PermissionLenght;
 }

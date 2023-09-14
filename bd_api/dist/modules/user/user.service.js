@@ -19,29 +19,10 @@ const user_1 = require("../../typeorm/user");
 const typeorm_2 = require("typeorm");
 const crypto_service_1 = require("../../utils/crypto_service");
 const jwt_1 = require("@nestjs/jwt");
-const typeorm_3 = require("../../typeorm");
 let UserService = class UserService {
-    constructor(userRepos, compUserRespo, restoUserRespo, jwt) {
+    constructor(userRepos, jwt) {
         this.userRepos = userRepos;
-        this.compUserRespo = compUserRespo;
-        this.restoUserRespo = restoUserRespo;
         this.jwt = jwt;
-    }
-    onModuleInit() {
-    }
-    async onInit() {
-        const admin = await this.userRepos.create({
-            email: 'admin2023@gmail.com',
-            birthday: new Date('11/05/1996'),
-            city: 'pikine',
-            country: 'senegal',
-            firstname: 'Super',
-            lastname: 'Administrateur',
-            isAdmin: true,
-            pin: '000000',
-            roleId: 17,
-        });
-        return this.userRepos.save(admin);
     }
     async create(user) {
         console.log('------------------create User Service--------------------');
@@ -50,39 +31,39 @@ let UserService = class UserService {
         user.profile.filename = 'nofile';
         user.profile.size = 0;
         const newUser = await this.userRepos.save(this.userRepos.create(user));
-        if (user.companyId && user.companyId != 0) {
-            await this.compUserRespo.save(this.compUserRespo.create({
-                companyId: user.companyId,
-                userId: newUser.id,
-            }));
-        }
-        if (user.restaurantId && user.restaurantId != 0) {
-            await this.restoUserRespo.save(this.restoUserRespo.create({
-                restaurantId: user.restaurantId,
-                userId: newUser.id,
-            }));
-        }
         return newUser;
     }
     async signIn(credential) {
+        console.log('---------------------------credential-----------------------');
+        console.log(credential);
         const user = await this.userRepos.findOneBy({ email: credential.email });
+        user.pin = crypto_service_1.CryptoService.createHash(credential.password);
+        console.log(user);
         const hash = crypto_service_1.CryptoService.createHash(credential.password);
         if (!user)
             throw new common_1.NotFoundException('user not found');
         if (user.pin === hash) {
             return this.jwt.sign(Object.assign({}, user), { secret: process.env.API_KEY });
         }
-        return 'no';
+        return undefined;
     }
     async getAllUser() {
         return await this.userRepos.find({
-            relations: { profile: true, role: true },
+            relations: {
+                profile: true,
+                role: true,
+            },
         });
     }
     async getUserById(id) {
         return await this.userRepos.findOne({
             where: { id },
-            relations: { profile: true, role: true },
+            relations: {
+                profile: true,
+                role: true,
+                company: { profile: true },
+                restaurant: { profile: true },
+            },
         });
     }
     async updateUserById(user) {
@@ -98,11 +79,7 @@ let UserService = class UserService {
 UserService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_1.User)),
-    __param(1, (0, typeorm_1.InjectRepository)(typeorm_3.CompanyUser)),
-    __param(2, (0, typeorm_1.InjectRepository)(typeorm_3.RestaurantUser)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository,
-        typeorm_2.Repository,
         jwt_1.JwtService])
 ], UserService);
 exports.UserService = UserService;

@@ -14,6 +14,9 @@ const typeorm_1 = require("typeorm");
 const _1 = require("./");
 const uppercase_transformer_1 = require("../transformer/uppercase.transformer");
 let Role = class Role {
+    async PermissionLenght() {
+        this.permissionLenght = this.permission.length;
+    }
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)('increment', { type: 'int' }),
@@ -27,6 +30,10 @@ __decorate([
     __metadata("design:type", String)
 ], Role.prototype, "scope", void 0);
 __decorate([
+    (0, typeorm_1.Column)('boolean', { default: true }),
+    __metadata("design:type", Boolean)
+], Role.prototype, "isActive", void 0);
+__decorate([
     (0, typeorm_1.Column)('varchar', { length: 30 }),
     __metadata("design:type", String)
 ], Role.prototype, "name", void 0);
@@ -35,9 +42,15 @@ __decorate([
     __metadata("design:type", Array)
 ], Role.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => _1.PermissionRole, (pU) => pU.role),
+    (0, typeorm_1.ManyToMany)(() => _1.Permission, {
+        cascade: true,
+        onUpdate: 'NO ACTION',
+        onDelete: 'NO ACTION',
+        eager: true,
+    }),
+    (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
-], Role.prototype, "permissionRole", void 0);
+], Role.prototype, "permission", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
@@ -46,6 +59,12 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Role.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.AfterLoad)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], Role.prototype, "PermissionLenght", null);
 Role = __decorate([
     (0, typeorm_1.Entity)('role'),
     (0, typeorm_1.Index)(['scope', 'name'], { unique: true })

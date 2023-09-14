@@ -1,6 +1,8 @@
-import { ExecutionContext } from '@nestjs/common';
-declare const LocalAuthGuard_base: import("@nestjs/passport").Type<import("@nestjs/passport").IAuthGuard>;
-export declare class LocalAuthGuard extends LocalAuthGuard_base {
-    canActivate(context: ExecutionContext): boolean | Promise<boolean> | import("rxjs").Observable<boolean>;
+import { CanActivate, ExecutionContext } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+export declare class LocalAuthGuard implements CanActivate {
+    private jwtService;
+    constructor(jwtService: JwtService);
+    canActivate(context: ExecutionContext): Promise<boolean>;
+    private extractTokenFromHeader;
 }
-export {};

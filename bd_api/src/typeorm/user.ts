@@ -5,14 +5,17 @@ import {
   Entity,
   Index,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
+  AfterLoad,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { CryptoService } from 'src/utils/crypto_service';
-import { PermissionUser, Role } from '.';
+import { Company, Permission, Restaurant, Role } from '.';
 import { FileDocument } from './';
 @Entity('user')
 @Index(['email', 'phone'], { unique: true })
@@ -33,10 +36,25 @@ export class User {
   isAdmin: boolean;
   @Column({ type: 'boolean', default: false })
   isAgent: boolean;
-  @Column({ type: 'boolean', default: false })
-  isResto: boolean;
-  @Column({ type: 'boolean', default: false })
-  isCompany: boolean;
+  @ManyToOne(() => Restaurant)
+  @JoinColumn()
+  restaurant: Restaurant;
+  @Column({ nullable: true, default: null })
+  restaurantId: number;
+  @ManyToOne(() => Company)
+  @JoinColumn()
+  company: Company;
+  @Column({ nullable: true, default: null })
+  companyId: number;
+  @ManyToMany(() => Permission, {
+    cascade: true,
+    onUpdate: 'NO ACTION',
+    onDelete: 'NO ACTION',
+    eager: true,
+  })
+  @JoinTable()
+  permission: Permission[];
+
   @Column({ type: 'varchar', length: 40 })
   address: string;
   @Column({ type: 'varchar', length: 20 })
@@ -58,17 +76,25 @@ export class User {
   })
   @JoinColumn()
   profile: FileDocument;
+
   @Column('boolean', { default: true })
   status: boolean;
   @UpdateDateColumn()
   updatedAt: Date;
   @CreateDateColumn()
   createdAt: Date;
-  @OneToMany(() => PermissionUser, (pU) => pU.user)
-  permissionUser: PermissionUser[];
+
   @BeforeInsert()
   async hashPassword() {
+    this.restaurantId = this.restaurantId == 0 ? null : this.restaurantId;
+    this.companyId = this.companyId == 0 ? null : this.companyId;
     this.pin = await CryptoService.createHash(this.pin);
     this.encryptedPin = await CryptoService.encrypt(this.pin);
+  }
+
+  permissionLenght: number;
+  @AfterLoad()
+  private async PermissionLenght() {
+    this.permissionLenght = this.permission.length;
   }
 }

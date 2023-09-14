@@ -1,11 +1,10 @@
 import { ReactNode, useState } from "react";
-import { useFormContext } from "react-hook-form";
 
 
 import { handlePreview } from "../utils/handle_preview";
 import {
   CameraIcon,
-  CheckIcon,
+  CheckCircleIcon,
   LockClosedIcon,
 } from "@heroicons/react/20/solid";
 import { FileDocument } from "../../core/models/file_document";
@@ -67,9 +66,9 @@ export const ImgPreview = ({
     <form
       onSubmit={onSubmit}
       action=""
-      className="m-2    flex input_bg items-center max-w-xs   p-2 flex-col justify-center "
+      className="    flex input_bg items-center   p-2 flex-col   "
     >
-      <label htmlFor={`${name}`}>
+      <label htmlFor={`${name}`} className="w-full h-full min-w-fit">
         <input
           key={`${name}`}
           title={`${name}`}
@@ -92,14 +91,14 @@ export const ImgPreview = ({
           )
         )}
       </label>
-      <div className="flex w-full   items-center justify-around content-center ">
+      <div className="flex w-full   my-2 items-center justify-around content-center ">
        
-        { changed&& <button type="submit" className="p-2 z-50 text-rose-500">
-            <CheckIcon  className="text-slate-800 h-8 w-8" />Valide
+        { changed&& <button type="submit" className="px-2 z-50 w-14 h-7 rounded-md bg-teal-100 flex text-xs items-center   justify-center">
+            <CheckCircleIcon  className="text-teal-800 h-6 w-6 m-auto  my-auto " /><span>OK</span>
           </button>}
        
         {isDelectable && (
-          <button type="submit">
+          <button type="submit" className="p-2 z-50 w-14 h-8  text-rose-500">
             <LockClosedIcon />
           </button>
         )}

@@ -21,15 +21,18 @@ const path_1 = require("path");
 const document_file_module_1 = require("./modules/document_file/document_file.module");
 const order_module_1 = require("./modules/order/order.module");
 const plate_module_1 = require("./modules/plate/plate.module");
-const company_user_module_1 = require("./modules/company_agent/company_user.module");
 const tag_module_1 = require("./modules/tag/tag.module");
-const restaurant_user_module_1 = require("./modules/restaurant_agent/restaurant_user.module");
 const module_1 = require("./modules/customer/module");
+const security_module_1 = require("./modules/security/security.module");
+const payment_type_module_1 = require("./modules/payment_type/payment_type.module");
+const jtw_1 = require("./jtw");
+const module_2 = require("./modules/role/module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            jtw_1.JWT,
             serve_static_1.ServeStaticModule.forRoot({
                 rootPath: (0, path_1.join)(__dirname, '..', 'upload'),
             }),
@@ -42,12 +45,13 @@ AppModule = __decorate([
             user_module_1.UserModule,
             module_1.CustomerModule,
             company_module_1.CompanyModule,
-            company_user_module_1.CompanyUserModule,
-            restaurant_user_module_1.RestaurantUserModule,
             document_file_module_1.DocumentModule,
             order_module_1.OrderModule,
             plate_module_1.PlateModule,
             tag_module_1.TagModule,
+            security_module_1.SecurityModule,
+            payment_type_module_1.PaymentTypeModule,
+            module_2.RoleModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

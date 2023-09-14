@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CompanyDto, companySchema } from "../../../core/models/company.dto";
 import { useCreateCompanyMutation } from "../../../core/features/company.slice";
 import { Input } from "../../components/input";
-import { Title } from "../../components/title";
 import { CustomForm } from "../../components/custom_form";
 
 export const OrganisationCreate = () => {
@@ -23,7 +22,7 @@ export const OrganisationCreate = () => {
   return (
     <div className="flex flex-col divide-y gap-y-2 ">
       
-      <CustomForm  title="Compagnie"  subTitle="Creer une nouvelle compagnie" onSubmit={handleSubmit(_onsubmit)}>
+      <CustomForm  title="Compagnie" isLoading={isLoading} isError={isError} isSuccess={isSuccess}  subTitle="Creer une nouvelle compagnie" onSubmit={handleSubmit(_onsubmit)}>
         <Input
           label="Nom"
           error={errors.name?.message}
@@ -41,6 +40,11 @@ export const OrganisationCreate = () => {
         />
         <Input
           label="Téléphone"
+          error={errors.phone?.message}
+          children={<input className="input" {...register("phone")} />}
+        />
+        <Input
+          label="Description"
           error={errors.phone?.message}
           children={<input className="input" {...register("phone")} />}
         />

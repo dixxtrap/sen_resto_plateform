@@ -8,22 +8,17 @@ import { JwtStrategy } from './jwt.strategy';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import { CompanyUser, RestaurantUser, User } from 'src/typeorm';
-
+import { User } from 'src/typeorm';
+import { JWT } from 'src/jtw';
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.register({
-      secret: process.env.API_KEY,
-      signOptions: {
-        expiresIn: '2d',
-      },
-    }),
-    TypeOrmModule.forFeature([User, CompanyUser, RestaurantUser]),
+    JWT,
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [UserController],
 
   providers: [JwtStrategy, UserService],
-  exports: [PassportModule, JwtModule],
+  exports: [PassportModule, JwtModule, UserService],
 })
 export class UserModule {}

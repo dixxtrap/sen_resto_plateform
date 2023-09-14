@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class Tag {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
-  @Column('varchar')
+  @Column('varchar', { unique: true })
   name: string;
   @Column('varchar')
   description: string;

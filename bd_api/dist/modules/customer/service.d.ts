@@ -12,10 +12,12 @@ export declare class CustomerService {
         token: string;
         id: number;
         phone: string;
+        adresse: string;
         isPhoneVeirified: boolean;
         displayName: string;
         laltitude: number;
         longitude: number;
+        isEnable: boolean;
         updatedAt: Date;
         createdAt: Date;
     }>;

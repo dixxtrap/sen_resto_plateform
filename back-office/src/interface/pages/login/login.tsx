@@ -1,37 +1,41 @@
-import React from 'react'
 import { Input } from '../../components/input'
-
+import { Logo } from '../../components/logo'
+import {useForm} from "react-hook-form"
+import { CustomForm } from '../../components/custom_form'
+import { SignInDto, SigniInSchema } from '../../../core/models/login.dto'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useLoginMutation } from '../../../core/features/security.slice'
+import { Navigate } from 'react-router-dom'
 export const Login = () => {
+  const  [ login,{isError, isSuccess, isLoading, reset}]=useLoginMutation();
+  const {register,  handleSubmit,formState:{errors}}=useForm({
+    resolver:yupResolver(SigniInSchema)
+  })
+
+  const _onSubmit= async (data:SignInDto)=>{
+console.log(data);
+await login(data);
+  }
   return (
     <>
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+   {isSuccess&& <Navigate to="/dash"/>}
+    <div   className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+         <Logo className='self-center mx-auto h-28 w-28  md:h-32 md:w32' />
+          <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
            Se Connecter a votre compte
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <CustomForm  isError={isError} isSuccess={isSuccess} onFinish={()=>reset()}  isLoading={isLoading} onSubmit={handleSubmit(_onSubmit)}>
         
-<Input label='Adresse Email' children={<input className='input'/>}/>
-<Input label='Mot de Passe' children={<input className='input'/>}/>
+<Input label='Adresse Email' error={errors.email?.message} children={<input className='input' {...register("email")}/>}/>
+<Input label='Mot de Passe'  error={errors.password?.message}  children={<input type='password' className='input' {...register("password")} />}/>
         
 
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
+            
+          </CustomForm>
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{' '}

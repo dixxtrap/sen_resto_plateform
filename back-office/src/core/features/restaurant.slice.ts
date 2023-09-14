@@ -3,7 +3,7 @@ import { RestaurantDto } from "../models/restaurant.dto";
 import { WsMessage } from "../models/error.dto";
 
 export const restaurantApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/v1/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
   reducerPath: "restaurant",
   tagTypes: ["restaurant", "company"],
   endpoints: (builder) => ({
@@ -11,7 +11,7 @@ export const restaurantApi = createApi({
       query: () => `restaurant`,
       providesTags: ["restaurant", "company"],
     }),
-    createRestaurant: builder.mutation<RestaurantDto, WsMessage>({
+    createRestaurant: builder.mutation<RestaurantDto, RestaurantDto>({
       query: (restaurant) => ({
         url: "restaurant",
         method: "POST",

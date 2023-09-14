@@ -1,17 +1,11 @@
-import { OnModuleInit } from '@nestjs/common';
 import { User } from 'src/typeorm/user';
 import { Repository } from 'typeorm';
 import { SignInDto, UserDto } from '../../dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { CompanyUser, RestaurantUser } from 'src/typeorm';
-export declare class UserService implements OnModuleInit {
+export declare class UserService {
     private userRepos;
-    private compUserRespo;
-    private restoUserRespo;
     private jwt;
-    constructor(userRepos: Repository<User>, compUserRespo: Repository<CompanyUser>, restoUserRespo: Repository<RestaurantUser>, jwt: JwtService);
-    onModuleInit(): void;
-    onInit(): Promise<User>;
+    constructor(userRepos: Repository<User>, jwt: JwtService);
     create(user: UserDto): Promise<User>;
     signIn(credential: SignInDto): Promise<string>;
     getAllUser(): Promise<User[]>;

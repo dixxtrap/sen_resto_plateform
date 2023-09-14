@@ -4,7 +4,7 @@ import { WsMessage } from "../models/error.dto";
 
 export const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/v1/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
   tagTypes: ["user"],
   endpoints: (builder) => ({
     createUser: builder.mutation<Partial<User> | WsMessage, User>({
@@ -25,7 +25,7 @@ export const userApi = createApi({
 
       invalidatesTags: ["user"],
     }),
-    getUser: builder.query<User[], any>({
+    getUser: builder.query<User[], string>({
       query: () => "user",
       providesTags: ["user"],
     }),
