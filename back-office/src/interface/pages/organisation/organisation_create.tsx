@@ -45,8 +45,8 @@ export const OrganisationCreate = () => {
         />
         <Input
           label="Description"
-          error={errors.phone?.message}
-          children={<input className="input" {...register("phone")} />}
+          error={errors.description?.message}
+          children={<textarea className="input" {...register("description")} />}
         />
         <Input
           label="Adresse"

@@ -38,7 +38,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "lastname", void 0);
 __decorate([
-    (0, typeorm_1.Column)(''),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
@@ -86,15 +86,15 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "permission", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 40 }),
+    (0, typeorm_1.Column)({ type: 'varchar', length: 40, default: '' }),
     __metadata("design:type", String)
 ], User.prototype, "address", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 20 }),
+    (0, typeorm_1.Column)({ type: 'varchar', length: 20, default: 'SN' }),
     __metadata("design:type", String)
 ], User.prototype, "country", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 20 }),
+    (0, typeorm_1.Column)({ type: 'varchar', length: 20, default: 'Dakar' }),
     __metadata("design:type", String)
 ], User.prototype, "city", void 0);
 __decorate([
@@ -106,7 +106,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "phone", void 0);
 __decorate([
-    (0, typeorm_1.Column)('bigint'),
+    (0, typeorm_1.Column)('bigint', { nullable: true }),
     __metadata("design:type", Number)
 ], User.prototype, "roleId", void 0);
 __decorate([

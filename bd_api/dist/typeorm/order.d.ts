@@ -1,5 +1,7 @@
-import { PlateHistory, Customer, PaymentTypeHistory } from './';
+import { PlateHistory, Customer, PaymentTypeHistory, Restaurant } from './';
 export declare enum OrderStatus {
+    Empty = "empty",
+    Active = "active",
     Preparing = "preparing",
     ReadyForDelivery = "ready_for_delivery",
     OutForDelivery = "out_for_delivery",
@@ -13,7 +15,10 @@ export declare enum OrderStatus {
 }
 export declare class Order {
     id: number;
-    costumer: Customer;
+    customer: Customer;
+    customerId: number;
+    restaurant: Restaurant;
+    restaurantId: number;
     deliveryDate: Date;
     status: OrderStatus;
     paymentTypeHistoryId: number;

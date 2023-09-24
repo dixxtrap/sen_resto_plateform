@@ -5,10 +5,10 @@ const config: MysqlConnectionOptions = {
   host: 'localhost',
   port: 3306,
   username: 'root',
-  password: '',
+  password: 'root',
   dateStrings: true,
   entities: entities,
-  database: 'sen-resto-test',
+  database: 'sen_resto',
   synchronize: true,
   //   ssl: {
   //     // Enable SSL if required

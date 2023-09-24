@@ -36,7 +36,7 @@ let LocalAuthGuard = class LocalAuthGuard {
     }
     extractTokenFromHeader(request) {
         var _a, _b, _c, _d;
-        const [type, token] = (_d = (_b = (_a = request.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')) !== null && _b !== void 0 ? _b : (_c = request.cookies['access_token']) === null || _c === void 0 ? void 0 : _c.split(' ')) !== null && _d !== void 0 ? _d : [undefined, undefined];
+        const [type, token] = (_d = (_b = (_a = request.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')) !== null && _b !== void 0 ? _b : (_c = request.cookies['access_token']) === null || _c === void 0 ? void 0 : _c.split(' ')) !== null && _d !== void 0 ? _d : [];
         return type === 'Bearer' ? token : undefined;
     }
 };

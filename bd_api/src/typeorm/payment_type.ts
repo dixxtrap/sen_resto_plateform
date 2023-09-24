@@ -36,7 +36,7 @@ export class PaymentType {
   feesInvert: number;
   @Column('bool', { default: false })
   isActive: boolean;
-  @Column('varchar', { length: 250 })
+  @Column('varchar', { length: 250, nullable: true })
   description: string;
   @CreateDateColumn()
   createdAt: Date;

@@ -50,7 +50,7 @@ export class Plate {
   saturday: boolean;
   @Column({ default: true })
   sunday: boolean;
-  @Column({ name: 'cooking_time' })
+  @Column({ name: 'cooking_time', nullable: true })
   cookingTime: number;
   @Column({ default: 0 })
   reduction: number;

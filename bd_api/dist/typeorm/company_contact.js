@@ -16,7 +16,7 @@ const contact_1 = require("./contact");
 let CompanyContact = class CompanyContact extends contact_1.Contact {
 };
 __decorate([
-    (0, typeorm_1.Column)('int'),
+    (0, typeorm_1.Column)('int', { nullable: true }),
     __metadata("design:type", Number)
 ], CompanyContact.prototype, "companyId", void 0);
 __decorate([

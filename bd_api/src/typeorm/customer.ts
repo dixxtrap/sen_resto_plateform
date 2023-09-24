@@ -11,7 +11,7 @@ import {
 export class Customer {
   @PrimaryGeneratedColumn() id: number;
   @Column({ unique: true }) phone: string;
-  @Column() adresse: string;
+  @Column({nullable:true}) adresse: string;
   @Column({ default: false }) isPhoneVeirified: boolean;
   @Column({ nullable: true }) displayName: string;
   @Column({ default: 0 }) laltitude: number;

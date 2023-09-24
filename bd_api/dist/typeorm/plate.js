@@ -82,7 +82,7 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Plate.prototype, "sunday", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'cooking_time' }),
+    (0, typeorm_1.Column)({ name: 'cooking_time', nullable: true }),
     __metadata("design:type", Number)
 ], Plate.prototype, "cookingTime", void 0);
 __decorate([

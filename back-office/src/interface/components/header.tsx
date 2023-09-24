@@ -61,16 +61,16 @@ export const Header: FC<{
 
             <div className="grow flex items-center gap-x-3">
               
-                <Img
+             { user?.company &&  <Img
                   className="h-8  md:h-10 rounded-md"
-                  hasImg={user!.company!.profile!.size! > 0}
+                  hasImg={user?.company?.profile?.size > 0}
                   imgId={
                     user!.company!.id === 1
                       ? user?.restaurant?.profile!.id ??
                         user?.company!.profile?.id
                       : user?.company!.profile?.id
                   }
-                />
+                />}
               
               <span className="text-indigo-600 text-xl font-bold">
                 {user?.company?.id == 1

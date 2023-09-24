@@ -16,7 +16,7 @@ let OrderModule = class OrderModule {
 };
 OrderModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([typeorm_2.Order])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([typeorm_2.Order, typeorm_2.OrderPlate])],
         controllers: [order_controller_1.OrderController],
         providers: [order_service_1.OrderService],
     })

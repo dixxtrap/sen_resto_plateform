@@ -12,7 +12,7 @@ import { Contact } from './contact';
 
 @Entity()
 export class CompanyContact extends Contact {
-  @Column('int')
+  @Column('int',{nullable:true})
   companyId: number;
   @ManyToOne(() => Company)
   company: Company;

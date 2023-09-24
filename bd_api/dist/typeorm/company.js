@@ -32,11 +32,11 @@ __decorate([
     __metadata("design:type", String)
 ], Company.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { default: '' }),
+    (0, typeorm_1.Column)('varchar', { nullable: true }),
     __metadata("design:type", String)
 ], Company.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar'),
+    (0, typeorm_1.Column)('varchar', { nullable: true }),
     __metadata("design:type", String)
 ], Company.prototype, "address", void 0);
 __decorate([

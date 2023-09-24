@@ -30,7 +30,7 @@ export class PaymentTypeHistory {
   })
   @JoinColumn()
   paymentType: PaymentType;
-  @Column()
+  @Column({ nullable: true })
   paymentTypeId: number;
   @Column('double', { default: 0 })
   fees: number;
@@ -38,7 +38,7 @@ export class PaymentTypeHistory {
   feesInvert: number;
   @Column('bool', { default: false })
   isActive: boolean;
-  @Column('varchar', { length: 250 })
+  @Column('varchar', { length: 250, nullable: true })
   description: string;
   @CreateDateColumn()
   createdAt: Date;

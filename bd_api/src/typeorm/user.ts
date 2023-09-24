@@ -26,7 +26,7 @@ export class User {
   firstname: string;
   @Column('varchar')
   lastname: string;
-  @Column('')
+  @Column()
   email: string;
   @Column('varchar')
   pin: string;
@@ -55,17 +55,17 @@ export class User {
   @JoinTable()
   permission: Permission[];
 
-  @Column({ type: 'varchar', length: 40 })
+  @Column({ type: 'varchar', length: 40, default: '' })
   address: string;
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 20, default: 'SN' })
   country: string;
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 20, default: 'Dakar' })
   city: string;
   @Column({ type: 'datetime', nullable: true })
   birthday: Date;
   @Column({ type: 'varchar', length: 30 })
   phone: string;
-  @Column('bigint')
+  @Column('bigint', { nullable: true })
   roleId: number;
   @ManyToOne(() => Role, (role) => role.user)
   role: Role;

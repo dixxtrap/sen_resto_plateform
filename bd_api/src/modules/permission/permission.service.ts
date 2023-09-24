@@ -21,8 +21,8 @@ export class PermissionService implements OnModuleInit {
       process.env.API_KEY,
     );
     try {
-      //  this.onInitRole();
-      //  this.onInit();
+        // this.onInitRole();
+        // this.onInit();
     } catch (e) {}
   }
   async onInit() {

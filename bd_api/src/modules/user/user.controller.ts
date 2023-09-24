@@ -40,7 +40,7 @@ export class UserController implements OnModuleInit {
     admin.phone = SUPER_ADMIN_PHONE;
     admin.roleId = 1;
     try {
-    // await this.create(admin);
+    //  await this.create(admin);
     } catch (error) {
       console.log(error)
     }

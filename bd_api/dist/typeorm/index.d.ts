@@ -21,4 +21,4 @@ import { OrderPlate } from './order_plate';
 import { PlateHistory } from './plate_amount';
 import { PaymentTypeHistory } from './payment_type_history';
 export { Company, Role, Restaurant, Permission, User, PermissionUser, PermissionRole, Plate, RestaurantContact, Customer, CompanyContact, Contact, PaymentType, PaymentTypeHistory, Payment, Order, FileDocument, PlateFile, TagPlate, Tag, OrderPlate, PlateHistory, };
-export declare const entities: (typeof Role | typeof User | typeof Permission | typeof PermissionUser | typeof PermissionRole | typeof RestaurantContact | typeof Customer | typeof CompanyContact | typeof Payment | typeof Order | typeof FileDocument | typeof PlateFile | typeof TagPlate | typeof Tag | typeof OrderPlate | typeof PlateHistory)[];
+export declare const entities: (typeof FileDocument | typeof RestaurantContact | typeof User | typeof Permission | typeof Role | typeof PermissionUser | typeof PermissionRole | typeof Tag | typeof PlateFile | typeof CompanyContact | typeof Order | typeof Customer | typeof PlateHistory | typeof Payment | typeof TagPlate | typeof OrderPlate)[];

@@ -56,7 +56,7 @@ __decorate([
     __metadata("design:type", Boolean)
 ], PaymentType.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { length: 250 }),
+    (0, typeorm_1.Column)('varchar', { length: 250, nullable: true }),
     __metadata("design:type", String)
 ], PaymentType.prototype, "description", void 0);
 __decorate([

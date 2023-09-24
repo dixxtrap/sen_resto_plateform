@@ -36,23 +36,23 @@ __decorate([
     __metadata("design:type", Number)
 ], Restaurant.prototype, "companyId", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar'),
+    (0, typeorm_1.Column)('varchar', { nullable: true }),
     __metadata("design:type", String)
 ], Restaurant.prototype, "address", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { length: 100, default: 'Dakar' }),
+    (0, typeorm_1.Column)('varchar', { length: 100, nullable: true }),
     __metadata("design:type", String)
 ], Restaurant.prototype, "city", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { length: 100, default: 'Senegal' }),
+    (0, typeorm_1.Column)('varchar', { length: 100, nullable: true }),
     __metadata("design:type", String)
 ], Restaurant.prototype, "country", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { length: 20 }),
+    (0, typeorm_1.Column)('varchar', { length: 20, nullable: true }),
     __metadata("design:type", String)
 ], Restaurant.prototype, "postal_code", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { length: 20 }),
+    (0, typeorm_1.Column)('varchar', { length: 20, nullable: true }),
     __metadata("design:type", String)
 ], Restaurant.prototype, "phone", void 0);
 __decorate([

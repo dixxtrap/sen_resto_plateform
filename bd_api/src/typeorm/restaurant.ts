@@ -27,15 +27,15 @@ export class Restaurant {
   email: string;
   @Column('int', { nullable: true })
   companyId: number;
-  @Column('varchar')
+  @Column('varchar', { nullable: true })
   address: string;
-  @Column('varchar', { length: 100, default: 'Dakar' })
+  @Column('varchar', { length: 100, nullable: true })
   city: string;
-  @Column('varchar', { length: 100, default: 'Senegal' })
+  @Column('varchar', { length: 100, nullable: true })
   country: string;
-  @Column('varchar', { length: 20 })
+  @Column('varchar', { length: 20, nullable: true })
   postal_code: string;
-  @Column('varchar', { length: 20 })
+  @Column('varchar', { length: 20, nullable: true })
   phone: string;
   @CreateDateColumn()
   createdAt: Date;

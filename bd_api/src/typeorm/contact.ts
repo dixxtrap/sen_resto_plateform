@@ -18,7 +18,7 @@ export class Contact {
   email: string;
   @Column('varchar', { length: 20 })
   telephhone: string;
-  @Column('varchar', { length: 20 })
+  @Column('varchar', { length: 20, nullable: true })
   adress: string;
   @CreateDateColumn()
   createdAt: Date;

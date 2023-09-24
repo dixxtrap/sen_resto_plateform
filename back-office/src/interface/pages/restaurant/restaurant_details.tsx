@@ -2,13 +2,16 @@ import { useGetRestaurantByIdQuery } from "../../../core/features/restaurant.sli
 import { useParams } from "react-router-dom";
 import { Img } from "../../components/image_updatable";
 import { Title } from "../../components/title";
+import { Alert } from "../../components/alert_success";
 
 export const RestaurantDetails = () => {
   const { id } = useParams();
-  const { data: restaurant } = useGetRestaurantByIdQuery(parseInt(id!));
+  const { data: restaurant , isLoading, isSuccess} = useGetRestaurantByIdQuery(parseInt(id!));
   return (
     <div>
-      <div className="flex gap-x-3 shrink-0 items-center">
+      {<Alert type="loading" isOpen={ isLoading} />}
+      {isSuccess && restaurant && !isLoading && <>
+        <div className="flex gap-x-3 shrink-0 items-center">
         <Img
           className="h-8  md:h-20 rounded-md"
           hasImg={
@@ -105,7 +108,7 @@ export const RestaurantDetails = () => {
            </dd>
          </div> */}
         </dl>
-      </div>
+      </div></>}
     </div>
   );
 };

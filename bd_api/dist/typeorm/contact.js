@@ -34,7 +34,7 @@ __decorate([
     __metadata("design:type", String)
 ], Contact.prototype, "telephhone", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { length: 20 }),
+    (0, typeorm_1.Column)('varchar', { length: 20, nullable: true }),
     __metadata("design:type", String)
 ], Contact.prototype, "adress", void 0);
 __decorate([

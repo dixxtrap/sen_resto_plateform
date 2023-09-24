@@ -11,7 +11,7 @@ export class Permission {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar')
+  @Column('varchar',)
   sousModule: string;
   @Column('enum', { enum: ['CREATE', 'READ', 'UPDATE', 'DELETE'] })
   type: string;

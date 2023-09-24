@@ -25,9 +25,9 @@ export class Company {
   short_name: string;
   @Column('varchar', { length: 30 })
   email: string;
-  @Column('varchar', { default: '' })
+  @Column('varchar', {nullable:true})
   description: string;
-  @Column('varchar')
+  @Column('varchar',{nullable:true})
   address: string;
   @Column('varchar', { length: 100, default: 'Dakar' })
   city: string;

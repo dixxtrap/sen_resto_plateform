@@ -24,7 +24,7 @@ export class Payment {
     enum: ['success', 'refunded', 'pending', 'initiate', 'failled'],
   })
   status: string;
-  @Column()
+  @Column({ nullable: true })
   extenalPaymentId: string;
   @CreateDateColumn()
   createdAt: Date;

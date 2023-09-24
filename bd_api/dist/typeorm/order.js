@@ -14,6 +14,8 @@ const typeorm_1 = require("typeorm");
 const _1 = require("./");
 var OrderStatus;
 (function (OrderStatus) {
+    OrderStatus["Empty"] = "empty";
+    OrderStatus["Active"] = "active";
     OrderStatus["Preparing"] = "preparing";
     OrderStatus["ReadyForDelivery"] = "ready_for_delivery";
     OrderStatus["OutForDelivery"] = "out_for_delivery";
@@ -32,9 +34,29 @@ __decorate([
     __metadata("design:type", Number)
 ], Order.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => _1.Customer),
+    (0, typeorm_1.ManyToMany)(() => _1.Customer, {
+        cascade: true,
+        nullable: true,
+        onUpdate: 'NO ACTION',
+    }),
     __metadata("design:type", _1.Customer)
-], Order.prototype, "costumer", void 0);
+], Order.prototype, "customer", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: null }),
+    __metadata("design:type", Number)
+], Order.prototype, "customerId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToMany)(() => _1.Restaurant, {
+        cascade: true,
+        nullable: true,
+        onUpdate: 'NO ACTION',
+    }),
+    __metadata("design:type", _1.Restaurant)
+], Order.prototype, "restaurant", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, default: null }),
+    __metadata("design:type", Number)
+], Order.prototype, "restaurantId", void 0);
 __decorate([
     (0, typeorm_1.Column)('datetime'),
     __metadata("design:type", Date)
@@ -43,6 +65,7 @@ __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
         enum: OrderStatus,
+        default: OrderStatus.Empty,
     }),
     __metadata("design:type", String)
 ], Order.prototype, "status", void 0);
@@ -51,7 +74,6 @@ __decorate([
         cascade: true,
         onUpdate: 'NO ACTION',
         onDelete: 'NO ACTION',
-        eager: true,
     }),
     (0, typeorm_1.Column)({ nullable: true, default: null }),
     __metadata("design:type", Number)
@@ -62,11 +84,11 @@ __decorate([
     __metadata("design:type", _1.PaymentTypeHistory)
 ], Order.prototype, "paymentTypeHistory", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Order.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Order.prototype, "message", void 0);
 __decorate([
@@ -74,7 +96,6 @@ __decorate([
         cascade: true,
         onUpdate: 'NO ACTION',
         onDelete: 'NO ACTION',
-        eager: true,
     }),
     (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
