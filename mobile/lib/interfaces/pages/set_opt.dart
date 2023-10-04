@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/cores/gateway.dart';
 import 'package:mobile/cores/model/customer.dart';
-import 'package:mobile/cores/providers/gateway.provider.dart';
 import 'package:mobile/interfaces/component/custom_input.dart';
 import 'package:mobile/interfaces/utils/assets_svg.dart';
 import 'package:mobile/interfaces/utils/constant.dart';
-import 'package:mobile/interfaces/utils/kprint.dart';
 import 'package:mobile/interfaces/utils/move_focus.dart';
 import 'package:mobile/interfaces/utils/svg_icon.dart';
 import 'package:mobile/session.dart';

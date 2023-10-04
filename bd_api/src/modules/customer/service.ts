@@ -29,6 +29,9 @@ export class CustomerService {
     return await this.repos.update({ id }, { ...item });
   }
   async post(item: CustomerDto) {
+    console.log('---------------------create customer--------------------');
+    const customer = await this.repos.findOneBy({ phone: item.phone });
+    if (customer) return customer;
     return await this.repos.save(this.repos.create({ ...item }));
   }
 }

@@ -19,13 +19,17 @@ class _SetPhoneState extends State<SetPhone> {
   final _phoneCtr = TextEditingController();
   Customer? customer;
   _onSubmit() async {
-    try {
-      customer = await Gateway.getUser(_phoneCtr.text);
-      kprint(customer!.phone!);
-      Session.refreshCustomer(customer!);
+    kprint("onSubmit");
+    await Gateway.getUser(_phoneCtr.text).then((value) {
+      kprint(value.displayName);
+      kprint(value!.phone!);
+      Session.refreshCustomer(value!);
       Session.setStateOfKyc(StateOfKyc.initiate);
       Navigator.pushReplacementNamed(context, "set_otp");
-    } catch (e) {}
+    }).onError((error, stackTrace) {
+      kprint(error);
+      kprint(stackTrace);
+    });
   }
 
   @override

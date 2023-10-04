@@ -2,15 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-td,th{
-        @apply text-left py-2
+td,
+th {
+  @apply text-left py-2 whitespace-nowrap   text-sm text-gray-500;
 }
-.bgInput{
-        @apply bg-slate-100/60;
+.bgInput {
+  @apply bg-slate-100/60;
 }
-.switchBase{
-        @apply flex bgInput p-2 ring-1 ring-gray-300 ring-inset rounded-md gap-x-3 justify-between;
+.switchBase {
+  @apply flex bgInput p-2 ring-1 ring-gray-300 ring-inset rounded-md gap-x-3 justify-between;
 }
-.input{
-  @apply     block w-full rounded-md  border-0 py-1.5   px-2  bg-slate-100/40 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-[1.0px] focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6
+.input {
+  @apply block w-full rounded-md  border-0 py-1.5   px-2  bg-slate-100/40 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-[1.0px] focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
+}
+.last_td {
+  @apply text-secondary-600  font-semibold px-2 hover:text-secondary-900;
+}
+.last_td_container{
+        @apply relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0;
+}
+.button{
+  @apply rounded-sm font-medium  py-2 px-3
+}
+.button.primary{
+  @apply bg-indigo-500 text-white   hover:bg-indigo-500/90 hover:shadow-md duration-150
 }

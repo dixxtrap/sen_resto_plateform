@@ -5,7 +5,7 @@ import { Request } from 'express';
 export declare class PlateController {
     private service;
     constructor(service: PlateService);
-    getS(): Promise<import("../../typeorm").Plate[]>;
+    getS(req: Request): Promise<import("../../typeorm").Plate[]>;
     get(id: number): Promise<import("../../typeorm").Plate>;
     getByRestaurant(id: number): Promise<import("../../typeorm").Plate[]>;
     create(item: PlateDto, req: Request): Promise<{

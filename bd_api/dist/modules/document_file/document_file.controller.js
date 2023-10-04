@@ -32,7 +32,6 @@ let DocumentController = class DocumentController {
         const file = await this.doc.findOneBy({
             id: id,
         });
-        console.log('path:=================', file);
         const filePath = (0, path_1.join)(__dirname, '..', '..', '..', file.path);
         return res.sendFile(filePath);
     }
@@ -72,7 +71,6 @@ __decorate([
             },
             filename: (req, file, callback) => {
                 console.log('------------------destination file name-------------------');
-                console.log(req.body);
                 const randomName = Array(32)
                     .fill(null)
                     .map(() => Math.round(Math.random() * 16).toString(16))

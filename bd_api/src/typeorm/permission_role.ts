@@ -1,4 +1,13 @@
-import { Entity, Index, JoinColumn, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  CreateDateColumn,
+  PrimaryColumn,
+  UpdateDateColumn,
+  Column,
+} from 'typeorm';
 import { Permission, Role } from './';
 
 @Entity('role_permission_permission', { orderBy: { permissionId: 'ASC' } })
@@ -7,8 +16,10 @@ export class PermissionRole {
   permissionId: number;
   @PrimaryColumn()
   roleId: number;
-  @JoinColumn()
-  permission: Permission;
-  @JoinColumn()
-  role: Role;
+  @Column('bool', { default: true })
+  isActive: boolean;
+  @CreateDateColumn()
+  createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

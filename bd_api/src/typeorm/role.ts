@@ -10,6 +10,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Permission, User } from './';
 import { UppercaseTransformer } from 'src/transformer/uppercase.transformer';
@@ -29,6 +30,7 @@ export class Role {
   @Column('varchar', { length: 30 })
   name: string;
   @OneToMany(() => User, (u) => u.role)
+  @JoinColumn()
   user: User[];
   @ManyToMany(() => Permission, {
     cascade: true,
@@ -43,8 +45,11 @@ export class Role {
   @UpdateDateColumn()
   updatedAt: Date;
   permissionLenght: number;
+  userLenght: number;
   @AfterLoad()
   private async PermissionLenght() {
+    console.log(this);
     this.permissionLenght = this.permission.length;
+    this.userLenght = this.user?.length ?? 0;
   }
 }

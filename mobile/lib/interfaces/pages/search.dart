@@ -37,6 +37,9 @@ class _SearchState extends ConsumerState<Search> {
       body: SingleChildScrollView(
           child: Column(
         children: [
+          const SizedBox(
+            height: kpadding / 2,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,11 +93,6 @@ class _SearchState extends ConsumerState<Search> {
                     .toList(),
               ),
             ),
-          SvgIcon(
-            AssetSvg.searchFill,
-            size: 100,
-            color: getTheme(context).disabledColor,
-          ),
           if (provider?.plates != null)
             Table(
               children: List.generate(
@@ -105,6 +103,7 @@ class _SearchState extends ConsumerState<Search> {
                           (j) => TableCell(
                               child: provider!.plates!.length > i * 2 + j
                                   ? PlateItem2(
+                                    
                                       plate: provider!.plates![i * 2 + j])
                                   : SizedBox())))),
             )

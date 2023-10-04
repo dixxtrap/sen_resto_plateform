@@ -72,30 +72,14 @@ class PlatViewItem extends StatelessWidget {
                       SizedBox(
                         width: kpadding,
                       ),
-                      Text(
-                        "${plat.cookingTime!} min",
-                        style: getTextTheme(context)
-                            .bodySmall!
-                            .copyWith(fontSize: 12),
-                      ),
-                      const SvgIcon(AssetSvg.timer, size: 15),
                       Spacer(),
                       SizedBox(
                         height: kpadding * 1.4,
-                        child: FilledButton.tonal(
-                            style: FilledButton.styleFrom(
-                                shape: roundedButton,
-                                minimumSize: Size.zero,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: kpadding / 2,
-                                    vertical: kpadding / 8)),
-                            onPressed: () {},
-                            child: Text(
-                              "${plat.price}  F cfa",
-                              style: getTextTheme(context)
-                                  .bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.bold),
-                            )),
+                        child: Text(
+                          "${plat.price}  F cfa",
+                          style: getTextTheme(context).bodyMedium!.copyWith(
+                              fontWeight: FontWeight.bold, color: kprimary),
+                        ),
                       )
                     ],
                   ),

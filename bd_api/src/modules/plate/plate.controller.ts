@@ -23,9 +23,11 @@ import { Request } from 'express';
 export class PlateController {
   constructor(private service: PlateService) {}
   @Get()
+  @UseGuards(LocalAuthGuard)
+  @ApiBearerAuth()
   @ApiResponse({ type: [GetPalteDto], status: 200 })
-  getS() {
-    return this.service.getS();
+  getS(@Req() req: Request) {
+    return this.service.getS(req['user']);
   }
   @Get('/:id')
   get(@Param('id') id: number) {

@@ -1,20 +1,23 @@
 import "dart:convert";
 
 import "package:http/http.dart" as http;
+import "package:mobile/cores/env.dart";
 import "package:mobile/cores/model/company.dart";
 import "package:mobile/cores/model/customer.dart";
 import "package:mobile/cores/model/plat.dart";
 import "package:mobile/cores/model/restaurant.dart";
 import "package:mobile/cores/model/tag.dart";
 import "package:mobile/interfaces/utils/kprint.dart";
+import "package:mobile/session.dart";
 
 class Gateway {
-  static final String baseUrl = "http://192.168.43.149:3001/v1";
+  static const String baseUrl = Env.baseUrl;
+  static var header = {"Authorization": "Bearer ${Session.token}"};
 // Methode Get
   static Future<Customer> getUser(String phone) async {
-    kprint('-------------------------login-----------------');
+    kprint('-------------------------getLogin-----------------');
     http.Response response =
-        await http.get(Uri.parse("$baseUrl/customer/token/$phone"));
+        await http.get(Uri.parse("$baseUrl/customer/token/772371668"));
     kprint(response.body);
     if ([200, 201].contains(response.statusCode)) {
       return Customer.fromJson(jsonDecode(response.body));
@@ -24,9 +27,10 @@ class Gateway {
   }
 
   static Future<List<Restaurant>> getRestos() async {
-    kprint('-------------------------login-----------------');
-    http.Response response =
-        await http.get(Uri.parse("$baseUrl/restaurant/particulier"));
+    kprint('-------------------------get Restaurant-----------------');
+    http.Response response = await http.get(
+        Uri.parse("$baseUrl/restaurant/particulier"),
+        headers: {"Authoriszation": "Bearer ${Session.token}"});
     kprint(response.body);
     if ([200, 201].contains(response.statusCode)) {
       return (jsonDecode(response.body) as List)
@@ -38,8 +42,9 @@ class Gateway {
   }
 
   static Future<List<Company>> getCompany() async {
-    kprint('-------------------------login-----------------');
-    http.Response response = await http.get(Uri.parse("$baseUrl/company"));
+    kprint('-------------------------Company get-----------------');
+    http.Response response =
+        await http.get(Uri.parse("$baseUrl/company"), headers: header);
     kprint(response.body);
     if ([200, 201].contains(response.statusCode)) {
       return (jsonDecode(response.body) as List)
@@ -51,8 +56,9 @@ class Gateway {
   }
 
   static Future<List<Tag>> getTag() async {
-    kprint('-------------------------login-----------------');
-    http.Response response = await http.get(Uri.parse("$baseUrl/tag"));
+    kprint('-------------------------getTag-----------------');
+    http.Response response =
+        await http.get(Uri.parse("$baseUrl/tag"), headers: header);
     kprint(response.body);
     if ([200, 201].contains(response.statusCode)) {
       return (jsonDecode(response.body) as List)
@@ -64,9 +70,9 @@ class Gateway {
   }
 
   static Future<List<Plat>> getPlatByRestaurant(int id) async {
-    kprint('-------------------------login-----------------');
-    http.Response response =
-        await http.get(Uri.parse("$baseUrl/plate/restaurant/$id"));
+    kprint('-------------------------get restaurant-----------------');
+    http.Response response = await http
+        .get(Uri.parse("$baseUrl/plate/restaurant/$id"), headers: header);
     kprint(response.body);
     if ([200, 201].contains(response.statusCode)) {
       return (jsonDecode(response.body) as List)
@@ -78,8 +84,10 @@ class Gateway {
   }
 
   static Future<List<Plat>> getPlat() async {
-    kprint('-------------------------login-----------------');
-    http.Response response = await http.get(Uri.parse("$baseUrl/plate"));
+    kprint('-------------------------plat-----------------');
+    kprint(Session.token);
+    http.Response response =
+        await http.get(Uri.parse("$baseUrl/plate"), headers: header);
     kprint(response.body);
     if ([200, 201].contains(response.statusCode)) {
       return (jsonDecode(response.body) as List)

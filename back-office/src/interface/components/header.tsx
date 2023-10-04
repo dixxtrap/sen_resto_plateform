@@ -28,25 +28,17 @@ export const Header: FC<{
       isSuccess: isDisconnecteSuccess,
     },
   ] = useSignoutMutation();
-  const {
-    data: user,
-    currentData,
-    isSuccess,
-    isError,
-    refetch,
-  } = useProfileQuery("");
+  const { data: user, isSuccess, refetch } = useProfileQuery("");
   useEffect(() => {
-    if (!user) {
-      refetch();
-    }
-  }, [refetch, user]);
+    refetch();
+  }, [refetch]);
   return (
     <>
       <Alert isOpen={isDisconnecteLoading} type="loading" />
       <Alert isOpen={isDisconnecteError} type="faillure" />
       {isDisconnecteSuccess && <Navigate to={"/"} />}
       <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-        {user && (
+        {isSuccess && (
           <>
             <button
               type="button"
@@ -60,18 +52,19 @@ export const Header: FC<{
             <div className="h-6 w-px bg-gray-900/10 " aria-hidden="true" />
 
             <div className="grow flex items-center gap-x-3">
-              
-             { user?.company &&  <Img
+              {user?.company && (
+                <Img
                   className="h-8  md:h-10 rounded-md"
-                  hasImg={user?.company?.profile?.size > 0}
+                  hasImg={user?.company?.profile?.size! > 0}
                   imgId={
                     user!.company!.id === 1
                       ? user?.restaurant?.profile!.id ??
                         user?.company!.profile?.id
                       : user?.company!.profile?.id
                   }
-                />}
-              
+                />
+              )}
+
               <span className="text-indigo-600 text-xl font-bold">
                 {user?.company?.id == 1
                   ? user.restaurant?.name ?? user?.company?.name

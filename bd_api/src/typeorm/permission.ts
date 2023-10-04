@@ -2,7 +2,8 @@ import {
   Column,
   Entity,
   Index,
-  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 @Entity()
@@ -11,10 +12,14 @@ export class Permission {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar',)
+  @Column('varchar')
   sousModule: string;
   @Column('enum', { enum: ['CREATE', 'READ', 'UPDATE', 'DELETE'] })
   type: string;
+  @CreateDateColumn()
+  createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
   @Column('bool', { default: true })
   isActive: boolean;
 }

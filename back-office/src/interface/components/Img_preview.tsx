@@ -1,6 +1,5 @@
 import { ReactNode, useState } from "react";
 
-
 import { handlePreview } from "../utils/handle_preview";
 import {
   CameraIcon,
@@ -59,6 +58,7 @@ export const ImgPreview = ({
       if (canUpdateAfter)
         setPreviewImage(img!.path ? `/v1/document/file/${img!.id}` : undefined);
       if (refresh) refresh();
+      setChanged(false);
     }
   };
 
@@ -91,12 +91,17 @@ export const ImgPreview = ({
           )
         )}
       </label>
-      <div className="flex w-full   my-2 items-center justify-around content-center ">
-       
-        { changed&& <button type="submit" className="px-2 z-50 w-14 h-7 rounded-md bg-teal-100 flex text-xs items-center   justify-center">
-            <CheckCircleIcon  className="text-teal-800 h-6 w-6 m-auto  my-auto " /><span>OK</span>
-          </button>}
-       
+      <div className="flex    my-2 items-center justify-around content-center ">
+        {changed && (
+          <button
+            type="submit"
+            className="px-2 z-50 w-14 h-7 rounded-md bg-teal-100 flex text-xs items-center   justify-center"
+          >
+            <CheckCircleIcon className="text-teal-800 h-6 w-6 m-auto  my-auto " />
+            <span>OK</span>
+          </button>
+        )}
+
         {isDelectable && (
           <button type="submit" className="p-2 z-50 w-14 h-8  text-rose-500">
             <LockClosedIcon />

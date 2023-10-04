@@ -6,6 +6,7 @@ import 'package:mobile/interfaces/component/custom_box.dart';
 import 'package:mobile/interfaces/component/resto_item.dart';
 import 'package:mobile/interfaces/component/title.dart';
 import 'package:mobile/interfaces/pages/page_with_bottom_navigator_bar.dart';
+import 'package:mobile/interfaces/pages/plat_details.dart';
 import 'package:mobile/interfaces/utils/constant.dart';
 
 class RestoDetails extends StatefulWidget {
@@ -44,31 +45,45 @@ class _RestoDetailsState extends State<RestoDetails> {
               Container(
                 margin: EdgeInsets.all(kpadding / 2),
                 padding: EdgeInsets.all(kpadding / 2),
+                width: double.maxFinite,
                 decoration: BoxDecoration(
                     color: kprimary,
                     borderRadius: BorderRadius.circular(kpadding / 4)),
-                child: Row(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ImageItem(id: widget.resto.profile!.id!),
                     SizedBox(
                       width: kpadding / 4,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Text(
+                      widget.resto.name!,
+                      style: getTextTheme(context)
+                          .headlineSmall!
+                          .copyWith(color: Colors.white),
+                    ),
+                    Wrap(
+                      spacing: 20,
                       children: [
                         Text(
-                          widget.resto.name!,
-                          style: getTextTheme(context)
-                              .headlineSmall!
-                              .copyWith(color: Colors.white),
-                        ),
-                        Text(
-                          widget.resto.company!.name!,
+                          widget.resto.email!,
                           style: getTextTheme(context)
                               .bodySmall!
                               .copyWith(color: Colors.white),
-                        )
+                        ),
+                        Text(
+                          widget.resto.phone!,
+                          style: getTextTheme(context)
+                              .bodySmall!
+                              .copyWith(color: Colors.white),
+                        ),
+                        Text(
+                          " ${widget.resto.openingTime!.substring(0, 5)}/${widget.resto.closingTime!.substring(0, 5)}",
+                          style: getTextTheme(context)
+                              .bodySmall!
+                              .copyWith(color: Colors.white),
+                        ),
                       ],
                     )
                   ],
@@ -149,44 +164,47 @@ class PlateItem2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(kpadding / 2),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ImageItem(
-              id: plate.file![0].photoId!,
-              width: double.maxFinite,
-              height: getWidth(context) / 2.5),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  plate.name!,
-                  style: getTextTheme(context)
-                      .bodyMedium!
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 20,
-                  child: FilledButton.tonal(
-                      style: FilledButton.styleFrom(
-                          minimumSize: Size.zero,
-                          maximumSize: Size(70, 20),
-                          shape: roundedButton,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: kpadding / 4)),
-                      onPressed: () {},
-                      child: Text(
-                        "${plate.price}F cfa",
-                        style: getTextTheme(context).bodySmall,
-                      )),
-                )
-              ],
+      child: InkWell(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => PlateDetails(
+              plate: plate,
             ),
-          )
-        ],
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ImageItem(
+                id: plate.file![0].photoId!,
+                width: double.maxFinite,
+                height: getWidth(context) / 2.5),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Wrap(
+                spacing: 10,
+                children: [
+                  Text(
+                    plate.name!,
+                    style: getTextTheme(context)
+                        .bodySmall!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 20,
+                    child: Text(
+                      "${plate.price}F",
+                      style: getTextTheme(context).bodySmall!.copyWith(
+                          color: kprimary, fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -43,6 +43,9 @@ export const UserCreate = () => {
       
       <Input label='Adresse Mail' name='email' >
         <input id='email'  className='input'{...register("email")} />
+        </Input>
+        <Input label='Téléphone' name='phone'  >
+        <input  id='phone' className='input' {...register("phone")}/>
       </Input>
       <Input label='Adrresse' name='address'  >
         <input  id='address' className='input' {...register("address")}/>

@@ -49,11 +49,7 @@ class _InitPageState extends State<InitPage> {
 
   _onStart() {
     Session.loadData();
-    if (Session.stateOfKyc != StateOfKyc.initiate) {
-      Navigator.pushReplacementNamed(
-        context,
-        "home",
-      );
+    if (Session.stateOfKyc == StateOfKyc.initiate) {
     } else if (Session.stateOfKyc != StateOfKyc.initiate) {
       Navigator.pushReplacementNamed(
         context,
@@ -68,7 +64,7 @@ class _InitPageState extends State<InitPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: kpadding * 5,
             ),
             Text(
@@ -80,7 +76,7 @@ class _InitPageState extends State<InitPage> {
                   color: kprimary,
                   fontSize: 20),
             ),
-            SizedBox(
+            const SizedBox(
               height: kpadding * 3,
             ),
             SizedBox(

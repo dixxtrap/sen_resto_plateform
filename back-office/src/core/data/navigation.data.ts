@@ -14,6 +14,7 @@ import {
   LinkIcon,
   ShieldCheckIcon,
   UsersIcon,
+  WalletIcon,
 } from "@heroicons/react/24/outline";
 
 export const navigationData = [
@@ -25,6 +26,7 @@ export const navigationData = [
   { name: "Plats", href: "/plate", icon: CakeIcon, current: false },
   { name: "Commandes", href: "/order", icon: ClipboardDocumentCheckIcon, current: false },
   { name: "Payement", href: "/payment_type", icon: BanknotesIcon, current: false },
+  { name: "Facture", href: "/facture", icon: WalletIcon, current: false },
   // { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
   // { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
   { name: "Permission", href: "/permission", icon: ShieldCheckIcon, current: false },

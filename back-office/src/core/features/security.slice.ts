@@ -3,8 +3,8 @@ import { SignInDto } from "../models/login.dto";
 import { User } from "../models/user.dto";
 
 export const securityApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "v1" }),
-  reducerPath: "security",
+  baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
+  reducerPath: "securityApi",
 
   tagTypes: ["security"],
   endpoints: (builder) => ({

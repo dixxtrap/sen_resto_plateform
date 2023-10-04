@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import 'package:mobile/interfaces/pages/login.dart';
 import 'package:mobile/interfaces/pages/search.dart';
 import 'package:mobile/interfaces/pages/set_opt.dart';
 import 'package:mobile/interfaces/pages/set_phone.dart';
@@ -15,7 +16,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -56,6 +56,7 @@ class MyApp extends StatelessWidget {
         "search": (context) => const Search(),
         "restaurant": (context) => Restaurant(),
         "bag": (context) => Bag(),
+        "login": (context) => Login(),
         "profile": (context) => Setting(),
         "set_phone": (context) => SetPhone(),
         "set_otp": (context) => SetOtp()

@@ -52,14 +52,13 @@ export const PaymentTypeList = () => {
             <td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
               <Link
                 to={`/payment_type/details/${e.id}`}
-                className="text-indigo-600 px-2 hover:text-indigo-900"
-              >
+                className="last_td">
+              
                 Details
               </Link>
               <Link
                 to={`/payment_type/edit/${e.id}`}
-                className="text-indigo-600 px-2 hover:text-indigo-900"
-              >
+               className="last_td">
                 Modifier
               </Link>
             </td>

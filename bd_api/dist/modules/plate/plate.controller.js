@@ -25,8 +25,8 @@ let PlateController = class PlateController {
     constructor(service) {
         this.service = service;
     }
-    getS() {
-        return this.service.getS();
+    getS(req) {
+        return this.service.getS(req['user']);
     }
     get(id) {
         return this.service.get(id);
@@ -49,9 +49,12 @@ let PlateController = class PlateController {
 };
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(local_auth_guard_1.LocalAuthGuard),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, swagger_1.ApiResponse)({ type: [plate_dto_1.GetPalteDto], status: 200 }),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], PlateController.prototype, "getS", null);
 __decorate([

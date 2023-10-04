@@ -1,5 +1,6 @@
 import { HttpException, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { exceptionCode } from 'src/data/exception_code';
 import { permissions } from 'src/data/permission.data';
 import { roleData } from 'src/data/role.data';
 import { CompanyDto } from 'src/dto/company.dto';
@@ -21,8 +22,8 @@ export class PermissionService implements OnModuleInit {
       process.env.API_KEY,
     );
     try {
-        // this.onInitRole();
-        // this.onInit();
+      //  this.onInitRole();
+      //  this.onInit();
     } catch (e) {}
   }
   async onInit() {
@@ -130,18 +131,20 @@ export class PermissionService implements OnModuleInit {
   }
 
   //TODO: PERMISSION
-  async createPermission(permisionTdo: PermissionDto): Promise<Permission> {
-    try {
-      const permissionDoc = this.permissionRepos.create(permisionTdo);
-      const savedPermission = await this.permissionRepos.save(permissionDoc);
-      return savedPermission;
-    } catch (error) {
-      // console.log(error);
-    }
+  async createPermission(permisionTdo: PermissionDto) {
+    Promise.all(
+      ['CREATE', 'READ', 'UPDATE', 'DELETE'].map((e) => {
+        this.permissionRepos.save(
+          this.permissionRepos.create({ ...permisionTdo, type: e }),
+        );
+      }),
+    )
+      .then((_e) => exceptionCode.SUCCEEDED)
+      .catch((_e) => new HttpException(exceptionCode.FAILLURE, 404));
   }
 
   async getPermissions(): Promise<Permission[]> {
-    const permissions = await this.permissionRepos.find();
+    const permissions = await this.permissionRepos.find({});
     return permissions;
   }
 }

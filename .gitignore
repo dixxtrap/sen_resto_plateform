@@ -1,3 +1,4 @@
 ./back-office/node_modules
 ./bd_api/node_modules
+./bd_api/src/mysql.config.ts
 ./client/node_modules

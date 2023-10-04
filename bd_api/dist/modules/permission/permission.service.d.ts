@@ -15,6 +15,6 @@ export declare class PermissionService implements OnModuleInit {
     getRoleUser(search: string): Promise<Role[]>;
     getRolePermission(id: number): Promise<Role>;
     onInitRole(): Promise<void>;
-    createPermission(permisionTdo: PermissionDto): Promise<Permission>;
+    createPermission(permisionTdo: PermissionDto): Promise<void>;
     getPermissions(): Promise<Permission[]>;
 }

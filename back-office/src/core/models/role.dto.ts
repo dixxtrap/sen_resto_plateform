@@ -6,25 +6,26 @@ export class RoleDto {
   scope!: string;
   createdAt!: string;
   isActive?: boolean;
-  updatedAt!:string;
-permissionRole!:PermissionRoleDto[];
-user!:User[]
+  updatedAt!: string;
+  permissionLenght?: number;
+  userLenght?: number;
+  permission!: PermissionRole[];
+  user!: User[];
 }
-export class PermissionRoleDto{
-id?:number;
-createdAt?:string;
-updatedAt?:string;
-permissionId!:number
-userId!:number
-roleId!:number
-permission?:PermissionDto;
-isActive!:boolean;
-user?:User;
+export class PermissionRole {
+  id?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  sousModule!: string;
+  type!: string;
+  isActive!: boolean;
+  user?: User;
 }
-export class PermissionDto{
-  id!:number;
-  createdAt!:string;
-  updatedAt!:string;
-  sousModule!:string;
-  type!:string
+export class PermissionDto {
+  id!: number;
+  createdAt!: string;
+  updatedAt!: string;
+  sousModule!: string;
+  isActive!: boolean;
+  type!: string;
 }

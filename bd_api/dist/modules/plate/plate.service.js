@@ -37,8 +37,15 @@ let PlateService = class PlateService {
         this.tagPlateRepos = tagPlateRepos;
         this.docRepos = docRepos;
     }
-    getS() {
-        return this.repos.find({ relations: { file: { photo: true } } });
+    async getS(req) {
+        console.log(req);
+        console.log('-----------------------------------restaurant-------------------', req.restaurantId);
+        if (req.restaurantId)
+            return await this.repos.find({
+                where: { restaurantId: req.restaurantId },
+                relations: { file: { photo: true } },
+            });
+        return (await this.repos.find({ relations: { file: { photo: true } } })).sort(() => Math.random() - 0.5);
     }
     async get(id) {
         return await this.repos.findOne({

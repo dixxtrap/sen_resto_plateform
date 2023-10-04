@@ -12,8 +12,6 @@ export class SecurityService {
   }
   async profile(req: Request) {
     const user = await this.user.getUserById(req['user'].id);
-    console.log('----------get user by id-----------------');
-    console.log(user);
     return user;
   }
 }

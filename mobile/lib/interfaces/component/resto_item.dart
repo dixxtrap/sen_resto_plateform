@@ -23,7 +23,9 @@ class RestoItem extends StatelessWidget {
           ),
         );
       },
-      child: ImageItem(id: resto.profile!.id!),
+      child: ImageItem(
+        id: resto.profile!.id!,
+      ),
     );
   }
 }
@@ -39,11 +41,13 @@ class ImageItem extends StatelessWidget {
     return Container(
       width: width,
       height: height,
+
       // margin: EdgeInsets.all(kpadding),
       decoration: BoxDecoration(
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
-                color: Colors.black12,
+                color: Colors.white54,
                 blurRadius: 10,
                 blurStyle: BlurStyle.outer)
           ],
@@ -65,8 +69,8 @@ class ImageItem extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                  getTheme(context).cardColor.withOpacity(.4),
-                  getTheme(context).primaryColor.withOpacity(.17),
+                  getTheme(context).cardColor.withOpacity(.08),
+                  getTheme(context).primaryColor.withOpacity(.03),
                 ])),
             child: Image.network("${Env.fileBase}/$id", fit: BoxFit.contain),
           ),

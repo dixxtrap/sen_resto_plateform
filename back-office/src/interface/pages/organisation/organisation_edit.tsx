@@ -20,6 +20,7 @@ export const OrganisationEdit = () => {
     data: old,
     isLoading: isOldLoading,
     isSuccess: isOldSuccess,
+    refetch, 
   } = useGetCompanyByIdQuery(id);
   const [update, { isError, isSuccess, isLoading }] =
     useUpdateCompanyByIdMutation();
@@ -54,17 +55,17 @@ export const OrganisationEdit = () => {
     <Alert isOpen={isOldLoading} type="loading" title="Recuperation" />
   ) : (
     <div>
-      <div className="flex flex-col divide-y gap-y-2 ">
+      <div className="flex flex-col justify-start divide-y gap-y-2 ">
         <Title title="Compagnie" />
-        <div className="flex bg-pink-400 mr-auto">
-          <ImgPreview
-            img={old!.profile!}
-              name={"profile"}
-              icon={<CameraIcon />}
-              
-            className="h-20 md:h-100 md:w-100  bg-indigo-100 "
-          />
-        </div>
+          <div>
+               <ImgPreview
+          img={old!.profile!}
+          name={"profile"}
+          refresh={()=>refetch()}
+          
+          className="h-20 md:h-36  mr-auto  self-start place-self-start "
+        />
+     </div>
 
         <CustomForm
           isLoading={isLoading}

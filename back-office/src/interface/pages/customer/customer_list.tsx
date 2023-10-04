@@ -31,10 +31,10 @@ export const CustomerList = () => {
                            
                           </td>
                           <td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                            <Link to={`/customer/details/${customer.id}`} className="text-indigo-600 px-2 hover:text-indigo-900">
+                            <Link to={`/customer/details/${customer.id}`} className="last_td">
                               Details<span className="sr-only"> {customer.phone}</span>
                             </Link>
-                            <Link to={`/customer/edit/${customer.id}`} className="text-indigo-600 px-2 hover:text-indigo-900">
+                            <Link to={`/customer/edit/${customer.id}`} className="last_td">
                               Modifier<span className="sr-only"> {customer.phone}</span>
                             </Link>
                           </td>

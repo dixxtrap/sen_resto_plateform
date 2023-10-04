@@ -1,4 +1,3 @@
-import React from "react";
 import { CustomForm } from "../../components/custom_form";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

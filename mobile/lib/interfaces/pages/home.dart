@@ -38,7 +38,20 @@ class _HomeState extends ConsumerState<Home> {
       currentIndex: 0,
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Bienvenu !",
+                textAlign: TextAlign.left,
+                textScaleFactor: 1.3,
+                style: getTextTheme(context).bodyLarge!.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+              ),
+            ),
             const SizedBox(
               height: kpadding,
             ),

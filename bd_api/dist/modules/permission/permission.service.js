@@ -13,7 +13,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PermissionService = void 0;
+const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const exception_code_1 = require("../../data/exception_code");
 const permission_data_1 = require("../../data/permission.data");
 const role_data_1 = require("../../data/role.data");
 const typeorm_2 = require("../../typeorm");
@@ -94,16 +96,14 @@ let PermissionService = class PermissionService {
         }));
     }
     async createPermission(permisionTdo) {
-        try {
-            const permissionDoc = this.permissionRepos.create(permisionTdo);
-            const savedPermission = await this.permissionRepos.save(permissionDoc);
-            return savedPermission;
-        }
-        catch (error) {
-        }
+        Promise.all(['CREATE', 'READ', 'UPDATE', 'DELETE'].map((e) => {
+            this.permissionRepos.save(this.permissionRepos.create(Object.assign(Object.assign({}, permisionTdo), { type: e })));
+        }))
+            .then((_e) => exception_code_1.exceptionCode.SUCCEEDED)
+            .catch((_e) => new common_1.HttpException(exception_code_1.exceptionCode.FAILLURE, 404));
     }
     async getPermissions() {
-        const permissions = await this.permissionRepos.find();
+        const permissions = await this.permissionRepos.find({});
         return permissions;
     }
 };

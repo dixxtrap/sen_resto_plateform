@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PermissionRole = void 0;
 const typeorm_1 = require("typeorm");
-const _1 = require("./");
 let PermissionRole = class PermissionRole {
 };
 __decorate([
@@ -23,13 +22,17 @@ __decorate([
     __metadata("design:type", Number)
 ], PermissionRole.prototype, "roleId", void 0);
 __decorate([
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", _1.Permission)
-], PermissionRole.prototype, "permission", void 0);
+    (0, typeorm_1.Column)('bool', { default: true }),
+    __metadata("design:type", Boolean)
+], PermissionRole.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", _1.Role)
-], PermissionRole.prototype, "role", void 0);
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], PermissionRole.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], PermissionRole.prototype, "updatedAt", void 0);
 PermissionRole = __decorate([
     (0, typeorm_1.Entity)('role_permission_permission', { orderBy: { permissionId: 'ASC' } })
 ], PermissionRole);

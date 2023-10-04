@@ -25,9 +25,9 @@ export class Company {
   short_name: string;
   @Column('varchar', { length: 30 })
   email: string;
-  @Column('varchar', {nullable:true})
+  @Column('varchar', { nullable: true })
   description: string;
-  @Column('varchar',{nullable:true})
+  @Column('varchar', { nullable: true })
   address: string;
   @Column('varchar', { length: 100, default: 'Dakar' })
   city: string;
@@ -53,7 +53,6 @@ export class Company {
     cascade: true,
     nullable: true,
     onUpdate: 'NO ACTION',
-  
   })
   @JoinColumn()
   profile: FileDocument;

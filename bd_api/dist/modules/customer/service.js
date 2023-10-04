@@ -37,6 +37,10 @@ let CustomerService = class CustomerService {
         return await this.repos.update({ id }, Object.assign({}, item));
     }
     async post(item) {
+        console.log('---------------------create customer--------------------');
+        const customer = await this.repos.findOneBy({ phone: item.phone });
+        if (customer)
+            return customer;
         return await this.repos.save(this.repos.create(Object.assign({}, item)));
     }
 };

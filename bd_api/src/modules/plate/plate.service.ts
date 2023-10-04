@@ -31,8 +31,21 @@ export class PlateService {
     private docRepos: Repository<FileDocument>,
   ) {}
 
-  getS() {
-    return this.repos.find({ relations: { file: { photo: true } } });
+  async getS(req: any) {
+    console.log(req);
+    console.log(
+      '-----------------------------------restaurant-------------------',
+      req.restaurantId,
+    );
+    if (req.restaurantId)
+      return await this.repos.find({
+        where: { restaurantId: req.restaurantId },
+        relations: { file: { photo: true } },
+      });
+
+    return (
+      await this.repos.find({ relations: { file: { photo: true } } })
+    ).sort(() => Math.random() - 0.5);
   }
   async get(id: number) {
     return await this.repos.findOne({

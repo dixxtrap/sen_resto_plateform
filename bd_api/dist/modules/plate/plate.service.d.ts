@@ -9,7 +9,7 @@ export declare class PlateService {
     private tagPlateRepos;
     private docRepos;
     constructor(repos: Repository<Plate>, reposHis: Repository<PlateHistory>, plateFileRepos: Repository<PlateFile>, tagPlateRepos: Repository<TagPlate>, docRepos: Repository<FileDocument>);
-    getS(): Promise<Plate[]>;
+    getS(req: any): Promise<Plate[]>;
     get(id: number): Promise<Plate>;
     getByRestaurant(id: number): Promise<Plate[]>;
     create(data: PlateDto, user: any): Promise<{

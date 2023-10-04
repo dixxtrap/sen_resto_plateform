@@ -15,7 +15,10 @@ const _1 = require("./");
 const uppercase_transformer_1 = require("../transformer/uppercase.transformer");
 let Role = class Role {
     async PermissionLenght() {
+        var _a, _b;
+        console.log(this);
         this.permissionLenght = this.permission.length;
+        this.userLenght = (_b = (_a = this.user) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0;
     }
 };
 __decorate([
@@ -39,6 +42,7 @@ __decorate([
 ], Role.prototype, "name", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => _1.User, (u) => u.role),
+    (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Array)
 ], Role.prototype, "user", void 0);
 __decorate([

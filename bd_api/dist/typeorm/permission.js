@@ -26,6 +26,14 @@ __decorate([
     __metadata("design:type", String)
 ], Permission.prototype, "type", void 0);
 __decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Permission.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], Permission.prototype, "updatedAt", void 0);
+__decorate([
     (0, typeorm_1.Column)('bool', { default: true }),
     __metadata("design:type", Boolean)
 ], Permission.prototype, "isActive", void 0);

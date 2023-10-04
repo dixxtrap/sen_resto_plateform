@@ -9,5 +9,6 @@ export declare class Role {
     createdAt: Date;
     updatedAt: Date;
     permissionLenght: number;
+    userLenght: number;
     private PermissionLenght;
 }

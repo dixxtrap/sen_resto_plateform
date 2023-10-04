@@ -61,8 +61,8 @@ export const Navigation: FC<{
               </Transition.Child>
 
               <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-2 ring-1 ring-white/10">
-                <div className="flex h-16 shrink-0 items-center">
-                <Logo/>
+                <div className="flex h-16 shrink-0 sticky top-0 backdrop-blur-sm items-center">
+                <Logo className="bg-gradient-to-tr to-teal-500/20 from-indigo-500/20 h-14 w-14 p-1 rounded-md"/>
 
                 </div>
                 <nav className="flex flex-1 flex-col">
@@ -101,8 +101,9 @@ export const Navigation: FC<{
 export const ShortNav = () => {
   return (
     <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-20 lg:overflow-y-auto lg:bg-gray-900 lg:pb-4">
-      <div className="flex h-16 shrink-0 items-center justify-center">
-      <Logo/>
+      <div className="flex h-16 shrink-0 items-center sticky top-0 justify-center">
+      <Logo className="bg-gradient-to-tr to-teal-500/20 backdrop-blur-sm from-indigo-500/20 h-14 w-14 p-1 rounded-md"/>
+
 
       </div>
       <nav className="mt-8">
