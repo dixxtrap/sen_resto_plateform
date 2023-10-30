@@ -1,0 +1,717 @@
+-- Adminer 4.8.1 MySQL 11.1.2-MariaDB-1:11.1.2+maria~ubu2204 dump
+
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+USE `sen_resto`;
+
+SET NAMES utf8mb4;
+
+DROP TABLE IF EXISTS `company`;
+CREATE TABLE `company` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `short_name` varchar(255) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(100) NOT NULL DEFAULT 'Dakar',
+  `country` varchar(100) NOT NULL DEFAULT 'Senegal',
+  `postal_code` varchar(20) DEFAULT NULL,
+  `phone` varchar(20) NOT NULL,
+  `laltitude` double NOT NULL DEFAULT 0,
+  `longitude` double NOT NULL DEFAULT 0,
+  `isActive` tinyint(4) NOT NULL DEFAULT 1,
+  `canPublish` tinyint(4) NOT NULL DEFAULT 1,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `profileId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_545714aade866156b16a64dd61` (`name`,`country`),
+  UNIQUE KEY `IDX_984dd74aed2fc291cd1b04e9ea` (`short_name`,`name`),
+  UNIQUE KEY `REL_5f4cd87de0c7817442134bf236` (`profileId`),
+  CONSTRAINT `FK_5f4cd87de0c7817442134bf236e` FOREIGN KEY (`profileId`) REFERENCES `file_document` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `company`;
+INSERT INTO `company` (`id`, `name`, `short_name`, `email`, `description`, `address`, `city`, `country`, `postal_code`, `phone`, `laltitude`, `longitude`, `isActive`, `canPublish`, `createdAt`, `updatedAt`, `profileId`) VALUES
+(1,	'Sen Resto',	'SR',	'SenResto2023@gmail.com',	'',	'',	'Pikine',	'Senegal',	NULL,	'772371668',	170989.78,	154267.677,	1,	1,	'2023-09-25 23:27:54.152412',	'2023-09-25 23:27:54.152412',	4),
+(2,	'Djolof Chicken',	'DC_SN',	'DjolofChicken@gmail.com',	'',	'Grand Dakar',	'Dakar',	'Senegal',	NULL,	'22177656787',	156252,	0,	1,	1,	'2023-09-25 23:28:55.878044',	'2023-09-25 23:28:55.878044',	5),
+(3,	'Kentucky Fried Chicken',	'KFC',	'kfc_senegal@gmail.com',	'',	'Grand Dakar',	'dakar',	'Senegal',	NULL,	'776543456',	170989.78,	5154416.677,	1,	1,	'2023-09-29 15:55:12.609755',	'2023-09-29 15:55:12.609755',	20);
+
+DROP TABLE IF EXISTS `company_contact`;
+CREATE TABLE `company_contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(20) NOT NULL,
+  `lastname` varchar(20) NOT NULL,
+  `email` varchar(20) NOT NULL,
+  `telephhone` varchar(20) NOT NULL,
+  `adress` varchar(20) DEFAULT NULL,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `companyId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_8708ab9fa9a1e023ab9b6fcdcec` (`companyId`),
+  CONSTRAINT `FK_8708ab9fa9a1e023ab9b6fcdcec` FOREIGN KEY (`companyId`) REFERENCES `company` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `company_contact`;
+
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `phone` varchar(255) NOT NULL,
+  `adresse` varchar(255) DEFAULT NULL,
+  `isPhoneVeirified` tinyint(4) NOT NULL DEFAULT 0,
+  `displayName` varchar(255) DEFAULT NULL,
+  `laltitude` int(11) NOT NULL DEFAULT 0,
+  `longitude` int(11) NOT NULL DEFAULT 0,
+  `isEnable` tinyint(4) NOT NULL DEFAULT 1,
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_03846b4bae9df80f19c76005a8` (`phone`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `customer`;
+INSERT INTO `customer` (`id`, `phone`, `adresse`, `isPhoneVeirified`, `displayName`, `laltitude`, `longitude`, `isEnable`, `updatedAt`, `createdAt`) VALUES
+(1,	'772371668',	NULL,	1,	'Mamadou Diop',	0,	0,	1,	'2023-10-02 12:26:45.349462',	'2023-10-02 12:26:45.349462');
+
+DROP TABLE IF EXISTS `file_document`;
+CREATE TABLE `file_document` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fieldname` varchar(255) DEFAULT NULL,
+  `originalname` varchar(255) DEFAULT NULL,
+  `encoding` varchar(255) DEFAULT NULL,
+  `mimetype` varchar(255) DEFAULT NULL,
+  `destination` varchar(255) DEFAULT NULL,
+  `filename` varchar(255) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `size` int(11) NOT NULL DEFAULT 0,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `file_document`;
+INSERT INTO `file_document` (`id`, `fieldname`, `originalname`, `encoding`, `mimetype`, `destination`, `filename`, `path`, `size`, `createdAt`, `updatedAt`) VALUES
+(3,	NULL,	NULL,	NULL,	NULL,	NULL,	'nofile',	NULL,	0,	'2023-09-25 23:25:44.280856',	'2023-09-25 23:25:44.280856'),
+(4,	'file',	'chicken.png',	'7bit',	'image/png',	'./upload/',	'9849ab108aa10d9be56eedc28683e58619.png',	'upload\\9849ab108aa10d9be56eedc28683e58619.png',	1186048,	'2023-09-25 23:27:54.125004',	'2023-10-02 13:32:53.000000'),
+(5,	'file',	'logo.png',	'7bit',	'image/png',	'./upload/',	'acfbc341c4b100a77587810b16a4e104810d.png',	'upload\\acfbc341c4b100a77587810b16a4e104810d.png',	51333,	'2023-09-25 23:28:55.861965',	'2023-09-29 14:40:19.000000'),
+(6,	'file',	'1679745176025.jpg',	'7bit',	'image/jpeg',	'./upload/',	'edcd13023cfd0c336f4181d7c5255be3.jpg',	'upload\\edcd13023cfd0c336f4181d7c5255be3.jpg',	7205,	'2023-09-28 23:04:08.094483',	'2023-09-28 23:14:44.000000'),
+(8,	NULL,	NULL,	NULL,	NULL,	NULL,	'nofile',	NULL,	0,	'2023-09-28 23:10:00.221033',	'2023-09-28 23:10:00.221033'),
+(9,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	0,	'2023-09-28 23:11:37.973097',	'2023-09-28 23:11:37.973097'),
+(10,	'file',	'Sans titre.png',	'7bit',	'image/png',	'./upload/',	'9823c7755ca03d3bbf7bfee8710569cec.png',	'upload\\9823c7755ca03d3bbf7bfee8710569cec.png',	1441,	'2023-09-28 23:18:16.131556',	'2023-09-28 23:26:57.000000'),
+(11,	'file',	'Sans titre.jpg',	'7bit',	'image/jpeg',	'./upload/',	'e43db195426f01e129700f30a5bbbf9b.jpg',	'upload\\e43db195426f01e129700f30a5bbbf9b.jpg',	32009,	'2023-09-28 23:19:12.870814',	'2023-09-28 23:23:19.000000'),
+(12,	'file',	'Ej6mRxHWkAMYLUe.jpg',	'7bit',	'image/jpeg',	'./upload/',	'a22a1078c1907fb65fb110bae3a72df14a.jpg',	'upload\\a22a1078c1907fb65fb110bae3a72df14a.jpg',	26502,	'2023-09-28 23:19:28.947961',	'2023-09-28 23:23:38.000000'),
+(13,	'file',	'cahs_pay.png',	'7bit',	'image/png',	'./upload/',	'40864106fad5f49105cde1bade5fde1410.png',	'upload\\40864106fad5f49105cde1bade5fde1410.png',	11371,	'2023-09-28 23:19:50.762489',	'2023-09-28 23:32:28.000000'),
+(14,	'file',	'Free-Money.png',	'7bit',	'image/png',	'./upload/',	'18509c5066365b0b72ee3fbb38279102f.png',	'upload\\18509c5066365b0b72ee3fbb38279102f.png',	20119,	'2023-09-28 23:20:25.302436',	'2023-09-28 23:28:56.000000'),
+(15,	'file',	'burger.jpg',	'7bit',	'image/jpeg',	'./upload/',	'2bd9791094a76aca69d1b5598f94cab99.jpg',	'upload\\2bd9791094a76aca69d1b5598f94cab99.jpg',	39984,	'2023-09-29 14:30:54.979504',	'2023-09-29 14:35:22.000000'),
+(16,	'file',	'biscuit.jpg',	'7bit',	'image/jpeg',	'./upload',	'2dde25b34a56469aceaa48b8f10f2c9a3.jpg',	'upload\\2dde25b34a56469aceaa48b8f10f2c9a3.jpg',	25711,	'2023-09-29 14:35:03.179476',	'2023-09-29 14:35:03.179476'),
+(17,	'file',	'djolof1.jpg',	'7bit',	'image/jpeg',	'./upload',	'a9f11e53cd31a3337e10abca16fef5725.jpg',	'upload\\a9f11e53cd31a3337e10abca16fef5725.jpg',	44972,	'2023-09-29 14:36:12.643109',	'2023-09-29 14:36:12.643109'),
+(18,	'file',	'djolof3.jpg',	'7bit',	'image/jpeg',	'./upload',	'a5b5b2ab031063b1984e6333d4e3a474.jpg',	'upload\\a5b5b2ab031063b1984e6333d4e3a474.jpg',	34459,	'2023-09-29 14:37:32.291495',	'2023-09-29 14:37:32.291495'),
+(19,	'file',	'djoloffamily1.jpg',	'7bit',	'image/jpeg',	'./upload',	'5995902932e6e7133d4f7d131915f5f7.jpg',	'upload\\5995902932e6e7133d4f7d131915f5f7.jpg',	46091,	'2023-09-29 14:38:52.163566',	'2023-09-29 14:38:52.163566'),
+(20,	'file',	'LOGO_KFC_HD.png',	'7bit',	'image/png',	'./upload/',	'233a06cc8c474b2eecd43daa79810253f.png',	'upload\\233a06cc8c474b2eecd43daa79810253f.png',	80347,	'2023-09-29 15:55:12.568026',	'2023-09-29 15:56:07.000000'),
+(21,	NULL,	NULL,	NULL,	NULL,	NULL,	'nofile',	NULL,	0,	'2023-09-29 15:57:21.736460',	'2023-09-29 15:57:21.736460'),
+(22,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	0,	'2023-09-29 16:17:38.302826',	'2023-09-29 16:17:38.302826'),
+(23,	'file',	'STRIPS-3.jpg',	'7bit',	'image/jpeg',	'./upload',	'8cc9fee5ef93b18677e606cb961eff0e.jpg',	'upload\\8cc9fee5ef93b18677e606cb961eff0e.jpg',	458286,	'2023-09-29 16:22:37.747149',	'2023-09-29 16:22:37.747149'),
+(24,	'file',	'STRIPS-6.jpg',	'7bit',	'image/jpeg',	'./upload',	'24ab9c28198bb52d22a8d61b2da961035.jpg',	'upload\\24ab9c28198bb52d22a8d61b2da961035.jpg',	507833,	'2023-09-29 16:30:46.274348',	'2023-09-29 16:30:46.274348'),
+(25,	'file',	'STRIPS-15.jpg',	'7bit',	'image/jpeg',	'./upload',	'7864b71c7cf7ddf182fd42738e215711.jpg',	'upload\\7864b71c7cf7ddf182fd42738e215711.jpg',	553063,	'2023-09-29 16:31:58.843988',	'2023-09-29 16:31:58.843988'),
+(26,	'file',	'MENUS_SOUTRA_5_SANS_BOISSON.jpg',	'7bit',	'image/jpeg',	'./upload',	'd25b3eb5191d9c11079ee2cb8cb84cbe9.jpg',	'upload\\d25b3eb5191d9c11079ee2cb8cb84cbe9.jpg',	1074687,	'2023-09-29 16:33:06.439400',	'2023-09-29 16:33:06.439400'),
+(27,	'file',	'MENUS_SOUTRA_2_SANS_BOISSON.jpg',	'7bit',	'image/jpeg',	'./upload',	'e9af1ceaf1318f7d2d5b2bb534eeae99.jpg',	'upload\\e9af1ceaf1318f7d2d5b2bb534eeae99.jpg',	778326,	'2023-09-29 16:57:35.474143',	'2023-09-29 16:57:35.474143'),
+(28,	'file',	'MENUS_SOUTRA_3_SANS_BOISSON.jpg',	'7bit',	'image/jpeg',	'./upload',	'31bc93250c0a57f6424d0ebc72ba9c52.jpg',	'upload\\31bc93250c0a57f6424d0ebc72ba9c52.jpg',	980697,	'2023-09-29 16:57:48.165295',	'2023-09-29 16:57:48.165295'),
+(29,	'file',	'MENUS_SOUTRA_3_AVEC_BOISSON.jpg',	'7bit',	'image/jpeg',	'./upload',	'2b21028e237f9cfd88f4ba262ecfcf20c.jpg',	'upload\\2b21028e237f9cfd88f4ba262ecfcf20c.jpg',	1066944,	'2023-09-29 16:59:43.431930',	'2023-09-29 16:59:43.431930'),
+(30,	'file',	'MENUS_SOUTRA_3_AVEC_BOISSON.jpg',	'7bit',	'image/jpeg',	'./upload',	'76e374cdff76d651852e9b219433349c.jpg',	'upload\\76e374cdff76d651852e9b219433349c.jpg',	1066944,	'2023-09-29 17:00:14.381682',	'2023-09-29 17:00:14.381682'),
+(31,	'file',	'BUCKET-9-PIEÌCES.jpg',	'7bit',	'image/jpeg',	'./upload',	'c53b425efd8bcd12787ce4486aecab19.jpg',	'upload\\c53b425efd8bcd12787ce4486aecab19.jpg',	321594,	'2023-09-29 17:02:03.232453',	'2023-09-29 17:02:03.232453'),
+(32,	'file',	'BUCKET-21-PIEÌCES.jpg',	'7bit',	'image/jpeg',	'./upload',	'101868165fe2d10fbd459bc514813f0a6b.jpg',	'upload\\101868165fe2d10fbd459bc514813f0a6b.jpg',	481457,	'2023-09-29 17:07:27.740252',	'2023-09-29 17:07:27.740252'),
+(33,	NULL,	NULL,	NULL,	NULL,	NULL,	'nofile',	NULL,	0,	'2023-09-30 23:30:27.295369',	'2023-09-30 23:30:27.295369'),
+(34,	'file',	'WhatsApp Image 2023-09-27 at 12.03.16.jpeg',	'7bit',	'image/jpeg',	'./upload',	'eb24b108d43193ac18bdc10edae847fd86.jpeg',	'upload\\eb24b108d43193ac18bdc10edae847fd86.jpeg',	170065,	'2023-09-30 23:37:33.983375',	'2023-09-30 23:37:33.983375'),
+(35,	'file',	'WhatsApp Image 2023-09-15 at 12.31.31.jpeg',	'7bit',	'image/jpeg',	'./upload',	'59853571dffb591bbb574b2b143db277.jpeg',	'upload\\59853571dffb591bbb574b2b143db277.jpeg',	46041,	'2023-09-30 23:44:02.565908',	'2023-09-30 23:44:02.565908'),
+(36,	'file',	'WhatsApp Image 2023-09-27 at 12.03.16.jpeg',	'7bit',	'image/jpeg',	'./upload',	'bd78adb54d851429f4add9a7d215c4b9.jpeg',	'upload\\bd78adb54d851429f4add9a7d215c4b9.jpeg',	38220,	'2023-09-30 23:46:34.018857',	'2023-09-30 23:46:34.018857'),
+(37,	'file',	'WhatsApp Image 2023-09-06 at 12.10.07.jpeg',	'7bit',	'image/jpeg',	'./upload',	'b249b8d2d4952b62c3386e3fea759aee.jpeg',	'upload\\b249b8d2d4952b62c3386e3fea759aee.jpeg',	64193,	'2023-09-30 23:50:09.565116',	'2023-09-30 23:50:09.565116'),
+(38,	'file',	'WhatsApp Image 2023-09-03 at 12.29.59.jpeg',	'7bit',	'image/jpeg',	'./upload',	'6ebbe15d5360426135a7413ad1e4aa48.jpeg',	'upload\\6ebbe15d5360426135a7413ad1e4aa48.jpeg',	33601,	'2023-09-30 23:56:39.741296',	'2023-09-30 23:56:39.741296'),
+(39,	'file',	'WhatsApp Image 2023-09-08 at 14.07.16.jpeg',	'7bit',	'image/jpeg',	'./upload',	'a1b2e5b379384f4724b29abd34c0f119.jpeg',	'upload\\a1b2e5b379384f4724b29abd34c0f119.jpeg',	19482,	'2023-10-01 00:03:34.285405',	'2023-10-01 00:03:34.285405'),
+(40,	'file',	'214664082_102290642131995_7783874832537134647_n.jpg',	'7bit',	'image/jpeg',	'./upload/',	'6fd2f7e2525cfa6b7f644949ac18be2a.jpg',	'upload\\6fd2f7e2525cfa6b7f644949ac18be2a.jpg',	177245,	'2023-10-03 19:09:24.442111',	'2023-10-07 20:32:06.000000'),
+(41,	NULL,	NULL,	NULL,	NULL,	NULL,	'nofile',	NULL,	0,	'2023-10-03 20:35:44.686280',	'2023-10-03 20:35:44.686280'),
+(42,	'file',	'torsade-aux-olives.jpg',	'7bit',	'image/jpeg',	'./upload',	'64fc6fab2f9319e5725a114c43d5b2da.jpg',	'upload\\64fc6fab2f9319e5725a114c43d5b2da.jpg',	39894,	'2023-10-03 20:39:40.871373',	'2023-10-03 20:39:40.871373'),
+(43,	'file',	'torsade-aux-olives2.jpg',	'7bit',	'image/jpeg',	'./upload',	'8c6ad3e7a18267b10b1de381f19745b9d.jpg',	'upload\\8c6ad3e7a18267b10b1de381f19745b9d.jpg',	115546,	'2023-10-03 20:39:48.726806',	'2023-10-03 20:39:48.726806'),
+(44,	'file',	'torsade-aux-olives3.jpg',	'7bit',	'image/jpeg',	'./upload',	'62510e10bf756a6989c65e30c16eaecfdf.jpg',	'upload\\62510e10bf756a6989c65e30c16eaecfdf.jpg',	42082,	'2023-10-03 20:39:55.003787',	'2023-10-03 20:39:55.003787'),
+(45,	'file',	'tarte-monge.jpg',	'7bit',	'image/jpeg',	'./upload',	'602f88a25e291e310145d1ed47f339423.jpg',	'upload\\602f88a25e291e310145d1ed47f339423.jpg',	51509,	'2023-10-03 20:41:39.074438',	'2023-10-03 20:41:39.074438'),
+(46,	'file',	'tarte-abricot-pistache.jpg',	'7bit',	'image/jpeg',	'./upload',	'd10e10ef3c105317fa1cad1774b137a6d2a.jpg',	'upload\\d10e10ef3c105317fa1cad1774b137a6d2a.jpg',	68841,	'2023-10-03 20:43:42.639790',	'2023-10-03 20:43:42.639790'),
+(47,	'file',	'pain-aux-cereales.jpg',	'7bit',	'image/jpeg',	'./upload',	'a8910dbc0515e2e1510a79a71b6f5f2f16.jpg',	'upload\\a8910dbc0515e2e1510a79a71b6f5f2f16.jpg',	57949,	'2023-10-03 20:48:00.136881',	'2023-10-03 20:48:00.136881'),
+(48,	'file',	'pain-aux-cereales2.jpg',	'7bit',	'image/jpeg',	'./upload',	'71606ad7261c8e410f3fa061d819f3ee3.jpg',	'upload\\71606ad7261c8e410f3fa061d819f3ee3.jpg',	61035,	'2023-10-03 20:48:15.126152',	'2023-10-03 20:48:15.126152'),
+(49,	'file',	'1611363850-logo-katia.jpg',	'7bit',	'image/jpeg',	'./upload/',	'847a17ed617110bdd3f43622539fc8ae4.jpg',	'upload\\847a17ed617110bdd3f43622539fc8ae4.jpg',	21183,	'2023-10-03 22:18:18.378958',	'2023-10-03 22:25:10.000000'),
+(52,	'file',	'-a07b6529_300x300.png',	'7bit',	'image/png',	'./upload/',	'10d3314965cf88b965aa8f5521b77e031.png',	'upload\\10d3314965cf88b965aa8f5521b77e031.png',	77654,	'2023-10-04 16:02:36.596888',	'2023-10-04 16:03:05.000000'),
+(53,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	0,	'2023-10-05 15:45:00.361317',	'2023-10-05 15:45:00.361317');
+
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customerId` int(11) DEFAULT NULL,
+  `restaurantId` int(11) DEFAULT NULL,
+  `deliveryDate` datetime DEFAULT NULL,
+  `status` enum('empty','onbag','active','preparing','ready_for_delivery','out_for_delivery','delivered','delivery_delayed','cancelled','quality_issue','payment_processing','refund_in_progress','order_not_delivered') NOT NULL DEFAULT 'empty',
+  `paymentTypeHistoryId` int(11) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `amount` float NOT NULL DEFAULT 0,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  PRIMARY KEY (`id`),
+  KEY `FK_16b1de2cd811bcd1d5a68083b74` (`paymentTypeHistoryId`),
+  CONSTRAINT `FK_16b1de2cd811bcd1d5a68083b74` FOREIGN KEY (`paymentTypeHistoryId`) REFERENCES `payment_type_history` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `order`;
+INSERT INTO `order` (`id`, `customerId`, `restaurantId`, `deliveryDate`, `status`, `paymentTypeHistoryId`, `description`, `message`, `amount`, `createdAt`, `updatedAt`) VALUES
+(1,	1,	3,	NULL,	'onbag',	NULL,	NULL,	NULL,	0,	'2023-10-24 16:50:43.840081',	'2023-10-24 16:54:01.000000');
+
+DROP TABLE IF EXISTS `order_plates_plate_history`;
+CREATE TABLE `order_plates_plate_history` (
+  `orderId` int(11) NOT NULL,
+  `plateHistoryId` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`orderId`,`plateHistoryId`),
+  KEY `IDX_b7918c6908259e91e31ec7eb6f` (`orderId`),
+  KEY `IDX_2d702daaf49353043686199038` (`plateHistoryId`),
+  CONSTRAINT `FK_2d702daaf49353043686199038c` FOREIGN KEY (`plateHistoryId`) REFERENCES `plate_history` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_b7918c6908259e91e31ec7eb6f6` FOREIGN KEY (`orderId`) REFERENCES `order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `order_plates_plate_history`;
+INSERT INTO `order_plates_plate_history` (`orderId`, `plateHistoryId`, `quantity`) VALUES
+(1,	11,	0);
+
+DROP TABLE IF EXISTS `payment`;
+CREATE TABLE `payment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` enum('success','refunded','pending','initiate','failled') NOT NULL,
+  `extenalPaymentId` varchar(255) DEFAULT NULL,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `orderId` int(11) DEFAULT NULL,
+  `paymentTypeId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `REL_d09d285fe1645cd2f0db811e29` (`orderId`),
+  KEY `FK_7275d1212ed427833ef3630adfb` (`paymentTypeId`),
+  CONSTRAINT `FK_7275d1212ed427833ef3630adfb` FOREIGN KEY (`paymentTypeId`) REFERENCES `payment_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_d09d285fe1645cd2f0db811e293` FOREIGN KEY (`orderId`) REFERENCES `order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `payment`;
+
+DROP TABLE IF EXISTS `payment_type`;
+CREATE TABLE `payment_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  `createById` int(11) NOT NULL,
+  `fees` double NOT NULL DEFAULT 0,
+  `feesInvert` double NOT NULL DEFAULT 0,
+  `isActive` tinyint(4) NOT NULL DEFAULT 0,
+  `description` varchar(250) DEFAULT NULL,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `profileId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `REL_3f7fd914305ee70af3e2d740d1` (`profileId`),
+  KEY `FK_fca7ceae12c5540f6c02cffd906` (`createById`),
+  CONSTRAINT `FK_3f7fd914305ee70af3e2d740d11` FOREIGN KEY (`profileId`) REFERENCES `file_document` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_fca7ceae12c5540f6c02cffd906` FOREIGN KEY (`createById`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `payment_type`;
+INSERT INTO `payment_type` (`id`, `name`, `createById`, `fees`, `feesInvert`, `isActive`, `description`, `createdAt`, `updatedAt`, `profileId`) VALUES
+(1,	'Orange Money',	3,	3,	0.8,	0,	'',	'2023-09-28 23:18:16.138251',	'2023-09-28 23:18:31.000000',	10),
+(2,	'Kpay',	3,	3,	0.7,	1,	'',	'2023-09-28 23:19:12.877240',	'2023-09-28 23:19:12.877240',	11),
+(3,	'Wave',	3,	3,	0.2,	0,	'',	'2023-09-28 23:19:28.953316',	'2023-09-28 23:19:28.953316',	12),
+(4,	'A la livraison',	3,	0,	0,	1,	'',	'2023-09-28 23:19:50.772019',	'2023-09-28 23:19:50.772019',	13),
+(5,	'Free Money',	3,	3,	1,	1,	'',	'2023-09-28 23:20:25.307402',	'2023-09-28 23:20:25.307402',	14);
+
+DROP TABLE IF EXISTS `payment_type_history`;
+CREATE TABLE `payment_type_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  `createById` int(11) NOT NULL,
+  `paymentTypeId` int(11) DEFAULT NULL,
+  `fees` double NOT NULL DEFAULT 0,
+  `feesInvert` double NOT NULL DEFAULT 0,
+  `isActive` tinyint(4) NOT NULL DEFAULT 0,
+  `description` varchar(250) DEFAULT NULL,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `REL_c1ce6f6de120ac665dac0b71fa` (`paymentTypeId`),
+  KEY `FK_38d36e28838a96c4ff389b1b906` (`createById`),
+  CONSTRAINT `FK_38d36e28838a96c4ff389b1b906` FOREIGN KEY (`createById`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_c1ce6f6de120ac665dac0b71fad` FOREIGN KEY (`paymentTypeId`) REFERENCES `payment_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `payment_type_history`;
+INSERT INTO `payment_type_history` (`id`, `name`, `createById`, `paymentTypeId`, `fees`, `feesInvert`, `isActive`, `description`, `createdAt`, `updatedAt`) VALUES
+(1,	'Orange Money',	3,	1,	3,	1.3,	0,	'',	'2023-09-28 23:18:16.154276',	'2023-09-28 23:18:16.154276'),
+(2,	'Kpay',	3,	2,	3,	0.7,	1,	'',	'2023-09-28 23:19:12.887886',	'2023-09-28 23:19:12.887886'),
+(3,	'Wave',	3,	3,	3,	0.2,	0,	'',	'2023-09-28 23:19:28.967067',	'2023-09-28 23:19:28.967067'),
+(4,	'A la livraison',	3,	4,	0,	0,	1,	'',	'2023-09-28 23:19:50.790424',	'2023-09-28 23:19:50.790424'),
+(5,	'Free Money',	3,	5,	3,	1,	1,	'',	'2023-09-28 23:20:25.318701',	'2023-09-28 23:20:25.318701');
+
+DROP TABLE IF EXISTS `permission`;
+CREATE TABLE `permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sousModule` varchar(255) NOT NULL,
+  `type` enum('CREATE','READ','UPDATE','DELETE') NOT NULL,
+  `isActive` tinyint(4) NOT NULL DEFAULT 1,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_51afee4eec2f433177b8791b8a` (`sousModule`,`type`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `permission`;
+INSERT INTO `permission` (`id`, `sousModule`, `type`, `isActive`, `createdAt`, `updatedAt`) VALUES
+(1,	'USER',	'CREATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(2,	'USER',	'UPDATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(3,	'USER',	'READ',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(4,	'ROLE',	'CREATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(5,	'USER',	'DELETE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(6,	'ROLE',	'READ',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(7,	'ROLE',	'UPDATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(8,	'ROLE',	'DELETE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(9,	'COMPANY',	'CREATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(10,	'COMPANY',	'READ',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(11,	'COMPANY',	'UPDATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(13,	'RESTAURANT',	'CREATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(14,	'RESTAURANT',	'READ',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(15,	'RESTAURANT',	'UPDATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(16,	'RESTAURANT',	'DELETE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(17,	'ORDER',	'CREATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(18,	'ORDER',	'READ',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(19,	'ORDER',	'UPDATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(20,	'ORDER',	'DELETE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(21,	'PLATE',	'CREATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(22,	'PLATE',	'READ',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(23,	'PLATE',	'UPDATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(24,	'PLATE',	'DELETE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(25,	'TAGS',	'CREATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(26,	'TAGS',	'READ',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(27,	'TAGS',	'UPDATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(28,	'TAGS',	'DELETE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(29,	'PERMISSION_ROLE',	'CREATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(30,	'PERMISSION_ROLE',	'READ',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(31,	'PERMISSION_ROLE',	'UPDATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(32,	'PERMISSION_ROLE',	'DELETE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(33,	'PERMISSION_USER',	'CREATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(34,	'PERMISSION_USER',	'UPDATE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(35,	'PERMISSION_USER',	'READ',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888'),
+(36,	'PERMISSION_USER',	'DELETE',	1,	'2023-09-30 02:06:28.500526',	'2023-09-30 02:06:28.558888');
+
+DROP TABLE IF EXISTS `plate`;
+CREATE TABLE `plate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `restaurantId` int(11) NOT NULL,
+  `name` varchar(35) NOT NULL,
+  `description` varchar(350) NOT NULL,
+  `price` int(11) NOT NULL,
+  `monday` tinyint(4) NOT NULL DEFAULT 1,
+  `tuesday` tinyint(4) NOT NULL DEFAULT 1,
+  `wednesday` tinyint(4) NOT NULL DEFAULT 1,
+  `thursday` tinyint(4) NOT NULL DEFAULT 1,
+  `friday` tinyint(4) NOT NULL DEFAULT 1,
+  `saturday` tinyint(4) NOT NULL DEFAULT 1,
+  `sunday` tinyint(4) NOT NULL DEFAULT 1,
+  `cooking_time` int(11) DEFAULT NULL,
+  `reduction` int(11) NOT NULL DEFAULT 0,
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  PRIMARY KEY (`id`),
+  KEY `FK_aa4570f8831ef39efd05b3ed20c` (`restaurantId`),
+  CONSTRAINT `FK_aa4570f8831ef39efd05b3ed20c` FOREIGN KEY (`restaurantId`) REFERENCES `restaurant` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `plate`;
+INSERT INTO `plate` (`id`, `restaurantId`, `name`, `description`, `price`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`, `cooking_time`, `reduction`, `updatedAt`, `createdAt`) VALUES
+(1,	2,	'Burger',	'',	1000,	1,	0,	0,	1,	0,	1,	1,	10,	0,	'2023-10-08 03:17:42.000000',	'2023-09-29 14:30:13.752090'),
+(2,	2,	'Djolof Biscuit',	'',	1000,	1,	1,	1,	1,	1,	1,	1,	10,	0,	'2023-09-29 14:34:47.594961',	'2023-09-29 14:34:47.594961'),
+(3,	2,	'Djolof chicken 1',	'',	2500,	1,	1,	1,	1,	1,	1,	1,	30,	0,	'2023-09-29 14:36:00.212462',	'2023-09-29 14:36:00.212462'),
+(4,	2,	'Djolof 3',	'',	2800,	1,	1,	1,	1,	1,	1,	1,	30,	0,	'2023-09-29 14:37:22.187914',	'2023-09-29 14:37:22.187914'),
+(5,	2,	'Djolof Family',	'',	9500,	1,	1,	1,	1,	1,	1,	1,	45,	0,	'2023-09-29 14:38:19.866999',	'2023-09-29 14:38:19.866999'),
+(6,	3,	'Strips 3',	'Prêt pour un moment gourmand? Voici les strips ! De tendres morceaux de poulets marinés et panés à la main croustillants et savoureux 3 pièces de Strips + 1 portion de frites simple',	2500,	1,	1,	1,	1,	1,	1,	1,	10,	0,	'2023-09-29 16:22:12.967265',	'2023-09-29 16:22:12.967265'),
+(7,	3,	'Strips 6',	'6 pièces de Strips + 1 portion de frites large',	4500,	1,	1,	1,	1,	1,	1,	1,	30,	0,	'2023-10-07 22:56:46.000000',	'2023-09-29 16:23:25.446995'),
+(8,	3,	'Strip15',	'15 pièces de Strips + 2 portions de frites larges',	11000,	1,	1,	1,	1,	1,	1,	1,	45,	0,	'2023-09-29 16:24:07.160607',	'2023-09-29 16:24:07.160607'),
+(9,	3,	'Soutra 5 sans boisson',	'Une petite ou une grosse faim? Les soutra se déclinent en 2,3 et 5 pièces pour des moments gourmands à petits prix Découvrez les épicés ou nature Soutra 5 sans boisson',	5500,	1,	1,	1,	0,	0,	1,	1,	60,	0,	'2023-10-08 03:17:19.000000',	'2023-09-29 16:25:30.954364'),
+(10,	3,	'Soutra 2 sans boisson',	'Une petite ou une grosse faim? Les soutra se déclinent en 2,3 et 5 pièces pour des moments gourmands à petits prix Découvrez les épicés ou nature Soutra 2 sans boisson',	2000,	1,	0,	0,	0,	1,	1,	1,	70,	0,	'2023-09-29 17:12:56.000000',	'2023-09-29 16:26:21.866361'),
+(11,	3,	'Soutra 3 sans boisson',	'Une petite ou une grosse faim? Les soutra se déclinent en 2,3 et 5 pièces pour des moments gourmands à petits prix Découvrez les épicés ou nature Soutra 3 sans boisson',	3000,	1,	1,	1,	1,	1,	1,	1,	60,	0,	'2023-10-07 23:12:59.000000',	'2023-09-29 16:27:01.210079'),
+(12,	3,	'Menu Soutra 2',	'Une petite ou une grosse faim? Les soutra se déclinent en 2,3 et 5 pièces pour des moments gourmands à petits prix Découvrez les épicés ou nature 2 pièces original recipe +1 portion de frite simple +1 Boisson',	2500,	1,	1,	1,	1,	1,	1,	1,	60,	0,	'2023-09-29 16:27:53.473225',	'2023-09-29 16:27:53.473225'),
+(13,	3,	'Menu Soutra 3',	'Une petite ou une grosse faim? Les soutra se déclinent en 2,3 et 5 pièces pour des moments gourmands à petits prix Découvrez les épicés ou nature 3 pièces original recipe +1 portion de frite simple +1 Boisson',	3500,	1,	1,	1,	1,	1,	1,	1,	60,	0,	'2023-09-29 16:28:34.760901',	'2023-09-29 16:28:34.760901'),
+(14,	3,	'Menu Bucket 9',	'Vous adorez tout ce qui est bon et tendre, mariné avec la recette la plus originale du monde? Alors ce bucket de poulet est parfait pour vous. Pour le plaisir des petits et des grands. Découvrez le en menus avec frites et boisson 9 pièces de poulet +2 Portions de frites +1 Grande Boisson',	14000,	1,	1,	1,	1,	1,	1,	1,	120,	0,	'2023-09-29 17:01:48.000000',	'2023-09-29 16:30:02.189407'),
+(15,	3,	'Menu Bucket 21',	'21 pièces de poulet +2 Portions de frites +1 Grande Boisson',	25000,	1,	0,	0,	1,	1,	0,	1,	60,	1,	'2023-09-30 19:23:03.000000',	'2023-09-29 17:07:14.221831'),
+(16,	1,	'Box Ndigonal',	'6 Fataya , 3 Sawarma ,3 Samoussa 2 Burger +1 jus local 250ml  ',	5000,	1,	1,	1,	1,	1,	1,	1,	120,	0,	'2023-09-30 23:36:19.778233',	'2023-09-30 23:36:19.778233'),
+(17,	1,	'Cest Bon (Yassa)',	'',	3000,	1,	1,	1,	1,	1,	1,	1,	300,	10,	'2023-09-30 23:43:50.082191',	'2023-09-30 23:43:50.082191'),
+(18,	1,	'Crepe Royal',	'1 gouffre +2 mini Crpe +1 jus LOcal',	5000,	1,	1,	1,	1,	1,	1,	1,	120,	0,	'2023-09-30 23:46:21.305267',	'2023-09-30 23:46:21.305267'),
+(19,	1,	'Fataya Royal',	'6 Fataya + 1 jus royal ',	2300,	1,	1,	1,	1,	1,	1,	1,	120,	0,	'2023-09-30 23:49:56.493029',	'2023-09-30 23:49:56.493029'),
+(20,	1,	'Crepe au Chocolat',	'',	2500,	1,	1,	1,	1,	1,	1,	1,	80,	0,	'2023-09-30 23:56:25.997034',	'2023-09-30 23:56:25.997034'),
+(21,	1,	'Thiéré Bassé',	'Couscous a la Sénégalaise',	5000,	1,	1,	1,	1,	1,	1,	1,	0,	0,	'2023-10-01 00:03:21.236564',	'2023-10-01 00:03:21.236564'),
+(22,	4,	'Torsade aux Olive',	'Un classique de la Maison Kayser, ici, Torsade aux Olive acidulé se mêle au fondant de la crème d\'amande-pistache dans cette tarte à base de pâte sablée aux amandes. Pour en apprécier toutes les nuances, sortez la tarte du réfrigérateur 20 minutes avant de la savourer.',	2000,	1,	1,	1,	1,	1,	1,	1,	30,	0,	'2023-10-03 20:44:51.000000',	'2023-10-03 20:38:59.505010'),
+(23,	4,	'Tarte Monge',	'Laissez-vous tenter par une tarte légère et onctueuse.',	3200,	1,	1,	1,	1,	1,	1,	1,	0,	0,	'2023-10-03 20:41:26.416118',	'2023-10-03 20:41:26.416118'),
+(24,	4,	'tarte abricot pistache',	'Un classique de la Maison Kayser, ici, l\'abricot rôti acidulé se mêle au fondant de la crème d\'amande-pistache dans cette tarte à base de pâte sablée aux amandes. Pour en apprécier toutes les nuances, sortez la tarte du réfrigérateur 20 minutes avant de la savourer.',	3200,	1,	1,	1,	1,	1,	1,	1,	45,	0,	'2023-10-03 20:43:25.845406',	'2023-10-03 20:43:25.845406'),
+(25,	4,	'Pain aux cereales',	'L\'abondance des parfums du mélange de graines de sésame, pavot, millet, lin blond, lin brun et tournesol est sublimée dans ce pain à la farine de froment et levain liquide. Il s\'accordera avec tous vos mets, tout au long de la journée. Parfait des tartines du petit-déjeuner au dîner.',	2300,	1,	1,	1,	1,	1,	1,	1,	20,	0,	'2023-10-03 20:47:40.000000',	'2023-10-03 20:47:26.751928');
+
+DROP TABLE IF EXISTS `plate_file`;
+CREATE TABLE `plate_file` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plateId` int(11) NOT NULL,
+  `file_document_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `REL_5cc7b88c11e9ab860a94922183` (`file_document_id`),
+  KEY `FK_a32406be992dd129c466d80c1f7` (`plateId`),
+  CONSTRAINT `FK_5cc7b88c11e9ab860a94922183c` FOREIGN KEY (`file_document_id`) REFERENCES `file_document` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_a32406be992dd129c466d80c1f7` FOREIGN KEY (`plateId`) REFERENCES `plate` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `plate_file`;
+INSERT INTO `plate_file` (`id`, `plateId`, `file_document_id`) VALUES
+(1,	1,	15),
+(2,	2,	16),
+(3,	3,	17),
+(4,	4,	18),
+(5,	5,	19),
+(6,	6,	23),
+(7,	7,	24),
+(8,	8,	25),
+(9,	9,	26),
+(10,	10,	27),
+(11,	11,	28),
+(12,	13,	29),
+(13,	12,	30),
+(14,	14,	31),
+(15,	15,	32),
+(16,	16,	34),
+(17,	17,	35),
+(18,	18,	36),
+(19,	19,	37),
+(20,	20,	38),
+(21,	21,	39),
+(22,	22,	42),
+(23,	22,	43),
+(24,	22,	44),
+(25,	23,	45),
+(26,	24,	46),
+(27,	25,	47),
+(28,	25,	48);
+
+DROP TABLE IF EXISTS `plate_history`;
+CREATE TABLE `plate_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `plateId` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `reduction` int(11) NOT NULL,
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  PRIMARY KEY (`id`),
+  KEY `FK_a8f1f4e45b383b9a0c2f678509d` (`plateId`),
+  CONSTRAINT `FK_a8f1f4e45b383b9a0c2f678509d` FOREIGN KEY (`plateId`) REFERENCES `plate` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `plate_history`;
+INSERT INTO `plate_history` (`id`, `plateId`, `price`, `reduction`, `updatedAt`, `createdAt`) VALUES
+(1,	1,	1000,	0,	'2023-09-29 14:30:13.831243',	'2023-09-29 14:30:13.831243'),
+(2,	2,	1000,	0,	'2023-09-29 14:34:47.606602',	'2023-09-29 14:34:47.606602'),
+(3,	3,	2500,	0,	'2023-09-29 14:36:00.226116',	'2023-09-29 14:36:00.226116'),
+(4,	4,	2800,	0,	'2023-09-29 14:37:22.200569',	'2023-09-29 14:37:22.200569'),
+(5,	5,	9500,	0,	'2023-09-29 14:38:19.881421',	'2023-09-29 14:38:19.881421'),
+(6,	6,	2500,	0,	'2023-09-29 16:22:12.981144',	'2023-09-29 16:22:12.981144'),
+(7,	7,	4500,	0,	'2023-09-29 16:23:25.463854',	'2023-09-29 16:23:25.463854'),
+(8,	8,	11000,	0,	'2023-09-29 16:24:07.171698',	'2023-09-29 16:24:07.171698'),
+(9,	9,	5500,	0,	'2023-09-29 16:25:30.963690',	'2023-09-29 16:25:30.963690'),
+(10,	10,	2000,	0,	'2023-09-29 16:26:21.877384',	'2023-09-29 16:26:21.877384'),
+(11,	11,	3000,	0,	'2023-09-29 16:27:01.221414',	'2023-09-29 16:27:01.221414'),
+(12,	12,	2500,	0,	'2023-09-29 16:27:53.483002',	'2023-09-29 16:27:53.483002'),
+(13,	13,	3500,	0,	'2023-09-29 16:28:34.770089',	'2023-09-29 16:28:34.770089'),
+(14,	14,	14000,	0,	'2023-09-29 16:30:02.199171',	'2023-09-29 16:30:02.199171'),
+(15,	15,	25000,	1,	'2023-09-29 17:07:14.236983',	'2023-09-29 17:07:14.236983'),
+(16,	16,	5000,	0,	'2023-09-30 23:36:20.009438',	'2023-09-30 23:36:20.009438'),
+(17,	17,	3000,	10,	'2023-09-30 23:43:50.292903',	'2023-09-30 23:43:50.292903'),
+(18,	18,	5000,	0,	'2023-09-30 23:46:21.465370',	'2023-09-30 23:46:21.465370'),
+(19,	19,	2300,	0,	'2023-09-30 23:49:56.666724',	'2023-09-30 23:49:56.666724'),
+(20,	20,	2500,	0,	'2023-09-30 23:56:26.177750',	'2023-09-30 23:56:26.177750'),
+(21,	21,	5000,	0,	'2023-10-01 00:03:21.420164',	'2023-10-01 00:03:21.420164'),
+(22,	22,	2000,	0,	'2023-10-03 20:38:59.526068',	'2023-10-03 20:38:59.526068'),
+(23,	23,	3200,	0,	'2023-10-03 20:41:26.425515',	'2023-10-03 20:41:26.425515'),
+(24,	24,	3200,	0,	'2023-10-03 20:43:25.862392',	'2023-10-03 20:43:25.862392'),
+(25,	25,	2300,	0,	'2023-10-03 20:47:26.765254',	'2023-10-03 20:47:26.765254');
+
+DROP TABLE IF EXISTS `plate_tag_tag`;
+CREATE TABLE `plate_tag_tag` (
+  `plateId` int(11) NOT NULL,
+  `tagId` int(11) NOT NULL,
+  PRIMARY KEY (`plateId`,`tagId`),
+  KEY `IDX_1f76e93695b467e228c8b250dd` (`plateId`),
+  KEY `IDX_5a28d725942e5e2b31c7c89c89` (`tagId`),
+  CONSTRAINT `FK_1f76e93695b467e228c8b250dd2` FOREIGN KEY (`plateId`) REFERENCES `plate` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_5a28d725942e5e2b31c7c89c891` FOREIGN KEY (`tagId`) REFERENCES `tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `plate_tag_tag`;
+INSERT INTO `plate_tag_tag` (`plateId`, `tagId`) VALUES
+(1,	1),
+(1,	3),
+(1,	6),
+(1,	13),
+(3,	12),
+(3,	17),
+(7,	30),
+(9,	1),
+(9,	2),
+(9,	7),
+(9,	11),
+(9,	12),
+(11,	14),
+(11,	18),
+(11,	24);
+
+DROP TABLE IF EXISTS `restaurant`;
+CREATE TABLE `restaurant` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `companyId` int(11) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `postal_code` varchar(20) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `laltitude` float NOT NULL DEFAULT 0,
+  `longitude` float NOT NULL DEFAULT 0,
+  `isDelecetd` tinyint(4) NOT NULL DEFAULT 0,
+  `openingTime` time NOT NULL DEFAULT '08:00:00',
+  `closingTime` time NOT NULL DEFAULT '23:00:00',
+  `profileId` int(11) DEFAULT NULL,
+  `description` text NOT NULL DEFAULT 'no Description',
+  `isActive` tinyint(4) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `REL_8edf520e963cdb0fba4e825eaf` (`profileId`),
+  UNIQUE KEY `IDX_b4490915d4121dad228d1d032c` (`name`,`companyId`),
+  KEY `FK_5b81421e810b7ae0badcc2491b0` (`companyId`),
+  CONSTRAINT `FK_5b81421e810b7ae0badcc2491b0` FOREIGN KEY (`companyId`) REFERENCES `company` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  CONSTRAINT `FK_8edf520e963cdb0fba4e825eafd` FOREIGN KEY (`profileId`) REFERENCES `file_document` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `restaurant`;
+INSERT INTO `restaurant` (`id`, `name`, `email`, `companyId`, `address`, `city`, `country`, `postal_code`, `phone`, `createdAt`, `updatedAt`, `laltitude`, `longitude`, `isDelecetd`, `openingTime`, `closingTime`, `profileId`, `description`, `isActive`) VALUES
+(1,	'Palais Africa',	'dj_chicken_almadi@gmail.com',	1,	NULL,	NULL,	NULL,	NULL,	'22177656787',	'2023-09-28 23:04:08.114236',	'2023-10-05 15:43:04.000000',	14.7098,	-17.4805,	0,	'08:00:00',	'20:00:00',	6,	'no Description',	1),
+(2,	'Almahdi 1',	'dj_chicken_almadi@gmail.com',	2,	NULL,	NULL,	NULL,	NULL,	'774567654',	'2023-09-28 23:11:37.978406',	'2023-09-28 23:11:37.978406',	1433490,	1433490,	0,	'08:00:00',	'20:00:00',	9,	'no Description',	1),
+(3,	'Kfc Corniche',	'kfc_senegal@gmail.com',	3,	NULL,	NULL,	NULL,	NULL,	'772371668',	'2023-09-29 16:17:38.310716',	'2023-10-05 15:51:31.000000',	14.712,	-17.4765,	0,	'08:00:00',	'22:00:00',	22,	'no Description',	1),
+(4,	'Maison Kaiser Corniche',	'kaeser@gmail.com',	1,	NULL,	NULL,	NULL,	NULL,	'776865678',	'2023-10-03 19:09:24.546857',	'2023-10-05 15:52:08.000000',	14.6876,	-17.4694,	0,	'07:00:00',	'23:00:00',	40,	'no Description',	1),
+(5,	'Chez Kathia',	'Kathia@gmail.com',	1,	NULL,	NULL,	NULL,	NULL,	'22177656787',	'2023-10-03 22:18:18.509364',	'2023-10-05 15:52:48.000000',	14.7157,	-17.1729,	0,	'11:00:00',	'20:00:00',	49,	'no Description',	1),
+(6,	'Planet Kebab',	'planet.kebab@gmail.com',	1,	NULL,	NULL,	NULL,	NULL,	'7765678756',	'2023-10-04 16:02:36.638946',	'2023-10-05 15:53:46.000000',	14.7387,	-17.5096,	0,	'07:00:00',	'23:00:00',	52,	'Bienvenue sur le site officiel de PLANET KEBAB ! Sur notre site, vous trouverez notre menu complet à emporter, toujours mis à jour avec les derniers prix et choix, y compris nos offres spéciales. Notre site est facile à utiliser pour commander à emporter ou en livraison !',	1),
+(7,	'Djolof Chicken Liberte 6',	'DjolofChicken@gmail.com',	2,	NULL,	NULL,	NULL,	NULL,	'22177656787',	'2023-10-05 15:45:00.369566',	'2023-10-05 15:45:00.369566',	-17.4625,	14.7363,	0,	'07:00:00',	'23:00:00',	53,	'',	1);
+
+DROP TABLE IF EXISTS `restaurant_contact`;
+CREATE TABLE `restaurant_contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(20) NOT NULL,
+  `lastname` varchar(20) NOT NULL,
+  `email` varchar(20) NOT NULL,
+  `telephhone` varchar(20) NOT NULL,
+  `adress` varchar(20) DEFAULT NULL,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `restaurantId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_1865846581a57db1322ee5f6343` (`restaurantId`),
+  CONSTRAINT `FK_1865846581a57db1322ee5f6343` FOREIGN KEY (`restaurantId`) REFERENCES `restaurant` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `restaurant_contact`;
+
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `scope` enum('SUPER','RESTAURANT','COMPANY','DELIVER','CUSTOMER') NOT NULL,
+  `isActive` tinyint(4) NOT NULL DEFAULT 1,
+  `name` varchar(30) NOT NULL,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_5b49d0f504f7ef31045a1fb2eb` (`scope`,`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `role`;
+INSERT INTO `role` (`id`, `scope`, `isActive`, `name`, `createdAt`, `updatedAt`) VALUES
+(1,	'SUPER',	1,	'ADMIN',	'2023-09-25 23:24:03.738346',	'2023-09-25 23:24:03.738346'),
+(2,	'RESTAURANT',	1,	'MASTER',	'2023-09-25 23:24:03.829627',	'2023-09-25 23:24:03.829627'),
+(3,	'RESTAURANT',	1,	'ADMIN',	'2023-09-25 23:24:03.837980',	'2023-09-25 23:24:03.837980'),
+(4,	'COMPANY',	1,	'MASTER',	'2023-09-25 23:24:03.840462',	'2023-09-25 23:24:03.840462'),
+(5,	'RESTAURANT',	1,	'DELIVERER',	'2023-09-25 23:24:03.844652',	'2023-09-25 23:24:03.844652'),
+(7,	'DELIVER',	1,	'MASTER',	'2023-09-25 23:24:03.851710',	'2023-09-25 23:24:03.851710'),
+(8,	'CUSTOMER',	1,	'CUSTOMER',	'2023-09-25 23:24:03.853639',	'2023-09-25 23:24:03.853639'),
+(9,	'COMPANY',	1,	'ADMIN',	'2023-09-25 23:24:03.859335',	'2023-09-25 23:24:03.859335'),
+(10,	'DELIVER',	1,	'CUSTOMER',	'2023-09-25 23:24:03.861014',	'2023-09-25 23:24:03.861014');
+
+DROP TABLE IF EXISTS `role_permission_permission`;
+CREATE TABLE `role_permission_permission` (
+  `permissionId` int(11) NOT NULL,
+  `roleId` int(11) NOT NULL,
+  `isActive` tinyint(4) NOT NULL DEFAULT 1,
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  PRIMARY KEY (`permissionId`,`roleId`),
+  KEY `IDX_be73ed38a02ea01cef07836835` (`roleId`),
+  KEY `IDX_1fff5824ba3354f53d4fae760c` (`permissionId`),
+  CONSTRAINT `FK_1fff5824ba3354f53d4fae760c3` FOREIGN KEY (`permissionId`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_be73ed38a02ea01cef07836835e` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `role_permission_permission`;
+INSERT INTO `role_permission_permission` (`permissionId`, `roleId`, `isActive`, `createdAt`, `updatedAt`) VALUES
+(1,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(1,	9,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(2,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(2,	9,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(3,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(3,	9,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(4,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(7,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(9,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(10,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(11,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(13,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(13,	9,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(14,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(14,	9,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(15,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(15,	9,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(18,	2,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(18,	9,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(19,	2,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(19,	10,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(21,	2,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(22,	2,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(22,	9,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(23,	2,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(28,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(29,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(30,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(31,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(32,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(33,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(34,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136'),
+(35,	1,	1,	'2023-10-26 22:21:29.648892',	'2023-10-26 22:21:29.668136');
+
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE `tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_6a9775008add570dc3e5a0bab7` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `tag`;
+INSERT INTO `tag` (`id`, `name`, `description`) VALUES
+(1,	'Acide',	'Une saveur acide, rappelant l\'acidité présente dans les agrumes, les vinaigres, etc.'),
+(2,	'Sucré',	'Une saveur sucrée, associée à la présence de sucre ou d\'édulcorants dans les aliments.'),
+(3,	'Salé',	'Une saveur salée, caractéristique de la présence de sel dans les aliments.'),
+(4,	'Amer',	'Une saveur amère, caractéristique de certains légumes verts, du café, du chocolat noir, etc.'),
+(5,	'Umami',	'Une saveur umami, souvent décrite comme une sensation de richesse et de profondeur du goût.'),
+(6,	'Épicé',	'Une saveur épicée, associée aux épices comme le piment de Cayenne, le poivre de Sichuan, etc.'),
+(7,	'Herbacé',	'Une saveur herbacée, évoquant les herbes fraîches comme le basilic, le persil, etc.'),
+(8,	'Agrume',	'Une saveur d\'agrume, rappelant les fruits tels que l\'orange, le citron, le pamplemousse, etc.'),
+(9,	'Fumé',	'Une saveur fumée, qui peut être obtenue grâce à des techniques de fumaison ou l\'utilisation d\'arômes fumés.'),
+(10,	'Érable',	'Une saveur d\'érable, typique des produits à base de sirop d\'érable ou de sucre d\'érable.'),
+(11,	'Noisette',	'Une saveur de noisette, caractéristique de la noisette grillée ou de produits à base de noisettes.'),
+(12,	'Fruité',	'Une saveur fruitée, caractéristique des fruits frais ou des arômes fruités.'),
+(13,	'Cannelle',	'Une saveur de cannelle, utilisée dans de nombreux desserts et pâtisseries pour apporter une note chaude et épicée.'),
+(14,	'Herbes fraîches',	'Une saveur d\'herbes fraîches, comme le basilic, le persil, la coriandre, etc.'),
+(15,	'Crémeux',	'Une texture crémeuse, souvent associée aux produits laitiers, à la crème, au fromage, etc.'),
+(16,	'Anisé',	'Une saveur anisée, rappelant la saveur de l\'anis, de la réglisse ou du fenouil.'),
+(17,	'Caramel',	'Une saveur de caramel, obtenue par la cuisson du sucre jusqu\'à ce qu\'il prenne une couleur ambrée.'),
+(18,	'Fruits rouges',	'Une saveur de fruits rouges, regroupant des fruits comme les fraises, les framboises, les cerises, etc.'),
+(19,	'Beurré',	'Une saveur beurrée, évoquant le goût et la texture du beurre dans les préparations.'),
+(20,	'Cacao',	'Une saveur de cacao, provenant du chocolat ou du cacao en poudre.'),
+(21,	'Vanille',	'Une saveur de vanille, provenant des gousses de vanille utilisées comme arôme naturel.'),
+(23,	'Menthe',	'Une saveur de menthe, rafraîchissante et aromatique, souvent utilisée dans les desserts et les boissons.'),
+(24,	'Champignon',	'Une saveur de champignon, rappelant le goût terrestre et savoureux des champignons cuits ou sautés.'),
+(25,	'Cacahuète',	'Une saveur de cacahuète, caractéristique des arachides grillées ou utilisées dans les préparations.'),
+(26,	'Réglisse',	'Une saveur de réglisse, rappelant le goût sucré et anisé de la réglisse ou de l\'extrait de réglisse.'),
+(27,	'Sésame',	'Une saveur de sésame, obtenue à partir des graines de sésame grillées ou utilisées dans les préparations.'),
+(30,	'Café',	'Une saveur de café, caractéristique de l\'arôme et de l\'amertume du café torréfié.'),
+(31,	'Coco',	'Une saveur de coco, rappelant le goût sucré et exotique de la noix de coco râpée ou du lait de coco.'),
+(35,	'Poire',	'Une saveur de poire, caractéristique du goût sucré et juteux des poires fraîches.'),
+(36,	'Pomme',	'Une saveur de pomme, rappelant le goût sucré et acidulé des différentes variétés de pommes.'),
+(37,	'Framboise',	'Une saveur de framboise, rappelant le goût sucré et acidulé de ce fruit rouge.'),
+(38,	'Mangue',	'Une saveur de mangue, caractéristique du goût sucré et juteux de la mangue mûre.'),
+(39,	'Cassis',	'Une saveur de cassis, caractéristique du fruit noir et acidulé du cassissier.'),
+(40,	'Abricot',	'Une saveur d\'abricot, rappelant le goût sucré et juteux de l\'abricot mûr.'),
+(41,	'Banane',	'Une saveur de banane, rappelant le goût sucré et crémeux de la banane mûre.'),
+(42,	'Pêche',	'Une saveur de pêche, caractéristique du goût sucré et juteux de la pêche mûre.'),
+(43,	'Ananas',	'Une saveur d\'ananas, caractéristique du goût sucré et acidulé de l\'ananas mûr.'),
+(44,	'Menthe poivrée',	'Une saveur de menthe poivrée, caractéristique de la menthe fraîche avec une note de fraîcheur intense.'),
+(45,	'Cerise',	'Une saveur de cerise, rappelant le goût sucré et acidulé de la cerise mûre.'),
+(46,	'Citron vert',	'Une saveur de citron vert, caractéristique du goût acidulé et rafraîchissant du citron vert.'),
+(47,	'Fraise',	'Une saveur de fraise, rappelant le goût sucré et juteux de la fraise mûre.'),
+(48,	'Melon',	'Une saveur de melon, caractéristique du goût sucré et juteux du melon mûr.'),
+(49,	'Myrtille',	'Une saveur de myrtille, rappelant le goût sucré et légèrement acidulé de la myrtille.'),
+(50,	'Pomme verte',	'Une saveur de pomme verte, caractéristique du goût acidulé et croquant de la pomme verte.'),
+(51,	'Raisin',	'Une saveur de raisin, rappelant le goût sucré et juteux du raisin frais ou sec.'),
+(53,	'Mûre',	'Une saveur de mûre, rappelant le goût sucré et juteux de la mûre mûre.');
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(20) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `pin` varchar(255) NOT NULL,
+  `encryptedPin` varchar(255) NOT NULL,
+  `isAdmin` tinyint(4) NOT NULL DEFAULT 0,
+  `isAgent` tinyint(4) NOT NULL DEFAULT 0,
+  `restaurantId` int(11) DEFAULT NULL,
+  `companyId` int(11) DEFAULT NULL,
+  `address` varchar(40) NOT NULL DEFAULT '',
+  `country` varchar(20) NOT NULL DEFAULT 'SN',
+  `city` varchar(20) NOT NULL DEFAULT 'Dakar',
+  `birthday` datetime DEFAULT NULL,
+  `phone` varchar(30) NOT NULL,
+  `roleId` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `updatedAt` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `createdAt` datetime(6) NOT NULL DEFAULT current_timestamp(6),
+  `profileId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_47b23b06e27ab078de4af18bc8` (`email`,`phone`),
+  UNIQUE KEY `REL_9466682df91534dd95e4dbaa61` (`profileId`),
+  KEY `FK_65b1b155df8d445c401c0d04278` (`restaurantId`),
+  KEY `FK_86586021a26d1180b0968f98502` (`companyId`),
+  KEY `FK_c28e52f758e7bbc53828db92194` (`roleId`),
+  CONSTRAINT `FK_65b1b155df8d445c401c0d04278` FOREIGN KEY (`restaurantId`) REFERENCES `restaurant` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_86586021a26d1180b0968f98502` FOREIGN KEY (`companyId`) REFERENCES `company` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_9466682df91534dd95e4dbaa616` FOREIGN KEY (`profileId`) REFERENCES `file_document` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_c28e52f758e7bbc53828db92194` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `user`;
+INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `pin`, `encryptedPin`, `isAdmin`, `isAgent`, `restaurantId`, `companyId`, `address`, `country`, `city`, `birthday`, `phone`, `roleId`, `status`, `updatedAt`, `createdAt`, `profileId`) VALUES
+(3,	'SUPER',	'ADMIN',	'Kalanji2023@gmail.com',	'554c0536171ebc408c00cad0efad1319e43d4229811a5e8869b6f96b57c0b988',	'705211cf2ef866658d77362e83908ddd:77ee1f18beeba40e75366e772138276a0b5b47c51dc8b54ddd201edd0c65e2f20858db720e2ded53a297ae1dece71e521c86255849bf4c4d50d8c240eaab5970',	1,	0,	NULL,	1,	'Al Mahdi',	'SN',	'Dakar',	NULL,	'221772371668',	1,	1,	'2023-10-02 20:27:00.000000',	'2023-09-25 23:25:44.308876',	3),
+(4,	'Djolof',	'Admin',	'DjolofChicken@gmail.com',	'91b4d142823f7d20c5f08df69122de43f35f057a988d9619f6d3138485c9a203',	'30e59e681381cf134faf6bf7e87911bd:d82e711b8b43fbbe1d177a7b8a20b785e97d46e331bf1c6dd85efb0f0c9ccc0a254f5e6597be2911bb101ceea35b237e3e73f18953e01203f434b638cc5d96af',	0,	0,	2,	2,	'Grand Dakar',	'Senegal',	'rufisque',	NULL,	'22177656787',	9,	1,	'2023-09-29 14:28:46.000000',	'2023-09-28 23:10:00.230224',	8),
+(5,	'KFC',	'Admin',	'kfc@gmail.com',	'91b4d142823f7d20c5f08df69122de43f35f057a988d9619f6d3138485c9a203',	'32e7d30c76bb946b5d350e3da6a3e3fb:936929266bb5e1d36b0865707805df15cc754f94445d5353a9ba04f42ab771b506425eb16f8472417fb690597323fe3b93c893d917625972208d4d0904d46014',	0,	0,	3,	3,	'Grand Dakar',	'Sénégal',	'Dakar',	NULL,	'776543456',	9,	1,	'2023-09-29 16:19:18.000000',	'2023-09-29 15:57:21.742137',	21),
+(6,	'Mamadou ',	'Diop',	'Mamadou@gmail.com',	'91b4d142823f7d20c5f08df69122de43f35f057a988d9619f6d3138485c9a203',	'c47ba389f099fcaab1ef82cce9da39bb:dd5dc3316806ee25c982f4e3585b981ec6d71baa132e4e4b1c3a8e688eec918877a0de6acab07a5667189701f83c45e06141a263e39d87c162741dcc0ce3800f',	0,	0,	1,	1,	'Grand Dakar',	'Senegal',	'Dakar',	NULL,	'776545689',	3,	1,	'2023-09-30 23:30:27.458866',	'2023-09-30 23:30:27.458866',	33),
+(7,	'Jean',	'Diatta',	'kaeser@gmail.com',	'91b4d142823f7d20c5f08df69122de43f35f057a988d9619f6d3138485c9a203',	'3ad8bb3cd5d8faca751f948df8ee9299:4ed4bb7c960c33994e5d10b0a00ccad1cfff3a1bd40a01458325637d9fa98e64d1a16aff5ec9aff1be98c459515b9ff7c5484a02ff976ae3a995f0039030fd08',	0,	0,	4,	1,	'Dakar Corniche',	'Sénégal',	'Dakar',	NULL,	'778906778',	3,	1,	'2023-10-03 20:35:44.707230',	'2023-10-03 20:35:44.707230',	41);
+
+DROP TABLE IF EXISTS `user_permission_permission`;
+CREATE TABLE `user_permission_permission` (
+  `permissionId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  PRIMARY KEY (`permissionId`,`userId`),
+  KEY `IDX_d0249b430d2bd7ac0856dd352f` (`userId`),
+  KEY `IDX_642fa08fa2955d26b5f335ffa3` (`permissionId`),
+  CONSTRAINT `FK_642fa08fa2955d26b5f335ffa32` FOREIGN KEY (`permissionId`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_d0249b430d2bd7ac0856dd352fe` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+TRUNCATE `user_permission_permission`;
+
+-- 2023-10-30 11:33:37
