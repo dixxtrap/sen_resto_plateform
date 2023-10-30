@@ -12,27 +12,25 @@ export const RoleList = () => {
       title="Securité"
       subtitle="Gestion des roles & permission"
       createPath="/security/role/create"
-      th={["Nom", "Scope", "Permissions","utilisateur", "Date de Creation", "Status", ""]}
+      th={["Nom", "Scope", "Permissions", "Date de Creation", "Status", ""]}
       trs={
         <>
           {roles.map((e) => (
             <tr key={e.id + "_role"}>
-              <td className=" whitespace-nowrap py-3 pl-4 pr-3 text-sm sm:pl-0">
+              <td className=" ">
                 {e.name}
               </td>
-              <td className="whitespace-nowrap  py-3 text-sm text-gray-500">
+              <td className="">
                 {e.scope}
               </td>
-              <td className="whitespace-nowrap  py-3 text-sm text-gray-500">
+              <td className="">
                 {e.permissionLenght}
               </td>
-              <td className="whitespace-nowrap  py-3 text-sm text-gray-500">
-                {e.userLenght}
-              </td>
-              <td className="whitespace-nowrap  py-3 text-sm text-gray-500">
+
+              <td className="">
                 {e.createdAt}
               </td>
-              <td className="whitespace-nowrap  py-3 text-sm text-gray-500">
+              <td className="">
                 <Status
                   status={e.isActive!}
                   activeText="Actif"

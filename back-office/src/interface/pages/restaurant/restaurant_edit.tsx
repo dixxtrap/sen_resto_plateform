@@ -80,6 +80,27 @@ export const RestaurantEdit = () => {
         <Input label="Description" error={errors.description?.message}>
           <textarea {...register("description")} className="input" />
         </Input>
+        <div className="flex gap-8  w-full flex-wrap">
+          <Input
+            label="Laltitude"
+            className=" max-w-lg"
+
+            error={errors.city?.message}
+
+            children={
+              <input className="input " {...register("laltitude")} />
+            }
+          />
+          <Input
+            label="Longitude"
+            className=" max-w-lg"
+
+            error={errors.country?.message}
+            children={
+              <input className="input " {...register("longitude")} />
+            }
+          />
+        </div>
         {/* {Object.values(errors).map(e=><span>{e.message}</span>)} */}
       </CustomForm>
     </div>

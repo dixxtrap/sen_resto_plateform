@@ -32,16 +32,21 @@ class RestoItem extends StatelessWidget {
 
 class ImageItem extends StatelessWidget {
   const ImageItem(
-      {super.key, required this.id, this.height = 100, this.width = 100});
+      {super.key,
+      required this.id,
+      this.padding,
+      this.height = 100,
+      this.width = 100});
   final int id;
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
+  final EdgeInsets? padding;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
       height: height,
-
+      padding: padding,
       // margin: EdgeInsets.all(kpadding),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -63,7 +68,7 @@ class ImageItem extends StatelessWidget {
           filter: ImageFilter.blur(
               sigmaX: 10, sigmaY: 10, tileMode: TileMode.repeated),
           child: Container(
-            height: height / 2,
+            height: height! / 2,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,

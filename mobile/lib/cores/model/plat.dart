@@ -1,3 +1,6 @@
+import 'package:mobile/cores/model/restaurant.dart';
+import 'package:mobile/interfaces/utils/kprint.dart';
+
 import 'file_doc.dart';
 import 'tag.dart';
 
@@ -18,6 +21,7 @@ class Plat {
   int? reduction;
   String? updatedAt;
   String? createdAt;
+  Restaurant? restaurant;
   List<FileDoc>? file;
   List<Tag>? tag;
 
@@ -58,6 +62,11 @@ class Plat {
     reduction = json['reduction'];
     updatedAt = json['updatedAt'];
     createdAt = json['createdAt'];
+    kprint(
+        "---------------------------resto plat-----------------------${json["restaurant"]}");
+    restaurant = (json['restaurant'] != null)
+        ? Restaurant.fromJson(json["restaurant"])
+        : null;
     if (json['file'] != null) {
       file = <FileDoc>[];
       json['file'].forEach((v) {

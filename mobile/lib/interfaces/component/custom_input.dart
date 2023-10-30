@@ -67,13 +67,13 @@ class CustomInput extends StatelessWidget {
           cursorHeight: cursorHeight,
           obscureText: obscureText ?? false,
           style: style,
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.left,
           decoration: InputDecoration(
               isDense: false,
               contentPadding: contentPadding ??
                   const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               fillColor:
-                  getTheme(context).colorScheme.onBackground.withOpacity(.04),
+                  getTheme(context).colorScheme.onBackground.withOpacity(.1),
               filled: true,
               counterText: "",
               border: OutlineInputBorder(

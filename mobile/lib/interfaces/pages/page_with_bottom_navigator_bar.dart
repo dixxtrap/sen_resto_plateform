@@ -82,16 +82,16 @@ class _PageWithBottomNavigatorState extends State<PageWithBottomNavigator> {
                 ),
                 BottomNavigationBarItem(
                   icon: SvgIcon(
-                    AssetSvg.chart,
+                    AssetSvg.map,
                     color: iconColor,
                     size: 22,
                   ),
                   activeIcon: SvgIcon(
-                    AssetSvg.chartFiil,
+                    AssetSvg.mapFill,
                     color: CupertinoTheme.of(context).primaryColor,
                     size: 25,
                   ),
-                  label: 'Pagner',
+                  label: 'Localisation',
                 ),
                 BottomNavigationBarItem(
                   icon: SvgIcon(

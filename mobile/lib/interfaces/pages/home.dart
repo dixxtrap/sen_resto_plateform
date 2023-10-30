@@ -81,18 +81,24 @@ class _HomeState extends ConsumerState<Home> {
             CustomTitle(
               title: "Restaurant",
             ),
-            const SizedBox(
-              height: kpadding * 1,
-            ),
             if (provider.restaurant != null)
-              Wrap(
-                  runSpacing: kpadding / 1.5,
-                  spacing: kpadding / 1.5,
-                  children: List.generate(
-                      provider.restaurant!.length,
-                      (i) => RestoItem(
+              SizedBox(
+                height: 100,
+                child: PageView.builder(
+                    itemCount: provider.restaurant!.length,
+                    pageSnapping: true,
+                    controller: PageController(
+                      viewportFraction: .32,
+                      initialPage: 1,
+                      keepPage: true,
+                    ),
+                    itemBuilder: (_, i) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RestoItem(
                             resto: provider.restaurant![i],
-                          ))),
+                          ),
+                        )),
+              ),
             const SizedBox(
               height: kpadding * 1,
             ),

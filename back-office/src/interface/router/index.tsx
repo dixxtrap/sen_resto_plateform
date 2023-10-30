@@ -9,6 +9,7 @@ import { plateRouter } from "./plateRouter";
 import { securityRouter } from "./secutrity.router";
 import { paymentTypeRouter } from "./payment_type.router";
 import { orderRouter } from "./order.router";
+import { GoogleMapComponent } from "../pages/dashboard/dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "dash",
-        element: <div>Dash</div>,
+        element: <div><GoogleMapComponent/></div>,
       },
       organisationRouter,
       userRouter,

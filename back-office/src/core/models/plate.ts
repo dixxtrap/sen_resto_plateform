@@ -1,6 +1,6 @@
 import { FileDocument } from "./file_document";
 import * as Yup from "yup";
-import { Tag } from "./tag.dto";
+import { Tag } from "./tag.dto";  
 
 export interface Plate {
   id?: number;
@@ -9,7 +9,7 @@ export interface Plate {
   description?: string;
   price?: number;
   reduction?: number;
-  updatedAt?: string;
+  updatedAt?: string; 
   createdAt?: string;
   monday?: boolean;
   tuesday?: boolean;

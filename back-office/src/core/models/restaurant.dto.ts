@@ -14,6 +14,7 @@ export class RestaurantDto {
 
   companyId?: number;
   createdAt?: string;
+  isActive?:  boolean;
 
   updatedAt?: string;
 

@@ -24,19 +24,19 @@ export const UserList = () => {
                             
                              <div className='flex flex-col'>
                              <div className="font-medium  text-gray-900">{user.firstname} {user.lastname}</div>
-                                <div className="mt-1 text-gray-500 leading-3 text-xs">{user.email}</div>
+                                
                              </div>
                                 
                             
                             </div>
                           </td>
-                          <td className="whitespace-nowrap  py-3 text-sm text-gray-500">{user!.role!.name} {user!.role!.scope}</td>
+                          <td className="">{user!.role!.name} {user!.role!.scope}</td>
       
                         
                         
-                          <td className="whitespace-nowrap  py-3 text-sm text-gray-500">{user.address}-{user.city}</td>
-                          <td className="whitespace-nowrap  py-3 text-sm text-gray-500">{user.phone}</td>
-                          <td className="whitespace-nowrap  py-3 text-sm text-gray-500">
+                          <td className="">{user.address}-{user.city}</td>
+                          <td className="">{user.phone}</td>
+                          <td className="">
                        <Status status={ user.status!} inactiveText='Inactif' activeText='Actif' />
                           </td>
                           <td className="last_td_container">

@@ -90,7 +90,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">{trs}</tbody>
+              <tbody className="divide-y divide-gray-200 text-xs bg-white">{trs}</tbody>
             </table>
           </div>
         </div>

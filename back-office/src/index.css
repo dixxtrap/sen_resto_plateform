@@ -4,7 +4,10 @@
 
 td,
 th {
-  @apply text-left py-2 whitespace-nowrap   text-sm text-gray-500;
+  @apply text-left  whitespace-nowrap   text-sm text-gray-500;
+}
+td{
+  @apply py-2
 }
 .bgInput {
   @apply bg-slate-100/60;
@@ -19,7 +22,7 @@ th {
   @apply text-secondary-600  font-semibold px-2 hover:text-secondary-900;
 }
 .last_td_container{
-        @apply relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0;
+        @apply relative whitespace-nowrap  pl-3 pr-4 text-right text-base font-medium sm:pr-0;
 }
 .button{
   @apply rounded-sm font-medium  py-2 px-3

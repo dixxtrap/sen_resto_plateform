@@ -146,7 +146,7 @@ class PlatViewItem extends StatelessWidget {
                                       PlateDetails(plate: plat),
                                 ));
                           },
-                          child: Row(
+                          child: const Row(
                             children: [
                               SvgIcon(
                                 AssetSvg.chart2,

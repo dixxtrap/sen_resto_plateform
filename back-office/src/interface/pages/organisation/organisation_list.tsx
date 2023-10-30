@@ -14,11 +14,11 @@ export const OrganisationList = () => {
           <>
            {companies.map((company) => (
                   <tr key={company.id!+company.name!}>
-                    <td className="whitespace-nowrap py-3 pl-4 pr-3 text-sm sm:pl-0">
+                    <td className="">
                       <div className="flex items-center">
                         <div className="  flex-shrink-0 ">
                           {/* <ImgPreview name={`Prile_${company?.profile?.id}`} className='bg-blue-400 h-11' img={company.profile!}/> */}
-                         <Img  hasImg={company?.profile?.path!=='' &&company?.profile?.path!==null && company?.profile!=null} icon={<BuildingOffice2Icon  className='h-5  text-indigo-500 mr-2'/>} className='h-8 mr-2 aspect-square' imgId={company.profile?.id} />
+                         <Img  hasImg={company?.profile?.path!=='' &&company?.profile?.path!==null && company?.profile!=null} icon={<BuildingOffice2Icon  className='h-5  text-indigo-500 mr-2'/>} className='h-7 mr-2  aspect-square' imgId={company.profile?.id} />
                         </div>
                        
                           <div className="font-medium text-gray-900">{company.name}</div>
@@ -26,18 +26,18 @@ export const OrganisationList = () => {
                       
                       </div>
                     </td>
-                    <td className="whitespace-nowrap  py-3 text-sm text-gray-500">{company.email}</td>
+                    <td className="">{company.email}</td>
 
                   
                   
-                    <td className="whitespace-nowrap  py-3 text-sm text-gray-500">{company.address}/{company.city}</td>
-                    <td className="whitespace-nowrap  py-3 text-sm text-gray-500">{company.phone}</td>
-                    <td className="whitespace-nowrap  py-3 text-sm text-gray-500">
+                    <td className="">{company.address}/{company.city}</td>
+                    <td className="">{company.phone}</td>
+                    <td className="">
                     <Status status={ company.isActive!} inactiveText='Inactif' activeText='Actif' />
                       
                      
                     </td>
-                    <td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    <td className="last_td_container">
                       <Link to={`/organisation/details/${company.id}`} className="last_td">
                         Details<span className="sr-only">, {company.phone}</span>
                       </Link>

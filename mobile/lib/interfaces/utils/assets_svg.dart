@@ -1,6 +1,8 @@
 class AssetSvg {
   static const String home = "assets/svg/home.svg";
   static const String homeFiil = "assets/svg/home_fill.svg";
+  static const String map = "assets/svg/map.svg";
+  static const String mapFill = "assets/svg/map_fill.svg";
   static const String chart = "assets/svg/chart.svg";
   static const String chartFiil = "assets/svg/chart_fill.svg";
   static const String favorite = "assets/svg/favorite.svg";

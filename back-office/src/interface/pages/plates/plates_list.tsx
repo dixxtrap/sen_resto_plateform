@@ -40,9 +40,9 @@ export const PlateList = () => {
             <>
               {plates.map((e) => (
                 <tr>
-                  <td className="whitespace-nowrap py-3 pl-4 pr-3 text-sm sm:pl-0">
-                    <div className="flex items-center">
-                      <div className="h-11 w-11 flex-shrink-0">
+                  <td className="">
+                    <div className="flex items-center gap-x-3">
+                      <div className=" flex-shrink-0">
                         {e.file && e.file.length > 0 ? (
                           <Img
                             hasImg={true}
@@ -65,13 +65,13 @@ export const PlateList = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="whitespace-nowrap  max-w-xs py-3 text-sm text-gray-500">
+                  <td className="">
                     {e.cookingTime} minutes
                   </td>
-                  <td className="whitespace-nowrap  max-w-xs py-3 text-sm text-gray-500">
+                  <td className="">
                     {e.price} F CFA
                   </td>
-                  <td className="whitespace-nowrap  max-w-xs py-3 text-sm text-gray-500">
+                  <td className="">
                     {e.reduction}
                   </td>
                   <td className=" ">

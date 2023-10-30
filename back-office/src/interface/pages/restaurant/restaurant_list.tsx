@@ -3,6 +3,7 @@ import { useGetResttaurantQuery } from "../../../core/features/restaurant.slice"
 import { TablePagination } from "../../components/table_pagination";
 import { Img } from "../../components/image_updatable";
 import { Link } from "react-router-dom";
+import { Status } from "../../components/status";
 
 export const RestaurantList = () => {
   const { data: restaurants = [] } = useGetResttaurantQuery("");
@@ -14,10 +15,10 @@ export const RestaurantList = () => {
         subtitle="Liste des Restaurants"
         th={[
           "Nom",
-          "Email",
+          "Organisation",
           "Adresse",
           "Téléphone",
-          "Description",
+          
           "Ouv/Ferm",
           "Status",
           "",
@@ -27,9 +28,9 @@ export const RestaurantList = () => {
             {restaurants.map((restaurant) => (
               <tr
                 key={restaurant.email}
-                className="whitespace-nowrap  py-3 text-sm text-gray-500"
+                className=""
               >
-                <td className="whitespace-nowrap py-3 pl-4 pr-3 text-sm sm:pl-0">
+                <td className="">
                   <div className="flex items-center">
                     <Img
                       hasImg={
@@ -47,28 +48,25 @@ export const RestaurantList = () => {
                     {/* <ImgPreview  name={`img_${restaurant.id}`} img={ restaurant.company.short_name=="SR" ? restaurant.profile!:restaurant.company.profile!}/> */}
 
                     <div className="flex flex-col">
-                      <div className="font-medium text-base text-gray-900">
+                    
                         {restaurant.name}
-                      </div>
-                      <div className="mt-1 text-gray-500 leading-3 text-xs">
-                        {restaurant.company!.name}
-                      </div>
+                    
+                      
+                     
                     </div>
                   </div>
                 </td>
-                <td className="">{restaurant.email}</td>
+                <td className=""> {restaurant.company!.name}</td>
                 <td className="">{restaurant.city}</td>
                 <td className="">{restaurant.phone}</td>
-                <td className="">{restaurant.description}</td>
+               
                 <td className="">
                   {restaurant.openingTime?.substring(0, 5)} /{" "}
                   {restaurant.closingTime?.substring(0, 5)}
                 </td>
 
                 <td className="">
-                  <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                    Active
-                  </span>
+               <Status status={restaurant.isActive!}     />
                 </td>
                 <td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                   <Link

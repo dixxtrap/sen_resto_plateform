@@ -23,6 +23,7 @@ export const PaymentTypeList = () => {
           "",
         ]}
         createPath="/payment_type/create"
+        isPaginated={false}
         trs={paymentType.map((e) => (
           <tr className="whitespace-nowrap  max-w-xs text-sm text-gray-500 py-2">
             <td>
