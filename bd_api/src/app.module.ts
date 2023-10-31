@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config from './mysql.config';
-import { UserModule } from './modules/user/user.module';
+import { UserModule } from './modules/user/user.module'; 
 import { CompanyModule } from './modules/company/company.module';
 import { PermissionModule } from './modules/permission/permission.module';
 import { ConfigModule } from '@nestjs/config';
