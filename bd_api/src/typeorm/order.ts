@@ -54,7 +54,7 @@ export class Order {
   restaurant: Restaurant;
   @Column({ nullable: true, default: null })
   restaurantId: number;
-  @Column('datetime')
+  @Column('datetime',{nullable:true})
   deliveryDate: Date;
   @Column({
     type: 'enum',
