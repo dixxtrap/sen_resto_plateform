@@ -22,6 +22,7 @@ import {
 
 export enum OrderStatus {
   Empty = 'empty',
+  Onbag = 'onbag',
   Active = 'active',
   Preparing = 'preparing',
   ReadyForDelivery = 'ready_for_delivery',
@@ -54,12 +55,13 @@ export class Order {
   restaurant: Restaurant;
   @Column({ nullable: true, default: null })
   restaurantId: number;
-  @Column('datetime',{nullable:true})
+  @Column('datetime', { nullable: true })
   deliveryDate: Date;
   @Column({
     type: 'enum',
     enum: OrderStatus,
     default: OrderStatus.Empty,
+    nullable: true,
   })
   status: OrderStatus;
   @ManyToMany(() => Plate, {

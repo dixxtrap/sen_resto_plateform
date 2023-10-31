@@ -1,6 +1,7 @@
 import { PlateHistory, Customer, PaymentTypeHistory, Restaurant } from './';
 export declare enum OrderStatus {
     Empty = "empty",
+    Onbag = "onbag",
     Active = "active",
     Preparing = "preparing",
     ReadyForDelivery = "ready_for_delivery",

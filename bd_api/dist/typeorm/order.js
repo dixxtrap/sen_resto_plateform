@@ -15,6 +15,7 @@ const _1 = require("./");
 var OrderStatus;
 (function (OrderStatus) {
     OrderStatus["Empty"] = "empty";
+    OrderStatus["Onbag"] = "onbag";
     OrderStatus["Active"] = "active";
     OrderStatus["Preparing"] = "preparing";
     OrderStatus["ReadyForDelivery"] = "ready_for_delivery";
@@ -58,7 +59,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Order.prototype, "restaurantId", void 0);
 __decorate([
-    (0, typeorm_1.Column)('datetime'),
+    (0, typeorm_1.Column)('datetime', { nullable: true }),
     __metadata("design:type", Date)
 ], Order.prototype, "deliveryDate", void 0);
 __decorate([
@@ -66,6 +67,7 @@ __decorate([
         type: 'enum',
         enum: OrderStatus,
         default: OrderStatus.Empty,
+        nullable: true,
     }),
     __metadata("design:type", String)
 ], Order.prototype, "status", void 0);
