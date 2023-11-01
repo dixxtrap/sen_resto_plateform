@@ -1,4 +1,0 @@
-node_modules
-dist
-src/mysql.config.ts
-.env
