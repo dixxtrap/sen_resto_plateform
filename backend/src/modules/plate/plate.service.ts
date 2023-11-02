@@ -8,6 +8,7 @@ import { InjectRepository, getRepositoryToken } from '@nestjs/typeorm';
 import { promises } from 'dns';
 import { exceptionCode } from 'src/data/exception_code';
 import { tagData } from 'src/data/tag_data';
+import { IPagination, IPaginationResult } from 'src/dto/pagination';
 import { PlateDto } from 'src/dto/plate.dto';
 import {
   FileDocument,
@@ -165,5 +166,23 @@ export class PlateService {
       .where('plate_history.plateId = :plateId', { id })
       .orderBy('plate_history.createdAt', 'DESC')
       .getOne();
+  }
+
+  // todo web
+  async getPlateForWeb(filter: IPagination) {
+    console.log(`-----------------${filter.page}----------------------`);
+    const total = await this.repos.count();
+    const pageLenght = Math.round(total / filter.pageSize);
+    const data = await this.repos.find({
+      relations: { restaurant: true, file: true, tag: true },
+      take: filter.pageSize ?? 15,
+      skip: (filter.pageSize ?? 15) * (filter.page ?? 0),
+    });
+    return {
+      next: total,
+      pageLenght,
+      total,
+      data: data.sort(() => Math.random() - 0.5),
+    };
   }
 }

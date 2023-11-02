@@ -11,7 +11,7 @@ export  const  Header=()=> {
     <Disclosure as="nav" className=" shadow sticky top-0 backdrop-blur-md z-50">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-4 bg-white/30  ">
+          <div className=" px-2 sm:px-4 lg:px-4 bg-gradient-to-b from-white to-white/40 ">
             <div className="flex h-16 justify-between">
               <div className="flex px-2 lg:px-0">
                 <Link to="/" className="flex flex-shrink-0 items-center">

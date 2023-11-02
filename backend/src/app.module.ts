@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import config from './mysql.config';
+
 import { UserModule } from './modules/user/user.module';
 import { CompanyModule } from './modules/company/company.module';
 import { PermissionModule } from './modules/permission/permission.module';
@@ -19,6 +19,8 @@ import { SecurityModule } from './modules/security/security.module';
 import { PaymentTypeModule } from './modules/payment_type/payment_type.module';
 import { JWT } from './jtw';
 import { RoleModule } from './modules/role/module';
+import config from 'mysql.config';
+import { WebModule } from './modules/web/module';
 @Module({
   imports: [
     JWT,
@@ -42,6 +44,7 @@ import { RoleModule } from './modules/role/module';
     SecurityModule,
     PaymentTypeModule,
     RoleModule,
+    WebModule,
   ],
 
   controllers: [AppController],

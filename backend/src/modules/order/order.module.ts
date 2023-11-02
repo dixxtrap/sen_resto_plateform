@@ -9,5 +9,6 @@ import { JWT } from 'src/jtw';
   imports: [JWT, TypeOrmModule.forFeature([Order, OrderPlate, PlateHistory])],
   controllers: [OrderController],
   providers: [OrderService],
+  exports: [OrderService],
 })
 export class OrderModule {}

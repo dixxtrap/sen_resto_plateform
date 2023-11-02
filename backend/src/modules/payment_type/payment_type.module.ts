@@ -9,5 +9,6 @@ import { JWT } from 'src/jtw';
   imports: [JWT, TypeOrmModule.forFeature([PaymentType, PaymentTypeHistory])],
   controllers: [PaymentTypeController],
   providers: [PaymentTypeService],
+  exports: [PaymentTypeService],
 })
 export class PaymentTypeModule {}

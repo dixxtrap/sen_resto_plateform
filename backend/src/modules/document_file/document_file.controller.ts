@@ -33,8 +33,8 @@ export class DocumentController {
     const file = await this.doc.findOneBy({
       id: id,
     });
-  
-    const filePath = join(__dirname, '..', '..', '..', file.path); // Path to the specific file
+    console.log(`----------------------${__dirname}-----------------------`);
+    const filePath = join(__dirname, '../../../../', file.path); // Path to the specific file
     return res.sendFile(filePath);
   }
   @Put(':id')

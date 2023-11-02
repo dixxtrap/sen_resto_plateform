@@ -2,6 +2,7 @@ import { Ilink } from "./constant.interface";
 
 export const constant = {
   app_name: "Sen Resto",
+  filePath:"/v1/document/file"
 };
 
 export const links: Ilink[] = [

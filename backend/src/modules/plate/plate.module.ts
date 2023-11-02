@@ -36,5 +36,6 @@ import { JWT } from 'src/jtw';
   ],
   controllers: [PlateController],
   providers: [PlateService],
+  exports: [PlateService],
 })
 export class PlateModule {}
