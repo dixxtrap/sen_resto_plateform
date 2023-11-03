@@ -1,6 +1,5 @@
 import { RestaurantDto } from "./restaurant.dto";
-import * as yup from "yup";
-import { text } from "./text";
+
 import { FileDocument } from "./file_document";
 export class CompanyDto {
   id?: number;
@@ -19,7 +18,8 @@ export class CompanyDto {
   canPublish?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
-  restaurants?: number | RestaurantDto[];
+  restaurants?: RestaurantDto[];
+  restaurantLength?: number;
   profile?: FileDocument;
 }
 // export const companySchema = yup.object({
@@ -45,4 +45,3 @@ export class CompanyDto {
 
 //   // age: yup.number().positive().integer().required(),
 // });
-
