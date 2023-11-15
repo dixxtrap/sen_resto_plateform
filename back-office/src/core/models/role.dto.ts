@@ -13,13 +13,13 @@ export class RoleDto {
   user!: User[];
 }
 export class PermissionRole {
-  id?: number;
-  createdAt?: string;
-  updatedAt?: string;
+  id!: number;
+  createdAt!: string;
+  updatedAt!: string;
   sousModule!: string;
   type!: string;
   isActive!: boolean;
-  user?: User;
+  user!: User;
 }
 export class PermissionDto {
   id!: number;

@@ -25,7 +25,9 @@ export class SecurityController {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       sameSite: 'none',
     });
-    return res.status(200).json(exceptionCode.LOGIN_SUCCESS);
+    return res
+      .status(200)
+      .json({ ...exceptionCode.LOGIN_SUCCESS, token: token });
   }
   @Get('/profile')
   @ApiBearerAuth()

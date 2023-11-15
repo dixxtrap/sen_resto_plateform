@@ -2,7 +2,7 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { FileDocument } from 'src/typeorm';
 
 export class FileDocumentDto extends PartialType(FileDocument) {
-  [x: string]: any;
+  [x: string]: any; 
   @ApiProperty()
   fieldname!: string;
   @ApiProperty()

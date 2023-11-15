@@ -21,6 +21,7 @@ import { JWT } from './jtw';
 import { RoleModule } from './modules/role/module';
 import config from 'mysql.config';
 import { WebModule } from './modules/web/module';
+import { PaymentModule } from './modules/payment/module';
 @Module({
   imports: [
     JWT,
@@ -45,6 +46,7 @@ import { WebModule } from './modules/web/module';
     PaymentTypeModule,
     RoleModule,
     WebModule,
+    PaymentModule,
   ],
 
   controllers: [AppController],

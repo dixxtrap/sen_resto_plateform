@@ -35,8 +35,10 @@ export class RestaurantController {
     return await this.companyService.createRestaurant(restaurant);
   }
   @Get('')
-  async getRestaurants() {
-    return await this.companyService.getRestaurants();
+  @ApiBearerAuth()
+  @UseGuards(LocalAuthGuard)
+  async getRestaurants(@Req() req: Request) {
+    return await this.companyService.getRestaurants(req['user']);
   }
   @Get('particulier')
   async getRestaurantsParticulier() {

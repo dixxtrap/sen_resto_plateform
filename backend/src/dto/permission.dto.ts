@@ -5,6 +5,6 @@ export class PermissionDto {
   isActive?: boolean;
   @ApiProperty()
   sousModule: string;
-  @ApiProperty({ enum: ['CREATE', 'UPDATE', 'READ', 'DELETE'] })
+  @ApiProperty({ enum: ['CREATE', 'UPDATE', 'READ', 'DELETE', '*'] })
   type: string;
 }

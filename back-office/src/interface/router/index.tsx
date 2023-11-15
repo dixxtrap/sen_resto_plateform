@@ -10,6 +10,7 @@ import { securityRouter } from "./secutrity.router";
 import { paymentTypeRouter } from "./payment_type.router";
 import { orderRouter } from "./order.router";
 import { GoogleMapComponent } from "../pages/dashboard/dashboard";
+import { paymentRouter } from "./payment.router";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
       securityRouter,
       paymentTypeRouter,
       orderRouter,
+      paymentRouter
     ],
   },
 ]);

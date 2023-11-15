@@ -5,7 +5,7 @@ import { WsMessage } from "../models/error.dto";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
-  tagTypes: ["user"],
+  tagTypes: ["user", "security"],
   endpoints: (builder) => ({
     createUser: builder.mutation<Partial<User> | WsMessage, User>({
       query: (user: User) => ({
@@ -16,8 +16,11 @@ export const userApi = createApi({
 
       invalidatesTags: ["user"],
     }),
-    updateUser: builder.mutation<Partial<User> | WsMessage, {user:User, id:number}>({
-      query: ({user, id}) => ({
+    updateUser: builder.mutation<
+      Partial<User> | WsMessage,
+      { user: User; id: number }
+    >({
+      query: ({ user, id }) => ({
         url: `user/${id}`,
         method: "PUT",
         body: user,
@@ -29,11 +32,21 @@ export const userApi = createApi({
       query: () => "user",
       providesTags: ["user"],
     }),
-    getUserById:builder.query<User, number>({
+    getUserById: builder.query<User, number>({
       query: (id) => `user/${id}`,
       providesTags: ["user"],
-    })
+    }),
+    getUserRole: builder.query<User, string>({
+      query: () => `user/profile`,
+      providesTags: ["user", "security"],
+    }),
   }),
 });
 
-export const { useCreateUserMutation, useGetUserQuery , useGetUserByIdQuery, useUpdateUserMutation} = userApi;
+export const {
+  useCreateUserMutation,
+  useGetUserQuery,
+  useGetUserByIdQuery,
+  useUpdateUserMutation,
+  useGetUserRoleQuery,
+} = userApi;

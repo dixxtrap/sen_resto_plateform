@@ -7,7 +7,7 @@ import { CompanyDto } from 'src/dto/company.dto';
 import { PermissionDto } from 'src/dto/permission.dto';
 import { PermissionRoleDto, RoleDto } from 'src/dto/role.dto';
 import { Permission, Role } from 'src/typeorm';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 
 export class PermissionService implements OnModuleInit {
   constructor(
@@ -111,6 +111,7 @@ export class PermissionService implements OnModuleInit {
     return await this.roleRepos.findOne({
       where: {
         id: id,
+      
       },
       relations: {
         permission: true,
@@ -132,15 +133,19 @@ export class PermissionService implements OnModuleInit {
 
   //TODO: PERMISSION
   async createPermission(permisionTdo: PermissionDto) {
-    Promise.all(
-      ['CREATE', 'READ', 'UPDATE', 'DELETE'].map((e) => {
-        this.permissionRepos.save(
-          this.permissionRepos.create({ ...permisionTdo, type: e }),
-        );
-      }),
-    )
-      .then((_e) => exceptionCode.SUCCEEDED)
-      .catch((_e) => new HttpException(exceptionCode.FAILLURE, 404));
+    if (permisionTdo.type === '*')
+      return Promise.all(
+        ['CREATE', 'READ', 'UPDATE', 'DELETE'].map((e) => {
+          this.permissionRepos.save(
+            this.permissionRepos.create({ ...permisionTdo, type: e }),
+          );
+        }),
+      )
+        .then((_e) => exceptionCode.SUCCEEDED)
+        .catch((_e) => new HttpException(exceptionCode.FAILLURE, 404));
+    return this.permissionRepos.save(
+      this.permissionRepos.create({ ...permisionTdo }),
+    );
   }
 
   async getPermissions(): Promise<Permission[]> {

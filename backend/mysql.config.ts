@@ -6,11 +6,11 @@ const config: MysqlConnectionOptions = {
   type: 'mysql',
   host: 'localhost',
   port: 3307,
-  username: 'root',
-  password: 'root',
+  username: 'Kalanji',
+  password: 'Kalanji2023',
   dateStrings: true,
   entities: entities,
-  database: 'sen_resto',
+  database: 'sen_resto_text',
   synchronize: true,
   //   ssl: {
   //     // Enable SSL if required

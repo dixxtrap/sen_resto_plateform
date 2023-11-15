@@ -29,9 +29,9 @@ export const PlateList = () => {
               {tags.slice(0, 8).map((tag) => (
                 <div
                   className={clsx(
-                    "whitespace-nowrap text-center bg-gradient-to-tr   ring-1 ring-inset  ring-red-50  rounded-2xl py-1 px-6 text-sm",
+                    "whitespace-nowrap text-center bg-gradient-to-tr  font-bold    ring-inset rounded-2xl py-1 px-6 text-sm",
                     tag.id! % 5 == 0 ?
-                      "from-red-500 to-red-300 text-white font-bold":"from-slate-500/20 to-slate-500/5"
+                      "from-red-500 to-red-300 text-white  ring-red-100 ring-2  ":"from-slate-500/20 to-slate-500/5  ring-1 outline-2 text-gray-500 ring-gray-200"
                   )}
                 >
                   {tag.name}

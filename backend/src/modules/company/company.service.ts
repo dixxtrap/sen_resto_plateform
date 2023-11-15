@@ -8,6 +8,7 @@ import { MustBeEntityError, Repository } from 'typeorm';
 import { PermissionService } from '../permission/permission.service';
 import { DocumentService } from '../document_file/document_file.service';
 import { FileDocumentDto } from 'src/dto/file.dto';
+import { UserDto } from 'src/dto/user.dto';
 
 @Injectable()
 export class CompanyService implements OnModuleInit {
@@ -79,7 +80,12 @@ export class CompanyService implements OnModuleInit {
     return await contactDoc;
   }
   // Restaurant
-  async getRestaurants() {
+  async getRestaurants(user: { companyId: number }) {
+    if (user.companyId)
+      return await this.restosService.find({
+        where: { isDelecetd: false, companyId: user.companyId },
+        relations: { company: { profile: true }, profile: true },
+      });
     return await this.restosService.find({
       where: { isDelecetd: false },
       relations: { company: { profile: true }, profile: true },

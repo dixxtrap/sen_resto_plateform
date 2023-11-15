@@ -6,16 +6,19 @@ import {
   Param,
   Post,
   Put,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { LocalAuthGuard } from 'src/middleware/local_auth.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserDto } from 'src/dto/user.dto';
+import { Request } from 'express';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController implements OnModuleInit {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly service: UserService) {}
   onModuleInit() {
     this.createAdmin();
   }
@@ -40,33 +43,39 @@ export class UserController implements OnModuleInit {
     admin.phone = SUPER_ADMIN_PHONE;
     admin.roleId = 1;
     try {
-        // await this.create(admin);
+      // await this.create(admin);
     } catch (error) {
       console.log(error);
     }
 
     // console.log(admin);
   }
+  @Get('profile')
+  @UseGuards(LocalAuthGuard)
+  @ApiBearerAuth()
+  getProfile(@Req() req: Request) {
+    return this.service.profile(req['user'].id);
+  }
   @Post('')
   create(@Body() user: UserDto) {
     console.log('---------------------create user--------------------', user);
-    return this.userService.create(user);
+    return this.service.create(user);
   }
 
   @Get()
   // @UseGuards(LocalAuthGuard)
   // @ApiBearerAuth()
   getAllUser() {
-    return this.userService.getAllUser();
+    return this.service.getAllUser();
   }
 
   @Get(':id')
   getUserById(@Param('id') id: number) {
-    return this.userService.getUserById(id);
+    return this.service.getUserById(id);
   }
   @Put(':id')
   updateUserById(@Param('id') id: number, @Body() user: UserDto) {
     user.id = id;
-    return this.userService.updateUserById(user);
+    return this.service.updateUserById(user);
   }
 }

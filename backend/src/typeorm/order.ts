@@ -18,6 +18,7 @@ import {
   Customer,
   PaymentTypeHistory,
   Restaurant,
+  OrderPlate,
 } from '.';
 
 export enum OrderStatus {
@@ -39,11 +40,7 @@ export enum OrderStatus {
 export class Order {
   @PrimaryGeneratedColumn()
   id: number;
-  @ManyToMany(() => Customer, {
-    cascade: true,
-    nullable: true,
-    onUpdate: 'NO ACTION',
-  })
+  @ManyToOne(() => Customer)
   customer: Customer;
   @Column({ nullable: true, default: null })
   customerId: number;
@@ -77,13 +74,8 @@ export class Order {
   description: string;
   @Column({ nullable: true })
   message: string;
-  @ManyToMany(() => PlateHistory, {
-    cascade: true,
-    onUpdate: 'NO ACTION',
-    onDelete: 'NO ACTION',
-  })
-  @JoinTable()
-  plates: PlateHistory[];
+  @OneToMany(() => OrderPlate, (item) => item.order)
+  plates: OrderPlate[];
   @Column({ default: 0, type: 'float' })
   amount: number;
   @CreateDateColumn()

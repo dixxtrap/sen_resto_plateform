@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { Plate } from "../models/plate";
-import { url } from "inspector";
 import { errorTrasform } from "./error_transformer";
 import { WsMessage } from "../models/error.dto";
 

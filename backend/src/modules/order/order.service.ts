@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { OrderAddPlate, OrderDto } from 'src/dto/order.dto';
 import { Order, OrderPlate, PlateHistory } from 'src/typeorm';
 import { OrderStatus } from 'src/typeorm/order';
-import { Equal, Repository } from 'typeorm';
+import { Equal, In, Repository } from 'typeorm';
 
 @Injectable()
 export class OrderService {
@@ -17,7 +17,9 @@ export class OrderService {
   // ----------------------Commande-------------------
   async getS() {
     console.log('---------------------------get order----------------------');
-    return await this.repos.find({});
+    return await this.repos.find({
+      relations: { plates: { plateHistory: { plate: true } }, customer: true },
+    });
   }
 
   getById(id: number) {
@@ -27,10 +29,18 @@ export class OrderService {
   create(body: OrderDto) {
     return this.repos.save(this.repos.create(body));
   }
-  async getOrCreateOrder(customerId: number, restaurantId: number) {
+  async getOrCreateOrder(
+    customerId: number,
+    restaurantId: number,
+    orderStatus: OrderStatus = OrderStatus.OnBag,
+  ) {
     const order =
       (await this.repos.findOne({
-        where: { customerId, restaurantId, status: OrderStatus.OnBag },
+        where: {
+          customerId,
+          restaurantId,
+          status: In([OrderStatus.Empty, OrderStatus.OnBag]),
+        },
       })) ??
       (await this.repos.save(
         this.repos.create({ customerId, restaurantId: restaurantId }),
@@ -48,15 +58,16 @@ export class OrderService {
       plateHistory.plate.restaurantId,
     );
     const orderPlate = await this.reposOrderPlate.findOne({
-      where: { orderId: order.id, plateHistoryId: plateHistory.id },
+      where: { plateHistoryId: plateHistory.id },
     });
 
     if (!orderPlate) {
       const newOrderPlate = await this.reposOrderPlate.save(
         this.reposOrderPlate.create({
-          orderId: order.id,
           plateHistoryId: plateHistory.id,
           quantity: body.quantity,
+          comment: body.comment,
+          orderId: order.id,
         }),
       );
       return newOrderPlate;
@@ -69,7 +80,7 @@ export class OrderService {
     console.log(decoded);
     return this.repos.find({
       where: { customerId: Equal(decoded.id) },
-      relations: { plates: { plate: true } },
+      relations: { plates: true },
     });
   }
 }

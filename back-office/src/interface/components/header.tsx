@@ -90,16 +90,23 @@ export const Header: FC<{
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
-                  <Menu.Button className="-m-1.5 flex items-center p-1.5">
+                  <Menu.Button className="-m-1.5 flex items-center p-1.5 gap-x-1">
                     <span className="sr-only">Open user menu</span>
                     <UserCircleIcon className="h-6 w-6 text-gray-400 hover:text-gray-500" />
                     <span className="hidden lg:flex lg:items-center">
-                      <span
-                        className="ml-4 text-sm font-semibold leading-6 text-gray-900"
-                        aria-hidden="true"
-                      >
-                        {user?.firstname} {user?.lastname}
-                      </span>
+                      {isSuccess && user && (
+                        <div className="flex flex-col justify-center items-center gap-y-1">
+                          <span
+                            className=" text-sm font-semibold leading-3 text-gray-900"
+                            aria-hidden="true"
+                          >
+                            {user?.firstname} {user?.lastname}
+                          </span>
+                          <span className="text-xs text-gray-500  lowercase leading-3">
+                            {user.role?.name!} {user.role?.scope!}
+                          </span>
+                        </div>
+                      )}
                       <ChevronDownIcon
                         className="ml-2 h-5 w-5 text-gray-400"
                         aria-hidden="true"

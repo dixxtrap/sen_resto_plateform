@@ -24,7 +24,7 @@ export class Plate {
   name: string;
   @OneToMany(() => PlateFile, (file) => file.plate)
   file: PlateFile;
-  @Column('varchar', { length: '350' })
+  @Column('text')
   description: string;
   @ManyToMany(() => Tag, {
     cascade: true,

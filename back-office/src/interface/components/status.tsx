@@ -6,6 +6,6 @@ type StatusProps = {
 }
 export const Status: FC<StatusProps> = ({ status, activeText="active", inactiveText="inactive" }) => {
   return (
-    <span className={`inline-flex items-center text-xs rounded-md  px-5 py-1  my-1 ring-1 ring-inset  ${status ? "ring-teal-600/20 text-teal-700 bg-teal-50" : "ring-pink-600/20 text-pink-700 bg-pink-50"}`}>{status ? activeText : inactiveText}</span>
+    <span className={`inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset  ${status ? "ring-teal-100 text-teal-50 bg-teal-500" : "ring-red-100 text-red-50 bg-red-500"}`}>{status ? activeText : inactiveText}</span>
   )
 }

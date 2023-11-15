@@ -7,6 +7,7 @@ import { CryptoService } from 'src/utils/crypto_service';
 import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class UserService {
+  [x: string]: any;
   constructor(
     @InjectRepository(User)
     private userRepos: Repository<User>,
@@ -43,6 +44,19 @@ export class UserService {
         profile: true,
         role: true,
       },
+    });
+  }
+  async profile(id: number) {
+    return await this.userRepos.findOne({
+      where: { id },
+      relations: {
+        role: {
+          permission: true,
+        },
+      },
+      // select: {
+      //   hashPassword: false,
+      // },
     });
   }
   async getUserById(id: number) {

@@ -6,14 +6,15 @@ export const securityApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
   reducerPath: "securityApi",
 
-  tagTypes: ["security"],
+  tagTypes: ["security", "user"],
   endpoints: (builder) => ({
-    login: builder.mutation<undefined, SignInDto>({
+    login: builder.mutation<{ token: string }, SignInDto>({
       query: (item) => ({
         url: "security/login",
         method: "POST",
         body: item,
       }),
+      invalidatesTags: ["security", "user"],
     }),
     signout: builder.mutation<undefined, string>({
       query: () => ({

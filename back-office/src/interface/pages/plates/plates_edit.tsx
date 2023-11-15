@@ -61,6 +61,7 @@ export const PlatesEdit = () => {
   return (
     <>
       <Alert isOpen={isOldLoading && isTagLoading} type="loading"  title="Recuperation"/>
+      <Alert isOpen={isError} type="loading"  title="Recuperation"/>
       {old&&tags&&
         <div className="flex flex-col divide-y">
           <Title title="Plat" subTitle="Modifier le plat" />
