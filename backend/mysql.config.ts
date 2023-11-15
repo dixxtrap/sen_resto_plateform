@@ -10,7 +10,7 @@ const config: MysqlConnectionOptions = {
   password: 'Kalanji2023',
   dateStrings: true,
   entities: entities,
-  database: 'sen_resto_text',
+  database: 'sen_resto_test',
   synchronize: true,
   //   ssl: {
   //     // Enable SSL if required
