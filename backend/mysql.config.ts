@@ -5,7 +5,7 @@ export const basedire = __dirname;
 const config: MysqlConnectionOptions = {
   type: 'mysql',
   host: 'localhost',
-  port: 3307,
+  port: 3306,
   username: 'Kalanji',
   password: 'Kalanji2023',
   dateStrings: true,
