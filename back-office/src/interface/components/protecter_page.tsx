@@ -1,10 +1,11 @@
-import React, { FC, ReactNode, useEffect, useState } from "react";
-import { PermissionDto, RoleDto } from "../../core/models/role.dto";
+import  { FC, ReactNode, useEffect, useState } from "react";
+
 import { Navigate } from "react-router-dom";
 
 import { useGetUserRoleQuery } from "../../core/features/auth.slice";
+import { useProfileQuery } from "../../core/features/security.slice";
 type Props = {
-  permissions: { sousModule: string; type: string }[];
+  permissions: { code: string; type: string }[];
   children?: ReactNode;
   isPage?: boolean;
 };
@@ -19,32 +20,30 @@ export const ProtecterPage: FC<Props> = ({
     isLoading,
     isError: conFailled,
     refetch,
-  } = useGetUserRoleQuery("");
+  } = useProfileQuery("");
   const [canActive, setCanActive] = useState<boolean>(false);
   const canActiveHandle = () => {
-    console.log("--------------------canActivate-----------");
-    console.log(decoded);
+  
     if (!decoded) {
       refetch();
     }
-    console.log(permissions);
-    const result = decoded?.role?.permission.some((item) => {
-      const l = permissions.map((item2) => {
-        const r =
-          (item.type.toLowerCase() === item2.type.toLowerCase() ||
+    // console.log(permissions);
+    const result = decoded?.role?.rolePermission?.some((item) => {
+     return  permissions.some((item2) => {
+      return (item.permission?.action?.toLowerCase() === item2.type.toLowerCase() ||
             item2.type.toLowerCase() === "*") &&
-          (item.sousModule.toLowerCase() === item2.sousModule.toLowerCase() ||
-            item2.sousModule.toLowerCase() === "*");
-        return r;
+          (item.permission?.module?.name?.toLowerCase() === item2.code.toLowerCase() ||
+            item2.code.toLowerCase() === "*");
+    
       });
-      return l.some((item) => item === true);
+     
     });
-    console.log(result);
+    // console.log(result);
     setCanActive(result ?? false);
   };
-  useEffect(() => {
-    if (isConnected && decoded) {
-      console.log("--------------------canActivate:useEffet-----------");
+  useEffect(() => { 
+    if (isConnected && decoded) { 
+      // console.log("--------------------canActivate:useEffet-----------");
 
       canActiveHandle();
     } else {

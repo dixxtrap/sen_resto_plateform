@@ -15,7 +15,7 @@ export default function Public() {
 
         <ShortNav />
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <main className="lg:pl-20 ">
+        <main className="lg:pl-20 min-h-screen ">
           <div className="px-4 py-10 sm:px-6 lg:px-8 text-center lg:py-6">
             {/* Main area */}
             

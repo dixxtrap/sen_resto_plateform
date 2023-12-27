@@ -9,10 +9,7 @@ import { Alert } from "../../components/alert_success";
 import { Input } from "../../components/input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  RestaurantDto,
-  restaurantSchema,
-} from "../../../core/models/restaurant.dto";
+import { CompanyDto, companySchema } from "../../../core/models/company.dto";
 import { Title } from "../../components/title";
 import { ImgPreview } from "../../components/Img_preview";
 
@@ -24,16 +21,16 @@ export const RestaurantEdit = () => {
     register,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(restaurantSchema),
+    resolver: yupResolver(companySchema),
   });
   const [updateCompany, { isLoading, isSuccess, isError, reset }] =
     useUpdateRestaurantByIdMutation();
   const { data: oldRestaurant, isLoading: isRestaurantLoading } =
     useGetRestaurantByIdQuery(parseInt(id!));
-  const _onSubmit = (body: RestaurantDto) => {
+  const _onSubmit =handleSubmit( (body: CompanyDto) => {
     console.log(body);
     updateCompany({ id: parseInt(id!), restos: body! });
-  };
+  });
   useEffect(() => {
     if (oldRestaurant) {
       setValue("name", oldRestaurant.name!);
@@ -52,21 +49,19 @@ export const RestaurantEdit = () => {
         title="Restaurant"
         subTitle={"Modifier le restaurant" + " " + oldRestaurant?.name}
       />
-      {oldRestaurant?.companyId == 1 ? (
-       
+      {oldRestaurant?.parent!.id! == 1 ? (
         <ImgPreview
           img={oldRestaurant!.profile!}
           name={"profile"}
           className="h-20 md:h-36 bg-indigo-100 mr-auto  self-start place-self-start "
-          />
-       
-      ) : null} 
+        />
+      ) : null}
       <CustomForm
         isError={isError}
         onFinish={() => reset()}
         isLoading={isLoading}
         isSuccess={isSuccess}
-        onSubmit={handleSubmit(_onSubmit)}
+        onSubmit={_onSubmit}
       >
         <Input label="Nom du Restaurant" error={errors.name?.message}>
           <input {...register("name")} className="input" />
@@ -84,21 +79,14 @@ export const RestaurantEdit = () => {
           <Input
             label="Laltitude"
             className=" max-w-lg"
-
             error={errors.city?.message}
-
-            children={
-              <input className="input " {...register("laltitude")} />
-            }
+            children={<input className="input " {...register("laltitude")} />}
           />
           <Input
             label="Longitude"
             className=" max-w-lg"
-
             error={errors.country?.message}
-            children={
-              <input className="input " {...register("longitude")} />
-            }
+            children={<input className="input " {...register("longitude")} />}
           />
         </div>
         {/* {Object.values(errors).map(e=><span>{e.message}</span>)} */}

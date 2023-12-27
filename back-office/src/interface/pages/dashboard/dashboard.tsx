@@ -10,8 +10,9 @@ import img from "../../../assets/svg/restoMap.svg";
 import plateMapImg from "../../../assets/svg/plateMap.svg";
 import { useGetResttaurantQuery } from "../../../core/features/restaurant.slice";
 import { Navigate, useNavigate } from "react-router-dom";
+import { BanknotesIcon, CakeIcon, UserIcon, WalletIcon } from "@heroicons/react/24/outline";
 const containerStyle = {
-  width: "100%",
+  width: "fit",
   height: "100vh",
 };
 
@@ -40,6 +41,25 @@ export const GoogleMapComponent: React.FC = () => {
   useEffect(() => {}, []);
 
   return (
+    <>
+    <div className="  grid grid-cols-4 h-24  gap-4 pb-5">
+    {  [
+      {number:12005600, label:"Solde",  color:"card0",icon: <UserIcon className="h-full"/>},
+
+    {number:16870, label:"Commandes", color:"card1", icon:<WalletIcon  className="h-full"/> },
+    {number:150, label:"Produits",  color:"card2",  icon:<CakeIcon  className="h-full"/> },
+      {number:2768, label:"Transactions",  color:"card3",  icon:<BanknotesIcon  className="h-full"/> },
+  
+].map((item, index)=><div className={` card `}>
+     <div className={`h-12 ${item.color}`}>
+     {item.icon!}
+     </div>
+    <div className="flex flex-col items-start  grow">
+    <span className="text-lg font-semibold">{item.label}</span>
+      <span className="text-2xl font-bold">{item.number}</span>
+    </div>
+    </div>)}
+    </div>
     <div className="h-fit max-h-[800px] rounded-md overflow-hidden">
       {loadScript.isLoaded ? (
         <GoogleMap
@@ -53,7 +73,7 @@ export const GoogleMapComponent: React.FC = () => {
               key={`key_${e.id}`}
               position={{ lat: e.laltitude!, lng: e.longitude! }}
               icon={img}
-              label={<span style={{fontWeight:"bold"}}> {e.name}</span>}
+              // label={<span style={{fontWeight:"bold"}}> {e.name}</span>}
               
               onClick={() => {
                 nav(`/restaurant/details/${e.id}`);
@@ -82,5 +102,6 @@ export const GoogleMapComponent: React.FC = () => {
         <div>Loading</div>
       )}
     </div>
+    </>
   );
 };

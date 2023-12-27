@@ -5,7 +5,7 @@ import { useCreateCompanyMutation } from "../../../core/features/company.slice";
 import { Input } from "../../components/input";
 import { CustomForm } from "../../components/custom_form";
 
-export const OrganisationCreate = () => {
+export const OrganisationCreate = ({type="company"}:{type?:string}) => {
   const [createCompany, { isError, isSuccess, isLoading }] =
     useCreateCompanyMutation();
   const {

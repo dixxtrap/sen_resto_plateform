@@ -4,16 +4,16 @@ import { useForm } from 'react-hook-form';
 import { User, userSchema } from '../../../core/models/user.dto';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Input } from '../../components/input';
-import { useGetCompanyQuery } from '../../../core/features/company.slice';
+import { useGetCompanyChildrenQuery, useGetCompanyQuery } from '../../../core/features/company.slice';
 import { useGetResttaurantQuery } from '../../../core/features/restaurant.slice';
 import { clsx } from '../../utils/clsx';
 import { useGetRolesQuery } from '../../../core/features/role.slice';
 import { useCreateUserMutation } from '../../../core/features/auth.slice';
+import { RoleDto } from "../../../core/models/role.dto";
 
 export const UserCreate = () => {
-  const {data:restaurants=[]}=useGetResttaurantQuery("");
   const {data:roles=[]}=useGetRolesQuery("");
-  const {data:companies=[]}=useGetCompanyQuery("");
+  const {data:companies=[]}=useGetCompanyChildrenQuery("");
 
 
   const [createUser, { isSuccess, isError, isLoading, reset }] = useCreateUserMutation();
@@ -31,6 +31,13 @@ export const UserCreate = () => {
       setValue("companyId" , companies[0].id)
    }
     }, [companies])
+
+    const showRole=(role:RoleDto)=>{
+      return role.children?.length!>0?<optgroup  label={role.name}>
+        <option value={role.id}>{role.name}</option>
+      {role.children?.map((role2)=><option value={role2.id}>{role2.name}</option>)}
+                 </optgroup>:<option value={role.id}>{role.name}</option>
+    }
   return (
     <div>
     <CustomForm onFinish={()=>reset()}  isSuccess={isSuccess} isError={isError} isLoading={isLoading} title='Agent' subTitle='Creer un nouveau Utilisateur'  onSubmit={handleSubmit(_onsubmit)} >
@@ -63,21 +70,13 @@ export const UserCreate = () => {
           companies.map(e=><option className='input' value={e.id}>{e.name}</option>)
         }
       </select></Input>
-      <Input label='Restaurant'>
-      <select className={clsx( "input",
-                 
-        "h-9",)} {...register("restaurantId")}>
-            <option className='input py-2' value={0}>Auccun restaurant</option>
-        {
-          restaurants.filter(e=>e.companyId==watch("companyId")).map(e=><option className='input py-2' value={e.id}>{e.name}</option>)
-        }
-      </select></Input>
+    
       <Input label='Role'>
       <select className={clsx( "input",
                  "lowercase",
                   "h-9",)} {...register("roleId")}>
         {
-          roles.map(e=><option className='input lowercase py-2' value={e.id}>{e.name}--{e.scope}</option>)
+          roles[0]?.children?.map(e=>showRole(e))
         }
       </select></Input>
     </CustomForm>

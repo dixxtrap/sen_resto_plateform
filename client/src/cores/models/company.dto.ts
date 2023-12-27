@@ -1,6 +1,11 @@
 import { RestaurantDto } from "./restaurant.dto";
 
 import { FileDocument } from "./file_document";
+export enum CompanyEnum {
+  RESTO = 'restaurant',
+  MASTER = 'master',
+  DELIVER = 'deliver',
+}
 export class CompanyDto {
   id?: number;
   name?: string;
@@ -12,6 +17,8 @@ export class CompanyDto {
   country?: string;
   postal_code?: string;
   phone?: string;
+  closingTime?: string;
+  openingTime?: string;
   laltitude?: number;
   longitude?: number;
   isActive?: boolean;
@@ -21,6 +28,7 @@ export class CompanyDto {
   restaurants?: RestaurantDto[];
   restaurantLength?: number;
   profile?: FileDocument;
+  type?: CompanyEnum;
 }
 // export const companySchema = yup.object({
 //   name: yup.string().max(30).required(),

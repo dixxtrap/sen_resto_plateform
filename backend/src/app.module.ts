@@ -3,50 +3,42 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UserModule } from './modules/user/user.module';
-import { CompanyModule } from './modules/company/company.module';
-import { PermissionModule } from './modules/permission/permission.module';
-import { ConfigModule } from '@nestjs/config';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
-import { DocumentModule } from './modules/document_file/document_file.module';
-import { OrderModule } from './modules/order/order.module';
-import { PlateModule } from './modules/plate/plate.module';
-import { TagModule } from './modules/tag/tag.module';
-import { Customer } from './typeorm';
-import { CustomerModule } from './modules/customer/module';
-import { SecurityModule } from './modules/security/security.module';
-import { PaymentTypeModule } from './modules/payment_type/payment_type.module';
 import { JWT } from './jtw';
-import { RoleModule } from './modules/role/module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { ConfigModule } from '@nestjs/config';
 import config from 'mysql.config';
-import { WebModule } from './modules/web/module';
-import { PaymentModule } from './modules/payment/module';
+import { join } from 'path';
+import { ModuleModule } from './modules/module/module.module';
+import { CategoryModule } from './modules/category/category.module';
+import { RoleModule } from './modules/role/role.module';
+import { PermissionModule } from './modules/permission/permssion.module';
+import { RolePermissionModule } from './modules/role_permsion/role_permission.module';
+import { PartnerModule } from './modules/partner/partner.module';
+import { UserModule } from './modules/user/user.module';
+import { SecurityModule } from './modules/security/security.module';
+
 @Module({
   imports: [
-    JWT,
+    SecurityModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'upload'), // Path to the static files directory
+      serveRoot: '/v1/upload',
+      serveStaticOptions: {
+        index: 'upload',
+      },
+      rootPath: join(__dirname, '../..', 'upload'), // Path to the static files directory
     }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
     TypeOrmModule.forRoot(config),
-    PermissionModule,
-    UserModule,
-    CustomerModule,
-    CompanyModule,
-
-    DocumentModule,
-    OrderModule,
-    PlateModule,
-    TagModule,
-    SecurityModule,
-    PaymentTypeModule,
+    ModuleModule,
+    CategoryModule,
     RoleModule,
-    WebModule,
-    PaymentModule,
+    PermissionModule,
+    RolePermissionModule,
+    PartnerModule,
+    UserModule,
   ],
 
   controllers: [AppController],

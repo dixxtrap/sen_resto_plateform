@@ -1,157 +1,204 @@
-import { PermissionDto } from 'src/dto/permission.dto';
+// import { PermissionDto } from 'src/dto/permission.dto';
 
-export const permissions: PermissionDto[] = [
+export const permissions = [
   {
     type: 'CREATE',
-    sousModule: 'USER',
+    label: 'Creer un nouveau utilisation',
+    code: 'USER',
   },
   {
     type: 'READ',
-    sousModule: 'USER',
+    code: 'USER',
+    label: 'Lister les utilisateurs',
   },
   {
     type: 'UPDATE',
-    sousModule: 'USER',
+    code: 'USER',
+    label: 'Modifier un utilisateur',
   },
   {
     type: 'DELETE',
-    sousModule: 'USER',
+    code: 'USER',
+    label: 'Supprimer un utilisateur',
+  },
+  {
+    type: 'DETAILS',
+    code: 'USER',
+    label: "Voir les details  d'un  utilisateur",
   },
   //   Role
   {
     type: 'CREATE',
-    sousModule: 'ROLE',
+    label: 'Creer un role',
+    code: 'ROLE',
   },
   {
     type: 'READ',
-    sousModule: 'ROLE',
+    code: 'ROLE',
+    label: 'Lister les roles',
   },
   {
     type: 'UPDATE',
-    sousModule: 'ROLE',
+    code: 'ROLE',
+    label: 'Modifier un role',
   },
   {
     type: 'DELETE',
-    sousModule: 'ROLE',
+    code: 'ROLE',
+    label: 'Supprimer un role',
   },
   //   Company
   {
     type: 'CREATE',
-    sousModule: 'COMPANY',
+    code: 'COMPANY',
+    label: 'Creer une  compagnie',
   },
   {
     type: 'READ',
-    sousModule: 'COMPANY',
+    code: 'COMPANY',
+    label: 'Lister les  compagnies',
   },
   {
     type: 'UPDATE',
-    sousModule: 'COMPANY',
+    code: 'COMPANY',
+    label: 'Modifier une  compagnie',
   },
-  {
-    type: 'DELETE',
-    sousModule: 'USER',
-  },
+
   //   RESTAURANT
   {
     type: 'CREATE',
-    sousModule: 'RESTAURANT',
+    code: 'RESTAURANT',
+    label: 'Creer un restaurant',
   },
   {
     type: 'READ',
-    sousModule: 'RESTAURANT',
+    code: 'RESTAURANT',
+    label: 'Lister les restaurants',
   },
   {
     type: 'UPDATE',
-    sousModule: 'RESTAURANT',
+    code: 'RESTAURANT',
+    label: 'Modifier un restaurant',
   },
   {
     type: 'DELETE',
-    sousModule: 'RESTAURANT',
+    code: 'RESTAURANT',
+    label: 'Supprimer un restaurant',
   },
   //   ORDER
   {
     type: 'CREATE',
-    sousModule: 'ORDER',
+    code: 'ORDER',
+    label: 'Creer une commande',
   },
   {
     type: 'READ',
-    sousModule: 'ORDER',
+    code: 'ORDER',
+    label: 'Lister les Commandes',
   },
   {
     type: 'UPDATE',
-    sousModule: 'ORDER',
+    code: 'ORDER',
+    label: 'Modifier une Commande',
   },
   {
     type: 'DELETE',
-    sousModule: 'ORDER',
+    code: 'ORDER',
+    label: 'Supprimer une Commande',
   },
   //   PLATE
 
   {
     type: 'CREATE',
-    sousModule: 'PLATE',
+    code: 'PLATE',
+    label: 'Creer  un plat',
   },
   {
     type: 'READ',
-    sousModule: 'PLATE',
+    code: 'PLATE',
+    label: 'Lister  les plats',
   },
   {
     type: 'UPDATE',
-    sousModule: 'PLATE',
+    code: 'PLATE',
+    label: 'Modifier  un plat',
   },
   {
     type: 'DELETE',
-    sousModule: 'PLATE',
+    code: 'PLATE',
+    label: 'Modifier  un plat',
   },
   //   TAGS
   {
     type: 'CREATE',
-    sousModule: 'TAGS',
+    code: 'TAGS',
+    label: 'Creer un tag',
   },
   {
     type: 'READ',
-    sousModule: 'TAGS',
+    code: 'TAGS',
+    label: 'Lister les tags',
   },
   {
     type: 'UPDATE',
-    sousModule: 'TAGS',
+    code: 'TAGS',
+    label: 'Modifier un tag',
   },
   {
     type: 'DELETE',
-    sousModule: 'TAGS',
+    code: 'TAGS',
+    label: 'Supprimer un tags',
   },
   //   PERMISSION_ROLE
   {
     type: 'CREATE',
-    sousModule: 'PERMISSION_ROLE',
+    code: 'PERMISSION_ROLE',
+    label: 'Ajouter des permission à un role',
   },
   {
     type: 'READ',
-    sousModule: 'PERMISSION_ROLE',
+    code: 'PERMISSION_ROLE',
+    label: "Lister les  permissions d'un  role",
   },
   {
     type: 'UPDATE',
-    sousModule: 'PERMISSION_ROLE',
+    code: 'PERMISSION_ROLE',
+    label: "Modifier les permissions d'un role",
   },
   {
     type: 'DELETE',
-    sousModule: 'PERMISSION_ROLE',
+    code: 'PERMISSION_ROLE',
+    label: 'Supprimer des  permissions à un role',
   },
   //   PERMISSION_USER
   {
     type: 'CREATE',
-    sousModule: 'PERMISSION_USER',
+    code: 'PAYMENT_TYPE',
+    label: 'Creer un methode de paiement',
   },
   {
     type: 'READ',
-    sousModule: 'PERMISSION_USER',
+    code: 'PAYMENT_TYPE',
+    label: 'Lister les methodes de paiement',
   },
   {
     type: 'UPDATE',
-    sousModule: 'PERMISSION_USER',
+    code: 'PAYMENT_TYPE',
+    label: 'Modifier un methode de paiement',
   },
   {
     type: 'DELETE',
-    sousModule: 'PERMISSION_USER',
+    code: 'PAYMENT_TYPE',
+    label: 'Supprimer un methode de paiement',
+  },
+  {
+    type: '*',
+    code: 'SECURITY',
+    label: 'Acceder au parametrage',
+  },
+  {
+    type: '*',
+    code: 'Permission',
+    label: 'Manager les permission',
   },
 ];

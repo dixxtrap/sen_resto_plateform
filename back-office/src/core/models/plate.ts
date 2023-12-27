@@ -11,17 +11,12 @@ export interface Plate {
   reduction?: number;
   updatedAt?: string; 
   createdAt?: string;
-  monday?: boolean;
-  tuesday?: boolean;
-  wednesday?: boolean;
-  thursday?: boolean;
-  friday?: boolean;
-  tagIds?: number[];
-  saturday?: boolean;
-  sunday?: boolean;
+ 
   cookingTime?: string;
   file?: PlateFile[];
   tag?: Tag[];
+  tagIds?: number[];
+
 }
 
 export interface PlateFile {
@@ -41,13 +36,8 @@ export const plateSchema = Yup.object({
   reduction: Yup.number(),
   tag: Yup.array(),
   tagIds: Yup.array(),
-  monday:Yup.boolean(),
-  tuesday:Yup.boolean(),
-  wednesday:Yup.boolean(),
-  thursday:Yup.boolean(),
-  friday:Yup.boolean(),
-  sunday:Yup.boolean(),
-  saturday:Yup.boolean(),
+ 
 });
+
 
 export type PlateFormDataCreate = Yup.InferType<typeof plateSchema>;

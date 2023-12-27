@@ -16,7 +16,7 @@ export const PlateItemPoppup = ({
   plate: Plate;
 }) => {
   const [selectedSize, setSelectedSize] = useState<number>(
-    plate.file![0]!.photoId
+    plate?.file![0]?.photoId??1
   );
   const [quantity, setQuantity] = useState<number>(1);
   const handleQuantity = (method: "increment" | "decrement") => {

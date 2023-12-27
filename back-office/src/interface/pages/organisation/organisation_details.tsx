@@ -4,7 +4,7 @@ import { Img } from "../../components/image_updatable";
 import { Title } from "../../components/title";
 import { Alert } from "../../components/alert_success";
 
-export const OrganisationDetails = () => {
+export const OrganisationDetails = ({type="company"}:{type?:string}) => {
   const { id } = useParams();
   const {
     data: company,

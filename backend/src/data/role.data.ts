@@ -1,6 +1,5 @@
-import { RoleDto } from 'src/dto/role.dto';
 
-export const roleData: RoleDto[] = [
+export const roleData = [
   { name: 'ADMIN', scope: 'SUPER' },
   { name: 'MASTER', scope: 'RESTAURANT' },
   { name: 'ADMIN', scope: 'RESTAURANT' },

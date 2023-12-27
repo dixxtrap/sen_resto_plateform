@@ -1,9 +1,12 @@
 import * as Yup from "yup";
 import { text } from "./text";
 import { FileDocument } from "./file_document";
-import { RoleDto } from "./role.dto";
+
 import { CompanyDto } from "./company.dto";
-import { RestaurantDto } from "./restaurant.dto";
+import { RoleDto } from "./role.dto";
+import { CreationDetailDto } from "./creation_details.dto";
+import { CoordonatesDto } from "./coordonates.dto";
+import { AddressDto } from "./address.dto";
 
 export class User {
   [x: string]: unknown;
@@ -11,18 +14,17 @@ export class User {
   lastname?: string;
   email?: string;
   phone?: string;
-  address?: string;
+  address?: AddressDto;
   city?: string;
   isAgent?: boolean;
   isAdmin?: boolean;
   country?: string;
   birthday?: string;
-  createdAt?: string;
+ details?:CreationDetailDto;
   pin?: string;
-  restaurantId?: number|null;
-  restaurant?: RestaurantDto;
-  companyId?: number|null;
-  company?: CompanyDto;
+coordonates?:CoordonatesDto;
+  parentId?: number|null;
+  parent?: CompanyDto;
   status?: boolean;
   profile?: FileDocument;
   roleId?: number;

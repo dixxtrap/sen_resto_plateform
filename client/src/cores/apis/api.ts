@@ -3,6 +3,7 @@ import { Plate } from "../models/plate";
 import { IPagination, IPaginationResult } from "../models/pagination.model";
 import { Tag } from "../models/tag.dto";
 import { CompanyDto } from "../models/company.dto";
+import { RestaurantDto } from "../models/restaurant.dto";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
@@ -16,10 +17,18 @@ export const api = createApi({
       query: () =>
         `company`,
     }),
+    getCompanyAndParticularRestaurant: builder.query<[CompanyDto], string>({
+      query: () =>
+        `company/companyAndparticularRestaurant`,
+    }),
+    getRestaurant: builder.query<[RestaurantDto], string>({
+      query: () =>
+        `restaurant/particulier`,
+    }),
     getTags: builder.query<[Tag], string>({
         query: () =>
           `tag`,
       }),
   }),
 });
-export const { useGetPlatesQuery, useGetTagsQuery, useGetCompanyQuery } = api;
+export const { useGetPlatesQuery, useGetTagsQuery, useGetCompanyQuery, useGetRestaurantQuery , useGetCompanyAndParticularRestaurantQuery} = api;

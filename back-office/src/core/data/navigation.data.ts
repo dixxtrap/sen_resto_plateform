@@ -13,6 +13,7 @@ import {
   IdentificationIcon,
   LinkIcon,
   ShieldCheckIcon,
+  TruckIcon,
   UsersIcon,
   WalletIcon,
 } from "@heroicons/react/24/outline";
@@ -22,7 +23,7 @@ import {
   RefAttributes,
   SVGProps,
 } from "react";
-import { PermissionDto } from "../models/role.dto";
+import { PermissionDto } from "../../interface/role.dto";
 type INavigation = {
   name: string;
   href: string;
@@ -32,73 +33,82 @@ type INavigation = {
       titleId?: string | undefined;
     } & RefAttributes<SVGSVGElement>
   >;
-  permissions: { sousModule: string; type: string }[];
+  permissions: { code: string; type: string }[];
 };
 export const navigationData: INavigation[] = [
   {
     name: "Dashboard",
-    href: "/dash",
+    href: "/dashboard",
     icon: HomeIcon,
-    permissions: [{ sousModule: "*", type: "*" }],
-  },
-  {
-    name: "Utilisateur",
-    href: "/user",
-    icon: UsersIcon,
-    permissions: [{ sousModule: "user", type: "*" }],
-  },
-  {
-    name: "Client",
-    href: "/customer",
-    icon: IdentificationIcon,
-    permissions: [{ sousModule: "customer", type: "*" }],
+    permissions: [{ code: "*", type: "*" }],
   },
   {
     name: "Organisation",
     href: "/organisation",
     icon: BuildingOffice2Icon,
-    permissions: [{ sousModule: "company", type: "*" }],
+    permissions: [{ code: "company_restaurant", type: "*" }],
   },
   {
     name: "Restaurant",
     href: "/restaurant",
     icon: BuildingStorefrontIcon,
-    permissions: [{ sousModule: "restaurant", type: "*" }],
+    permissions: [{ code: "restaurant", type: "*" }],
   },
+ 
+  {
+    name: "Client",
+    href: "/customer",
+    icon: IdentificationIcon,
+    permissions: [{ code: "customer", type: "*" }],
+  },
+  {
+    name: "Deliver",
+    href: "/deliver",
+    icon: TruckIcon,
+    permissions: [{ code: "*", type: "*" }],
+  },
+  {
+    name: "Utilisateur",
+    href: "/user",
+    icon: UsersIcon,
+    permissions: [{ code: "user", type: "*" }],
+  },
+ 
+ 
   {
     name: "Plats",
     href: "/plate",
     icon: CakeIcon,
-    permissions: [{ sousModule: "plate", type: "*" }],
+    permissions: [{ code: "product", type: "*" }],
   },
   {
     name: "Commandes",
     href: "/order",
     icon: ClipboardDocumentCheckIcon,
-    permissions: [{ sousModule: "order", type: "*" }],
+    permissions: [{ code: "order", type: "*" }],
   },
   {
     name: "Methode de paiement",
     href: "/payment_type",
     icon: BanknotesIcon,
-    permissions: [{ sousModule: "payment_type", type: "*" }],
+    permissions: [{ code: "payment_type", type: "*" }],
   },
   {
     name: "Payement",
     href: "/payment",
     icon: BanknotesIcon,
-    permissions: [{ sousModule: "payment", type: "*" }],
+    permissions: [{ code: "transaction", type: "*" }],
   },
-  { name: "Facture", href: "/facture", icon: WalletIcon, permissions: [{ sousModule: "factue", type: "*" }] },
+  { name: "Facture", href: "/facture", icon: WalletIcon, permissions: [{ code: "*", type: "*" }] },
   // { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
   // { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
   {
     name: "Permission",
     href: "/permission",
     icon: ShieldCheckIcon,
-    permissions: [{ sousModule: "permission", type: "*" }],
+    permissions: [{ code: "permission", type: "*" }],
   },
-  { name: "Role", href: "/security", icon: Cog6ToothIcon, permissions: [{ sousModule: "security", type: "*" }]  },
+  { name: "Role", href: "/security", icon: Cog6ToothIcon, permissions: [{ code: "role", type: "*" }]  },
 ];
 export const userNavigation = [
   { name: "Your profile", href: "#" },

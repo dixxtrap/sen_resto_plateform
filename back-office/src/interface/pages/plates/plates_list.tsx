@@ -1,20 +1,25 @@
 import React from "react";
 import { TablePagination } from "../../components/table_pagination";
-import { useGetPlateQuery } from "../../../core/features/plate.slice";
+import {
+  useGetPlateQuery,
+  useGetRestaurantPlateQuery,
+} from "../../../core/features/plate.slice";
 import { BuildingStorefrontIcon } from "@heroicons/react/24/outline";
 import { Img } from "../../components/image_updatable";
 import { clsx } from "../../utils/clsx";
 import { Link } from "react-router-dom";
 import { CakeIcon } from "@heroicons/react/20/solid";
 import { Alert } from "../../components/alert_success";
+import { useProfileQuery } from "../../../core/features/security.slice";
 
 export const PlateList = () => {
+  const { data: profile } = useProfileQuery("");
   const {
     data: plates = [],
     isSuccess,
     isLoading,
     isError,
-  } = useGetPlateQuery("");
+  } = useGetRestaurantPlateQuery(`${profile?.companyId!}`);
   return (
     <>
       <Alert isOpen={isLoading} type="loading" />
@@ -43,37 +48,29 @@ export const PlateList = () => {
                   <td className="">
                     <div className="flex items-center gap-x-3">
                       <div className=" flex-shrink-0">
-                        {e.file && e.file.length > 0 ? (
+                       
                           <Img
                             hasImg={true}
                             icon={<BuildingStorefrontIcon className="h-7" />}
                             className="h-8 rounded-md aspect-square"
-                            imgId={e.file[0].photo.id}
+                            imgId={ e.plate?.file?.length!>0? e.plate?.file![0].photoId! : 1}
                           />
-                        ) : (
-                          <CakeIcon className="h-8  md:h-8 text-indigo-500 bg-indigo-100 p-1 rounded-md" />
-                        )}
+                      
                       </div>
                       <div className="flex flex-shrink-0 flex-col">
-                        <div className="font-medium text-gray-900">
-                          {e.name}
+                        <div className="font-semibold">
+                          {e.plate?.name}
                         </div>
                         <div className="mt-1 text-gray-500">
                           {" "}
-                          {e.description!.substring(0, 30)}
+                          {e.plate?.description!.substring(0, 30)}
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td className="">
-                    {e.cookingTime} minutes
-                  </td>
-                  <td className="">
-                    {e.price} F CFA
-                  </td>
-                  <td className="">
-                    {e.reduction}
-                  </td>
+                  <td className="">{e.plate?.cookingTime} minutes</td>
+                  <td className="">{e.plate?.price} F CFA</td>
+                  <td className="">{e.plate?.reduction}</td>
                   <td className=" ">
                     <div
                       className={clsx(
@@ -180,11 +177,14 @@ export const PlateList = () => {
                     </div>
                   </td>
                   <td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    <Link to={`/plate/details/${e.id}`} className="last_td">
+                    <Link to={`/plate/details/${e.plateId}`} className="last_td">
                       Details
                     </Link>
-                    <Link to={`/plate/edit/${e.id}`} className="last_td">
-                      Modifier
+                    <Link to={`/plate/edit/${e.plateId}`} className="last_td">
+                      Modifier Plat
+                    </Link>
+                    <Link to={`/plate/management/${e.plateId}`} className="last_td">
+                      Modifier Planing
                     </Link>
                   </td>
                 </tr>

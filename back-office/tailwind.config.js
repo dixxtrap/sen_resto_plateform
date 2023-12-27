@@ -1,10 +1,20 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{html,js,tsx,ts}"],
+darkMode:"class",
   theme: {
+  
     extend: {
+  
       colors: {
-        indigo: {
+        kdark:{
+          divider:"#414953",
+          text:"#cccbca",
+          TitleText:"#f0efee",
+          kdarkbg:"#1c2128",
+        },
+     
+        primary: {
           '50': '#fff2f2',
           '100': '#ffd4d4',
           '200': '#fca5a5',
@@ -29,6 +39,7 @@ export default {
           '900': '#1d4044',
         },
       },
+    
     },
   },
   plugins: [

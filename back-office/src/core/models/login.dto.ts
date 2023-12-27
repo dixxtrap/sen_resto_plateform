@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { text } from "./text";
 export class SignInDto{
-        email?:string;
+        username?:string;
         password?:string;
 }
 

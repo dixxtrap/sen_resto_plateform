@@ -7,7 +7,7 @@ const ThemeProvider = ({ children }:{children:React.ReactNode}) => {
 
   const themeClass = currentTheme;
 
-  return <div className={themeClass}>{children}</div>;
+  return <div className={themeClass+ " h-full w-full dark:bg-slate-900"} >{children}</div>;
 };
 
 export default ThemeProvider;

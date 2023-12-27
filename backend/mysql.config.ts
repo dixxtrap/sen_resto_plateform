@@ -5,9 +5,9 @@ export const basedire = __dirname;
 const config: MysqlConnectionOptions = {
   type: 'mysql',
   host: 'localhost',
-  port: 3306,
-  username: 'Kalanji',
-  password: 'Kalanji2023',
+  port: 3307,
+  username: 'root',
+  password: 'root',
   dateStrings: true,
   entities: entities,
   database: 'sen_resto_test',

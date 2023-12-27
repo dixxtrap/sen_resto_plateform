@@ -21,7 +21,7 @@ export const OrganisationList = () => {
                          <Img  hasImg={company?.profile?.path!=='' &&company?.profile?.path!==null && company?.profile!=null} icon={<BuildingOffice2Icon  className='h-5  text-indigo-500 mr-2'/>} className='h-7 mr-2  aspect-square' imgId={company.profile?.id} />
                         </div>
                        
-                          <div className="font-medium text-gray-900">{company.name}</div>
+                          <div className="font-medium ">{company.name}</div>
                           {/* <div className="mt-1 text-gray-500">{company.email}</div> */}
                       
                       </div>

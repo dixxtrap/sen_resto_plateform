@@ -9,7 +9,7 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     createUser: builder.mutation<Partial<User> | WsMessage, User>({
       query: (user: User) => ({
-        url: "user",
+        url: "user/create",
         method: "POST",
         body: user,
       }),
@@ -21,7 +21,7 @@ export const userApi = createApi({
       { user: User; id: number }
     >({
       query: ({ user, id }) => ({
-        url: `user/${id}`,
+        url: `user/update/${id}`,
         method: "PUT",
         body: user,
       }),
@@ -29,11 +29,11 @@ export const userApi = createApi({
       invalidatesTags: ["user"],
     }),
     getUser: builder.query<User[], string>({
-      query: () => "user",
+      query: () => "user/all",
       providesTags: ["user"],
     }),
     getUserById: builder.query<User, number>({
-      query: (id) => `user/${id}`,
+      query: (id) => `user/byId/${id}`,
       providesTags: ["user"],
     }),
     getUserRole: builder.query<User, string>({

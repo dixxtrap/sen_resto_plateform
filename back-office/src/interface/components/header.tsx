@@ -16,6 +16,7 @@ import {
 } from "../../core/features/security.slice";
 import { Alert } from "./alert_success";
 import { Img } from "./image_updatable";
+import { ThemeToggler } from "./theme_toggler";
 export const Header: FC<{
   sidebarOpen: boolean;
   setSidebarOpen: Dispatch<SetStateAction<boolean>>;
@@ -28,47 +29,38 @@ export const Header: FC<{
       isSuccess: isDisconnecteSuccess,
     },
   ] = useSignoutMutation();
-  const { data: user, isSuccess, refetch } = useProfileQuery("");
+  const { data: user, isSuccess, refetch , isError} = useProfileQuery("");
+  // console.log(user);
   useEffect(() => {
     refetch();
   }, [refetch]);
   return (
     <>
+    {isError&& <Navigate to ="/"/>}
       <Alert isOpen={isDisconnecteLoading} type="loading" />
       <Alert isOpen={isDisconnecteError} type="faillure" />
       {isDisconnecteSuccess && <Navigate to={"/"} />}
-      <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+      <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b kdar px-4 shadow-sm sm:gap-x-6  darkBg bg-white  darkDivider  sm:px-6 lg:px-8">
         {isSuccess && (
           <>
             <button
               type="button"
-              className="-m-2.5 p-2.5  lg:pl-20 text-gray-700 "
+              className="-m-2.5 p-2.5  lg:pl-20  "
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+              <Bars3Icon className="h-6 w-6 " aria-hidden="true" />
             </button>
             {/* Separator */}
             <div className="h-6 w-px bg-gray-900/10 " aria-hidden="true" />
 
             <div className="grow flex items-center gap-x-3">
-              {user?.company && (
-                <Img
-                  className="h-8  md:h-10 rounded-md"
-                  hasImg={user?.company?.profile?.size! > 0}
-                  imgId={
-                    user!.company!.id === 1
-                      ? user?.restaurant?.profile!.id ??
-                        user?.company!.profile?.id
-                      : user?.company!.profile?.id
-                  }
-                />
-              )}
+             
 
-              <span className="text-indigo-600 text-xl font-bold">
-                {user?.company?.id == 1
-                  ? user.restaurant?.name ?? user?.company?.name
-                  : user?.company?.name}
+              <span className=" text-xl font-bold">
+                {user?.parent?.shortname === "SR"
+                  ? user.parent?.name 
+                  : user?.parent?.name}
               </span>
             </div>
 
@@ -81,7 +73,7 @@ export const Header: FC<{
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
-
+<ThemeToggler/>
                 {/* Separator */}
                 <div
                   className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"
@@ -97,13 +89,13 @@ export const Header: FC<{
                       {isSuccess && user && (
                         <div className="flex flex-col justify-center items-center gap-y-1">
                           <span
-                            className=" text-sm font-semibold leading-3 text-gray-900"
+                            className=" text-sm font-semibold leading-3 "
                             aria-hidden="true"
                           >
                             {user?.firstname} {user?.lastname}
                           </span>
                           <span className="text-xs text-gray-500  lowercase leading-3">
-                            {user.role?.name!} {user.role?.scope!}
+                            {user.role?.name!}
                           </span>
                         </div>
                       )}
@@ -138,7 +130,7 @@ export const Header: FC<{
                             "block px-3 py-1 text-sm leading-6 text-gray-900"
                           )}
                         >
-                          {user?.company?.phone}
+                          {user?.parent?.phone}
                         </span>
                       </Menu.Item>
                       <button

@@ -1,74 +1,53 @@
-import { Company } from './company';
-import { Role } from './role';
-import { Restaurant } from './restaurant';
-import { Permission } from './permission';
-import { User } from './user';
-import { PermissionUser } from './permission_user';
-import { PermissionRole } from './permission_role';
-import { Plate } from './plate';
-import { RestaurantContact } from './restaurant_contact';
-import { CompanyContact } from './company_contact';
-import { Contact } from './contact';
-
-import { PaymentType } from './payment_type';
-import { Payment } from './payment';
-import { Order } from './order';
-import { FileDocument } from './document';
-import { PlateFile } from './plate_file';
-import { Tag } from './tag';
-import { TagPlate } from './tag_plat';
-import { Customer } from './customer';
-import { OrderPlate } from './order_plate';
-import { PlateHistory } from './plate_amount';
-import { PaymentTypeHistory } from './payment_type_history';
+import {
+  CompanyRestaurantBase,
+  CompanyRestaurant,
+  Restaurant,
+} from './company_restaurant.entity';
+import { ModuleEntity } from './module.entity';
+import { Partner } from './partner.entity';
+import { PaymentType } from './payment_type.entity';
+import { Permission } from './permission.entity';
+import { Role } from './role.entity';
+import { RolePermission } from './role_permissison.entity';
+import { User } from './user.entity';
+import { Weekday } from './weekday.entity';
+import { Category } from './category.entity';
+import { Customer } from './customer.entity';
+import { Contrat } from './contrat.entity';
+import {
+  ProductManagement,
+  ProductManagementDay,
+} from './product_management.entity';
+import { ProductFile } from './product_file.entity';
+import { Product } from './product.entity';
 
 // export
 export {
-  Company,
-  Role,
-  Restaurant,
-  Permission,
+  Partner,
+  CompanyRestaurant,
+  CompanyRestaurantBase,
+  Weekday,
   User,
-  PermissionUser,
-  PermissionRole,
-  Plate,
-  RestaurantContact,
-  Customer,
-  CompanyContact,
-  Contact,
-  PaymentType,
-  PaymentTypeHistory,
-  Payment,
-  Order,
-  FileDocument,
-  PlateFile,
-  TagPlate,
-  Tag,
-  OrderPlate,
-  PlateHistory,
+  Role,
+  Permission,
 };
 export const entities = [
-  Company,
-  Role,
-  Restaurant,
-  Permission,
+  Partner,
+  CompanyRestaurantBase,
+  CompanyRestaurant,
+  Weekday,
   User,
-  PermissionUser,
-  PermissionRole,
-  Plate,
-  RestaurantContact,
-  CompanyContact,
-
-  Customer,
-
+  Role,
+  RolePermission,
+  Permission,
+  ModuleEntity,
   PaymentType,
-  PaymentTypeHistory,
-  Payment,
-  Order,
-  FileDocument,
-  PlateFile,
-  TagPlate,
-  Tag,
-  OrderPlate,
-  PlateHistory,
+  Category,
+  Restaurant,
+  Customer,
+  Contrat,
+  Product,
+  ProductFile,
+  ProductManagement,
+  ProductManagementDay,
 ];

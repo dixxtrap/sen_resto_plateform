@@ -1,33 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+html, body{
+  @apply dark:bg-slate-950 dark:text-slate-50 h-screen;
+}
 td,
 th {
-  @apply text-left  whitespace-nowrap   text-sm text-gray-500;
+  @apply text-left  whitespace-nowrap   text-sm text-gray-500 dark:text-kdark-text/80;
 }
 td{
   @apply py-2
 }
 .bgInput {
-  @apply bg-slate-100/60;
+  @apply bg-slate-100/60  dark:bg-[#252628];
+}
+.darkDivider{
+  @apply dark:border-kdark-divider/25  dark:divide-kdark-divider/25
+}
+.darkBg{
+  @apply dark:bg-[#1e1f21]
 }
 .input {
-  @apply block w-full rounded-md  border-0 py-1.5   px-2  bg-slate-100/40 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-[1.0px] focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
+  @apply block w-full rounded-md bgInput border-0 py-1.5   px-2   shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-kdark-divider/50 placeholder:text-gray-400 focus:ring-[1.0px] focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
 }
 .switchBase {
   @apply flex bgInput p-2 ring-1 ring-gray-300 ring-inset rounded-md gap-x-3 justify-between;
 }
 
 .last_td {
-  @apply text-secondary-600  font-semibold px-2 hover:text-secondary-900;
+  @apply text-secondary-900  dark:text-secondary-100/90  px-2 hover:text-secondary-900;
 }
 .last_td_container{
-        @apply relative whitespace-nowrap  pl-3 pr-4 text-right text-base font-medium sm:pr-0;
+        @apply relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0;
 }
 .button{
   @apply rounded-sm font-medium  py-2 px-3
 }
 .button.primary{
-  @apply bg-indigo-500 text-white   hover:bg-indigo-500/90 hover:shadow-md duration-150
+  @apply bg-primary-500 dark:bg-primary-400 rounded-md text-white   hover:bg-primary-500/90 hover:shadow-md duration-150
+}
+.title{
+  @apply text-slate-900 dark:text-slate-50
+}
+
+.card{
+  @apply bg-gradient-to-tr flex ring-[0.5px] ring-inset ring-gray-400/25 items-center px-3 gap-2 bg-slate-600/5  dark:bg-black/95  rounded-md  
+}
+.cardNum{
+  @apply p-2  rounded-md
+}
+.card0{
+  @apply bg-amber-500/10  cardNum  dark:text-amber-400   text-amber-500
+}
+.card1{
+  @apply bg-red-500/10  cardNum  dark:text-red-400  text-red-500
+} 
+.card2{
+  @apply bg-teal-500/10  cardNum  dark:text-teal-400  text-teal-500
+}
+.card3{
+  @apply bg-purple-500/10 cardNum  dark:text-indigo-400 text-indigo-500
+}
+
+.detailsValue{
+  @apply font-bold mr-4 text-opacity-60;
 }

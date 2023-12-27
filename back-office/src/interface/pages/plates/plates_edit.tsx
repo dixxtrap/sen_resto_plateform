@@ -63,7 +63,7 @@ export const PlatesEdit = () => {
       <Alert isOpen={isOldLoading && isTagLoading} type="loading"  title="Recuperation"/>
       <Alert isOpen={isError} type="loading"  title="Recuperation"/>
       {old&&tags&&
-        <div className="flex flex-col divide-y">
+        <div className="flex flex-col divide-y darkDivider">
           <Title title="Plat" subTitle="Modifier le plat" />
           <div className="flex flex-wrap">
             {old?.file?.map((e) => (
@@ -104,78 +104,7 @@ export const PlatesEdit = () => {
             </Input>
             <Input label="description" error={errors.description?.message}>
               <textarea className="input" {...register("description")} />
-              <div className="flex flex-wrap w-full mt-4 gap-x-3">
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Lundi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("monday")!}
-                    onClick={(val) => setValue("monday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Mardi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("tuesday")!}
-                    onClick={(val) => setValue("tuesday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Mercredi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("wednesday")!}
-                    onClick={(val) => setValue("wednesday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Jeudi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("thursday")!}
-                    onClick={(val) => setValue("thursday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Vendredi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("friday")!}
-                    onClick={(val) => setValue("friday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Samedi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("saturday")!}
-                    onClick={(val) => setValue("saturday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Dimanche
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("sunday")!}
-                    onClick={(val) => setValue("sunday", val)}
-                  />
-                </div>
-              </div>
+            
             </Input>
             <Input
               label="Liste des tags #"

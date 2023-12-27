@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { Plate } from "../../cores/models/plate";
-import {
-  PlusIcon,
-  ShoppingCartIcon,
-} from "@heroicons/react/24/outline";
+import { PlusIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 import { constant } from "../../utils/constant";
 import { PlateItemPoppup } from "./order_poppup";
@@ -17,7 +14,7 @@ export const PlateItem = ({ plate }: { plate: Plate }) => {
       <div key={plate.id} className="group plate">
         <div className="aspect-h-1  aspect-w-1 w-full  overflow-hidden   xl:aspect-h-4 xl:aspect-w-7 relative">
           <img
-            src={`${constant.filePath}/${plate!.file![0].photoId}`}
+            src={`${constant.filePath}/${plate?.file![0]?.photoId??1}`}
             alt={plate.name}
             className="h-36 md:h-60 lg:h-72 w-full object-cover object-center group-hover:opacity-75"
           />

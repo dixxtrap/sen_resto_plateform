@@ -5,7 +5,7 @@ import { CustomForm } from "../../components/custom_form";
 import { SignInDto, SigniInSchema } from "../../../core/models/login.dto";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useLoginMutation } from "../../../core/features/security.slice";
-import { Navigate } from "react-router-dom";
+import * as Yup from "yup";
 import { useGetUserRoleQuery } from "../../../core/features/auth.slice";
 import { useEffect } from "react";
 export const Login = () => {
@@ -17,7 +17,10 @@ export const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(SigniInSchema),
+    resolver: yupResolver(Yup.object(
+    {  username:Yup.string(),
+      password:Yup.string(),}
+    )),
   });
 
   const _onSubmit = async (data: SignInDto) => {
@@ -35,11 +38,11 @@ export const Login = () => {
 
   return (
     <>
-      {isSuccess && <Navigate to="/dash" />}
+  
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <Logo className="self-center mx-auto h-28 w-28  md:h-32 md:w32" />
-          <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight ">
             Se Connecter a votre compte
           </h2>
         </div>
@@ -50,12 +53,14 @@ export const Login = () => {
             isSuccess={isSuccess}
             onFinish={() => reset()}
             isLoading={isLoading}
+            
             onSubmit={handleSubmit(_onSubmit)}
+            successPath="/dashboard"
           >
             <Input
               label="Adresse Email"
-              error={errors.email?.message}
-              children={<input className="input" {...register("email")} />}
+              error={errors.username?.message}
+              children={<input className="input" {...register("username")} />}
             />
             <Input
               label="Mot de Passe"

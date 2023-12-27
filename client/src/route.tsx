@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { BasePage } from "./interfaces/pages/base";
 import Home from "./interfaces/pages/home";
 import { PlateList } from "./interfaces/pages/plate_list";
-
+import { Restaurant } from "./interfaces/pages/restaurant_list";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +17,10 @@ export const router = createBrowserRouter([
       {
         path: "plate",
         element: <PlateList />,
+      },
+      {
+        path: "restaurant",
+        element: <Restaurant />,
       },
     ],
   },

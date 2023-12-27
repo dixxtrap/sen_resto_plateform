@@ -7,6 +7,7 @@ import { Status } from '../../components/status'
 export const UserList = () => {
         const {data:users=[]}=useGetUserQuery("")
   return (
+    <div>
     <TablePagination 
     title='Agents' 
     subtitle='Liste des Agents'
@@ -16,25 +17,25 @@ export const UserList = () => {
         <>
                  {users.map((user) => (
                         <tr key={user.email+"_"+user.id}>
-                          <td className="whitespace-nowrap py-3 pl-4 pr-3 text-sm sm:pl-0">
+                          <td className="">
                             <div className="flex items-center">
                              
                              
 {/* <ImgPreview  name={`img_${user.id}`} img={ user.company.short_name=="SR" ? user.profile!:user.company.profile!}/> */}
                             
                              <div className='flex flex-col'>
-                             <div className="font-medium  text-gray-900">{user.firstname} {user.lastname}</div>
+                             <div className="font-bold  ">{user.firstname!} {user.lastname!}</div>
                                 
                              </div>
                                 
                             
                             </div>
                           </td>
-                          <td className="">{user!.role!.name} {user!.role!.scope}</td>
+                          <td className="">{user!.role!.name??""} {user!.role!.code??""}</td>
       
                         
                         
-                          <td className="">{user.address}-{user.city}</td>
+                          <td className="">{user.address?.country!}-{user.city}</td>
                           <td className="">{user.phone}</td>
                           <td className="">
                        <Status status={ user.status!} inactiveText='Inactif' activeText='Actif' />
@@ -52,5 +53,6 @@ export const UserList = () => {
                       </>}
        
     />
+    </div>
   )
 }

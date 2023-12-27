@@ -20,6 +20,10 @@ export const companyApi = createApi({
         query:()=>"/company",
         providesTags:["company"]
 }),
+getCompanyChildren:builder.query<CompanyDto[],string>({
+  query:()=>"/company/children",
+  providesTags:["company"]
+}),
 getCompanyById: builder.query<Partial<CompanyDto> ,string>({
         query: (id)=>`/company/${id}`,
         providesTags:["company"]
@@ -36,4 +40,4 @@ updateCompanyById: builder.mutation<CompanyDto, { id: number, company: CompanyDt
 });
 
 
-export const {useCreateCompanyMutation, useGetCompanyQuery, useGetCompanyByIdQuery, useUpdateCompanyByIdMutation}=companyApi
+export const {useCreateCompanyMutation,useGetCompanyChildrenQuery, useGetCompanyQuery, useGetCompanyByIdQuery, useUpdateCompanyByIdMutation}=companyApi

@@ -1,21 +1,14 @@
-import React from "react";
+
 import { CustomForm } from "../../components/custom_form";
 import {
   useCreateRestaurantMutation,
-  useGetRestaurantByIdQuery,
 } from "../../../core/features/restaurant.slice";
-import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Input } from "../../components/input";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  RestaurantDto,
-  restaurantSchema,
-} from "../../../core/models/restaurant.dto";
+import { CompanyDto, companySchema } from "../../../core/models/company.dto";
 
 export const RestaurantCreate = () => {
-  const { id } = useParams();
-  const { data: oldRestaurant } = useGetRestaurantByIdQuery(parseInt(id!));
   const [create, { isError, isLoading, isSuccess }] =
     useCreateRestaurantMutation();
   const {
@@ -23,11 +16,12 @@ export const RestaurantCreate = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(restaurantSchema),
+    resolver: yupResolver(companySchema),
   });
-  const _onSubmit =handleSubmit((body: RestaurantDto) => {
+  const _onSubmit = handleSubmit((body: CompanyDto) => {
+    console.log(`-------------------${body.description}`);
     console.log(body);
-    create(body);
+    create({ ...body, short_name: body.name });
   });
   return (
     <CustomForm
@@ -35,9 +29,16 @@ export const RestaurantCreate = () => {
       isError={isError}
       isLoading={isLoading}
       isSuccess={isSuccess}
-      subTitle={"Modifier le restaurant" + " " + oldRestaurant?.name}
+      subTitle={" Creer un nouveau restaurant"}
       onSubmit={_onSubmit}
     >
+      <ul>
+        {Object.entries(errors).map(([cle, valeur]) => (
+          <li key={cle}>
+            <strong>{cle}:</strong> {valeur.message}
+          </li>
+        ))}
+      </ul>
       <Input label="Nom du Restaurant" error={errors.name?.message}>
         <input {...register("name")} className="input" />
       </Input>
@@ -51,43 +52,49 @@ export const RestaurantCreate = () => {
         <textarea {...register("description")} className="input" />
       </Input>
       <div className="flex gap-8 w-full flex-wrap">
-          <Input
-            label="Longitude"
-            error={errors.longitude?.message}
-            className=" max-w-lg"
-
-            children={
-              <input className="input grow " {...register("longitude")} />
-            }
-          />
-          <Input
-            label="Laltitude"
-            error={errors.laltitude?.message}
-            className=" max-w-lg"
-            children={
-              <input className="input grow "{...register("laltitude")} />
-            }
-          />
+        <Input
+          label="Longitude"
+          error={errors.longitude?.message}
+          className=" max-w-lg"
+          children={
+            <input className="input grow " {...register("longitude")} />
+          }
+        />
+        <Input
+          label="Laltitude"
+          error={errors.laltitude?.message}
+          className=" max-w-lg"
+          children={
+            <input className="input grow " {...register("laltitude")} />
+          }
+        />
       </div>
       <div className="flex gap-8 w-full flex-wrap">
-          <Input
-            label="Ouverture"
-            error={errors.openingTime?.message}
-            className=" max-w-lg"
-
-            children={
-              <input className="input grow " placeholder="00:00:00" {...register("openingTime")} />
-            }
-          />
-          <Input
-            label="Fermuture"
-            error={errors.closingTime?.message}
-            className=" max-w-lg"
-            children={
-              <input className="input grow "  placeholder="00:00:00" {...register("closingTime")} />
-            }
-          />
-        </div>
+        <Input
+          label="Ouverture"
+          error={errors.openingTime?.message}
+          className=" max-w-lg"
+          children={
+            <input
+              className="input grow "
+              placeholder="00:00:00"
+              {...register("openingTime")}
+            />
+          }
+        />
+        <Input
+          label="Fermuture"
+          error={errors.closingTime?.message}
+          className=" max-w-lg"
+          children={
+            <input
+              className="input grow "
+              placeholder="00:00:00"
+              {...register("closingTime")}
+            />
+          }
+        />
+      </div>
     </CustomForm>
   );
 };

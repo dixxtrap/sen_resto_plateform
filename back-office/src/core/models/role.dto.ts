@@ -1,31 +1,25 @@
-import { User } from "./user.dto";
 
+import * as Yup from "yup"
+import { User } from "./user.dto";
+import { RolePermissionDto } from "./permission_role.dto";
+import { CreationDetailDto } from "./creation_details.dto";
 export class RoleDto {
-  id!: number;
-  name!: string;
-  scope!: string;
-  createdAt!: string;
+  id?: number;
+  name?: string;
+  code?: string;
+ children?:RoleDto[];
   isActive?: boolean;
-  updatedAt!: string;
-  permissionLenght?: number;
-  userLenght?: number;
-  permission!: PermissionRole[];
-  user!: User[];
+ details?:CreationDetailDto;
+parent?:RoleDto;
+parentId?:number;
+  rolePermission?: RolePermissionDto[];
+  user?: User[];
+  description?: string;
 }
-export class PermissionRole {
-  id!: number;
-  createdAt!: string;
-  updatedAt!: string;
-  sousModule!: string;
-  type!: string;
-  isActive!: boolean;
-  user!: User;
-}
-export class PermissionDto {
-  id!: number;
-  createdAt!: string;
-  updatedAt!: string;
-  sousModule!: string;
-  isActive!: boolean;
-  type!: string;
-}
+
+export const roleSchema=Yup.object({
+  name:Yup.string(),
+  code:Yup.string(),
+  description:Yup.string(),
+
+})

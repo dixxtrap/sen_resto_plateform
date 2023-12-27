@@ -14,7 +14,7 @@ import { ImgPreview } from "../../components/Img_preview";
 import { Alert } from "../../components/alert_success";
 import { CameraIcon } from "@heroicons/react/24/outline";
 
-export const OrganisationEdit = () => {
+export const OrganisationEdit = ({type="company"}:{type?:string}) => {
   const id = useParams().id!;
   const {
     data: old,
