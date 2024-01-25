@@ -4,4 +4,6 @@
 ./backend/src/upload/
 ./backend/upload
 ./backend/upload/img
+*/upload
+*/upload/img/
 ./client/node_modules
