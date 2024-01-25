@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:mobile/cores/model/document.dart';
 import 'package:mobile/interfaces/utils/kprint.dart';
@@ -64,17 +64,17 @@ class Company {
     updatedAt = json['updatedAt'];
     kprint("-----------------------toJson---------------------------");
     profile =
-        json['profile'] != null ? new Photo.fromJson(json['profile']) : null;
+        json['profile'] != null ? Photo.fromJson(json['profile']) : null;
     if (json['restaurants'] != null) {
       restaurants = <Restaurant>[];
       json['restaurants'].forEach((v) {
-        restaurants!.add(new Restaurant.fromJson(v));
+        restaurants!.add(Restaurant.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] = id;
     data['name'] = name;
     data['short_name'] = shortName;

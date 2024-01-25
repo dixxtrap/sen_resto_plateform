@@ -16,16 +16,22 @@ import { LocalAuthGuard } from './local_auth.guard';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Request, Response } from 'express';
 import { UserDto } from 'src/typeorm/user.entity';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from './jwt_auth.guard';
 
 @Controller('security')
 @ApiTags('security')
 export class SecurityController {
   constructor(private service: SecurityService) {}
-
+  
+  @Get('user/profile')
+  @UseGuards(JwtAuthGuard)
+  userProfile(@Body() body: LoginDto, @Req() req: Request) {
+    return req.user;
+  }
   @Post('login')
   @UseGuards(LocalAuthGuard)
   login(@Body() body: LoginDto) {
+    console.log(body);
     return HttpExceptionCode.LOGIN_SUCCESS;
   }
 
@@ -52,7 +58,7 @@ export class SecurityController {
     );
   }
 
-  @Get('forgot-password')
+  @Get('forgot_password')
   forgotPaswordVerification(
     @Query('token') token: string,
     @Res() res: Response,
@@ -70,7 +76,7 @@ export class SecurityController {
     body.token = token;
     return this.service.definePassword(body);
   }
-  @Post('forgot-password')
+  @Post('forgot_password')
   forgotPassword(@Body('email') body: string) {
     return this.service.forgotPassword(body);
   }

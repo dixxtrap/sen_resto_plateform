@@ -8,12 +8,12 @@ export const restaurantApi = createApi({
   tagTypes: ["restaurant"],
   endpoints: (builder) => ({
     getResttaurant: builder.query<CompanyDto[], string>({
-      query: () => `restaurant`,
+      query: () => `restaurant/all`,
       providesTags: ["restaurant"],
     }),
     createRestaurant: builder.mutation<CompanyDto, CompanyDto>({
       query: (restaurant) => ({
-        url: "restaurant",
+        url: "restaurant/create",
         method: "POST",
         body: restaurant,
       }),
@@ -24,14 +24,14 @@ export const restaurantApi = createApi({
       { id: number; restos: CompanyDto }
     >({
       query: ({ id, restos }) => ({
-        url: `restaurant/${id}`,
+        url: `restaurant/update/${id}`,
         method: "PUT",
         body: restos,
       }),
       invalidatesTags: ["restaurant"],
     }),
     getRestaurantById: builder.query<CompanyDto, number>({
-      query: (id) => `restaurant/${id}`,
+      query: (id) => `restaurant/byId/${id}`,
       providesTags: ["restaurant"],
     }),
   }),

@@ -15,7 +15,8 @@ export const PaymentTypeList = () => {
         title="Methode de Paiement"
         th={[
           "Nom",
-          "description",
+          "Telephone",
+          "email",
           "frais",
           "frais Operateur",
           "date de Création",
@@ -27,22 +28,20 @@ export const PaymentTypeList = () => {
         trs={paymentType.map((e) => (
           <tr className="whitespace-nowrap  max-w-xs text-sm text-gray-500 py-2">
             <td>
-              <div className="flex gap-x-3 items-center" >
+              <div className="flex gap-x-3 items-center " >
                 <Img
-                  hasImg={e.profile!.size! > 0}
-                  imgId={e.profile!.id}
+                  imgPath={e.imagePath}
+
                   className="w-8 rounded-md"
-                  icon={
-                    <BanknotesIcon className="h-7 mx-1 text-indigo-600 bg" />
-                  }
-                />
-                <span>{e.name}</span>
+                  icon={<BanknotesIcon className="h-7 mx-1 text-primary-600 bg" />} hasImg={e.imagePath!==null}                />
+                <span className="font-bold">{e.name}</span>
               </div>
             </td>
-            <td>{e.description}</td>
+            <td>{e.phone}</td>
+            <td>{e.email }</td>
             <td>{e.fees} %</td>
-            <td>{e.feesInvert} %</td>
-            <td>{formatDate(e.createdAt!)} </td>
+            <td>{e.invertFees} %</td>
+            <td>{formatDate(e.details?.createdAt!)} </td>
             <td>
               <Status
                 status={e.isActive!}

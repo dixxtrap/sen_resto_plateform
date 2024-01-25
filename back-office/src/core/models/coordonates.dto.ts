@@ -1,4 +1,10 @@
+import * as Yup  from "yup"
 export class CoordonatesDto{
-        laltitude?:number;
+        latitude?:number;
         longitude?:number;
 }
+
+export const coordonatesSchema=Yup.object({
+        latitude:Yup.number(),
+        longitude:Yup.number(),
+})

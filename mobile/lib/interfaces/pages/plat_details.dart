@@ -4,7 +4,6 @@ import 'package:mobile/cores/env.dart';
 import 'package:mobile/cores/model/plat.dart';
 import 'package:mobile/interfaces/component/appbar.dart';
 import 'package:mobile/interfaces/component/resto_item.dart';
-import 'package:mobile/interfaces/pages/page_with_bottom_navigator_bar.dart';
 import 'package:mobile/interfaces/utils/constant.dart';
 
 class PlateDetails extends StatefulWidget {
@@ -22,7 +21,7 @@ class _PlateDetailsState extends State<PlateDetails> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(),
+        appBar: const CustomAppBar(),
         body: SizedBox(
           height: getHeight(context),
           child: Column(
@@ -30,7 +29,7 @@ class _PlateDetailsState extends State<PlateDetails> {
               SizedBox(
                 height: getHeight(context) - 150,
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   child: Column(
                     children: [
                       Padding(
@@ -53,7 +52,7 @@ class _PlateDetailsState extends State<PlateDetails> {
                             //   height: 40,
                             //   width: null,
                             // ),
-                            SizedBox(
+                            const SizedBox(
                               width: kpadding / 2,
                             ),
                             Text(
@@ -80,7 +79,7 @@ class _PlateDetailsState extends State<PlateDetails> {
                                   vertical: index == i
                                       ? kpadding * 1.3
                                       : kpadding * 2),
-                              duration: Duration(milliseconds: 200),
+                              duration: const Duration(milliseconds: 200),
                               child: ImageItem(
                                 id: widget.plate.file![i].photoId!,
                                 height: double.maxFinite,
@@ -131,11 +130,11 @@ class _PlateDetailsState extends State<PlateDetails> {
               ),
               Container(
                 height: 75,
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                     color: getTheme(context).cardColor,
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(10))),
+                        const BorderRadius.vertical(top: Radius.circular(10))),
                 child: Row(children: [
                   IconButton.filledTonal(
                     style: IconButton.styleFrom(
@@ -147,7 +146,7 @@ class _PlateDetailsState extends State<PlateDetails> {
                         setState(() {});
                       }
                     },
-                    icon: Icon(CupertinoIcons.minus),
+                    icon: const Icon(CupertinoIcons.minus),
                   ),
                   SizedBox(
                     width: 40,
@@ -167,16 +166,16 @@ class _PlateDetailsState extends State<PlateDetails> {
                       quantity = quantity + 1;
                       setState(() {});
                     },
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   FilledButton(
                       style: FilledButton.styleFrom(
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
                       onPressed: () {},
-                      child: Text("Ajouter au Paigner"))
+                      child: const Text("Ajouter au Paigner"))
                 ]),
               )
             ],

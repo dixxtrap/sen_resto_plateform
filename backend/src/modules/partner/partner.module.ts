@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Partner } from 'src/typeorm';
 import {
   CompanyRestaurant,
+  CompanyRestaurantBase,
   Restaurant,
 } from 'src/typeorm/company_restaurant.entity';
 import { Customer } from 'src/typeorm/customer.entity';
@@ -16,6 +17,12 @@ import { CustomerController } from './customer/customer.controller';
 import { DeliverController } from './deliver/deliver.controller';
 import { DeliverService } from './deliver/deliver.service';
 import { MulterConfig } from 'src/utils/multer.config';
+import { PartnerService } from './partner.service';
+import { PartnerController } from './partner.controller';
+import { WalletStatusModule } from '../wallet_status/wallet_status.module';
+import { PaymentType } from 'src/typeorm/payment_type.entity';
+import { PaymentTypeController } from './payment_type/payment_type.controller';
+import { PaymentTypeService } from './payment_type/payment_type.service';
 
 @Module({
   imports: [
@@ -26,21 +33,28 @@ import { MulterConfig } from 'src/utils/multer.config';
       Customer,
       Restaurant,
       CompanyRestaurant,
+      CompanyRestaurantBase,
+      PaymentType,
     ]),
+    WalletStatusModule,
   ],
   controllers: [
     CompanyRestaurantController,
     RestaurantController,
     CustomerController,
     DeliverController,
+    PartnerController,
+    PaymentTypeController,
   ],
   providers: [
+    PartnerService,
     CompanyRestaurantService,
     RestaurantService,
     CustomerService,
     DeliverService,
+    PaymentTypeService,
   ],
-  exports : [
+  exports: [
     CompanyRestaurantService,
     RestaurantService,
     CustomerService,

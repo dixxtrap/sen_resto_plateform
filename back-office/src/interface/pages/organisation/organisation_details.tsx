@@ -4,68 +4,67 @@ import { Img } from "../../components/image_updatable";
 import { Title } from "../../components/title";
 import { Alert } from "../../components/alert_success";
 
-export const OrganisationDetails = ({type="company"}:{type?:string}) => {
+export const OrganisationDetails = ({}:{type?:string}) => {
+  
   const { id } = useParams();
   const {
     data: company,
-    isSuccess,
     isLoading,
-    isError,
   } = useGetCompanyByIdQuery(id!);
-  return isLoading ? (
-    <Alert isOpen={isLoading} type="loading" />
-  ) : (
-    <div>
+  return (<> <Alert isOpen={isLoading} type="loading" />
+   { company&&<div>
       <div className="flex gap-x-3 shrink-0 items-center">
         <Img
           className="h-8  md:h-20"
-          hasImg={company!.profile!.size! > 0}
-          imgId={company?.profile?.id}
+          hasImg={company!.imagePath!==null}
+          imgPath={company?.imagePath}
         />
         <Title
           title={company?.name}
           subTitle={`les details du restaurant ${company?.name}`}
         />
       </div>
-      <div className="mt-6 border-t text-left border-gray-100">
-        <dl className="divide-y divide-gray-100">
+      <div className="mt-6 border-t text-left border-gray-500">
+        <dl className="divide-y  divide-gray-500/20">
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
-              Full name
+            <dt className="text-sm font-medium leading-6 textSubtitle  text subtitle">
+              Nom 
             </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0 text value">
               {company?.name}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
+            <dt className="text-sm font-medium leading-6  text subtitle">
               Email
             </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0  text value">
               {company?.email}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
+            <dt className="text-sm font-medium leading-6   text subtitle">
               Addresse
             </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {company?.address}
+            <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0  text value">
+              {company?.address?.streetAddress}-
+              {company?.address?.city}-
+              {company?.address?.country}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
+            <dt className="text-sm font-medium leading-6 text subtitle ">
               Salary expectation
             </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0 text value">
               $120,000
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">
+            <dt className="text-sm font-medium leading-6  text subtitle">
               Description
             </dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0 text value">
               {company?.description}
             </dd>
           </div>
@@ -106,6 +105,6 @@ export const OrganisationDetails = ({type="company"}:{type?:string}) => {
           </div> */}
         </dl>
       </div>
-    </div>
-  );
+    </div>}
+  </>);
 };

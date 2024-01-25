@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { PaymentType } from "../models/payment_type";
+import { WsMessage } from "../models/error.dto";
 
 export const paymentTypeApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1/" }),
@@ -7,11 +8,11 @@ export const paymentTypeApi = createApi({
   tagTypes: ["payment_type"],
   endpoints: (builder) => ({
     getPaymentType: builder.query<PaymentType[], string>({
-      query: () => "payment_type",
+      query: () => "payment_type/all",
       providesTags: ["payment_type"],
     }),
     getPaymentTypeById: builder.query<PaymentType, number>({
-      query: (id) => "payment_type/" + id,
+      query: (id) => "payment_type/by_id/" + id,
       providesTags: ["payment_type"],
     }),
     updatePaymentType: builder.mutation<
@@ -19,17 +20,17 @@ export const paymentTypeApi = createApi({
       { paymentType: PaymentType; id: number }
     >({
       query: ({ id, paymentType }) => ({
-        url: `payment_type/${id}`,
+        url: `payment_type/by_id/${id}`,
         method: "PUT",
         body: paymentType,
       }),
       invalidatesTags: ["payment_type"],
     }),
-    createPaymentType: builder.mutation<PaymentType, PaymentType>({
-      query: (paymentTYpe) => ({
-        url: "payment_type",
+    createPaymentType: builder.mutation<WsMessage, PaymentType>({
+      query: (paymentType) => ({
+        url: "payment_type/create",
         method: "POST",
-        body: paymentTYpe,
+        body: paymentType,
       }),
       invalidatesTags: ["payment_type"],
     }),

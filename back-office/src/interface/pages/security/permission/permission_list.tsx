@@ -8,14 +8,14 @@ export const PermissionList = () => {
 const {data:permissions, isLoading, isSuccess, }=useGetPermissionQuery("")
   return (
     <div>
-      <TablePagination isPaginated={false} createPath='/permission/create' title='Listes Les Permissions' th={["Nom", "Module","Action","Code",  "Date de creation","Date de Modification", ""]}  trs={<>
+      <TablePagination isPaginated={false} createPath='/permission/create' title='Listes Les Permissions' th={["Nom", "Module","Action","Code",  "Date de creation", ""]}  trs={<>
       {permissions?.map((item)=><tr key={item.id}>
-        <td>{item.name}</td>
+        <td className='truncate max-w-[150px] pr-2'>{item.name}</td>
         <td className="lowercase">{item.module?.name}</td>
         <td>{item.action}</td>
-        <td>{item.code}</td>
+        <td className='truncate max-w-[140px] pr-2'>{item.code}</td>
         <td>{formatDate(item.details?.createdAt!)}</td>
-        <td>{formatDate(item.details?.updatedAt!)}</td>
+        {/* <td>{formatDate(item.details?.updatedAt!)}</td> */}
         <td className=''>
           <Status status={item.isActive!} />
         </td>

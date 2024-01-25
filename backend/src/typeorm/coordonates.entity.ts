@@ -2,9 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Column } from 'typeorm';
 
 export class Coordonates {
-  @Column('decimal',{default:0})
+  @Column('double', { default: 0.0 })
   latitude: number;
-  @Column('decimal',{default:0})
+  @Column('double', { default: 0.0 })
   longitude: number;
 }
 

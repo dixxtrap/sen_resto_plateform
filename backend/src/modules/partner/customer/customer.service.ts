@@ -59,4 +59,17 @@ export class CustomerService {
         throw new WsMessage(HttpExceptionCode.FAILLURE);
       });
   }
+  getByPhone({ phone }: { phone: string }) {
+    return this.repos
+      .findOne({ where: { phone: Equal(phone) } })
+      .then((result) => {
+        if (result) return result;
+        else throw new WsMessage(HttpExceptionCode.FAILLURE);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err instanceof WsMessage) throw err;
+        throw new WsMessage(HttpExceptionCode.FAILLURE);
+      });
+  }
 }

@@ -5,11 +5,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinColumn,
   ManyToOne,
   AfterLoad,
 } from 'typeorm';
-import { AppTransaction } from './transaction.entity';
+import { Transac } from './transaction.entity';
 import { Partner } from './partner.entity';
 import { CompanyRestaurantBase } from './company_restaurant.entity';
 
@@ -25,9 +24,8 @@ export class WalletStatus {
   totalCredit: number;
   @Column({ default: 0, type: 'double' })
   totalDebit: number;
-  @ManyToOne(() => AppTransaction)
-  @JoinColumn()
-  transaction: AppTransaction;
+  @ManyToOne(() => Transac)
+  transaction: Transac;
   @Column({ nullable: true, default: null })
   transactionId: number;
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
@@ -35,6 +33,7 @@ export class WalletStatus {
   @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
   balance: number;
+  loyaltyBalance: number;
   @AfterLoad()
   getBalance() {
     this.balance = this.totalCredit - this.totalDebit;

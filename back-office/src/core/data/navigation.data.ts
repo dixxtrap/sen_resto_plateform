@@ -6,12 +6,13 @@ import {
   // CalendarIcon,
   // ChartPieIcon,
   ClipboardDocumentCheckIcon,
+  ClipboardIcon,
   Cog6ToothIcon,
+  CreditCardIcon,
   // DocumentDuplicateIcon,
   // FolderIcon,
   HomeIcon,
   IdentificationIcon,
-  LinkIcon,
   ShieldCheckIcon,
   TruckIcon,
   UsersIcon,
@@ -19,11 +20,11 @@ import {
 } from "@heroicons/react/24/outline";
 import {
   ForwardRefExoticComponent,
-  ReactNode,
+
   RefAttributes,
   SVGProps,
 } from "react";
-import { PermissionDto } from "../../interface/role.dto";
+// import { PermissionDto } from "../../interface/role.dto";
 type INavigation = {
   name: string;
   href: string;
@@ -49,35 +50,46 @@ export const navigationData: INavigation[] = [
     permissions: [{ code: "company_restaurant", type: "*" }],
   },
   {
-    name: "Restaurant",
+    name: "Restaurants",
     href: "/restaurant",
     icon: BuildingStorefrontIcon,
     permissions: [{ code: "restaurant", type: "*" }],
   },
  
   {
-    name: "Client",
+    name: "Clients",
     href: "/customer",
     icon: IdentificationIcon,
     permissions: [{ code: "customer", type: "*" }],
   },
   {
-    name: "Deliver",
+    name: "Delivers",
     href: "/deliver",
     icon: TruckIcon,
     permissions: [{ code: "*", type: "*" }],
   },
   {
-    name: "Utilisateur",
+    name: "Utilisateurs",
     href: "/user",
     icon: UsersIcon,
     permissions: [{ code: "user", type: "*" }],
   },
  
- 
   {
-    name: "Plats",
-    href: "/plate",
+    name: "Cartes",
+    href: "/card",
+    icon: CreditCardIcon,
+    permissions: [{ code: "*", type: "*" }],
+  },
+  {
+    name: "Contrats",
+    href: "/contrat",
+    icon: ClipboardIcon,
+    permissions: [{ code: "*", type: "*" }],
+  },
+  {
+    name: "Produits",
+    href: "/product",
     icon: CakeIcon,
     permissions: [{ code: "product", type: "*" }],
   },

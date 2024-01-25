@@ -6,7 +6,7 @@ import { CompanyDto } from "./company.dto";
 import { RoleDto } from "./role.dto";
 import { CreationDetailDto } from "./creation_details.dto";
 import { CoordonatesDto } from "./coordonates.dto";
-import { AddressDto } from "./address.dto";
+import { AddressDto, addressSchema } from "./address.dto";
 
 export class User {
   [x: string]: unknown;
@@ -18,14 +18,15 @@ export class User {
   city?: string;
   isAgent?: boolean;
   isAdmin?: boolean;
-  country?: string;
-  birthday?: string;
+
+  birthday?: Date;
+  password?: string;
  details?:CreationDetailDto;
   pin?: string;
 coordonates?:CoordonatesDto;
   parentId?: number|null;
   parent?: CompanyDto;
-  status?: boolean;
+  isActive?: boolean;
   profile?: FileDocument;
   roleId?: number;
   role?: RoleDto;
@@ -36,13 +37,11 @@ export const userSchema = Yup.object({
   lastname: Yup.string().max(30).required(),
 
   phone: Yup.string().max(20, text.caracter_max(20)),
-  birthday: Yup.string(),
-  address: Yup.string().max(50, text.caracter_max(50)),
+  birthday: Yup.date(),
+  address:addressSchema,
   roleId: Yup.number(),
-  restaurantId: Yup.number().nullable().notRequired().optional(),
-  companyId: Yup.number(),
-  city: Yup.string(),
-  country: Yup.string(),
+  parentId: Yup.number().optional(),
+  password: Yup.string().optional(),
   email: Yup.string(),
 
   // country: Yup.string().max(20, text.caracter_max(20)),

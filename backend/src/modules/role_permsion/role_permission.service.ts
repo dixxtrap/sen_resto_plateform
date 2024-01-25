@@ -73,17 +73,22 @@ export class RolePermissionService {
   }) {
     return Promise.all(
       permissions.map((item) => {
-        this.create({
-          body: {
-            permissionId: item.id,
-            roleId: roleId,
-            canUse: true,
-            canInherit: true,
-          },
-        });
+        try {
+          return this.create({
+            body: {
+              permissionId: item.id,
+              roleId: roleId,
+              canUse: true,
+              canInherit: true,
+            },
+          });
+        } catch (err) {}
       }),
     )
-      .then((result) => {
+      .then(() => {
+        console.log(
+          '--------------------add multiple success---------------------',
+        );
         throw new WsMessage(HttpExceptionCode.SUCCEEDED);
       })
       .catch((err) => {

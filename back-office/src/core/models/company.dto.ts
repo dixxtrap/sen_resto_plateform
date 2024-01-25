@@ -2,52 +2,40 @@ import * as yup from "yup";
 import { text } from "./text";
 import { FileDocument } from "./file_document";
 import { CompanyEnum } from "./company_enu";
+import { AddressDto, addressSchema } from "./address.dto";
+import { CoordonatesDto, coordonatesSchema } from "./coordonates.dto";
+import { CreationDetailDto } from "./creation_details.dto";
 
 export type CompanyDto = {
   id?: number;
   name?: string;
   email?: string;
-  short_name?: string;
+  balance?: number;
   shortname?: string;
   description?: string;
-  imagePath?: string;
-  address?: string;
-  type?: CompanyEnum;
-  city?: string;
-  country?: string;
-  postal_code?: string;
+  address?: AddressDto;
   phone?: string;
-  laltitude?: number;
-  longitude?: number;
+  location?:CoordonatesDto;
   isActive?: boolean;
   canPublish?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
   openingTime?: string;
   closingTime?: string;
-  profile?: FileDocument;
+  imagePath?: string;
   parentId?:number;
+  details?:CreationDetailDto,
 } & { type?: CompanyEnum.RESTO; parent?: CompanyDto } & {
   type?: CompanyEnum.MASTER;
   children?: number | CompanyDto[];
 };
 export const companySchema = yup.object({
   name: yup.string().max(30).required(),
-  short_name: yup.string(),
+  shortname: yup.string(),
   description: yup.string(),
-  postal_code: yup.string(),
   phone: yup.string().max(20, text.caracter_max(20)).required(),
-  address: yup
-    .string()
-
-    .max(50, text.caracter_max(50)),
-  city: yup
-    .string()
-    .max(20, text.caracter_max(20)),
-  country: yup.string().max(20, text.caracter_max(20)),
+  address:addressSchema,
+ 
   email: yup.string().max(30, text.caracter_max(30)).required(),
-  laltitude: yup.number(),
-  longitude: yup.number(),
+location:coordonatesSchema,
   openingTime: yup
     .string()
     .matches(

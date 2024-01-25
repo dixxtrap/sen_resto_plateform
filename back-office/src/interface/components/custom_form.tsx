@@ -2,6 +2,7 @@ import { FC, FormEventHandler, ReactNode } from "react";
 import { Title } from "./title";
 import { Alert } from "./alert_success";
 import { Navigate } from "react-router-dom";
+import { FocusTrap } from "@headlessui/react";
 type CustomeFormProps = {
   children?: ReactNode;
   title?: string;
@@ -43,14 +44,16 @@ successMessage,
         {children}
         <button
           type="submit"
-          className=" min-w-[10rem] w-full bg-primary-600 hover:bg-primary-500 text-slate-50 py-2.5 rounded-md text-sm font-bold"
+          className=" min-w-[10rem] w-full bg-primary-500 hover:bg-primary-500/90 text-slate-50 py-2.5 rounded-md text-sm font-bold"
         >
           Valider
         </button>
       </form>
-      <Alert isOpen={isSuccess} type="succeedded" title="Félicitation" message={successMessage} onClose={onFinish}/>
-      <Alert isOpen={isError} type="faillure" title="Ooops!" message={ errorMessage}  onClose={onFinish} />
-     <Alert isOpen={isLoading} type="loading" title="Traitement..."   onClose={onFinish} message="Patientez un moment "/>
+    
+    { isSuccess&& <Alert isOpen={isSuccess} type="succeedded" title="Félicitation" message={successMessage} onClose={onFinish}/>}
+     {isError&& <Alert isOpen={isError} type="faillure" title="Ooops!" message={ errorMessage}  onClose={onFinish} />}
+    { isLoading&&<Alert isOpen={isLoading} type="loading" title="Traitement..."   onClose={onFinish} message="Patientez un moment "/>}
+ 
       {/* <Alert isOpen={isSuccess} type="succeedded" title="Félicitation"/> */}
       {/* <Alert isOpen={isError}/> */}
     </div>

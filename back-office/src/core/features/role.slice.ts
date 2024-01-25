@@ -1,14 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 import { WsMessage } from "../models/error.dto";
-import { PermissionDto, PermissionRole, RoleDto } from "../models/role.dto";
+import { RoleDto } from "../models/role.dto";
+import { PermissionDto } from "../models/permission.dto";
+import { RolePermissionDto } from "../models/permission_role.dto";
 
 export const roleApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
   tagTypes: ["role"],
   reducerPath: "roleApi",
   endpoints: (builder) => ({
-    getRoles: builder.query<RoleDto[], string>({
+    getRoles: builder.query<RoleDto, string>({
       query: () => `/role/all`,
       providesTags: ["role"],
     }),
@@ -28,22 +30,25 @@ export const roleApi = createApi({
       { id: number; body: PermissionDto[] }
     >({
       query: ({ id, body }) => ({
-        url: `/role/byId/addMultiplePermission/${id}`,
+        url: `/role/by_id/add_multiple_permission/${id}`,
         method: "PUT",
         body: body,
       }),
       invalidatesTags: ["role"],
+      // providesTags: ["role"],
+
     }),
     removePermissions: builder.mutation<
       WsMessage,
-      { id: number; body: PermissionRole[] }
+      { id: number; body: RolePermissionDto[] }
     >({
       query: ({ id, body }) => ({
-        url: `/role/byId/removeMultiplePermission/${id}`,
+        url: `/role/by_id/remove_multiple_permission/${id}`,
         method: "PUT",
         body: body,
       }),
       invalidatesTags: ["role"],
+      // provi: ["role"],
     }),
     getNoValidPermission: builder.query<PermissionDto[], number>({
       query: (id) => `role/noValidPermission/${id}`,
@@ -51,14 +56,14 @@ export const roleApi = createApi({
     }),
     getRolePermissionAndUser: builder.query<RoleDto, number>({
       query: (id) => `role/permission/${id}`,
-      providesTags: ["role"],
+      providesTags: ["role"], 
     }),
     getRoleById: builder.query<RoleDto, number>({
       query: (id) => `role/permission_user/${id}`,
       providesTags: ["role"],
     }),
     getRolePermissionById: builder.query<RoleDto, number>({
-      query: (id) => `role/byId/permsission/${id}`,
+      query: (id) => `role/by_id/permsission/${id}`,
       providesTags: ["role"],
     }),
   }),

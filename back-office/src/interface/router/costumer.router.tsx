@@ -1,7 +1,9 @@
 import { RouteObject } from "react-router-dom";
-import { OrganisationCreate } from "../pages/organisation/organisation_create";
-import { OrganisationEdit } from "../pages/organisation/organisation_edit";
-import { OrganisationDetails } from "../pages/organisation/organisation_details";
+
+import { CustomerList } from "../pages/customer/customer_list";
+import { CustomerEdit } from "../pages/customer/customer_edit";
+import { CustomerCreate } from "../pages/customer/customer_create";
+import { CustomerDetails } from "../pages/customer/customer_details";
 
 
 export const customerRouter:RouteObject={
@@ -10,19 +12,19 @@ children:[
         {
                 path:""
                 ,index:true,
-                element:<OrganisationCreate/>
+                element:<CustomerList/>
         },
         {
                 path:"edit:id",
-                element:<OrganisationEdit/>
+                element:<CustomerEdit/>
         },
         {
                 path:"create",
-                element:<OrganisationCreate/>
+                element:<CustomerCreate/>
         },
         {
                 path:"details:id",
-                element:<OrganisationDetails/>
+                element:<CustomerDetails/>
         }
 ]
 }

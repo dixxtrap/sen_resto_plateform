@@ -20,6 +20,16 @@ import {
 } from './product_management.entity';
 import { ProductFile } from './product_file.entity';
 import { Product } from './product.entity';
+import { ProductHistory } from './product_history.entity';
+import { Order } from './order.entity';
+import { Deliver } from './deliver.entity';
+import { CardAllocation } from './card_allocation.entity';
+import { ProductCategory } from './product_category.entity';
+import { Card } from './card.entity';
+import { CardAllocationDetails } from './card_allocation_details.entity';
+import { Transac } from './transaction.entity';
+import { WalletStatus } from './wallet_status.entity';
+import { OrderProduct } from './order_product.entity';
 
 // export
 export {
@@ -35,6 +45,7 @@ export const entities = [
   Partner,
   CompanyRestaurantBase,
   CompanyRestaurant,
+  Deliver,
   Weekday,
   User,
   Role,
@@ -47,7 +58,16 @@ export const entities = [
   Customer,
   Contrat,
   Product,
+  ProductCategory,
   ProductFile,
   ProductManagement,
   ProductManagementDay,
+  ProductHistory,
+  Order,
+  CardAllocation,
+  Card,
+  CardAllocationDetails,
+  Transac,
+  WalletStatus,
+  OrderProduct,
 ];

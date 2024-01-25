@@ -26,19 +26,26 @@ export class User {
   email: string;
   @Column()
   password: string;
+  @Column({ default: '2213000000', unique: true })
+  phone: string;
   @Column()
   passwordCrypt: string;
   @Column({ nullable: true, default: null })
   roleId: number;
   @ManyToOne(() => Role, { nullable: true })
   role: Role;
- 
-  @Column(() => Coordonates) 
+  @Column('date', { nullable: true, default: null })
+  birthday: Date;
+  @Column(() => Coordonates)
   coordonates: Coordonates;
   @Column(() => Address)
   address: Address;
   @ManyToOne(() => CompanyRestaurantBase)
   parent: CompanyRestaurantBase;
+  @Column({ default: true })
+  isActive: boolean;
+  @Column({ default: true })
+  isBloqued: boolean;
   @Column({ nullable: true, default: null })
   parentId: number;
   @Column(() => CreationDetails)
@@ -47,8 +54,8 @@ export class User {
   isMfa: boolean;
   @BeforeInsert()
   async transformPassword() {
-    this.passwordCrypt = CryptoService.encrypt(this.password);
-    this.password = CryptoService.createHash(this.password);
+    this.passwordCrypt = await CryptoService.encrypt(this.password);
+    this.password = await CryptoService.createHash(this.password);
   }
 }
 
@@ -56,7 +63,8 @@ export class UserDto {
   id: number;
   @ApiProperty()
   firstname: string;
-
+  @ApiProperty()
+  birthday: Date;
   @ApiProperty()
   lastname: string;
   @ApiProperty()
@@ -64,8 +72,9 @@ export class UserDto {
   @ApiProperty()
   coordonates: CoordonatesDto;
   @ApiProperty({ type: () => AddressDto })
-  address: AddressDto;
-  partnerId: number;
+  address?: AddressDto;
+  parentId?: number;
+  roleId?: number;
 
   @ApiProperty({ type: () => CreationDetailsDto })
   details: CreationDetailsDto;

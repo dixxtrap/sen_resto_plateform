@@ -6,14 +6,14 @@ export const Img = ({
         hasImg = false,
       
     
-        imgId,
+        imgPath,
         icon,
         label,
         className,
       }: {
         hasImg: boolean;
         small?: boolean;
-        imgId?: number;
+        imgPath?: string;
         icon?: ReactNode;
         label?: ReactNode;
         className?:string
@@ -26,7 +26,7 @@ export const Img = ({
                 <img
                   className={className+ " rounded-md"}
                   alt="djig"
-                  src={`/v1/document/file/${imgId}`}
+                  src={`/v1/${imgPath}`}
                 />
               ) : (
                 <span >

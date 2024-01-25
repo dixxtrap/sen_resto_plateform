@@ -7,9 +7,10 @@ import { Equal, Repository } from 'typeorm';
 import { RolePermissionService } from '../role_permsion/role_permission.service';
 import { RolePermissionDto } from 'src/typeorm/role_permissison.entity';
 import { PermissionDto } from 'src/typeorm/permission.entity';
+import { UserDto } from 'src/typeorm/user.entity';
 
 @Injectable()
-export class RoleService { 
+export class RoleService {
   constructor(
     @InjectRepository(Role) private repos: Repository<Role>,
     private rolePermissionService: RolePermissionService,
@@ -22,17 +23,23 @@ export class RoleService {
       }),
     );
   }
-  getAll() {
-    return this.repos.manager
-      .getTreeRepository(Role)
-      .findTrees()
-      .then((result) => result)
+  getAll({ by }: { by: UserDto }) {
+    return this.repos
+      .findOneBy({ id: by.roleId })
+      .then((role) => {
+        return this.repos.manager
+          .getTreeRepository(Role)
+          .findDescendantsTree(role)
+          .then((result) => result);
+      })
+
       .catch((e) => {
         console.log(e);
         throw new HttpException(HttpExceptionCode.FAILLURE, 500);
       });
   }
   getById({ id }: { id: number }) {
+    console.log('----------------get by id-----------------');
     return this.repos
       .findOne({
         where: { id: Equal(id) },
@@ -72,7 +79,6 @@ export class RoleService {
   update({
     id,
     body,
-    permissions,
   }: {
     id: number;
     body: RoleDto;

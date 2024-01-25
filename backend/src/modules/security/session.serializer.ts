@@ -8,11 +8,11 @@ export class SessionSerializer extends PassportSerializer {
     super();
   }
   serializeUser(user: UserDto, done: (err: Error|null, user: any) => void) {
-    console.log('---------------------serializator---------------');
+    // console.log('---------------------serializator---------------');
     done(null, user);
   }
   deserializeUser(payload: any, done: (err: Error, payload: string) => void) {
-    console.log('---------------------deserializator---------------');
+    // console.log('---------------------deserializator---------------');
 
     done(null, payload);
   }

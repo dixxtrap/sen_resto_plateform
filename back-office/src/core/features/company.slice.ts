@@ -10,27 +10,27 @@ export const companyApi = createApi({
   endpoints: (builder) => ({
     createCompany: builder.mutation<CompanyDto| WsMessage, CompanyDto>({
       query: (company: CompanyDto) => ({
-        url: "/company",
+        url: "/company_restaurant/create",
         method: "POST",
         body: company,
       }),
       invalidatesTags: ["company"],
     }),
     getCompany:builder.query<CompanyDto[],string>({
-        query:()=>"/company",
+        query:()=>"/company_restaurant/all",
         providesTags:["company"]
 }),
 getCompanyChildren:builder.query<CompanyDto[],string>({
-  query:()=>"/company/children",
+  query:()=>"/partner/children",
   providesTags:["company"]
 }),
 getCompanyById: builder.query<Partial<CompanyDto> ,string>({
-        query: (id)=>`/company/${id}`,
+        query: (id)=>`/company_restaurant/byId/${id}`,
         providesTags:["company"]
 }),
 updateCompanyById: builder.mutation<CompanyDto, { id: number, company: CompanyDto }>({
         query: ({id,company}) => ({
-          url: `/company/${id}`,
+          url: `/company_restaurant/update/${id}`,
           method: "PUT",
           body: company,
         }),

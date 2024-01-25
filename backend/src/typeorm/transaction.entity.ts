@@ -14,10 +14,10 @@ import { Partner } from './partner.entity';
 import { CompanyRestaurantBase } from './company_restaurant.entity';
 
 @Entity('transaction', { orderBy: { updatedAt: 'DESC', createdAt: 'DESC' } })
-export class AppTransaction {
+export class Transac {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column({ default: 0 })
+  @Column({ type: 'double', default: 0 })
   amount: number;
   @ManyToOne(() => Partner)
   sender: Partner | CompanyRestaurantBase;

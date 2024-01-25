@@ -17,7 +17,12 @@ export const RestaurantDetails = () => {
       {isSuccess && restaurant && !isLoading && (
         <>
           <div className="flex gap-x-3 shrink-0 items-center">
-            <Img
+          <Img
+          className="h-8  md:h-20"
+          hasImg={restaurant!.imagePath!==null}
+          imgPath={restaurant?.imagePath}
+        />
+            {/* <Img
               className="h-8  md:h-20 rounded-md"
               hasImg={
                 restaurant?.parent!.id === 1
@@ -29,57 +34,57 @@ export const RestaurantDetails = () => {
                   ? restaurant?.profile?.id
                   : restaurant?.parent?.profile?.id
               }
-            />
+            /> */}
             <Title
               title={restaurant?.name}
               subTitle={`les details du restaurant ${restaurant?.name}`}
             />
           </div>
-          <div className="mt-6 border-t text-left border-gray-100">
-            <dl className="divide-y divide-gray-100">
+          <div className="mt-6 border-t text-left border-gray-500/30">
+            <dl className="divide-y divide-gray-500/30">
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
+                <dt className="text-sm font-medium leading-6 textSubtile">
                   Full name
                 </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                <dd className="mt-1 text-sm leading-6 ttextSubtileValue sm:col-span-2 sm:mt-0">
                   {restaurant?.name}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
+                <dt className="text-sm font-medium leading-6 textSubtile">
                   Email
                 </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                <dd className="mt-1 text-sm leading-6 ttextSubtileValue sm:col-span-2 sm:mt-0">
                   {restaurant?.email}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
+                <dt className="text-sm font-medium leading-6 textSubtile">
                   Addresse
                 </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {restaurant?.address}
+                <dd className="mt-1 text-sm leading-6 ttextSubtileValue sm:col-span-2 sm:mt-0">
+                  {restaurant?.address?.streetAddress}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
+                <dt className="text-sm font-medium leading-6 textSubtile">
                   Salary expectation
                 </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                <dd className="mt-1 text-sm leading-6 ttextSubtileValue sm:col-span-2 sm:mt-0">
                   $120,000
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 text-gray-900">
+                <dt className="text-sm font-medium leading-6 textSubtile">
                   Description
                 </dt>
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                <dd className="mt-1 text-sm leading-6 ttextSubtileValue sm:col-span-2 sm:mt-0">
                   {restaurant?.description}
                 </dd>
               </div>
               {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-           <dt className="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
-           <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+           <dt className="text-sm font-medium leading-6 textSubtile">Attachments</dt>
+           <dd className="mt-2 text-sm textSubtile sm:col-span-2 sm:mt-0">
              <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                  <div className="flex w-0 flex-1 items-center">

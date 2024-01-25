@@ -1,219 +1,119 @@
-import React from "react";
-import { useGetPlateByIdQuery } from "../../../core/features/plate.slice";
+
+import {  useGetProductManagementByIdQuery } from "../../../core/features/product.slice";
 import { useParams } from "react-router-dom";
 import { Alert } from "../../components/alert_success";
 import { Title } from "../../components/title";
-import { Img } from "../../components/image_updatable";
+
 import { clsx } from "../../utils/clsx";
 import { CakeIcon } from "@heroicons/react/20/solid";
+import { formatDate } from "../../utils/date_format";
 
 export const PlatesDetails = () => {
   const { id } = useParams();
   const {
-    data: plate,
-    isLoading,
-    isSuccess,
-    isError,
-  } = useGetPlateByIdQuery(parseInt(id!));
+    data: productManagement,
+    isLoading
+  } = useGetProductManagementByIdQuery(parseInt(id!));
+  console.log(productManagement)
   return (
     <>
     <Alert isOpen={isLoading}/>
       <div>
         <div className="flex gap-x-3 shrink-0 items-center">
-         {plate?.file?.length>0? <Img
-            className="h-8  md:h-20"
-            hasImg={true}
-            imgId={plate?.file[0].photoId}
-          />:<CakeIcon className="h-8  md:h-20 text-indigo-500 bg-indigo-100 p-2 rounded-md"/>}
+         {productManagement?.product?.file?.length!>0? 
+         <img src={`/v1/${productManagement?.product?.file![0].path!}` } className="h-20 rounded-md"/>
+         :<CakeIcon className="h-8  md:h-20 text-secondary-500 bg-secondary-100 p-2 rounded-md"/>}
           <Title
-            title={plate?.name}
-            subTitle={`les details du restaurant ${plate?.name}`}
+            title={productManagement?.product?.name}
+            subTitle={`les details du restaurant ${productManagement?.product?.name}`}
           />
         </div>
-        <div className="mt-6 border-t text-left border-gray-100">
-          <dl className="divide-y divide-gray-100">
+        <div className="mt-6 border-t text-left border-gray-500/20">
+          <dl className="divide-y divide-gray-500/20">
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
+              <dt className="text-sm font-medium leading-6 textSubtile">
                 Nom{" "}
               </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {plate?.name}
+              <dd className="mt-1 text-sm leading-6 textSubtileValue sm:col-span-2 sm:mt-0">
+                {productManagement?.product?.name}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
+              <dt className="text-sm font-medium leading-6 textSubtile">
                 Prix
               </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {plate?.price} F CFA
+              <dd className="mt-1 text-sm leading-6 textSubtileValue sm:col-span-2 sm:mt-0">
+                {productManagement?.product?.price} F CFA
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
+              <dt className="text-sm font-medium leading-6 textSubtile">
                 Reduction
               </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {plate?.reduction}%
+              <dd className="mt-1 text-sm leading-6 textSubtileValue sm:col-span-2 sm:mt-0">
+                {productManagement?.product?.reduction}%
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
+              <dt className="text-sm font-medium leading-6 textSubtile">
                 Description
               </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {plate?.description}
+              <dd className="mt-1 text-sm leading-6 textSubtileValue sm:col-span-2 sm:mt-0">
+                {productManagement?.product?.description}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
+              <dt className="text-sm font-medium leading-6 textSubtile">
                 Date de creation
               </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {plate?.createdAt}
+              <dd className="mt-1 text-sm leading-6 textSubtileValue sm:col-span-2 sm:mt-0">
+                {productManagement?.product?.details?.createdAt &&formatDate(productManagement?.product?.details?.createdAt!)}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
+              <dt className="text-sm font-medium leading-6 textSubtile">
                 Jours de Vente
               </dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 flex gap-x-5 flex-wrap sm:col-span-2 sm:mt-0">
-                <div className="flex  text-slate-600  items-center gap-x-2">
-                  <span>Lun</span>
+              <dd className="mt-1 text-sm leading-6 textSubtileValue flex gap-x-5 flex-wrap sm:col-span-2 sm:mt-0">
+               {productManagement?.productManagementDay?.map(managementDay=> <div className="flex  text-slate-600  items-center gap-x-2">
+                  <span className="textSubtileValue">{managementDay.day?.name}</span>
                   <div
                   className={clsx(
-                    plate?.monday ? "bg-teal-400/20 " : "bg-slate-400/20",
+                   managementDay.isActive ? "bg-secondary-400/20 " : "bg-slate-400/20",
                     " h-4 w-4 rounded-full p-1"
                   )}
                 >
                   <div
                     className={clsx(
-                      plate?.monday? "bg-teal-400  " : "bg-slate-400",
+                      managementDay.isActive ? "bg-secondary-500  " : "bg-primary-400",
                       "rounded-full h-full w-full"
                     )}
                   ></div>
                
                   </div>
+                </div>)}
+              
+                </dd>
                 </div>
-                <div className="flex  text-slate-600  items-center gap-x-2">
-                  <span>Mardi</span>
-                  <div
-                  className={clsx(
-                    plate?.tuesday ? "bg-teal-400/20 " : "bg-slate-400/20",
-                    " h-4 w-4 rounded-full p-1"
-                  )}
-                >
-                  <div
-                    className={clsx(
-                      plate?.tuesday? "bg-teal-400  " : "bg-slate-400",
-                      "rounded-full h-full w-full"
-                    )}
-                  ></div>
-               
-                  </div>
-                </div>
-                <div className="flex  text-slate-600  items-center gap-x-2">
-                  <span>Mercredi</span>
-                  <div
-                  className={clsx(
-                    plate?.wednesday ? "bg-teal-400/20 " : "bg-slate-400/20",
-                    " h-4 w-4 rounded-full p-1"
-                  )}
-                >
-                  <div
-                    className={clsx(
-                      plate?.wednesday? "bg-teal-400  " : "bg-slate-400",
-                      "rounded-full h-full w-full"
-                    )}
-                  ></div>
-               
-                  </div>
-                </div>
-                <div className="flex  text-slate-600  items-center gap-x-2">
-                  <span>Jeudi</span>
-                  <div
-                  className={clsx(
-                    plate?.thursday ? "bg-teal-400/20 " : "bg-slate-400/20",
-                    " h-4 w-4 rounded-full p-1"
-                  )}
-                >
-                  <div
-                    className={clsx(
-                      plate?.thursday? "bg-teal-400  " : "bg-slate-400",
-                      "rounded-full h-full w-full"
-                    )}
-                  ></div>
-               
-                  </div>
-                </div>
-                <div className="flex   text-slate-600 gap-x-2 items-center">
-                  <span>Vendredi</span>
-                  <div
-                  className={clsx(
-                    plate?.friday ? "bg-teal-400/20 " : "bg-slate-400/20",
-                    " h-4 w-4 rounded-full p-1"
-                  )}
-                >
-                  <div
-                    className={clsx(
-                      plate?.friday? "bg-teal-400  " : "bg-slate-400",
-                      "rounded-full h-full w-full"
-                    )}
-                  ></div>
-               
-                  </div>
-                </div>
-                <div className="flex  text-slate-600  items-center gap-x-2">
-                  <span>Samedi</span>
-                  <div
-                  className={clsx(
-                    plate?.sunday ? "bg-teal-400/20 " : "bg-slate-400/20",
-                    " h-4 w-4 rounded-full p-1"
-                  )}
-                >
-                  <div
-                    className={clsx(
-                      plate?.sunday? "bg-teal-400  " : "bg-slate-400",
-                      "rounded-full h-full w-full"
-                    )}
-                  ></div>
-               
-                  </div>
-                </div>
-                <div className="flex  text-slate-600  items-center gap-x-2">
-                  <span>Dimanche</span>
-                  <div
-                  className={clsx(
-                    plate?.saturday ? "bg-teal-400/20 " : "bg-slate-400/20",
-                    " h-4 w-4 rounded-full p-1"
-                  )}
-                >
-                  <div
-                    className={clsx(
-                      plate?.saturday? "bg-teal-400  " : "bg-slate-400",
-                      "rounded-full h-full w-full"
-                    )}
-                  ></div>
-               
-                  </div>
-                </div>
-              </dd>
-            </div>
+              
+              
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">
+              <dt className="text-sm font-medium leading-6 textSubtile">
                 Image
               </dt>
-              <dd className="mt-1 text-sm  flex text-gray-700 gap-x-2  sm:col-span-2 sm:mt-0">
-                {plate?.file&& plate.file?.length>0 ? plate?.file!.map((e) => (
-                  <Img
-                    className="h-8  md:h-16 rounded-md"
-                    hasImg={e.photo.filename!==null&&e.photo.size!=0}
-                    imgId={e.photoId}
-                  />
+              <dd className="mt-1 text-sm  flex textSubtileValue gap-x-2  sm:col-span-2 sm:mt-0">
+                {productManagement?.product?.file! && productManagement?.product.file!?.length>0 ? productManagement?.product?.file!.map((e) => (
+                  // <Img
+                  //   className="h-8  md:h-16 rounded-md"
+                  //   hasImg={e.photo.filename!==null&&e.photo.size!=0}
+                  //   imgId={e.photoId}
+                  // />
+                 <img src={`/v1/${e.path}`}  className="h-20 rounded-md" />
                 )):<CakeIcon className="h-8  md:h-20 text-indigo-500 bg-indigo-100 p-2 rounded-md"/>}
               </dd>
             </div>
             {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
+            <dt className="text-sm font-medium leading-6 textSubtile">Attachments</dt>
             <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
                 <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">

@@ -5,7 +5,7 @@ export class PaymentType {
   name?: string;
   description?: string;
   fees?: number;
-  feesInvert?: number;
+  invertFees?: number;
   profile?: FileDocument;
   createdAt?: string;
   updatedAt?: string;
@@ -17,5 +17,5 @@ export const paymentTypeSchema = yup.object({
   isActive: yup.boolean(),
   description: yup.string(),
   fees: yup.number().min(0).max(100),
-  feesInvert: yup.number().min(0).max(100),
+  invertFees: yup.number().min(0).max(100),
 });

@@ -1,11 +1,10 @@
-import React from "react";
 import { useGetResttaurantQuery } from "../../../core/features/restaurant.slice";
 import { TablePagination } from "../../components/table_pagination";
-import { Img } from "../../components/image_updatable";
 import { Link } from "react-router-dom";
 import { Status } from "../../components/status";
 import { formatDate } from "../../utils/date_format";
 import { ProtecterPage } from "../../components/protecter_page";
+import { BuildingStorefrontIcon } from "@heroicons/react/24/outline";
 
 export const RestaurantList = () => {
   const { data: restaurants = [] } = useGetResttaurantQuery("");
@@ -17,7 +16,7 @@ export const RestaurantList = () => {
         subtitle="Liste des Restaurants"
         th={[
           "Nom",
-          "Organisation",
+          
           "Adresse",
           "Téléphone",
 
@@ -30,24 +29,17 @@ export const RestaurantList = () => {
           <>
             {restaurants.map((restaurant) => (
               <tr key={restaurant.email} className="">
-                <td className="">
-                  <div className="flex items-center">
-                    <Img
-                      hasImg={true}
-                      className="w-8 rounded-md mr-3 "
-                      imgId={
-                        restaurant.parent?.id === 1
-                          ? restaurant.profile?.id
-                          : restaurant.parent?.profile?.id ?? 1
-                      }
-                    />
+                <td className="flex  items-center">
+                  <div className=" flex-shrink-0  w-16 mr-2 content-center flex  justify-center ">
+                  {  restaurant.imagePath? <img src={`/v1/${restaurant.imagePath!}`} className='h-8 rounded-md  ' alt=""  />:<BuildingStorefrontIcon className='h-8 p-1 text-primary-500  bg-secondary-500/20 ring-2 mr-2  ring-secondary-500/80 rounded-md'/>}
                     {/* <ImgPreview  name={`img_${restaurant.id}`} img={ restaurant.company.short_name=="SR" ? restaurant.profile!:restaurant.company.profile!}/> */}
 
-                    <div className="flex flex-col">{restaurant.name}</div>
+                   
                   </div>
+                  <div className="flex flex-col font-bold">{restaurant.name}</div>
                 </td>
-                <td className=""> {restaurant.parent?.name}</td>
-                <td className="">{restaurant.city}</td>
+               
+                <td className="">{restaurant.address?.streetAddress} - {restaurant.address?.city} - {restaurant.address?.country}</td>
                 <td className="">{restaurant.phone}</td>
 
                 <td className="">
@@ -55,19 +47,19 @@ export const RestaurantList = () => {
                   {restaurant.closingTime?.substring(0, 5)}
                 </td>
 <td>
-{formatDate(restaurant.createdAt!)}
+{formatDate(restaurant.details?.createdAt!)}
 </td>
                 <td className="">
                   <Status status={restaurant.isActive!} />
                 </td>
 
                 <td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                <ProtecterPage isPage={false} permissions={[{code:"PLAT_MANAGEMENT", type:"CREATE"}]}>
+                <ProtecterPage isPage={false} permissions={[{code:"PRODUCT_MANAGEMENT", type:"CREATE"}]}>
                 <Link
                     to={`/restaurant/plats/${restaurant.id}`}
                     className="last_td"
                   >
-                    Plats<span className="sr-only">, {restaurant.phone}</span>
+                    product<span className="sr-only">, {restaurant.phone}</span>
                   </Link>
                 </ProtecterPage>
                   <Link

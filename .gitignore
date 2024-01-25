@@ -1,5 +1,7 @@
 ./back-office/node_modules
 ./backend/node_modules
 ./backend/src/mysql.config.ts
-./backend/src/upload
+./backend/src/upload/
+./backend/upload
+./backend/upload/img
 ./client/node_modules

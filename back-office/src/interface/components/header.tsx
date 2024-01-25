@@ -8,14 +8,13 @@ import {
   ChevronDownIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import { NavLink, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { FC, Dispatch, SetStateAction, Fragment } from "react";
 import {
   useProfileQuery,
   useSignoutMutation,
 } from "../../core/features/security.slice";
 import { Alert } from "./alert_success";
-import { Img } from "./image_updatable";
 import { ThemeToggler } from "./theme_toggler";
 export const Header: FC<{
   sidebarOpen: boolean;
@@ -58,9 +57,9 @@ export const Header: FC<{
              
 
               <span className=" text-xl font-bold">
-                {user?.parent?.shortname === "SR"
-                  ? user.parent?.name 
-                  : user?.parent?.name}
+                {user?.parent?.parent?.shortname === "Sen Resto"
+                  ? user.parent?.name :user?.parent?.shortname === "SR"? user?.parent?.name
+                  : user?.parent?.parent?.name}
               </span>
             </div>
 

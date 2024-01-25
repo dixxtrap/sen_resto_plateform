@@ -9,10 +9,11 @@ import { UserService } from '../user/user.service';
 import { LoginDto } from './security.dto';
 import { JwtService } from '@nestjs/jwt';
 
-import { HttpExceptionCode } from 'src/utils/http_exception_code';
+import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { EmailService } from 'src/utils/mail.service';
 import { CryptoService } from 'src/utils/crypto_service';
 import { UserDto } from 'src/typeorm/user.entity';
+import { CustomerService } from '../partner/customer/customer.service';
 
 @Injectable()
 export class SecurityService {
@@ -20,6 +21,7 @@ export class SecurityService {
     private userService: UserService,
     private jwtService: JwtService,
     private mailService: EmailService,
+    private customerService: CustomerService,
   ) {}
   async login(body: LoginDto) {
     const user = await this.userService.findByEmailForLogin({
@@ -35,7 +37,7 @@ export class SecurityService {
       password,
       ...rest
     } = user;
-console.log(user);
+    console.log(user);
     if (user.password === CryptoService.createHash(body.password)) {
       return { ...rest };
     }
@@ -110,5 +112,28 @@ console.log(user);
       return HttpExceptionCode.SUCCEEDED;
     }
     throw new NotFoundException();
+  }
+  userLogin({ phone, code }: { phone: string; code: string }) {
+    return this.customerService
+      .getByPhone({ phone })
+      .then((user) => {
+        console.log(user);
+        if (user) {
+          const { firstname, lastname, id, phone } = user;
+          const token = this.jwtService.sign(
+            { firstname, lastname, id, phone },
+            {
+              secret: process.env.CRYPTO_KEY,
+            },
+          );
+          return { ...HttpExceptionCode.SUCCEEDED, token };
+        }
+        throw new WsMessage(HttpExceptionCode.NOT_FOUND);
+      })
+      .catch((err) => {
+        if (err instanceof WsMessage) throw err;
+        console.log(err);
+        throw new WsMessage(HttpExceptionCode.FAILLURE);
+      });
   }
 }

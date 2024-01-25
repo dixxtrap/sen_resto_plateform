@@ -1,9 +1,21 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { RoleService } from './role.service';
 import { ApiTags } from '@nestjs/swagger';
 import { RoleDto } from 'src/typeorm/role.entity';
 import { RolePermissionDto } from 'src/typeorm/role_permissison.entity';
 import { PermissionDto } from 'src/typeorm/permission.entity';
+import { AuthenticatedGuard } from '../security/authenticated.guard';
+import { Request } from 'express';
+import { UserDto } from 'src/typeorm/user.entity';
 @Controller('role')
 @ApiTags('role')
 export class RoleController {
@@ -21,30 +33,32 @@ export class RoleController {
   ) {
     return this.service.update({ body, id, permissions });
   }
-  @Put('byId/addMultiplePermission/:id')
+  @Put('by_id/add_multiple_permission/:id')
   addMultiplePermission(
     @Body() permissions: PermissionDto[],
     @Param('id') id: number,
   ) {
     return this.service.addMultiplePermission({ roleId: id, permissions });
   }
-  @Put('byId/removeMultiplePermission/:id')
+  @Put('by_id/remove_multiple_permission/:id')
   removeMultiplePermission(
     @Body() permissions: RolePermissionDto[],
     @Param('id') id: number,
   ) {
     return this.service.removeMultiplePermission({ roleId: id, permissions });
   }
-  @Get('byId/:id')
+  @Get('by_id/:id')
   getById(@Param('id') id: number) {
     return this.service.getById({ id });
   }
-  @Get('byId/permsission/:id')
+  @Get('by_id/permsission/:id')
   getPermissionByRoleId(@Param('id') id: number) {
     return this.service.getPermissionById({ id });
   }
   @Get('all')
-  getAll() {
-    return this.service.getAll();
+  @UseGuards(AuthenticatedGuard)
+  getAll(@Req() req: Request) {
+    const by = req.user as UserDto;
+    return this.service.getAll({ by });
   }
 }

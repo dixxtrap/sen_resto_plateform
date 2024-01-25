@@ -1,26 +1,24 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { BuildingStorefrontIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 import { FC, Fragment, Dispatch, SetStateAction } from "react";
 import { navigationData } from "../../core/data/navigation.data";
 import { classNames, clsx } from "../utils/clsx";
-import { Img } from "./image_updatable";
 import { NavLink } from "react-router-dom";
-import { Logo } from "./logo";
 import { ProtecterPage } from "./protecter_page";
 import { useSelector } from "react-redux";
 import { selectCurrentTheme } from "../../core/features/theme.slice";
 import {
   useProfileQuery,
-  useSignoutMutation,
+  // useSignoutMutation,
 } from "../../core/features/security.slice";
 export const Navigation: FC<{
   sidebarOpen: boolean;
   setSidebarOpen: Dispatch<SetStateAction<boolean>>;
 }> = ({ sidebarOpen, setSidebarOpen }) => {
   const theme=useSelector(selectCurrentTheme)
-  const { data: user, isSuccess, refetch } = useProfileQuery("");
+  const { data: user, isSuccess } = useProfileQuery("");
   return (
-    <Transition.Root show={sidebarOpen} as={Fragment}>
+    isSuccess&&<Transition.Root show={sidebarOpen} as={Fragment}>
       <Dialog as="div" className={"relative z-50 "+theme} onClose={setSidebarOpen}>
         <Transition.Child
           as={Fragment}
@@ -31,7 +29,7 @@ export const Navigation: FC<{
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/20 " />
+          <div className="fixed inset-0 bg-black/1 0 backdrop-blur-lg " />
         </Transition.Child>
 
         <div className="fixed inset-0  flex ">
@@ -46,18 +44,22 @@ export const Navigation: FC<{
           >
             <Dialog.Panel className="relative flex w-full max-w-xs flex-1">
              
-              <div className="flex grow flex-col gap-y-5 overflow-y-auto backdrop-blur-lg bg-gradient-to-tr from-slate-950 dark:from-black  pb-2 ring-1 ring-white/10">
-                <div className="flex h-16 px-2 shrink-0  sticky top-0  items-center justify-between">
+              <div className="flex grow flex-col gap-y-5 overflow-y-auto backdrop-blur-lg bg-gradient-to-tr  from-slate-950 to-black  pb-2 ring-1 ring-white/10">
+                <div className="flex h-16 shrink-0  sticky top-0  items-center justify-between">
                 {user?.parent && user.parent.imagePath && (
                 <img
-                className="h-10 md:h-14 r bg-gradient-to-tr to-teal-500/20 from-indigo-500/20  p-1 rounded-md"
+                className="h-10 md:h-14  bg-gradient-to-tr  backdrop-blur-lg  rounded-md"
                  src={`/v1/${user.parent.imagePath}`}
                 />
               )}
-               
+                 <span className=" text-xl font-bold text-white ">
+                {user?.parent?.parent?.shortname === "SR"
+                  ? user.parent?.name :user?.parent?.shortname === "SR"? user?.parent?.name
+                  : user?.parent?.parent?.name}
+              </span>
                   <button
                     type="button"
-                    className="-m-2.5 p-2.5"
+                    className="-m-2.5 p-2.5 mx-2"
                     onClick={() => setSidebarOpen(false)}
                   >
                     <span className="sr-only">Close sidebar</span>
@@ -68,7 +70,7 @@ export const Navigation: FC<{
                   </button>
                 </div>
                 <nav className="flex flex-1 flex-col px-2 ">
-                  <ul role="list" className="-mx-2 flex-1 space-y-1">
+                  <ul role="list" className="-mx-2 flex-1 space-y-1 px-2">
                     {navigationData.map((item) => (
                       <ProtecterPage key={`nav_item2_${item.name}`} permissions={item.permissions!}>
                         {" "}
@@ -104,16 +106,18 @@ export const Navigation: FC<{
   );
 };
 export const ShortNav = () => {
-  const { data: user, isSuccess, refetch } = useProfileQuery("");
+  const { data: user,  } = useProfileQuery("");
   return (
     <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-20 lg:overflow-y-auto  border-r darkDivider  bg-slate-950 dark:bg-black/90 lg:pb-4">
-      <div className="flex h-16 px-2  shrink-0 items-center sticky top-0 justify-center">
+      <div className="flex h-16 mx-2  shrink-0 items-center sticky top-0 justify-center">
       {user?.parent && user.parent.imagePath && (
                 <img
-                className="h-10 md:h-14 r bg-gradient-to-tr to-teal-500/20 from-indigo-500/20  p-1 rounded-md"
+                className="     rounded-md backdrop-blur-lg"
                  src={`/v1/${user.parent.imagePath}`}
                 />
+              
               )}
+              
         {/* <Logo className="bg-gradient-to-tr to-teal-500/20 backdrop-blur-sm from-indigo-500/20 h-14 w-14 p-1 rounded-md" /> */}
       </div>
       <nav className="mt-8">

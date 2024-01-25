@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { BasePage } from "./interfaces/pages/base";
 import Home from "./interfaces/pages/home";
-import { PlateList } from "./interfaces/pages/plate_list";
+import { PlateList } from "./interfaces/pages/product";
 import { Restaurant } from "./interfaces/pages/restaurant_list";
 
 export const router = createBrowserRouter([

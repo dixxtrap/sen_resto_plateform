@@ -5,14 +5,16 @@ import { useCreateCompanyMutation } from "../../../core/features/company.slice";
 import { Input } from "../../components/input";
 import { CustomForm } from "../../components/custom_form";
 
-export const OrganisationCreate = ({type="company"}:{type?:string}) => {
-  const [createCompany, { isError, isSuccess, isLoading }] =
+export const OrganisationCreate = () => {
+
+  const [createCompany, { isError, isSuccess, isLoading, reset }] =
     useCreateCompanyMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
+    
     resolver: yupResolver(companySchema),
   });
   const _onsubmit = (data: CompanyDto | unknown) => {
@@ -22,7 +24,7 @@ export const OrganisationCreate = ({type="company"}:{type?:string}) => {
   return (
     <div className="flex flex-col divide-y gap-y-2 ">
       
-      <CustomForm  title="Compagnie" isLoading={isLoading} isError={isError} isSuccess={isSuccess}  subTitle="Creer une nouvelle compagnie" onSubmit={handleSubmit(_onsubmit)}>
+      <CustomForm  title="Compagnie" isLoading={isLoading} isError={isError} isSuccess={isSuccess}  subTitle="Creer une nouvelle compagnie" onSubmit={handleSubmit(_onsubmit)} onFinish={reset} >
         <Input
           label="Nom"
           error={errors.name?.message}
@@ -30,8 +32,8 @@ export const OrganisationCreate = ({type="company"}:{type?:string}) => {
         />
         <Input
           label="Abbréviation"
-          error={errors.short_name?.message}
-          children={<input className="input" {...register("short_name")} />}
+          error={errors.shortname?.message}
+          children={<input className="input" {...register("shortname")} />}
         />
         <Input
           label="Email"
@@ -51,45 +53,45 @@ export const OrganisationCreate = ({type="company"}:{type?:string}) => {
         <Input
           label="Adresse"
           error={errors.address?.message}
-          children={<input className="input" {...register("address")} />}
+          children={<input className="input" {...register("address.streetAddress")} />}
         />
         <div className="flex gap-8  w-full flex-wrap">
           <Input
             label="Region"
             className=" max-w-lg"
 
-            error={errors.city?.message}
+            error={errors.address?.city?.message}
 
             children={
-              <input className="input " {...register("city")} />
+              <input className="input " {...register("address.city")} />
             }
           />
           <Input
             label="Pays"
             className=" max-w-lg"
 
-            error={errors.country?.message}
+            error={errors.address?.country?.message}
             children={
-              <input className="input " {...register("country")} />
+              <input className="input " {...register("address.country")} />
             }
           />
         </div>
         <div className="flex gap-8 w-full flex-wrap">
           <Input
             label="Longitude"
-            error={errors.longitude?.message}
+            error={errors.location?.longitude?.message}
             className=" max-w-lg"
 
             children={
-              <input className="input grow " {...register("longitude")} />
+              <input className="input grow " {...register("location.longitude")} />
             }
           />
           <Input
             label="Laltitude"
-            error={errors.laltitude?.message}
+            error={errors.location?.latitude?.message}
             className=" max-w-lg"
             children={
-              <input className="input grow " {...register("laltitude")} />
+              <input className="input grow " {...register("location.latitude")} />
             }
           />
         </div>

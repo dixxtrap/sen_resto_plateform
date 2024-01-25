@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect, useState } from "react";
 import { Title } from "../../components/title";
 import { CustomForm } from "../../components/custom_form";
 import { Input } from "../../components/input";
@@ -10,19 +10,23 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CompanyDto, companySchema } from "../../../core/models/company.dto";
 import { useParams } from "react-router-dom";
-import { ImgPreview } from "../../components/Img_preview";
 import { Alert } from "../../components/alert_success";
 import { CameraIcon } from "@heroicons/react/24/outline";
+import { handlePreview } from "../../utils/handle_preview";
 
-export const OrganisationEdit = ({type="company"}:{type?:string}) => {
+export const OrganisationEdit = () => {
   const id = useParams().id!;
+  const [preview, setPreview]=useState<string>();
+  const [file, setFile]=useState<File>();
+  const [changed, setChanged]=useState< boolean>(false);
+console.log(changed)
+  const handleImage=handlePreview({previewImage:preview!, setPreviewImage:setPreview, setFile:setFile, setChanged:setChanged})
   const {
     data: old,
     isLoading: isOldLoading,
     isSuccess: isOldSuccess,
-    refetch, 
   } = useGetCompanyByIdQuery(id);
-  const [update, { isError, isSuccess, isLoading }] =
+  const [update, { isError, isSuccess, isLoading, reset }] =
     useUpdateCompanyByIdMutation();
   const {
     register,
@@ -35,36 +39,42 @@ export const OrganisationEdit = ({type="company"}:{type?:string}) => {
   useEffect(() => {
     if (old) {
       setValue("name", old.name!);
-      setValue("short_name", old.short_name!);
+      setValue("shortname", old.shortname!);
       setValue("email", old.email!);
       setValue("phone", old.phone!);
-      setValue("address", old.address!);
-      setValue("city", old.city!);
+      setValue("address.streetAddress", old.address!.streetAddress);
+      setValue("address.city", old.address?.city!);
+      setValue("address.country", old.address?.country!);
       setValue("description", old.description!);
-      setValue("country", old.country!);
-      setValue("laltitude", old.laltitude!);
-      setValue("longitude", old.longitude!);
+      setValue("address.country", old.address?.country!);
+      setValue("location.latitude", old.location?.latitude!);
+      setValue("location.longitude", old.location?.longitude!);
     }
   }, [old, setValue]);
 
-  const _onSubmit = handleSubmit((data: CompanyDto) => {
+  const _onSubmit = handleSubmit(async (data: CompanyDto) => {
     console.log(data);
+    if(file){
+      const formData = new FormData();
+      formData.append("file", file!);
+await fetch(`/v1/company_restaurant/update/${old?.id}`,{
+  method: "PUT",
+  body: formData,
+})
+    }
     update({ id: parseInt(id), company: data });
   });
   return !isOldSuccess ? (
     <Alert isOpen={isOldLoading} type="loading" title="Recuperation" />
   ) : (
     <div>
-      <div className="flex flex-col justify-start divide-y gap-y-2 ">
+      <div className="flex flex-col justify-start divide-y divide-gray-500/10 gap-y-2 ">
         <Title title="Compagnie" />
           <div>
-               <ImgPreview
-          img={old!.profile!}
-          name={"profile"}
-          refresh={()=>refetch()}
-          
-          className="h-20 md:h-36  mr-auto  self-start place-self-start "
-        />
+        <label htmlFor="file">
+        <input type="file" hidden id="file" name="file" onChange={handleImage}/>
+        {preview?<img src={preview} className="h-20"/>:old.imagePath?<img src={`/v1/${old.imagePath}`} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
+        </label>
      </div>
 
         <CustomForm
@@ -72,69 +82,83 @@ export const OrganisationEdit = ({type="company"}:{type?:string}) => {
           isError={isError}
           isSuccess={isSuccess}
           subTitle="Creer une nouvelle compagnie"
+          onFinish={reset}
           onSubmit={_onSubmit}
         >
           <Input
             label="Nom"
-            error={errors.name?.message}
+            error={errors.name?.message!}
             children={<input className="input" {...register("name")} />}
           />
           <Input
             label="Abbréviation"
-            error={errors.short_name?.message}
-            children={<input className="input" {...register("short_name")} />}
+            error={errors.shortname?.message!}
+            children={<input className="input" {...register("shortname")} />}
           />
           <Input
             label="Email"
-            error={errors.email?.message}
+            error={errors.email?.message!}
             children={<input className="input" {...register("email")} />}
           />
           <Input
             label="Téléphone"
-            error={errors.phone?.message}
+            error={errors.phone?.message!}
             children={<input className="input" {...register("phone")} />}
           />
           <Input
             label="Description"
-            error={errors.phone?.message}
-            children={<input className="input" {...register("description")} />}
+            error={errors.phone?.message!}
+            children={<textarea className="input" {...register("description")} />}
           />
-          <Input
-            label="Adresse"
-            error={errors.address?.message}
-            children={<input className="input" {...register("address")} />}
-          />
+          
+             <div className="flex gap-8  w-full flex-wrap">
+            <Input
+              label="Adresse"
+              className=" max-w-lg"
+              error={errors.address?.streetAddress?.message!}
+              children={<input className="input " {...register("address.streetAddress")} />}
+            />
+            
+            <Input
+              label="Code Postal"
+              className=" max-w-lg"
+              error={errors.address?.postalCode?.message!}
+              children={<input className="input " {...register("address.postalCode")} />}
+            />
+          </div>
           <div className="flex gap-8  w-full flex-wrap">
             <Input
               label="Region"
               className=" max-w-lg"
-              error={errors.city?.message}
-              children={<input className="input " {...register("city")} />}
+              error={errors.address?.city?.message!}
+              children={<input className="input " {...register("address.city")} />}
             />
+            
             <Input
               label="Pays"
               className=" max-w-lg"
-              error={errors.country?.message}
-              children={<input className="input " {...register("country")} />}
+              error={errors.address?.country?.message!}
+              children={<input className="input " {...register("address.country")} />}
             />
           </div>
           <div className="flex gap-8 w-full flex-wrap">
-            <Input
-              label="Longitude"
-              error={errors.longitude?.message}
-              className=" max-w-lg"
-              children={
-                <input className="input grow " {...register("longitude")} />
-              }
-            />
+            
             <Input
               label="Laltitude"
-              error={errors.laltitude?.message}
+              error={errors.location?.latitude?.message!}
               className=" max-w-lg"
               children={
-                <input className="input grow " {...register("laltitude")} />
+                <input className="input grow " {...register("location.latitude")} />
               }
             />
+            <Input
+              label="Longitude"
+              error={errors.location?.longitude?.message!}
+              className=" max-w-lg"
+              children={
+                <input className="input grow " {...register("location.longitude")} />
+              }
+            />   
           </div>
         </CustomForm>
       </div>

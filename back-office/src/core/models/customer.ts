@@ -1,16 +1,18 @@
 import * as yup from "yup"
+import { CreationDetailDto } from "./creation_details.dto"
 
 export class Customer {
+        [x: string]: any
         id?: number
         phone?: string
         adresse?: string
         isPhoneVeirified?: boolean
-        displayName?: string
+        fisrtname?: string
+        lastname?: string
         laltitude?: number
         longitude?: number
         isEnable?: boolean
-        updatedAt?: string
-        createdAt?: string
+       details?:CreationDetailDto
       }
 
 

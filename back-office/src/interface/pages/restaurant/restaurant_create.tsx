@@ -9,19 +9,27 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CompanyDto, companySchema } from "../../../core/models/company.dto";
 
 export const RestaurantCreate = () => {
-  const [create, { isError, isLoading, isSuccess }] =
+  const [create, { isError, isLoading, isSuccess, reset }] =
     useCreateRestaurantMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
+    defaultValues:{
+      openingTime:"08:00:00",
+      closingTime:"23:00:00",
+      location:{
+        latitude:0.000,
+        longitude:0.000
+      }
+    },
     resolver: yupResolver(companySchema),
   });
   const _onSubmit = handleSubmit((body: CompanyDto) => {
     console.log(`-------------------${body.description}`);
     console.log(body);
-    create({ ...body, short_name: body.name });
+    create({ ...body });
   });
   return (
     <CustomForm
@@ -31,6 +39,7 @@ export const RestaurantCreate = () => {
       isSuccess={isSuccess}
       subTitle={" Creer un nouveau restaurant"}
       onSubmit={_onSubmit}
+     onFinish={reset}
     >
       <ul>
         {Object.entries(errors).map(([cle, valeur]) => (
@@ -42,30 +51,42 @@ export const RestaurantCreate = () => {
       <Input label="Nom du Restaurant" error={errors.name?.message}>
         <input {...register("name")} className="input" />
       </Input>
+      <Input label="Nom Commercial" error={errors.name?.message}>
+        <input {...register("shortname")} className="input" />
+      </Input>
       <Input label="Email" error={errors.email?.message}>
         <input {...register("email")} className="input" />
       </Input>
       <Input label="Téléphone" error={errors.phone?.message}>
         <input {...register("phone")} className="input" />
       </Input>
+      <Input label="Adresse" error={errors.address?.streetAddress?.message}>
+        <input {...register("address.streetAddress")} className="input" />
+      </Input>
+      <Input label="Ville" error={errors.address?.city?.message}>
+        <input {...register("address.city")} className="input" />
+      </Input>
+      <Input label="Pays" error={errors.address?.country?.message}>
+        <input {...register("address.country")} className="input" />
+      </Input>
       <Input label="Description" error={errors.description?.message}>
         <textarea {...register("description")} className="input" />
       </Input>
       <div className="flex gap-8 w-full flex-wrap">
         <Input
-          label="Longitude"
-          error={errors.longitude?.message}
+          label="Laltitude"
+          error={errors.location?.latitude?.message}
           className=" max-w-lg"
           children={
-            <input className="input grow " {...register("longitude")} />
+            <input className="input grow " {...register("location.latitude")} />
           }
         />
         <Input
-          label="Laltitude"
-          error={errors.laltitude?.message}
+          label="Longitude"
+          error={errors.location?.latitude?.message}
           className=" max-w-lg"
           children={
-            <input className="input grow " {...register("laltitude")} />
+            <input className="input grow " {...register("location.longitude")} />
           }
         />
       </div>

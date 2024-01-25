@@ -31,14 +31,14 @@ export const UserList = () => {
                             
                             </div>
                           </td>
-                          <td className="">{user!.role!.name??""} {user!.role!.code??""}</td>
+                          <td className="">{user!.role!.name??""}   </td>
       
                         
                         
-                          <td className="">{user.address?.country!}-{user.city}</td>
+                          <td className="">{user.address?.country!}-{user.address?.city}</td>
                           <td className="">{user.phone}</td>
                           <td className="">
-                       <Status status={ user.status!} inactiveText='Inactif' activeText='Actif' />
+                       <Status status={ user.isActive!} inactiveText='Inactif' activeText='Actif' />
                           </td>
                           <td className="last_td_container">
                             <Link to={`/user/details/${user.id}`}className="last_td">

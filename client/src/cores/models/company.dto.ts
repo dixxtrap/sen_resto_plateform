@@ -1,6 +1,9 @@
 import { RestaurantDto } from "./restaurant.dto";
 
 import { FileDocument } from "./file_document";
+import { CreationDetailDto } from "./creation_details.dto";
+import { CoordonatesDto } from "./coordonates.dto";
+import { AddressDto } from "./address.dto";
 export enum CompanyEnum {
   RESTO = 'restaurant',
   MASTER = 'master',
@@ -10,25 +13,21 @@ export class CompanyDto {
   id?: number;
   name?: string;
   email?: string;
-  short_name?: string;
+  shortname?: string;
   description?: string;
-  address?: string;
+  address?: AddressDto;
+  type?: CompanyEnum;
   city?: string;
   country?: string;
-  postal_code?: string;
   phone?: string;
-  closingTime?: string;
-  openingTime?: string;
-  laltitude?: number;
-  longitude?: number;
+  location?:CoordonatesDto;
   isActive?: boolean;
   canPublish?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
-  restaurants?: RestaurantDto[];
-  restaurantLength?: number;
-  profile?: FileDocument;
-  type?: CompanyEnum;
+  openingTime?: string;
+  closingTime?: string;
+  imagePath?: string;
+  parentId?:number;
+  details?:CreationDetailDto
 }
 // export const companySchema = yup.object({
 //   name: yup.string().max(30).required(),

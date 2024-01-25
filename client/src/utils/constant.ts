@@ -2,11 +2,11 @@ import { Ilink } from "./constant.interface";
 
 export const constant = {
   app_name: "Sen Resto",
-  filePath:"/v1/document/file"
+  filePath:"/v1/"
 };
 
 export const links: Ilink[] = [
-  { name: "Nos Company", route: "company" },
-  { name: "Nos Restarant", route: "restaurant" },
+  { name: "comapny", route: "" },
+ 
   { name: "Produits", route: "plate" },
 ];

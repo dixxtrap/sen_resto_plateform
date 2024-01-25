@@ -8,14 +8,14 @@ export const customerApi = createApi({
   endpoints: (builder) => ({
     updateCustomer: builder.mutation<Customer,{ id:number, customer:Customer}>({
       query: ({id, customer}) => ({
-        url: `customer/${id}`,
+        url: `customer/by_id/${id}`,
         method: "PUT",
         body: customer,
       }),
       invalidatesTags: ["customer"],
     }),
     customer: builder.query<Customer[], string>({
-      query: () => "customer",
+      query: () => "customer/all",
       providesTags: ["customer"],
     }),
     customerById: builder.query<Customer, number>({

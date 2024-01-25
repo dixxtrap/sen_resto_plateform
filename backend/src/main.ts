@@ -4,8 +4,14 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { VersioningType } from '@nestjs/common';
 import * as passport from 'passport';
 import * as session from 'express-session';
+import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
+  // const httpsOptions = {
+  //   key: readFileSync('../kpay-api.com_2024-01-09.key'),
+  //   cert: readFileSync('../kpay-api.com_2024-01-09.crt'),
+  // };
   const app = await NestFactory.create(AppModule);
+  app.use(cookieParser());
   app.enableVersioning({ defaultVersion: '1', type: VersioningType.URI });
   const config = new DocumentBuilder()
     .setTitle('Card Management System')
@@ -20,7 +26,7 @@ async function bootstrap() {
       secret: 'B@kiH@man2023', // get from env file
       resave: true,
       saveUninitialized: true,
-      cookie: { 
+      cookie: {
         maxAge: 4 * 60 * 100000,
       },
     }),

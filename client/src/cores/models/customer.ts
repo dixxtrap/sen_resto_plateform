@@ -1,16 +1,15 @@
+import { AddressDto } from "./address.dto"
+import { CreationDetailDto } from "./creation_details.dto"
 
 
 export class Customer {
         id?: number
         phone?: string
-        adresse?: string
         isPhoneVeirified?: boolean
-        displayName?: string
-        laltitude?: number
-        longitude?: number
-        isEnable?: boolean
-        updatedAt?: string
-        createdAt?: string
+        firstname?: string
+        lastname?: string
+       address?:AddressDto
+    details?:CreationDetailDto
       }
 
 

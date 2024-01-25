@@ -15,18 +15,21 @@ type TablePaginationProps = {
   subtitle?: string;
   createPath?: string;
   isPaginated?: boolean;
+  createTitle?:string,
+
 };
 export const TablePagination: FC<TablePaginationProps> = ({
   trs,
   title,
   subtitle,
   th,
+  createTitle,
   createPath,
   isPaginated = true,
 }) => {
   const [selected, setSelected] = useState(10);
   return (
-    <div className="px-4 sm:px-6 lg:px-8   py-4 rounded-md" >
+    <div className="px-1 sm:px-2 lg:px-2   py-4 rounded-md" >
       <div className="sm:flex sm:items-start justify-between items-start">
         <div className="sm:flex flex-col items-start justify-start grow">
           <h1 className="text-base font-semibold leading-6 title">
@@ -39,10 +42,10 @@ export const TablePagination: FC<TablePaginationProps> = ({
             <Link
               to={createPath}
               type="button"
-              className="block rounded-md bg-primary-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600/10
-              "
+              className="button primary"
+               
             >
-              Ajouter {title}
+               {createTitle??`Ajouter ${title}`}
             </Link>
           </div>
         )}
@@ -157,28 +160,28 @@ export const TablePagination: FC<TablePaginationProps> = ({
           </Listbox>
           <div>
             <nav
-              className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+              className="isolate inline-flex -space-x-px overflow-hidden rounded-md shadow-sm bgInput ring-1 ring-inset  text-gray-500 ring-gray-500/50"
               aria-label="Pagination"
             >
-              <a
-                href="#"
-                className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+              <button
+              
+                className="relative inline-flex items-center  px-2 py-2    border-r border-gray-500/50  hover:bg-gray-500/20  focus:z-20 focus:outline-offset-0"
               >
                 <span className="sr-only">Previous</span>
-                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-              </a>
+                <ChevronLeftIcon className="h-5 w-5 stroke-gray-500" aria-hidden="true" />
+              </button>
               {/* Current: "z-10 bg-primary-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
               <a
                 href="#"
                 aria-current="page"
-                className="relative z-10 inline-flex items-center bg-primary-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+                className="relative z-10 inline-flex items-center px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
               >
                 1
               </a>
 
               <a
                 href="#"
-                className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                className="relative inline-flex items-center rounded-r-md px-2 py-2 border-l border-gray-500/50 hover:bg-gray-500/20 focus:z-20 focus:outline-offset-0"
               >
                 <span className="sr-only">Next</span>
                 <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />

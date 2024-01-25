@@ -5,11 +5,11 @@ import { WsMessage } from "../models/error.dto";
 export const permissionApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
   reducerPath: "permissionApi",
-  tagTypes: ["permissionApi", "role"],
+  tagTypes: ["permissionApi"],
   endpoints: (builder) => ({
     getPermission: builder.query<PermissionDto[], string>({
       query: () => "permission/all",
-      providesTags:["permissionApi"]
+      // providesTags:["permissionApi"]
     }),
     createPermission: builder.mutation<
     WsMessage,
@@ -20,8 +20,8 @@ export const permissionApi = createApi({
       method: "POST",
       body: body,
     }),
-    invalidatesTags: ["permissionApi","role"],
-    providesTags:['permissionApi']
+    invalidatesTags: ["permissionApi"],
+    // providesTags:['permissionApi']
   }),
   }),
 });

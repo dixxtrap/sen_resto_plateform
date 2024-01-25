@@ -16,4 +16,6 @@ export class CustomerDto extends PartnerDto {
   firstname: string;
   @ApiProperty()
   lastname: string;
+  @ApiProperty()
+  phone: string;
 }

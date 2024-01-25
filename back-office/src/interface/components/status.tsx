@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
+import  { FC } from 'react'
 type StatusProps = {
   status: boolean,
   activeText?: string,
   inactiveText?: string
 }
-export const Status: FC<StatusProps> = ({ status, activeText="active", inactiveText="inactive" }) => {
+export const Status: FC<StatusProps> = ({ status, activeText="Activer", inactiveText="Inactiver" }) => {
   return (
-    <span className={`inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset  ${status ? "ring-teal-200/50 text-teal-50 bg-teal-500 dark:bg-teal-800/90" : "ring-red-100 text-red-50 bg-red-500"}`}>{status ? activeText : inactiveText}</span>
+    <span className={`inline-flex justify-center text-xs font-semibold text-center rounded-full  text-white   px-5 py-1 min-w-[80px]  my-1 outline-1  outline-double outline-offset-1   ${status ? " outline-secondary-500/50 bg-secondary-500 " : " outline-primary-500/50 bg-primary-500"}`}>{status ? activeText : inactiveText}</span>
   )
 }

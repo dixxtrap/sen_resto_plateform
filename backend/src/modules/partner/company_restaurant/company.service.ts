@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { unlink } from 'fs';
+import { WalletStatusService } from 'src/modules/wallet_status/wallet_status.service';
 import { CompanyRestaurant } from 'src/typeorm';
 import { AddressDto } from 'src/typeorm/address.entity';
 import { CompanyRestaurantBaseDto } from 'src/typeorm/company_restaurant.entity';
 import { CoordonatesDto } from 'src/typeorm/coordonates.entity';
+import { UserDto } from 'src/typeorm/user.entity';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
@@ -13,31 +15,33 @@ export class CompanyRestaurantService {
   constructor(
     @InjectRepository(CompanyRestaurant)
     private repos: Repository<CompanyRestaurant>,
+    private walletStatusService: WalletStatusService,
   ) {}
   async itinitCompany() {
     const exist = await this.repos.exist({ where: { shortname: 'SR' } });
     if (!exist)
-      return this.create({
-        body: {
-          id: null,
-          email: 'senResto@gmail.com',
-          phone: '2211000000',
-          shortname: 'SR',
-          description: '',
-          name: 'Sen Resto',
-          location: new CoordonatesDto(),
-          address: new AddressDto(),
-          imagePath: '',
-          type: '',
-          partnerId: null,
-          partner: null,
-        },
+      return this.repos.save({
+        email: 'senResto@gmail.com',
+        phone: '2211000000',
+        shortname: 'SR',
+        description: '',
+        name: 'Sen Resto',
+        location: new CoordonatesDto(),
+        address: new AddressDto(),
+        imagePath: '',
+        type: '',
+        partnerId: null,
+        partner: null,
       });
   }
-  create({ body }: { body: CompanyRestaurantBaseDto }) {
+  create({ body, by }: { body: CompanyRestaurantBaseDto; by: UserDto }) {
     return this.repos
       .save(
-        this.repos.manager.getTreeRepository(CompanyRestaurant).create(body),
+        this.repos.create({
+          ...body,
+          details: { byId: by.id },
+          parentId: by.parentId,
+        }),
       )
       .then(async (result) => {
         // if (result) await this.reposClosure.update({childId:result.id,}, {parentId:result.partnerId});
@@ -51,6 +55,7 @@ export class CompanyRestaurantService {
       });
   }
   update({ id, body }: { id: number; body: CompanyRestaurantBaseDto }) {
+    console.log(body);
     return this.repos
       .findOne({ where: { id: Equal(id) } })
       .then((old) => {
@@ -79,7 +84,18 @@ export class CompanyRestaurantService {
     return this.repos
       .find()
       .then((result) => {
-        if (result) return result;
+        if (result)
+          return Promise.all(
+            result.map((item) => {
+              return this.walletStatusService
+                .getOrCreateByEntityId(item.id)
+                .then((ws) => {
+                  return { ...item, balance: ws.balance };
+                });
+            }),
+          ).then((result) => {
+            return result;
+          });
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
       .catch((err) => {

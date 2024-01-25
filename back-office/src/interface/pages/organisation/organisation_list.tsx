@@ -1,14 +1,14 @@
 import { useGetCompanyQuery } from '../../../core/features/company.slice'
-import { Img,  } from '../../components/image_updatable';
 import {Link} from "react-router-dom";
 import { TablePagination } from '../../components/table_pagination';
-import { BuildingOffice2Icon } from '@heroicons/react/24/solid';
+import { BuildingOfficeIcon } from '@heroicons/react/24/solid';
 import { Status } from '../../components/status';
+// import { BuildingOfficeIcon } from '@heroicons/react/24/outline';
 export const OrganisationList = () => {
         const {data:companies=[]}=useGetCompanyQuery("");
   return (
        <TablePagination 
-       th={["Nom", "Email", "Addresse", "Phone", "Status", ""]}
+       th={["Nom", "Email", "Addresse", "Phone","Solde", "Status", ""]}
        createPath='/organisation/create'
        title='Organisation' subtitle='List des oraganisations  et status ' trs={
           <>
@@ -16,9 +16,9 @@ export const OrganisationList = () => {
                   <tr key={company.id!+company.name!}>
                     <td className="">
                       <div className="flex items-center">
-                        <div className="  flex-shrink-0 ">
+                        <div className="  flex-shrink-0  w-16 mr-2 content-center flex  justify-center ">
                           {/* <ImgPreview name={`Prile_${company?.profile?.id}`} className='bg-blue-400 h-11' img={company.profile!}/> */}
-                         <Img  hasImg={company?.profile?.path!=='' &&company?.profile?.path!==null && company?.profile!=null} icon={<BuildingOffice2Icon  className='h-5  text-indigo-500 mr-2'/>} className='h-7 mr-2  aspect-square' imgId={company.profile?.id} />
+                          {  company.imagePath? <img src={`/v1/${company.imagePath!}`} className='h-8 rounded-md' alt=""  />:<BuildingOfficeIcon className='h-8 p-1 text-primary-500 bg-secondary-500/20 ring-2  ring-secondary-500/80 rounded-md'/>}
                         </div>
                        
                           <div className="font-medium ">{company.name}</div>
@@ -30,8 +30,9 @@ export const OrganisationList = () => {
 
                   
                   
-                    <td className="">{company.address}/{company.city}</td>
+                    <td className="">{company.address?.streetAddress}/{company.address?.city}</td>
                     <td className="">{company.phone}</td>
+                    <td className="font-bold">{company.balance} Fcfa</td>
                     <td className="">
                     <Status status={ company.isActive!} inactiveText='Inactif' activeText='Actif' />
                       

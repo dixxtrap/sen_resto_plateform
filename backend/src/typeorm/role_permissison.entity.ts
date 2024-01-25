@@ -23,7 +23,6 @@ export class RolePermission {
   @Column(() => CreationDetails)
   details: CreationDetails;
 }
-
 export class RolePermissionDto {
   @ApiProperty()
   permissionId?: number;

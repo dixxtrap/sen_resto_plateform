@@ -1,9 +1,134 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from 'src/typeorm/product.entity';
+import { Product, ProductDto } from 'src/typeorm/product.entity';
+import { UserDto } from 'src/typeorm/user.entity';
+import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository } from 'typeorm';
+import { ProductManagementService } from './product_management.service';
+import { WeekdayService } from './weekday.service';
+import { ProductCategory } from 'src/typeorm/product_category.entity';
+import { ProductManagementDayDto } from 'src/typeorm/product_management.entity';
 
 @Injectable()
 export class ProductService {
-  constructor(@InjectRepository(Product) private repos: Repository<Product>) {}
+  constructor(
+    @InjectRepository(Product) private repos: Repository<Product>,
+    @InjectRepository(ProductCategory)
+    private reposCategory: Repository<ProductCategory>,
+    private productManagementService: ProductManagementService,
+    private weekdayService: WeekdayService,
+  ) {}
+  create({ by, body }: { by: UserDto; body: ProductDto }) {
+    return this.repos
+      .save(
+        this.repos.create({
+          ...body,
+          parentId: by.parentId,
+          details: { byId: by.id },
+        }),
+      )
+      .then((value) => {
+        return this.productManagementService
+          .create({
+            partnerId: by.parentId,
+            productId: value.id,
+            isActive: true,
+          })
+          .then(() => {
+            if (value) return HttpExceptionCode.SUCCEEDED;
+            throw new WsMessage(HttpExceptionCode.FAILLURE);
+          });
+      })
+      .catch((err) => {
+        if (err instanceof WsMessage) throw err;
+        throw new WsMessage(HttpExceptionCode.FAILLURE);
+      });
+  }
+
+  update({ by, body, id }: { by: UserDto; body: ProductDto; id: number }) {
+    const { category, ...rest } = body;
+    return this.repos
+      .update(
+        { id },
+        {
+          ...rest,
+        },
+      )
+      .then((value) => {
+        if (category.length > 0) {
+          return this.reposCategory
+            .delete({ productId: id })
+            .then(() => {
+              return Promise.all(
+                category.map((cat) => {
+                  this.reposCategory.save({
+                    productId: id,
+                    categoryId: cat.id,
+                  });
+                }),
+              );
+            })
+            .then(() => {
+              if (value) throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+              throw new WsMessage(HttpExceptionCode.FAILLURE);
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+
+        if (err instanceof WsMessage) throw err;
+        throw new WsMessage(HttpExceptionCode.FAILLURE);
+      });
+  }
+  getProductById({ by, id }: { by: UserDto; id: number }) {
+    return this.repos
+      .findOne({ where: { id }, relations: { category: true, file: true } })
+      .then((value) => {
+        console.log(value);
+        if (value) return value;
+        throw new WsMessage(HttpExceptionCode.FAILLURE);
+      })
+      .catch((err) => {
+        console.log(err);
+
+        if (err instanceof WsMessage) throw err;
+        throw new WsMessage(HttpExceptionCode.FAILLURE);
+      });
+  }
+  getProductMamangement(by: UserDto) {
+    return this.productManagementService.getAll({ by });
+  }
+  getProductMamangementById({ id, by }: { by: UserDto; id: number }) {
+    return this.productManagementService.getById({ by, id });
+  }
+  addMultiProductManagement({
+    body,
+    by,
+    partnerId,
+  }: {
+    body: ProductDto[];
+    by: UserDto;
+    partnerId: number;
+  }) {
+    return this.productManagementService.addMultiple({ body, by, partnerId });
+  }
+  getWeekDay() {
+    return this.weekdayService.getAll();
+  }
+
+  updateManagementDay(body: ProductManagementDayDto[]) {
+    return this.productManagementService.updateManagementDay(body);
+  }
+  getAvailableProductForRestaurant({
+    partnerId,
+    by,
+  }: {
+    partnerId: number;
+    by: UserDto;
+  }) {
+    return this.productManagementService.getAvailableProductForRestaurant({
+      partnerId,
+    });
+  }
 }

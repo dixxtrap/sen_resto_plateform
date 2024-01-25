@@ -16,7 +16,7 @@ export const ThemeToggler= () => {
       <Switch
         checked={theme==="dark"}
         onChange={()=>{toggler(toggleTheme())}}
-        className={`bg-primary-400  relative inline-flex h-[30px] w-[55px]  ring-1 p-[2px] ring-primary-50/30 cursor-pointer rounded-md border-3 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
+        className={`bg-primary-500  relative inline-flex h-[30px] w-[55px]  ring-1 p-[2px] ring-primary-50/30 cursor-pointer rounded-md border-3 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
       >
         <span className="sr-only">Use setting</span>
         <span

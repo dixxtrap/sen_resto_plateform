@@ -28,12 +28,17 @@ export abstract class Partner {
   location: Coordonates;
   @Column()
   phone: string;
-  @Column()
+  @Column({ default: true })
+  isActive: boolean;
+  @Column({ default: true })
+  isBloqued: boolean;
+  @Column({ nullable: true, default: null, unique: true })
   email: string;
   @Column({ nullable: true, default: null })
   imagePath: string;
   @Column(() => Address)
   address: Address;
+
   @ManyToOne(() => Partner)
   parent: Partner | Restaurant | CompanyRestaurant;
   @OneToMany(() => Partner, (item) => item.parent)

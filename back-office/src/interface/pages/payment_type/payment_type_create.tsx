@@ -10,7 +10,7 @@ import { useCreatePaymentTypeMutation } from "../../../core/features/payment_typ
 import { CustomSwitch } from "../../components/switch";
 
 export const PaymentTypeCreate = () => {
-  const [create, { isError, isLoading, isSuccess }] =
+  const [create, { isError, isLoading, isSuccess , reset}] =
     useCreatePaymentTypeMutation();
   const {
     register,
@@ -33,6 +33,7 @@ export const PaymentTypeCreate = () => {
       isSuccess={isSuccess}
       isLoading={isLoading}
       onSubmit={_onsubmit}
+      onFinish={reset}
     >
       <Input
         label="Nom du Treminaison de Paiement"
@@ -40,15 +41,26 @@ export const PaymentTypeCreate = () => {
       >
         <input type="text" className="input" {...register("name")} />
       </Input>
+      <Input
+        label="Nom commerciale"
+        error={errors.shortname?.message}
+      >
+        <input type="text" className="input" {...register("shortname")} />
+      </Input>
       <Input label="Description" error={errors.description?.message}>
         <textarea className="input" {...register("description")} />
+      </Input>
+      <Input label="Téléphone" error={errors.phone?.message}>
+        <input type="text" className="input" {...register("phone")} />
+      </Input><Input label="Email" error={errors.email?.message}>
+        <input type="text" className="input" {...register("email")} />
       </Input>
       <Input label="Frais lors de la transaction" error={errors.fees?.message}>
         <input type="text" className="input" {...register("fees")} />
       </Input>
 
-      <Input label="Frais Chez L 'opérateur" error={errors.feesInvert?.message}>
-        <input type="text" className="input" {...register("feesInvert")} />
+      <Input label="Frais Chez L 'opérateur" error={errors.invertFees?.message}>
+        <input type="text" className="input" {...register("invertFees")} />
       </Input>
                   <div className="flex justify-between">
                           <span className="">

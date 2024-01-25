@@ -4,7 +4,7 @@ import themeReducer from "../features/theme.slice";
 import { restaurantApi } from "./restaurant.slice";
 import { companyApi } from "./company.slice";
 import { roleApi } from "./role.slice";
-import { plateApi } from "./plate.slice";
+import { productApi } from "./product.slice";
 import { companyAgentApi } from "./company_agent.slice";
 import { tagApi } from "./tag.slice";
 import { restaurantUserApi } from "./restaurant_user.slice";
@@ -13,13 +13,14 @@ import { customerApi } from "./customer.slice";
 import { paymentTypeApi } from "./payment_type.slice";
 import { permissionApi } from "./permission.slice";
 import { moduleApi } from "./module.slice";
+import { categoryApi } from "./category.slice";
 const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
     [restaurantApi.reducerPath]: restaurantApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
     [roleApi.reducerPath]: roleApi.reducer,
-    [plateApi.reducerPath]: plateApi.reducer,
+    [productApi.reducerPath]: productApi.reducer,
     [securityApi.reducerPath]: securityApi.reducer,
     [companyAgentApi.reducerPath]: companyAgentApi.reducer,
     [tagApi.reducerPath]: tagApi.reducer,
@@ -28,6 +29,7 @@ const store = configureStore({
     [restaurantUserApi.reducerPath]: restaurantUserApi.reducer,
     [permissionApi.reducerPath ]: permissionApi.reducer,
     [moduleApi.reducerPath ]: moduleApi.reducer,
+    [categoryApi.reducerPath ]: categoryApi.reducer,
     theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -37,7 +39,7 @@ const store = configureStore({
       companyApi.middleware,
       roleApi.middleware,
       securityApi.middleware,
-      plateApi.middleware,
+      productApi.middleware,
       paymentTypeApi.middleware,
 customerApi.middleware,
       companyAgentApi.middleware,
@@ -45,6 +47,7 @@ customerApi.middleware,
       restaurantUserApi.middleware,
       permissionApi.middleware, 
       moduleApi.middleware, 
+      categoryApi.middleware, 
     ),
 });
 

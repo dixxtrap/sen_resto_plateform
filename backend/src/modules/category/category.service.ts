@@ -1,6 +1,5 @@
 import { HttpException, Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { initialize } from 'passport';
 import { CategoryData } from 'src/data/category';
 import { Category, CategoryDto } from 'src/typeorm/category.entity';
 import { HttpExceptionCode } from 'src/utils/http_exception_code';

@@ -14,9 +14,9 @@ export class CreationDetails {
 }
 
 export class CreationDetailsDto {
-  createdAt: Date;
+  createdAt?: Date;
 
-  updatedAt: Date;
+  updatedAt?: Date;
   @ApiProperty({ nullable: true, default: null })
-  byId: number;
+  byId?: number;
 }

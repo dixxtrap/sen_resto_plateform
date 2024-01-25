@@ -1,6 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { throws } from 'assert';
 import { logInfo } from 'src/app_log';
 import { User } from 'src/typeorm';
 import { UserDto } from 'src/typeorm/user.entity';
@@ -37,8 +36,9 @@ export class UserService {
   }
   create({ by, body }: { by: UserDto; body: UserDto }) {
     logInfo({ by, action: `create user ${body.email}` });
+    console.log(body);
     return this.repos
-      .save(this.repos.create(body))
+      .save(this.repos.create({ ...body, details: { byId: by.id } }))
       .then((value) => {
         if (value) return HttpExceptionCode.SUCCEEDED;
         throw new Error('Not created');
@@ -51,6 +51,15 @@ export class UserService {
   get() {
     return this.repos
       .find({ relations: { role: true } })
+      .then((value) => value)
+      .catch((err) => {
+        console.log(err);
+        throw new HttpException(HttpExceptionCode.FAILLURE, 400);
+      });
+  }
+  getById({ id }: { id: number }) {
+    return this.repos
+      .findOne({ where: { id }, relations: { role: true } })
       .then((value) => value)
       .catch((err) => {
         console.log(err);
@@ -96,12 +105,12 @@ export class UserService {
         throw new HttpException(HttpExceptionCode.FAILLURE, 400);
       });
   }
-  definePassword({ id, password }: { id: number; password: string }) {
+  async definePassword({ id, password }: { id: number; password: string }) {
     return this.repos.update(
       { id },
       {
-        password: CryptoService.createHash(password),
-        passwordCrypt: CryptoService.encrypt(password),
+        password: await CryptoService.createHash(password),
+        passwordCrypt: await CryptoService.encrypt(password),
       },
     );
   }
@@ -111,7 +120,7 @@ export class UserService {
       .findOne({
         where: { id: Equal(by.id) },
         relations: {
-          parent: true,
+          parent: { parent: true },
           role: { rolePermission: { permission: { module: true } } },
         },
       })

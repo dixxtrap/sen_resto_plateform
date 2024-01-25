@@ -70,8 +70,8 @@ export const GoogleMapComponent: React.FC = () => {
           {/* Marker */}
           {restos.map((e) => (
             <MarkerF
-              key={`key_${e.id}`}
-              position={{ lat: e.laltitude!, lng: e.longitude! }}
+              key={`key_${e.name}`}
+              position={{ lat: e.location?.latitude!??17, lng: e.location?.longitude!??14 }}
               icon={img}
               // label={<span style={{fontWeight:"bold"}}> {e.name}</span>}
               
@@ -84,7 +84,7 @@ export const GoogleMapComponent: React.FC = () => {
           <MarkerF position={center} />
 
           {/* Directions */}
-          <DirectionsService
+          {/* <DirectionsService
             options={{
               destination: destination,
               origin: center,
@@ -96,7 +96,7 @@ export const GoogleMapComponent: React.FC = () => {
                 return <DirectionsRenderer directions={response} />;
               }
             }}
-          />
+          /> */}
         </GoogleMap>
       ) : (
         <div>Loading</div>

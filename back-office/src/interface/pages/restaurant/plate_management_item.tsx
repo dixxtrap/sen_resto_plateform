@@ -1,26 +1,25 @@
-import React from "react";
-import { Plate } from "../../../core/models/plate";
 import { Img } from "../../components/image_updatable";
-import { useAddPlateToRestaurantMutation } from "../../../core/features/plate.slice";
+import { useAddProductToRestaurantMutation } from "../../../core/features/product.slice";
 import { clsx } from "../../utils/clsx";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import { ProductDto } from "../../../core/models/product";
 
 export const PalteManagementItem = ({
-  plate,
+  product,
   companyId,
   isValid,
+  onClick,
 }: {
-  plate: Plate;
+  product: ProductDto;
   companyId: number;
   isValid: boolean;
+  onClick: () => {};
 }) => {
-  const [switchPlate, { isLoading, isSuccess }] =
-    useAddPlateToRestaurantMutation();
   return (
     <button
-      onClick={() => switchPlate({ companyId, plateId: plate.id! })}
+      onClick={onClick}
       className={clsx(
-        "flex  relative border rounded-sm ",
+        "flex  relative border  border-gray-500/30 rounded-md ",
         isValid ? "  ring-2 border-teal-500" : ""
       )}
     >
@@ -28,13 +27,19 @@ export const PalteManagementItem = ({
         <div className="  absolute h-full w-full bg-teal-200/20"></div>
       )}
       <Img
-        imgId={plate?.file![0]?.photoId ?? 1}
-        className="h-28 p-2 w-28"
+        imgPath={product?.file![0]?.path}
+        className="h-24  m-2 w-24 rounded-md "
         hasImg={true}
       />
-      <div className="flex  flex-col items-start">
-      <div className="flex justify-between w-full">  <span className="text-lg font-bold">{plate.name}</span> {isValid && <CheckCircleIcon className="h-7 text-teal-500" />}</div>
-        <span className="line-clamp-3 text-left">{plate.description}</span>
+      <div className="flex grow flex-col items-start">
+        <div className="flex justify-between w-full">
+          {" "}
+          <span className="text-lg font-bold">{product.name}</span>{" "}
+          {isValid && <CheckCircleIcon className="h-7 text-teal-500" />}
+        </div>
+        <span className="line-clamp-3 text-left text-sm">
+          {product.description}
+        </span>
       </div>
     </button>
   );

@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/cores/env.dart';
 import 'package:mobile/cores/model/company.dart';
@@ -16,7 +15,7 @@ class CompanyItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
           color: kprimary.withOpacity(.99),
           borderRadius: BorderRadius.circular(kpadding / 4),
@@ -49,14 +48,14 @@ class CompanyItemWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               width: kpadding / 4,
             ),
             Container(
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                  boxShadow: [BoxShadow()],
+                  boxShadow: const [BoxShadow()],
                   image: DecorationImage(
                       image: NetworkImage(
                           "${Env.fileBase}/${company.profile!.id}"),
@@ -84,7 +83,7 @@ class CompanyItemWidget extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Column(
@@ -103,7 +102,7 @@ class CompanyItemWidget extends StatelessWidget {
                           color: Colors.white),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: kpadding / 4,
                   ),
                   SizedBox(
@@ -129,10 +128,10 @@ class CompanyItemWidget extends StatelessWidget {
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white,
                               )),
-                      SizedBox(
+                      const SizedBox(
                         width: kpadding * 2,
                       ),
-                      SvgIcon(
+                      const SvgIcon(
                         AssetSvg.like,
                         color: Colors.white,
                         size: 18,

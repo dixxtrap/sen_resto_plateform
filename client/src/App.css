@@ -6,7 +6,7 @@
 }
 
 .plate .describe {
-  @apply bg-gradient-to-b from-gray-100/80 via-gray-50/60 to-white absolute left-0 top-0 bottom-0 right-0   overflow-y-scroll p-2 duration-150 -translate-y-full;
+  @apply bg-gradient-to-b from-gray-100 via-gray-50 to-white absolute left-0 top-0 bottom-0 right-0   overflow-y-scroll p-2 duration-500 -translate-y-full;
 }
 .plate:hover .describe {
   @apply block translate-y-0 ;
@@ -16,7 +16,7 @@
 }
 
 .plate {
-  @apply ring-[1.5px]  rounded-md overflow-hidden  ring-slate-700/10;
+  @apply  rounded-md overflow-hidden   ring-1 ring-slate-500/20 hover:shadow-md;
 }
 
 .btn {

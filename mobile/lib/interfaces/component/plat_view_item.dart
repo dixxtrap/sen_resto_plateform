@@ -55,7 +55,7 @@ class PlatViewItem extends StatelessWidget {
             ),
           ),
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: kpadding / 8),
+              padding: const EdgeInsets.symmetric(horizontal: kpadding / 8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,10 +69,10 @@ class PlatViewItem extends StatelessWidget {
                             .bodyMedium!
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: kpadding,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       SizedBox(
                         height: kpadding * 1.4,
                         child: Text(
@@ -111,7 +111,7 @@ class PlatViewItem extends StatelessWidget {
                               ),
                             )),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: kpadding / 4,
                   ),
                   SizedBox(
@@ -122,7 +122,7 @@ class PlatViewItem extends StatelessWidget {
                         FilledButton.tonalIcon(
                           style: FilledButton.styleFrom(
                               shape: roundedButton,
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: kpadding / 4)),
                           icon: const SvgIcon(
                             AssetSvg.like,
@@ -130,13 +130,13 @@ class PlatViewItem extends StatelessWidget {
                             size: 20,
                           ),
                           onPressed: () {},
-                          label: Text(" 100K"),
+                          label: const Text(" 100K"),
                         ),
                         FilledButton.tonal(
                           style: FilledButton.styleFrom(
                               shape: roundedButton,
                               minimumSize: Size.zero,
-                              padding: EdgeInsets.all(kpadding / 4)),
+                              padding: const EdgeInsets.all(kpadding / 4)),
                           // icon:
                           onPressed: () {
                             Navigator.push(
@@ -179,14 +179,14 @@ class CutomChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
           vertical: kpadding / 4, horizontal: kpadding / 2),
       decoration: BoxDecoration(
           border: Border.all(color: getTheme(context).primaryColor),
           borderRadius: BorderRadius.circular(kpadding),
           color: getTheme(context).primaryColor.withOpacity(.2)),
       child: Text(
-        "${value!}",
+        value!,
         style: getTextTheme(context)
             .bodySmall!
             .copyWith(fontWeight: FontWeight.bold),

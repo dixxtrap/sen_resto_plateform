@@ -1,22 +1,23 @@
 import { useState, Fragment } from "react";
-import { Plate } from "../../cores/models/plate";
+import { ProductDto } from "../../cores/models/product";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { RadioGroup, Transition, Dialog } from "@headlessui/react";
 import clsx from "clsx";
 import { constant } from "../../utils/constant";
 import React from "react";
+import { Input } from "./input";
 
 export const PlateItemPoppup = ({
   open,
   setOpen,
-  plate,
+  product,
 }: {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  plate: Plate;
+  product: ProductDto;
 }) => {
-  const [selectedSize, setSelectedSize] = useState<number>(
-    plate?.file![0]?.photoId??1
+  const [selectedSize, setSelectedSize] = useState<string>(
+    product?.file![0]?.path??""
   );
   const [quantity, setQuantity] = useState<number>(1);
   const handleQuantity = (method: "increment" | "decrement") => {
@@ -74,16 +75,49 @@ export const PlateItemPoppup = ({
                   </button>
 
                   <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:items-center lg:gap-x-8">
-                    <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
+                    <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg  sm:col-span-4 lg:col-span-5">
                       <img
-                        src={`/v1/document/file/${selectedSize}`}
-                        alt={plate.name!}
-                        className="object-cover object-center"
+                        src={`/v1/${selectedSize}`}
+                        alt={product.name!}
+                        className="object-cover object-center rounded-md"
                       />
+                        <RadioGroup
+                              value={selectedSize}
+                              onChange={setSelectedSize}
+                              className="mt-2"
+                            >
+                              <RadioGroup.Label className="sr-only">
+                                Choisir l'image
+                              </RadioGroup.Label>
+                              <div className="grid grid-cols-7 py-2 gap-2">
+                                {product!.file!.map((file) => (
+                                  <RadioGroup.Option
+                                    key={`plate_file_${file.id}`}
+                                    value={file.path}
+                                    className={({ active }) =>
+                                      clsx(
+                                        "cursor-pointer focus:outline-none",
+                                        active
+                                          ? "ring-2 ring-red-500 ring-offset-2 ring-inset"
+                                          : "",
+                                        "border-gray-200 bg-white text-gray-900 hover:bg-gray-50",
+                                        "flex items-center justify-center rounded-md border  text-sm font-medium uppercase sm:flex-1"
+                                      )
+                                    }
+                                  >
+                                    <RadioGroup.Label as="span">
+                                      <img
+                                        src={`${constant.filePath}/${file.path}`}
+                                      />
+                                    </RadioGroup.Label>
+                                  </RadioGroup.Option>
+                                ))}
+                              </div>
+                            </RadioGroup>
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7 divide-y-2 ">
                       <h2 className="text-xl font-bold text-gray-900 sm:pr-12">
-                        {plate.name}
+                        {product.name}
                       </h2>
 
                       <section
@@ -96,7 +130,7 @@ export const PlateItemPoppup = ({
                         <div className="flex justify-between font-semibold items-center">
                           <span>Prix</span>
                           <span className="font-bold text-red-500" >
-                            {plate.price} F CFA
+                            {product.price} F CFA
                           </span>
                         </div>
 
@@ -105,7 +139,7 @@ export const PlateItemPoppup = ({
                           <h4 className="sr-only">Reviews</h4>
                           <div className="flex items-center">
                             <div className="ml-1 flex items-center">
-                              {plate.description}
+                              {product.description}
                             </div>
                           </div>
                         </div>
@@ -124,49 +158,11 @@ export const PlateItemPoppup = ({
                           {/* Color picker */}
 
                           {/* Size picker */}
-                          <div className="mt-8">
-                            <div className="flex items-center justify-between">
-                              <h4 className="text-sm font-medium text-gray-900">
-                                Images
-                              </h4>
-                              <div className="text-sm font-medium text-red-600 hover:text-red-500">
-                                Choisir l'image
-                              </div>
-                            </div>
-
-                            <RadioGroup
-                              value={selectedSize}
-                              onChange={setSelectedSize}
-                              className="mt-2"
-                            >
-                              <RadioGroup.Label className="sr-only">
-                                Choisir l'image
-                              </RadioGroup.Label>
-                              <div className="grid grid-cols-7 gap-2">
-                                {plate!.file!.map((file) => (
-                                  <RadioGroup.Option
-                                    key={`plate_file_${file.id}`}
-                                    value={file.photoId}
-                                    className={({ active }) =>
-                                      clsx(
-                                        "cursor-pointer focus:outline-none",
-                                        active
-                                          ? "ring-2 ring-red-500 ring-offset-2 ring-inset"
-                                          : "",
-                                        "border-gray-200 bg-white text-gray-900 hover:bg-gray-50",
-                                        "flex items-center justify-center rounded-md border py-3 px-3 text-sm font-medium uppercase sm:flex-1"
-                                      )
-                                    }
-                                  >
-                                    <RadioGroup.Label as="span">
-                                      <img
-                                        src={`${constant.filePath}/${file.photoId}`}
-                                      />
-                                    </RadioGroup.Label>
-                                  </RadioGroup.Option>
-                                ))}
-                              </div>
-                            </RadioGroup>
+                          <div className="mt-2">
+                           <Input label="Details de la Commande">
+                           <textarea className="input"/>
+                           </Input>
+                          
                           </div>
                           <div className="flex items-stretch gap-5 ">
                             <button

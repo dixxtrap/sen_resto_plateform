@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -6,38 +5,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mobile/cores/providers/gateway.provider.dart';
 import 'package:mobile/interfaces/pages/page_with_bottom_navigator_bar.dart';
-import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
-import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:mobile/interfaces/pages/restaurant_details.dart';
-import 'package:mobile/interfaces/utils/constant.dart';
 import 'package:mobile/interfaces/utils/kprint.dart';
 
 class Bag extends ConsumerStatefulWidget {
-  Bag({Key? key}) : super(key: key);
+  const Bag({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _BagState();
 }
 
 class _BagState extends ConsumerState<Bag> {
-  GoogleMapController? _mapController;
   GatewayNotifier? provider;
   BitmapDescriptor? restoBitMap;
   BitmapDescriptor? plateBitMap;
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
-  final destination = LatLng(14.757556, -17.390524);
-  LatLng source = LatLng(14.739400, -17.506737);
+  final destination = const LatLng(14.757556, -17.390524);
+  LatLng source = const LatLng(14.739400, -17.506737);
   List<LatLng> palylineCoordinates = [];
-  static final CameraPosition _kGooglePlex = CameraPosition(
+  static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(14.739400, -17.506737),
     zoom: 12.4746,
   );
 
-  static const CameraPosition _kLake = CameraPosition(
-      target: LatLng(14.739400, -17.506737),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
 
   void getPolypoint() async {
     kprint("------------------------getPolyline------------------------");
@@ -49,8 +38,9 @@ class _BagState extends ConsumerState<Bag> {
     if (result.points.isNotEmpty) {
       kprint("------------------------point not empty------------------------");
 
-      result.points.forEach(
-          (e) => palylineCoordinates.add(LatLng(e.latitude, e.longitude)));
+      for (var e in result.points) {
+        palylineCoordinates.add(LatLng(e.latitude, e.longitude));
+      }
       setState(() {});
     }
   }
@@ -77,6 +67,7 @@ class _BagState extends ConsumerState<Bag> {
         provider = ref.watch(gatewayProvider);
         provider?.getData(refresh: true);
         getBitMap();
+      // ignore: empty_catches
       } catch (e) {}
     });
   }
@@ -88,7 +79,6 @@ class _BagState extends ConsumerState<Bag> {
       currentIndex: 2,
       body: GoogleMap(
         onMapCreated: (controller) {
-          _mapController = controller;
         },
         mapType: MapType.terrain,
         initialCameraPosition: _kGooglePlex,
@@ -96,12 +86,12 @@ class _BagState extends ConsumerState<Bag> {
         trafficEnabled: false,
         markers: {
           Marker(
-            markerId: MarkerId("source"),
+            markerId: const MarkerId("source"),
             position: source,
             icon: restoBitMap ?? BitmapDescriptor.defaultMarker,
           ),
           Marker(
-            markerId: MarkerId("destination"),
+            markerId: const MarkerId("destination"),
             position: destination,
             icon: plateBitMap ?? BitmapDescriptor.defaultMarker,
           ),

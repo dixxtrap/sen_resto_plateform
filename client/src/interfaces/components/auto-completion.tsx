@@ -60,11 +60,13 @@ export const AutoCompletionCompanies = () => {
                   {({ active, selected }) => (
                     <>
                       <div className="flex items-center">
-                        <img
-                          src={`${constant.filePath}/${company.profile?.id}`}
+                       <div className="w-10 ">
+                       <img
+                          src={`${constant.filePath}/${company.imagePath}`}
                           alt=""
-                          className="h-6 w-6 flex-shrink-0 rounded-full"
+                          className="h-6 flex-shrink-0 m-auto rounded-full"
                         />
+                       </div>
                         <span
                           className={clsx(
                             "ml-3 truncate",

@@ -18,7 +18,7 @@ export const securityApi = createApi({
     }),
     signout: builder.mutation<undefined, string>({
       query: () => ({
-        url: "security/signout",
+        url: "security/logout",
         method: "GET",
       }),
       invalidatesTags: ["security"],

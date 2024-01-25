@@ -1,43 +1,45 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Title } from "../../components/title";
 import { CustomForm } from "../../components/custom_form";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Plate, plateSchema } from "../../../core/models/plate";
+import { ProductDto, productSchema } from "../../../core/models/product";
 import {
-  useGetPlateByIdQuery,
-  useUpdatePlateMutation,
-} from "../../../core/features/plate.slice";
+  useGetProductByIdQuery,
+  useUpdateProductMutation,
+} from "../../../core/features/product.slice";
 import { useParams } from "react-router-dom";
 import { Input } from "../../components/input";
-import { ImgPreview } from "../../components/Img_preview";
-import { CameraIcon } from "@heroicons/react/24/outline";
-import { CustomSwitch } from "../../components/switch";
-import { useGetTagsQuery } from "../../../core/features/tag.slice";
+
 import { Alert } from "../../components/alert_success";
+import { useGetCategoryQuery } from "../../../core/features/category.slice";
+import { ShowCategorySelect } from "./show_category_select";
+import { CategoryDto } from "../../../core/models/category.dto";
+import { WsMessage } from "../../../core/models/error.dto";
+import { ProductCreateFile } from "./product_file_create";
+import { ProductFileUpdate } from "./product_file_update";
 export const PlatesEdit = () => {
+  const [categoryList, setCategoryList] = useState<CategoryDto[]>([]);
   const id = parseInt(useParams().id!);
-  const { data: tags, isLoading: isTagLoading } = useGetTagsQuery("");
-  const [update, { isLoading, isSuccess, isError }] = useUpdatePlateMutation();
+  const { data: categories, isLoading: isTagLoading } = useGetCategoryQuery("");
+  const [update, { isLoading, isSuccess, isError, reset, error }] = useUpdateProductMutation();
 
   const {
     data: old,
-    isError: isOldError,
     isLoading: isOldLoading,
-    refetch,
-  } = useGetPlateByIdQuery(id);
+  } = useGetProductByIdQuery(id);
+  console.log(old)
   const {
     handleSubmit,
     register,
     setValue,
-    watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(plateSchema),
+    resolver: yupResolver(productSchema),
   });
-  const _onSubmit = (body: Plate) => {
+  const _onSubmit = (body: ProductDto) => {
     console.log(body);
-    update({ id: id!, plate: body });
+    update({ id: id!, product: {...body, category:categoryList},  });
   };
   useEffect(() => {
     if (old) {
@@ -45,35 +47,24 @@ export const PlatesEdit = () => {
       setValue("description", old.description);
       setValue("price", old.price);
       setValue("reduction", old.reduction);
-      setValue("tag", old.tag);
-      setValue("monday", old.monday);
-      setValue("tuesday", old.tuesday);
-      setValue("wednesday", old.wednesday);
-      setValue("thursday", old.thursday);
-      setValue("friday", old.friday);
-      setValue("saturday", old.saturday);
-      setValue("sunday", old.sunday);
-
-      console.log(watch("tagIds"));
+ setCategoryList(old.category!??[])
+     
     }
   }, [old]);
 
   return (
     <>
-      <Alert isOpen={isOldLoading && isTagLoading} type="loading"  title="Recuperation"/>
-      <Alert isOpen={isError} type="loading"  title="Recuperation"/>
-      {old&&tags&&
+    {(isOldLoading || isTagLoading)&&  <Alert isOpen={true} type="loading"  title="Recuperation"/>}
+    {  isError&&<Alert isOpen={true} type="faillure"  title="Error" message={(error as WsMessage).message! }/>}:
+      {old&&categories&&
         <div className="flex flex-col divide-y darkDivider">
-          <Title title="Plat" subTitle="Modifier le plat" />
-          <div className="flex flex-wrap">
+          <Title title={old.name} subTitle="Modifier le plat" />
+          <div className="flex flex-wrap gap-2 py-2">
             {old?.file?.map((e) => (
-              <ImgPreview
-                name={`plate_file_${e.id}`}
-                className="h-14 w-14 md:h-28 md:w-28 rounded-md"
-                img={e.photo}
-              />
+             <ProductFileUpdate path={e.path!}  id={e.id!} productId={old?.id!} />
             ))}
-            <ImgPreview
+            <ProductCreateFile productId={old.id!}/>
+            {/* <ImgPreview
               name={`plate_file_last`}
               canUpdateAfter={true}
               refresh={refetch}
@@ -84,7 +75,7 @@ export const PlatesEdit = () => {
               icon={
                 <CameraIcon className="h-14 w-14 md:h-28 md:w-28 text-indigo-500" />
               }
-            />
+            /> */}
           </div>
 
           <CustomForm
@@ -92,6 +83,7 @@ export const PlatesEdit = () => {
             isSuccess={isSuccess}
             isLoading={isLoading}
             onSubmit={handleSubmit(_onSubmit)}
+            onFinish={reset}
           >
             <Input label="Nom du plat" error={errors.name?.message}>
               <input className="input" {...register("name")} />
@@ -109,27 +101,15 @@ export const PlatesEdit = () => {
             <Input
               label="Liste des tags #"
               name="123456"
-              error={errors.tagIds?.message}
+            
             >
               <div className="input">
                 <div className="   items-start  flex-wrap flex  ">
-                  {tags?.map((e) => (
-                    <label
-                      htmlFor={e.id + "_tag"}
-                      key={e.id + "_tag_label"}
-                      className="ml-4  text-left items-start justify-start  w-52  "
-                    >
-                      <input
-                        id={e.id + "_tag"}
-                        {...register("tagIds")}
-                        type="checkbox"
-                        defaultChecked={old!.tag!.some((t) => t.id === e.id)}
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        value={e.id}
-                      />{" "}
-                      <span> {e.name}</span>
-                    </label>
-                  ))}
+                <div className="   grid grid-cols-5  gap-3 ">
+              {categories[0]?.children?.map((e) =>
+                <ShowCategorySelect key={`key_${e.id}`} categoryList={categoryList} setCategoryList={setCategoryList} category={e} isChild={false}/>
+              )}
+            </div>
                 </div>
               </div>
             </Input>

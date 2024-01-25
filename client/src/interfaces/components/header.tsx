@@ -5,8 +5,10 @@ import logo from "../../assets/react.svg";
 import { constant, links } from "../../utils/constant";
 import { Link, NavLink } from "react-router-dom";
 import clsx from "clsx";
+import { useProfileQuery } from "../../cores/apis/security.slice";
 
-export  const  Header=()=> {
+export const Header = () => {
+  const { data: profile } = useProfileQuery("");
   return (
     <Disclosure as="nav" className=" shadow sticky top-0 backdrop-blur-md z-50">
       {({ open }) => (
@@ -15,7 +17,7 @@ export  const  Header=()=> {
             <div className="flex h-16 justify-between">
               <div className="flex px-2 lg:px-0">
                 <Link to="/" className="flex flex-shrink-0 items-center">
-                  <img src={logo} />
+                  <img src={logo} className="h-10" />
                   <span className="text-2xl font-bold font-serif ml-4  text-kprimary-500">
                     {constant.app_name}
                   </span>
@@ -37,7 +39,7 @@ export  const  Header=()=> {
                   ))}
                 </div>
               </div>
-            
+
               {/* <div className="flex items-center lg:hidden"> */}
               {/* Mobile menu button */}
               {/* <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"> */}
@@ -52,6 +54,7 @@ export  const  Header=()=> {
               </div> */}
 
               <div className=" lg:ml-4 lg:flex lg:items-center">
+                <div className="hidden lg:flex">{profile?.firstname} </div>
                 <button
                   type="button"
                   className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -60,7 +63,6 @@ export  const  Header=()=> {
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
-
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-4 flex-shrink-0">
                   <div>
@@ -104,24 +106,20 @@ export  const  Header=()=> {
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
-                      
-                          <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700"
-                          >
-                            Commande(s) en cours
-                          </a>
-                      
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700"
+                        >
+                          Commande(s) en cours
+                        </a>
                       </Menu.Item>
                       <Menu.Item>
-                      
-                          <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700"
-                          >
-                            Se déconnecter
-                          </a>
-                       
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700"
+                        >
+                          Se déconnecter
+                        </a>
                       </Menu.Item>
                       {/*<Menu.Item>
                         {({ active }) => (
@@ -143,4 +141,4 @@ export  const  Header=()=> {
       )}
     </Disclosure>
   );
-}
+};

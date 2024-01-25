@@ -12,13 +12,13 @@ import { User, userSchema } from "../../../core/models/user.dto";
 import { Alert } from "../../components/alert_success";
 import { useGetResttaurantQuery } from "../../../core/features/restaurant.slice";
 import { useGetRolesQuery } from "../../../core/features/role.slice";
-import { useGetCompanyQuery } from "../../../core/features/company.slice";
+import { useGetCompanyChildrenQuery, useGetCompanyQuery } from "../../../core/features/company.slice";
 import { clsx } from "../../utils/clsx";
+import { RoleDto } from "../../../core/models/role.dto";
 
 export const UserEdit = () => {
-  const { data: restaurants = [] } = useGetResttaurantQuery("");
-  const { data: roles = [] } = useGetRolesQuery("");
-  const { data: companies = [] } = useGetCompanyQuery("");
+  const { data: roles  } = useGetRolesQuery("");
+  const { data: companies = [] } = useGetCompanyChildrenQuery("");
   const { id } = useParams();
   const {
     data: oldUser,
@@ -26,12 +26,12 @@ export const UserEdit = () => {
     isLoading: isUserLoading,
     isError: isUserError,
   } = useGetUserByIdQuery(parseInt(id!));
-  const [update, { isError, isSuccess, isLoading }] = useUpdateUserMutation();
+  const [update, { isError, isSuccess, isLoading , reset}] = useUpdateUserMutation();
   const {
     register,
     handleSubmit,
     setValue,
-    reset,watch,
+  watch,
     formState: { errors },
   } = useForm({ resolver: yupResolver(userSchema) });
   useEffect(() => {
@@ -42,18 +42,35 @@ export const UserEdit = () => {
       setValue("email", oldUser.email!);
       setValue("roleId", oldUser.roleId!);
       setValue("phone", oldUser.phone!);
-      setValue("restaurantId", oldUser.restaurantId!);
-      setValue("companyId", oldUser.companyId!);
-      setValue("address", oldUser.address!);
-      setValue("country", oldUser.country!);
-      console.log(oldUser.birthday?.split("T")[0])
-      setValue("birthday", oldUser.birthday?.split("T")[0]);
-      setValue("city", oldUser.city!);
+      setValue("parentId", oldUser.parentId!);
+      setValue("address.streetAddress", oldUser.address?.streetAddress!);
+      setValue("address.country", oldUser.address?.country!);
+      setValue("address.city", oldUser.address?.city!);
+      console.log(oldUser.birthday)
+      setValue("birthday", oldUser.birthday);
     }
   }, [oldUser, setValue]);
   const _onSubmit = (body: User) => {
     console.log(body);
     update({ id: parseInt(id!), user: body });
+  };
+  const showRole = (role: RoleDto) => {
+    return role.children?.length! > 0 ? (
+      <optgroup className="dark:bg-black" label={role.name}>
+        <option selected={oldUser?.roleId===role.id} value={role.id} className="dark:bg-black">
+          {role.name}
+        </option>
+        {role.children?.map((role2) => (
+          <option selected={oldUser?.roleId===role2.id} className="dark:bg-black" value={role2.id}>
+            {role2.name}
+          </option>
+        ))}
+      </optgroup>
+    ) : (
+      <option className="dark:bg-black" value={role.id}>
+        {role.name}
+      </option>
+    );
   };
   return (
     <>
@@ -73,6 +90,7 @@ export const UserEdit = () => {
           isError={isError}
           isLoading={isLoading}
           isSuccess={isSuccess}
+          onFinish={reset}
           children={
             <>
               <Input label="Prénom" error={errors.firstname?.message}>
@@ -102,20 +120,20 @@ export const UserEdit = () => {
                   {...register("birthday")}
                 />
               </Input>
-              <Input label="Adresse" error={errors.address?.message}>
-                <input type="text" className="input" {...register("address")} />
+              <Input label="Adresse" error={errors.address?.streetAddress?.message}>
+                <input type="text" className="input" {...register("address.streetAddress")} />
               </Input>
-              <Input label="Region" error={errors.city?.message}>
-                <input type="text" className="input" {...register("city")} />
+              <Input label="Region" error={errors.address?.city?.message}>
+                <input type="text" className="input" {...register("address.city")} />
               </Input>
 
-              <Input label="Pays" error={errors.country?.message}>
-                <input type="text" className="input" {...register("country")} />
+              <Input label="Pays" error={errors.address?.country?.message}>
+                <input type="text" className="input" {...register("address.country")} />
               </Input>
               <Input label="Organisation">
                 <select
                   className={clsx("input", "h-9")}
-                  {...register("companyId")}
+                  {...register("parentId")}
                 >
                   {companies.map((e) => (
                     <option className="input" value={e.id}>
@@ -124,38 +142,16 @@ export const UserEdit = () => {
                   ))}
                 </select>
               </Input>
-              <Input label="Restaurant">
-                <select
-                  className={clsx(
-                    "input",
-
-                    "h-9"
-                  )}
-                  {...register("restaurantId")}
-                >
-                  <option className="input py-2" value={0} >
-                       
-                      </option>
-                  {restaurants
-                    .filter((e) => e.companyId == watch("companyId"))
-                    .map((e) => (
-                      <option className="input py-2" value={e.id}>
-                        {e.name}
-                      </option>
-                    ))}
-                </select>
-              </Input>
+           
               <Input label="Role">
-                <select
-                  className={clsx("input", "lowercase", "h-9")}
-                  {...register("roleId")}
-                >
-                  {roles.map((e) => (
-                    <option className="input lowercase py-2" value={e.id}>
-                      {e.name}--{e.scope}
-                    </option>
-                  ))}
-                </select>
+               
+              <select
+            className={clsx("input", "lowercase", "h-9")}
+            {...register("roleId")}
+          >
+
+            {roles?.children?.map((e) => showRole(e))}
+          </select>
               </Input>
             </>
           }

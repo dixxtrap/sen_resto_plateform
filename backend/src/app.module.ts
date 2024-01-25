@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
-import { JWT } from './jtw';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 import config from 'mysql.config';
@@ -16,6 +14,10 @@ import { RolePermissionModule } from './modules/role_permsion/role_permission.mo
 import { PartnerModule } from './modules/partner/partner.module';
 import { UserModule } from './modules/user/user.module';
 import { SecurityModule } from './modules/security/security.module';
+import { ProductModule } from './modules/product/product.module';
+
+import { WebServiceModule } from './modules/web_service/web_service.module';
+import { WalletStatusModule } from './modules/wallet_status/wallet_status.module';
 
 @Module({
   imports: [
@@ -39,6 +41,9 @@ import { SecurityModule } from './modules/security/security.module';
     RolePermissionModule,
     PartnerModule,
     UserModule,
+    ProductModule,
+    WebServiceModule,
+    WalletStatusModule
   ],
 
   controllers: [AppController],

@@ -1,11 +1,11 @@
 import React from "react";
-import { useGetCompanyAndParticularRestaurantQuery, useGetCompanyQuery } from "../../cores/apis/api";
+import {  useGetCompanyQuery } from "../../cores/apis/api";
 import clsx from "clsx";
 import { constant } from "../../utils/constant";
 import { CompanyEnum } from "../../cores/models/company.dto";
 
 export const HomeCompany = () => {
-  const { data = [], isLoading, isSuccess } = useGetCompanyAndParticularRestaurantQuery("");
+  const { data = [], isLoading, isSuccess } = useGetCompanyQuery("");
   return (
     <>
       {isLoading && <span>Chargement....</span>}
@@ -16,32 +16,35 @@ export const HomeCompany = () => {
               <div
                 key={item.name}
                 className={clsx(
-              
+                " hover:bg-gray-500/10",
                   "grid grid-cols-2 gap-y-2 gap-x-4 px-4 py-10 sm:px-6  xl:px-8 ring-1 ring-slate-200"
                 )}
               >
-                            <div className="">
-                                    <img src={`${constant.filePath}/${item.profile?.id}`}  className="h-20 w-auto"/>
+                            <div className=" ">
+                                    <img src={`v1/${item.imagePath}`}  className="h-20 mx-auto w-auto rounded-md"/>
                 </div>
                 <div className="flex flex-col">
-                  <dt className="text-sm font-medium leading-6 text-gray-500">
-                 {item.type===CompanyEnum.MASTER?"Company":"Particulier"}
-                  </dt>
+               
+                 
+                 
+                  <dd className="w-full flex-none text-xl font-medium leading-10 tracking-tight text-gray-900">
+                  {item.shortname}
+                  </dd>
                   <dd
                     className={clsx(
                       item.isActive ? "text-rose-600" : "text-gray-700",
                       "text-xs font-medium"
                     )}
                   >
+                     <dt className="text-sm font-medium leading-6 text-gray-500">
+                 {item.name}
+                  </dt>
                   
-                  </dd>
-                  <dd className="w-full flex-none text-xl font-medium leading-10 tracking-tight text-gray-900">
-                  {item.name}
                   </dd>
                   <dd
                     className={clsx(
                       item.isActive ? "text-rose-600" : "text-gray-700",
-                      "text-xs font-medium"
+                      "text-xs font-medium leading-6"
                     )}
                   >
                   {item.openingTime} / {item.closingTime}

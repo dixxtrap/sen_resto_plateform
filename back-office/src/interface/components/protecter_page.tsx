@@ -2,7 +2,6 @@ import  { FC, ReactNode, useEffect, useState } from "react";
 
 import { Navigate } from "react-router-dom";
 
-import { useGetUserRoleQuery } from "../../core/features/auth.slice";
 import { useProfileQuery } from "../../core/features/security.slice";
 type Props = {
   permissions: { code: string; type: string }[];
@@ -18,7 +17,7 @@ export const ProtecterPage: FC<Props> = ({
     data: decoded,
     isSuccess: isConnected,
     isLoading,
-    isError: conFailled,
+ 
     refetch,
   } = useProfileQuery("");
   const [canActive, setCanActive] = useState<boolean>(false);
@@ -31,8 +30,8 @@ export const ProtecterPage: FC<Props> = ({
     const result = decoded?.role?.rolePermission?.some((item) => {
      return  permissions.some((item2) => {
       return (item.permission?.action?.toLowerCase() === item2.type.toLowerCase() ||
-            item2.type.toLowerCase() === "*") &&
-          (item.permission?.module?.name?.toLowerCase() === item2.code.toLowerCase() ||
+            item2.type.toLowerCase() === "*" ) &&
+          (item.permission?.module?.name?.toLowerCase() === item2.code.toLowerCase() || item.permission?.code?.toLowerCase()===  item2.code.toLowerCase()||
             item2.code.toLowerCase() === "*");
     
       });
