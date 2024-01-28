@@ -33,6 +33,10 @@ export class UserService {
           roleId: roleId,
         }),
       );
+    else
+      return this.repos.findOne({
+        where: { email: process.env.SUPER_ADMIN_EMAIL },
+      });
   }
   create({ by, body }: { by: UserDto; body: UserDto }) {
     logInfo({ by, action: `create user ${body.email}` });

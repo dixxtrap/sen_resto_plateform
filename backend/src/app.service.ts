@@ -17,8 +17,9 @@ export class AppService implements OnModuleInit {
   }
   async iniPlateForm() {
     this.role.initRole().then((role) => {
-      return this.user.createAdmin(role.id).then((user) => {
-        return this.company.itinitCompany();
+      return this.user.createAdmin(role.id).then((_user) => {
+        console.log(_user);
+        // return this.company.itinitCompany(_user.id);
       });
     });
   }

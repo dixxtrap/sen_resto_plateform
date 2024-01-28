@@ -17,22 +17,22 @@ export class CompanyRestaurantService {
     private repos: Repository<CompanyRestaurant>,
     private walletStatusService: WalletStatusService,
   ) {}
-  async itinitCompany() {
-    const exist = await this.repos.exist({ where: { shortname: 'SR' } });
+  async itinitCompany(byId?: number) {
+    const exist = await this.repos.exist({ where: { shortname: 'Sen Resto' } });
     if (!exist)
-      return this.repos.save({
-        email: 'senResto@gmail.com',
-        phone: '2211000000',
-        shortname: 'SR',
-        description: '',
-        name: 'Sen Resto',
-        location: new CoordonatesDto(),
-        address: new AddressDto(),
-        imagePath: '',
-        type: '',
-        partnerId: null,
-        partner: null,
-      });
+      return this.repos.save(
+        this.repos.create({
+          email: 'senResto@gmail.com',
+          phone: '2211000000',
+          shortname: 'Sen Resto',
+          description: '',
+          name: 'Sen Resto',
+          location: new CoordonatesDto(),
+          address: new AddressDto(),
+          parentId: null,
+          details: { byId: byId },
+        }),
+      );
   }
   create({ body, by }: { body: CompanyRestaurantBaseDto; by: UserDto }) {
     return this.repos

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from 'src/typeorm';
 import { RoleDto } from 'src/typeorm/role.entity';
 import { HttpExceptionCode } from 'src/utils/http_exception_code';
-import { Equal, Repository } from 'typeorm';
+import { Equal, Like, Repository } from 'typeorm';
 import { RolePermissionService } from '../role_permsion/role_permission.service';
 import { RolePermissionDto } from 'src/typeorm/role_permissison.entity';
 import { PermissionDto } from 'src/typeorm/permission.entity';
@@ -16,12 +16,19 @@ export class RoleService {
     private rolePermissionService: RolePermissionService,
   ) {}
   initRole() {
-    return this.repos.manager.getTreeRepository(Role).save(
-      this.repos.manager.getTreeRepository(Role).create({
-        name: 'super_admin',
-        description: 'controller toute la plateform',
-      }),
-    );
+    return this.repos
+      .exist({ where: { code: Like('super_admin') } })
+      .then((exist) => {
+        console.log(exist);
+        return exist
+          ? this.repos.findOneBy({ code: 'super_admin' })
+          : this.repos.manager.getTreeRepository(Role).save(
+              this.repos.manager.getTreeRepository(Role).create({
+                name: 'super_admin',
+                description: 'controller toute la plateform',
+              }),
+            );
+      });
   }
   getAll({ by }: { by: UserDto }) {
     return this.repos

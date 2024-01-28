@@ -1,7 +1,6 @@
-import { ChildEntity, Column, TreeChildren, TreeParent } from 'typeorm';
+import { ChildEntity, Column } from 'typeorm';
 import { Partner, PartnerDto } from './partner.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { Coordonates } from './coordonates.entity';
 @ChildEntity()
 export class CompanyRestaurantBase extends Partner {
   @Column()
