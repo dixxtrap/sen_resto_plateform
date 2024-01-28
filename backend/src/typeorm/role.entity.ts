@@ -16,7 +16,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class Role {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column({ unique: true })
+  @Column({ unique: true,nullable:true, default:null })
   code: string;
   @Column()
   name: string;

@@ -24,7 +24,8 @@ export class RoleService {
           ? this.repos.findOneBy({ code: 'super_admin' })
           : this.repos.manager.getTreeRepository(Role).save(
               this.repos.manager.getTreeRepository(Role).create({
-                name: 'super_admin',
+                code: 'super_admin',
+                name: 'Super Admin',
                 description: 'controller toute la plateform',
               }),
             );
