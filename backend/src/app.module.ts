@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
-import config from 'mysql.config';
+import config from './../mysql.config';
 import { join } from 'path';
 import { ModuleModule } from './modules/module/module.module';
 import { CategoryModule } from './modules/category/category.module';
