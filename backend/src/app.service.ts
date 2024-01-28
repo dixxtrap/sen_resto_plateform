@@ -13,7 +13,7 @@ export class AppService implements OnModuleInit {
     private role: RoleService,
   ) {}
   onModuleInit() {
-    // this.iniPlateForm();
+    this.iniPlateForm();
   }
   async iniPlateForm() {
     this.role.initRole().then((role) => {

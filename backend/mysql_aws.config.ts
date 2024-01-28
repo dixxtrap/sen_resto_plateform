@@ -11,7 +11,7 @@ const config: MysqlConnectionOptions = {
   dateStrings: true,
   entities: entities,
   database: 'sen_resto_test',
-  synchronize: true,
+  synchronize: false,
 
   //   ssl: {
   //     // Enable SSL if required
