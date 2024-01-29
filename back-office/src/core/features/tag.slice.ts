@@ -1,5 +1,5 @@
 import {
-  ApiProvider,
+  
   createApi,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/dist/query/react";

@@ -14,7 +14,7 @@ export const customerApi = createApi({
       }),
       invalidatesTags: ["customer"],
     }),
-    customer: builder.query<Customer[], string>({
+    customer: builder.query<[Customer], string>({
       query: () => "customer/all",
       providesTags: ["customer"],
     }),

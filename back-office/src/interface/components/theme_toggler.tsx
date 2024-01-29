@@ -1,7 +1,5 @@
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import themeSlice, { selectCurrentTheme, toggleTheme } from '../../core/features/theme.slice'
-import { useState } from 'react'
+import  { selectCurrentTheme, toggleTheme } from '../../core/features/theme.slice'
 import { Switch } from '@headlessui/react'
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline'
 export const ThemeToggler= () => {
@@ -9,7 +7,6 @@ export const ThemeToggler= () => {
    const toggler= useDispatch();
    const theme= useSelector(selectCurrentTheme);
    
-  const [enabled, setEnabled] = useState(false)
   return (
   
     <div className="py-16">

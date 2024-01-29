@@ -6,6 +6,7 @@ export class RolePermissionDto {
       permissionId?:number;
       roleId?:number;
       canUse?:number;
+      isActive?:boolean;
       canInherit?:boolean;
       permission?:PermissionDto;
       role?:RoleDto;

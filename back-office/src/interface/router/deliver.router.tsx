@@ -1,6 +1,4 @@
 import { RouteObject } from "react-router-dom";
-import { OrganisationCreate } from "../pages/organisation/organisation_create";
-import { OrganisationEdit } from "../pages/organisation/organisation_edit";
 import { DeliverCompanyDetails } from "../pages/deliver_company/deliver_company_details";
 import DeliverCompanyCreate from "../pages/deliver_company/deliver_company_create";
 import { DeliverCompanyEdit } from "../pages/deliver_company/deliver_company_edit";

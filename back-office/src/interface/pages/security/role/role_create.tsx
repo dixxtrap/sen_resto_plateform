@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { useCreateRoleMutation } from '../../../../core/features/role.slice'
 import { CustomForm } from '../../../components/custom_form'
 import { Input } from '../../../components/input'
@@ -22,14 +22,14 @@ export const RoleCreate = () => {
    isSuccess={isSuccess}
    isLoading={isLoading}
    >
-    <Input label='Code'>
+    <Input label='Code' error={errors.code?.message!}>
     <input className='input' {...register("code")}/>
     </Input>
-    <Input label='name'>
+    <Input label='name' error={errors.name?.message!}>
     <input className='input' {...register("name")} />
    
     </Input>
-    <Input label='Description'>
+    <Input label='Description' error={errors.description?.message!}> 
     <textarea  className='input' {...register("description")}/>
    
     </Input>

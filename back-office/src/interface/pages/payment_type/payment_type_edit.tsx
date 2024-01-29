@@ -14,7 +14,6 @@ import {
 } from "../../../core/models/payment_type";
 import { CustomSwitch } from "../../components/switch";
 import { Title } from "../../components/title";
-import { ImgPreview } from "../../components/Img_preview";
 import { Alert } from "../../components/alert_success";
 import { handlePreview } from "../../utils/handle_preview";
 import { CameraIcon } from "@heroicons/react/20/solid";
@@ -36,7 +35,6 @@ export const PaymentTypeEdit = () => {
   const {
     data: old,
     isLoading: isOldLoading,
-    refetch,
   } = useGetPaymentTypeByIdQuery(id);
   const {
     register,

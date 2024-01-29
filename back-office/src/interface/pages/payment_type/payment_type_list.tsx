@@ -1,4 +1,3 @@
-import React from "react";
 import { TablePagination } from "../../components/table_pagination";
 import { useGetPaymentTypeQuery } from "../../../core/features/payment_type.slice";
 import { Status } from "../../components/status";

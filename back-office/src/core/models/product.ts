@@ -1,4 +1,3 @@
-import { FileDocument } from "./file_document";
 import * as Yup from "yup";
 import { CategoryDto } from "./category.dto";
 import { CompanyDto } from "./company.dto";

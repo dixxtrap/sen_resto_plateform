@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { CustomForm } from "../../components/custom_form";
 import { Input } from "../../components/input";
 import {
@@ -10,9 +10,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { User, userSchema } from "../../../core/models/user.dto";
 import { Alert } from "../../components/alert_success";
-import { useGetResttaurantQuery } from "../../../core/features/restaurant.slice";
 import { useGetRolesQuery } from "../../../core/features/role.slice";
-import { useGetCompanyChildrenQuery, useGetCompanyQuery } from "../../../core/features/company.slice";
+import { useGetCompanyChildrenQuery } from "../../../core/features/company.slice";
 import { clsx } from "../../utils/clsx";
 import { RoleDto } from "../../../core/models/role.dto";
 
@@ -24,14 +23,14 @@ export const UserEdit = () => {
     data: oldUser,
     isSuccess: isUserSuccess,
     isLoading: isUserLoading,
-    isError: isUserError,
+    // isError: isUserError,
   } = useGetUserByIdQuery(parseInt(id!));
   const [update, { isError, isSuccess, isLoading , reset}] = useUpdateUserMutation();
   const {
     register,
     handleSubmit,
     setValue,
-  watch,
+  
     formState: { errors },
   } = useForm({ resolver: yupResolver(userSchema) });
   useEffect(() => {

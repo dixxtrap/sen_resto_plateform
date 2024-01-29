@@ -6,7 +6,7 @@ import {
   ChevronUpDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import React, { FC, Fragment, ReactNode, useState } from "react";
+import  { FC, Fragment, ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 type TablePaginationProps = {
   th?: string[];

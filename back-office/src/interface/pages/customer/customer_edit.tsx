@@ -30,11 +30,14 @@ export const CustomerEdit = () => {
   };
   useEffect(() => {
    if(oldCustomer){
-    setValue("displayName", oldCustomer.displayName),
-    setValue("adresse", oldCustomer.adresse);
+    setValue("firstname", oldCustomer.firstname),
+    setValue("firstname", oldCustomer.firstname),
+    setValue("address.city", oldCustomer.address?.city);
+    setValue("address.country", oldCustomer.address?.country);
+    setValue("address.streetAddress", oldCustomer.address?.streetAddress);
     setValue("phone", oldCustomer.phone);
-    setValue("laltitude", oldCustomer.laltitude);
-    setValue("longitude", oldCustomer.longitude);
+    setValue("location.latitude", oldCustomer.location?.latitude);
+    setValue("location.longitude", oldCustomer.location?.longitude);
     setValue("isPhoneVeirified", oldCustomer.isPhoneVeirified);
     setValue("isEnable", oldCustomer.isEnable);
    }
@@ -45,23 +48,26 @@ export const CustomerEdit = () => {
       {<Alert isOpen={isCustomerLoading} />}
       <CustomForm
         title="Client"
-        subTitle={`Modifier le client ${oldCustomer?.displayName}`}
+        subTitle={`Modifier le client ${oldCustomer?.firstname}`}
         isError={isError}
         isSuccess={isSuccess}
         isLoading={isLoading}
         onSubmit={handleSubmit(_onSubmit)}
       >
-        <Input label="Nom complet">
-          <input className="input"   {...register("displayName")}/>
+        <Input label="Prenom" error={errors.firstname?.message!}>
+          <input className="input"   {...register("firstname")}/>
+        </Input>
+        <Input label="Nom" error={errors.lastname?.message!}>
+          <input className="input"   {...register("lastname")}/>
         </Input>
         <Input label="Adresse" >
-          <input className="input"  {...register("adresse")}/>
+          <input className="input"  {...register("address.streetAddress")}/>
         </Input>
         <Input label="Laltitude">
-          <input className="input" {...register("laltitude")} />
+          <input className="input" {...register("location.latitude")} />
         </Input>
         <Input label="Logitude">
-          <input className="input"  {...register("longitude")}/>
+          <input className="input"  {...register("location.longitude")}/>
         </Input>
       </CustomForm>
     </>

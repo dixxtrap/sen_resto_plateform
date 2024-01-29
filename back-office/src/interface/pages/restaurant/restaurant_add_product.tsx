@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { ProductManagementDto } from '../../../core/models/product_management'
 import { ProductDto } from '../../../core/models/product'
 import { Alert, DialogAlert } from '../../components/alert_success'
 import { Title } from '../../components/title'
 import { CheckIcon } from '@heroicons/react/20/solid'
-import { useAddProductManagementByIdMutation, useAddProductToRestaurantMutation } from '../../../core/features/product.slice'
+import { useAddProductManagementByIdMutation } from '../../../core/features/product.slice'
 import { useParams } from 'react-router-dom'
 
 export const RestaurantAddProduct = ({productManagement}:{productManagement:ProductManagementDto[]}) => {
   const [showDialog, setShowDialog]=useState<boolean>(false)
 const [listProduct, setListProduct]=useState<ProductDto[]>([]);
 const {id}=useParams()
-const[addProducts, {isLoading, isError, isSuccess}]=useAddProductManagementByIdMutation()
+const[addProducts, {isLoading}]=useAddProductManagementByIdMutation()
 const handleListProduct = (body: ProductDto) => {
 
  
@@ -26,7 +26,6 @@ const _onsubmit=()=>{
   setShowDialog(false);
   setListProduct([]);
 }
-const addProduct=()=>{}
   return (
     <div>
         <button className="button primary " onClick={() => setShowDialog(true)}>

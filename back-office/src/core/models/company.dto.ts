@@ -1,6 +1,5 @@
 import * as yup from "yup";
 import { text } from "./text";
-import { FileDocument } from "./file_document";
 import { CompanyEnum } from "./company_enu";
 import { AddressDto, addressSchema } from "./address.dto";
 import { CoordonatesDto, coordonatesSchema } from "./coordonates.dto";

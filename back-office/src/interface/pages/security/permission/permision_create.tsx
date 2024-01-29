@@ -1,4 +1,4 @@
-import React from "react";
+
 import { CustomForm } from "../../../components/custom_form";
 import { Input } from "../../../components/input";
 import { useForm } from "react-hook-form";
@@ -10,10 +10,12 @@ import { useGetModuleQuery } from "../../../../core/features/module.slice";
 
 export const PermissionCreate = () => {
   const [create, { isSuccess, isLoading, isError } ]=useCreatePermissionMutation();
-  const {register, handleSubmit, formState:{errors,}, watch}=useForm({
+  const {register, handleSubmit, formState:{errors,}}=useForm({
     resolver:yupResolver(permissionSchema)
   })
-  const {data:module=[], isLoading:isModuleLoading, isSuccess:isModuleLoadingSuccess}=useGetModuleQuery("")
+  const { data: module = [],
+    // isLoading: isModuleLoading, isSuccess: isModuleLoadingSuccess
+  } = useGetModuleQuery("")
   const _onSubmit=handleSubmit((data)=>{
 console.log(data);
 create({...data});

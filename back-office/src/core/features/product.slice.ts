@@ -16,7 +16,7 @@ export const productApi = createApi({
     }),
    
     getRestaurantProduct: builder.query<ProductManagementDto[], string>({
-      query: (id) =>`product/protect/product_management`,
+      query: () =>`product/protect/product_management`,
       providesTags: ["product"],
     }),
     getRestaurantProductById: builder.query<ProductManagementDto[], number>({

@@ -1,28 +1,30 @@
 import * as yup from "yup"
 import { CreationDetailDto } from "./creation_details.dto"
+import { CoordonatesDto, coordonatesSchema } from "./coordonates.dto"
+import { AddressDto, addressSchema } from "./address.dto"
 
 export class Customer {
-        [x: string]: any
+        
         id?: number
         phone?: string
-        adresse?: string
+        address?: AddressDto
         isPhoneVeirified?: boolean
-        fisrtname?: string
+        firstname?: string
         lastname?: string
-        laltitude?: number
-        longitude?: number
+       location?:CoordonatesDto
         isEnable?: boolean
        details?:CreationDetailDto
+  isActive?: boolean
       }
 
 
       export const customerSchema=yup.object({
 id:yup.number(),
 phone:yup.string(),
-adresse:yup.string(),
-displayName:yup.string(),
-laltitude:yup.number(),
-longitude:yup.number(),
+address:addressSchema,
+firstname:yup.string(),
+lastname:yup.string(),
+location: coordonatesSchema,
 isEnable:yup.boolean(),
 isPhoneVeirified:yup.boolean(),
       })

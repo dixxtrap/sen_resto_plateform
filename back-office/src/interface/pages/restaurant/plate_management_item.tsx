@@ -1,5 +1,4 @@
 import { Img } from "../../components/image_updatable";
-import { useAddProductToRestaurantMutation } from "../../../core/features/product.slice";
 import { clsx } from "../../utils/clsx";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { ProductDto } from "../../../core/models/product";
@@ -14,9 +13,11 @@ export const PalteManagementItem = ({
   companyId: number;
   isValid: boolean;
   onClick: () => {};
-}) => {
+  }) => {
+  
   return (
     <button
+      key={`buuton_${companyId}`}
       onClick={onClick}
       className={clsx(
         "flex  relative border  border-gray-500/30 rounded-md ",

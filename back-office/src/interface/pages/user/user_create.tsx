@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { CustomForm } from "../../components/custom_form";
 import { useForm } from "react-hook-form";
 import { userSchema } from "../../../core/models/user.dto";
@@ -19,7 +18,6 @@ export const UserCreate = () => {
   const {
     register,
     formState: { errors },
-    setValue,
     handleSubmit,
   } = useForm({
     resolver: yupResolver(userSchema),

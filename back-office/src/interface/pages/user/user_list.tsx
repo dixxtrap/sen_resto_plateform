@@ -1,4 +1,3 @@
-import React from 'react'
 import { TablePagination } from '../../components/table_pagination'
 import { useGetUserQuery } from '../../../core/features/auth.slice'
 import { Link } from 'react-router-dom'

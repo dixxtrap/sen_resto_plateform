@@ -2,7 +2,7 @@ import { Input } from "../../components/input";
 import { Logo } from "../../components/logo";
 import { useForm } from "react-hook-form";
 import { CustomForm } from "../../components/custom_form";
-import { SignInDto, SigniInSchema } from "../../../core/models/login.dto";
+import { SignInDto } from "../../../core/models/login.dto";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useLoginMutation } from "../../../core/features/security.slice";
 import * as Yup from "yup";

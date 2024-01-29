@@ -1,8 +1,6 @@
-import React from "react";
 import { useCustomerQuery } from "../../../core/features/customer.slice";
 import { TablePagination } from "../../components/table_pagination";
 import { Link } from "react-router-dom";
-import { clsx } from "../../utils/clsx";
 import { Status } from "../../components/status";
 import { formatDate } from "../../utils/date_format";
 
@@ -13,9 +11,14 @@ export const CustomerList = () => {
     isError,
     isSuccess,
   } = useCustomerQuery("");
+  console.log(isSuccess)
   return (
     <>
+      {isLoading&&<span>chargement</span>}
+      {isError&&<span>error</span>}
+      
       <TablePagination
+        
         title="Clients"
         th={[
           "Nom Complet",
@@ -33,7 +36,7 @@ export const CustomerList = () => {
               <tr className=" whitespace-nowrap text-sm text-slate-500 ">
                 <td className=" ">{customer!.firstname} {customer!.lastname}</td>
                 <td className="">{customer!.phone}</td>
-                <td className="">{customer!.adresse}</td>
+                <td className="">{customer!.address?.streetAddress}</td>
                 <td className="">{formatDate(customer!.details?.createdAt!)}</td>
                 <td className="">
                   <Status

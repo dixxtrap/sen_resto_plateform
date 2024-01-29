@@ -3,13 +3,11 @@ import {
   useLoadScript,
   MarkerF,
   GoogleMap,
-  DirectionsService,
-  DirectionsRenderer,
 } from "@react-google-maps/api";
 import img from "../../../assets/svg/restoMap.svg";
 import plateMapImg from "../../../assets/svg/plateMap.svg";
 import { useGetResttaurantQuery } from "../../../core/features/restaurant.slice";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { BanknotesIcon, CakeIcon, UserIcon, WalletIcon } from "@heroicons/react/24/outline";
 const containerStyle = {
   width: "fit",
@@ -25,13 +23,13 @@ const destination = {
   lat: 14.757556,
   lng: -17.390524,
 };
-enum TravelMode {
-  BICYCLING = "BICYCLING",
-  DRIVING = "DRIVING",
-  TRANSIT = "TRANSIT",
-  TWO_WHEELER = "TWO_WHEELER",
-  WALKING = "WALKING",
-}
+// enum TravelMode {
+//   BICYCLING = "BICYCLING",
+//   DRIVING = "DRIVING",
+//   TRANSIT = "TRANSIT",
+//   TWO_WHEELER = "TWO_WHEELER",
+//   WALKING = "WALKING",
+// }
 export const GoogleMapComponent: React.FC = () => {
   const nav = useNavigate();
   const { data: restos = [] } = useGetResttaurantQuery("");
@@ -50,7 +48,7 @@ export const GoogleMapComponent: React.FC = () => {
     {number:150, label:"Produits",  color:"card2",  icon:<CakeIcon  className="h-full"/> },
       {number:2768, label:"Transactions",  color:"card3",  icon:<BanknotesIcon  className="h-full"/> },
   
-].map((item, index)=><div className={` card `}>
+].map((item)=><div className={` card `}>
      <div className={`h-12 ${item.color}`}>
      {item.icon!}
      </div>

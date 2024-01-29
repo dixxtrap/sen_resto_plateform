@@ -1,11 +1,10 @@
-import React from 'react'
 import { TablePagination } from '../../../components/table_pagination'
 import { useGetPermissionQuery } from '../../../../core/features/permission.slice'
 import { formatDate } from '../../../utils/date_format'
 import { Status } from '../../../components/status'
 
 export const PermissionList = () => {
-const {data:permissions, isLoading, isSuccess, }=useGetPermissionQuery("")
+const {data:permissions }=useGetPermissionQuery("")
   return (
     <div>
       <TablePagination isPaginated={false} createPath='/permission/create' title='Listes Les Permissions' th={["Nom", "Module","Action","Code",  "Date de creation", ""]}  trs={<>

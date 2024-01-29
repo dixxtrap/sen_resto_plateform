@@ -1,8 +1,7 @@
-import { Switch } from "@headlessui/react"
-import { SunIcon } from "@heroicons/react/24/outline"
-import { MouseEventHandler } from "react"
+import { Switch } from "@headlessui/react";
 
-export const CustomSwitch = ({ isLoading, onClick, isActive }: { isLoading: boolean, onClick?: (bool:boolean)=>void, isActive: boolean }) => {
+export const CustomSwitch = ({ isLoading, onClick, isActive }: { isLoading: boolean, onClick?: (bool: boolean) => void, isActive: boolean }) => {
+        console.log(isLoading)
         return (
                 <Switch
                         checked={isActive}

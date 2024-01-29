@@ -6,7 +6,7 @@ export const deliverApi = createApi({
   reducerPath: "deliver",
   tagTypes: ["deliver"],
   endpoints: (builder) => ({
-    updateDeliver: builder.mutation<DeliverDto,{ id:number, deliver:deliver}>({
+    updateDeliver: builder.mutation<DeliverDto,{ id:number, deliver:DeliverDto}>({
       query: ({id, deliver}) => ({
         url: `deliver/by_id/${id}`,
         method: "PUT",
