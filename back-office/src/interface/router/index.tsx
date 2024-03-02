@@ -14,6 +14,7 @@ import { paymentRouter } from "./payment.router";
 import { permissionRouter } from "./permission.router";
 import { deliverRouter } from "./deliver.router";
 import { DefinePassword } from "../pages/login/define_password";
+import { cardRouter } from "./card.router";
 
 export const router = createBrowserRouter([
   {
@@ -43,7 +44,8 @@ export const router = createBrowserRouter([
       orderRouter,
       paymentRouter,
       permissionRouter,
-      deliverRouter
+      deliverRouter,
+      cardRouter
     ],
   },
 ]);

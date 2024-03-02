@@ -18,6 +18,7 @@ import { ProductModule } from './modules/product/product.module';
 
 import { WebServiceModule } from './modules/web_service/web_service.module';
 import { WalletStatusModule } from './modules/wallet_status/wallet_status.module';
+import { ExcelModule } from './modules/excel/excel.module';
 
 @Module({
   imports: [
@@ -43,9 +44,9 @@ import { WalletStatusModule } from './modules/wallet_status/wallet_status.module
     UserModule,
     ProductModule,
     WebServiceModule,
-    WalletStatusModule
+    WalletStatusModule,
+    ExcelModule,
   ],
-
   controllers: [AppController],
   providers: [AppService],
 })
