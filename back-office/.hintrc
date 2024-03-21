@@ -4,6 +4,7 @@
   ],
   "hints": {
     "button-type": "off",
-    "axe/forms": "off"
+    "axe/forms": "off",
+    "typescript-config/strict": "off"
   }
 }

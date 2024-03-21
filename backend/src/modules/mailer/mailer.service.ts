@@ -84,14 +84,7 @@ export class MailerService {
       text: content,
     });
   }
-  async sendOtpByMailMail({
-    to,
-    
-    message,
-  }: {
-    to: string;
-    message: string;
-  }) {
+  async sendOtpByMailMail({ to, message }: { to: string; message: string }) {
     const content = await Mustache.render(
       readFileSync(
         resolve('./src/utils/mustache/activation.reception_otp.email.mustache'),
