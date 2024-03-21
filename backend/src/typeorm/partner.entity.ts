@@ -1,16 +1,10 @@
 import {
-  BeforeInsert,
   Column,
-  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
   TableInheritance,
-  Tree,
-  TreeChildren,
-  TreeParent,
 } from 'typeorm';
 import { Coordonates, CoordonatesDto } from './coordonates.entity';
 import { Address, AddressDto } from './address.entity';
@@ -19,7 +13,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { CompanyRestaurant, Restaurant } from './company_restaurant.entity';
 import { Contrat } from './contrat.entity';
 
-@Entity()
+@Entity({})
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export abstract class Partner {
   @PrimaryGeneratedColumn()
@@ -49,6 +43,7 @@ export abstract class Partner {
   details: CreationDetails;
   @ManyToOne(() => Contrat)
   contrat: Contrat;
+  type: string;
 }
 
 export class PartnerDto {

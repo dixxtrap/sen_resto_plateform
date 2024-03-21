@@ -4,13 +4,13 @@ import { useForm } from "react-hook-form";
 import { CustomForm } from "../../components/custom_form";
 import { SignInDto } from "../../../core/models/login.dto";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useLoginMutation } from "../../../core/features/security.slice";
+import { useDefinePasswordMutation, useLoginMutation } from "../../../core/features/security.slice";
 import * as Yup from "yup";
 import { useGetUserRoleQuery } from "../../../core/features/auth.slice";
 import { useEffect } from "react";
 export const DefinePassword = () => {
   const [login, { isError, isSuccess, isLoading, reset, data }] =
-    useLoginMutation();
+  useDefinePasswordMutation();
   const { refetch } = useGetUserRoleQuery("");
   const {
     register,
@@ -25,16 +25,19 @@ export const DefinePassword = () => {
 
   const _onSubmit = async (data: SignInDto) => {
     console.log(data);
-    await login(data);
+    const currentUrl = window.location.href;
+    const url = new URL(currentUrl);
+    const searchParams = new URLSearchParams(url.search);
+    const token = searchParams.get('token');
+
+    console.log('Token récupéré :', token);
+    
+  if(token) { await login({token:token, password:data.password!});}
     refetch();
 
  
   };
-  useEffect(() => {
-    return () => {
-      document.cookie = "access_token=Bearer " + data?.token!;
-    };
-  }, [data]);
+
 
   return (
     <>
@@ -43,7 +46,7 @@ export const DefinePassword = () => {
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <Logo className="self-center mx-auto h-28 w-28  md:h-32 md:w32" />
           <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight ">
-            Se Connecter a votre compte
+            Definissez votre mot de passe
           </h2>
         </div>
 
@@ -54,16 +57,16 @@ export const DefinePassword = () => {
             onFinish={() => reset()}
             isLoading={isLoading}
             onSubmit={handleSubmit(_onSubmit)}
-            successPath="/dash"
+            successPath="/login"
           >
             <Input
-              label="Password"
+              label="Mot de passe"
           
               error={errors.password?.message}
               children={<input className="input" {...register("password")}      type="password"/>}
             />
             <Input
-              label="Mot de Passe"
+              label="Confirmation"
               error={errors.password?.message}
               children={
                 <input

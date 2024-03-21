@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
-import config from './../mysql.config';
+import config from '../mysql.config';
 import { join } from 'path';
 import { ModuleModule } from './modules/module/module.module';
 import { CategoryModule } from './modules/category/category.module';
@@ -15,11 +15,11 @@ import { PartnerModule } from './modules/partner/partner.module';
 import { UserModule } from './modules/user/user.module';
 import { SecurityModule } from './modules/security/security.module';
 import { ProductModule } from './modules/product/product.module';
-
 import { WebServiceModule } from './modules/web_service/web_service.module';
 import { WalletStatusModule } from './modules/wallet_status/wallet_status.module';
 import { ExcelModule } from './modules/excel/excel.module';
-
+import { OtpModule } from './modules/otp_config/otp.module';
+import { MailerModule } from './modules/mailer/mailer.module';
 @Module({
   imports: [
     SecurityModule,
@@ -46,6 +46,8 @@ import { ExcelModule } from './modules/excel/excel.module';
     WebServiceModule,
     WalletStatusModule,
     ExcelModule,
+    OtpModule,
+    MailerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

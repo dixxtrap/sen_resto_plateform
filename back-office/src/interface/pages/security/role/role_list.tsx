@@ -7,17 +7,17 @@ import { clsx } from "../../../utils/clsx";
 export const RoleList = () => {
   const { data: roles  } = useGetRolesQuery("");
   const roleView=(role:RoleDto, isChild:boolean=false)=>{
-    return <div className={clsx ( role.children?.length!>0?" " :"",isChild?"pl-10":"p-2","  flex    borderl flex-col items-start grow   border-collapse  dark:border-kdark-divider  bodrer-gray-200/20   rounded-l-md  w-full")}>
+    return <div className={clsx ( role.children?.length!>0?" " :"",isChild?"pl-10":"pl-3","  flex    borderl flex-col items-start grow   border-collapse  dark:border-kdark-divider  bodrer-gray-200/20   rounded-l-md  w-full")}>
     
       
-     <div className="flex  justify-between  gap-2  w-full items-stretch"> 
+     <div className="flex  justify-between    w-full items-stretch"> 
     {isChild&&  <div className="h-5 border-l-4  border-b-4 border-dashed rounded-bl-lg border-kdark-divider  text-end   w-9"></div>}
-    <div className="grow flex  items-center  pr-3 text-center ">
+    <div className="grow flex  items-center  text-center ">
    
         <div className="text-base leading-10 ">{role.name?.replace("_", " ")}  <span className="text-gray-500">({role.code})</span></div>
        
      <div className="grow"></div>
-      <div className=" flex gap-x-2">
+      <div className=" flex gap-2 justify-between  ">
       <Link to={`/security/role/permission/${role.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60">Permissions</Link>
 
       <Link to={`/security/role/details/${role.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60">details</Link>
@@ -31,10 +31,10 @@ export const RoleList = () => {
   }
   return (
     < >
-    <div className="flex justify-between">
+    <div className="flex justify-between items-center">
     <Title title={`Roles : ${roles?.name}`} subTitle="liste des roles et de leurs sous roles"/>
 
-      <div>      <Link to={`/security/role/permission/${roles?.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60">Permissions</Link>
+      <div className="flex gap-2">      <Link to={`/security/role/permission/${roles?.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60">Permissions</Link>
 
 <Link to={`/security/role/details/${roles?.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60">details</Link>
 <Link to={`/security/role/create/${roles?.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60"> + role</Link></div>

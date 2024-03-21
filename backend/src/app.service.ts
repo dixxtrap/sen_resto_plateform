@@ -19,7 +19,7 @@ export class AppService implements OnModuleInit {
     this.role.initRole().then((role) => {
       return this.user.createAdmin(role.id).then((_user) => {
         console.log(_user);
-        // return this.company.itinitCompany(_user.id);
+        return this.company.itinitCompany(_user.id);
       });
     });
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/cores/gateway.dart';
+
 import 'package:mobile/cores/model/plat.dart';
 import 'package:mobile/cores/model/restaurant.dart';
 import 'package:mobile/interfaces/component/custom_box.dart';

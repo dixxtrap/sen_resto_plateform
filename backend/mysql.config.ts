@@ -10,9 +10,9 @@ const config: MysqlConnectionOptions = {
   password: 'root',
   dateStrings: true,
   entities: entities,
-  database: 'sen_resto_test',
-  synchronize: false,
-
+  database: 'sen_resto',
+  synchronize: true,
+  logging: ['error'],
   //   ssl: {
   //     // Enable SSL if required
   //     ca: fs.readFileSync('path/to/ca.crt'),

@@ -14,6 +14,7 @@ import { paymentTypeApi } from "./payment_type.slice";
 import { permissionApi } from "./permission.slice";
 import { moduleApi } from "./module.slice";
 import { categoryApi } from "./category.slice";
+import { coorporateApi } from "./coorporate.slice";
 const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
@@ -30,6 +31,7 @@ const store = configureStore({
     [permissionApi.reducerPath ]: permissionApi.reducer,
     [moduleApi.reducerPath ]: moduleApi.reducer,
     [categoryApi.reducerPath ]: categoryApi.reducer,
+    [coorporateApi.reducerPath ]: coorporateApi.reducer,
     theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -37,6 +39,7 @@ const store = configureStore({
       userApi.middleware,
       restaurantApi.middleware,
       companyApi.middleware,
+      coorporateApi.middleware,
       roleApi.middleware,
       securityApi.middleware,
       productApi.middleware,

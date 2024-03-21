@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,7 +25,6 @@ class _BagState extends ConsumerState<Bag> {
     target: LatLng(14.739400, -17.506737),
     zoom: 12.4746,
   );
-
 
   void getPolypoint() async {
     kprint("------------------------getPolyline------------------------");
@@ -67,7 +65,7 @@ class _BagState extends ConsumerState<Bag> {
         provider = ref.watch(gatewayProvider);
         provider?.getData(refresh: true);
         getBitMap();
-      // ignore: empty_catches
+        // ignore: empty_catches
       } catch (e) {}
     });
   }
@@ -78,8 +76,7 @@ class _BagState extends ConsumerState<Bag> {
     return PageWithBottomNavigator(
       currentIndex: 2,
       body: GoogleMap(
-        onMapCreated: (controller) {
-        },
+        onMapCreated: (controller) {},
         mapType: MapType.terrain,
         initialCameraPosition: _kGooglePlex,
         myLocationEnabled: true,
@@ -95,23 +92,24 @@ class _BagState extends ConsumerState<Bag> {
             position: destination,
             icon: plateBitMap ?? BitmapDescriptor.defaultMarker,
           ),
-          ...provider.restaurant!.map((e) => Marker(
-              markerId: MarkerId("resto_${e.id}"),
-              visible: true,
-              infoWindow: InfoWindow(
-                  title: e.name,
-                  snippet: "snippset",
-                  onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute<void>(
-                          builder: (BuildContext context) => RestoDetails(
-                            resto: e,
+          if (provider.restaurant != null)
+            ...provider.restaurant!.map((e) => Marker(
+                markerId: MarkerId("resto_${e.id}"),
+                visible: true,
+                infoWindow: InfoWindow(
+                    title: e.name,
+                    snippet: "snippset",
+                    onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => RestoDetails(
+                              resto: e,
+                            ),
                           ),
-                        ),
-                      )),
-              icon: restoBitMap ?? BitmapDescriptor.defaultMarker,
-              // onTap:,
-              position: LatLng(e.laltitude!, e.longitude!)))
+                        )),
+                icon: restoBitMap ?? BitmapDescriptor.defaultMarker,
+                // onTap:,
+                position: LatLng(e.laltitude!, e.longitude!)))
         },
         polylines: {
           Polyline(

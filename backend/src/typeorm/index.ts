@@ -2,6 +2,7 @@ import {
   CompanyRestaurantBase,
   CompanyRestaurant,
   Restaurant,
+  Coorporate,
 } from './company_restaurant.entity';
 import { ModuleEntity } from './module.entity';
 import { Partner } from './partner.entity';
@@ -30,6 +31,10 @@ import { CardAllocationDetails } from './card_allocation_details.entity';
 import { Transac } from './transaction.entity';
 import { WalletStatus } from './wallet_status.entity';
 import { OrderProduct } from './order_product.entity';
+import { Commission } from './commission.entity';
+import { OtpConfig } from './otp_config';
+import { Otp } from './otp.entity';
+import { City, Commune, Region } from './city.entity';
 
 // export
 export {
@@ -45,6 +50,7 @@ export const entities = [
   Partner,
   CompanyRestaurantBase,
   CompanyRestaurant,
+  Coorporate,
   Deliver,
   Weekday,
   User,
@@ -70,4 +76,10 @@ export const entities = [
   Transac,
   WalletStatus,
   OrderProduct,
+  Commission,
+  OtpConfig,
+  Otp,
+  Region,
+  City,
+  Commune
 ];

@@ -4,7 +4,7 @@ import 'package:mobile/interfaces/utils/kprint.dart';
 import 'file_doc.dart';
 import 'tag.dart';
 
-class Plat {
+class Product {
   int? id;
   int? restaurantId;
   String? name;
@@ -25,7 +25,7 @@ class Plat {
   List<FileDoc>? file;
   List<Tag>? tag;
 
-  Plat(
+  Product(
       {this.id,
       this.restaurantId,
       this.name,
@@ -45,7 +45,7 @@ class Plat {
       this.file,
       this.tag});
 
-  Plat.fromJson(Map<String, dynamic> json) {
+  Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     restaurantId = json['restaurantId'];
     name = json['name'];

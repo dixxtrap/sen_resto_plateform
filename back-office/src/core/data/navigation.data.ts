@@ -1,8 +1,10 @@
+
 import {
   BanknotesIcon,
   BuildingOffice2Icon,
   BuildingStorefrontIcon,
   CakeIcon,
+  BellIcon,
   // CalendarIcon,
   // ChartPieIcon,
   ClipboardDocumentCheckIcon,
@@ -17,13 +19,16 @@ import {
   TruckIcon,
   UsersIcon,
   WalletIcon,
-} from "@heroicons/react/24/outline";
+  HomeModernIcon,
+  GiftIcon
+} from "@heroicons/react/24/solid";
 import {
   ForwardRefExoticComponent,
 
   RefAttributes,
   SVGProps,
 } from "react";
+import { PathRouter } from "../../interface/router/path.route";
 // import { PermissionDto } from "../../interface/role.dto";
 type INavigation = {
   name: string;
@@ -43,10 +48,11 @@ export const navigationData: INavigation[] = [
     icon: HomeIcon,
     permissions: [{ code: "*", type: "*" }],
   },
+
   {
     name: "Organisation",
     href: "/organisation",
-    icon: BuildingOffice2Icon,
+    icon:HomeModernIcon ,
     permissions: [{ code: "company_restaurant", type: "*" }],
   },
   {
@@ -55,12 +61,23 @@ export const navigationData: INavigation[] = [
     icon: BuildingStorefrontIcon,
     permissions: [{ code: "restaurant", type: "*" }],
   },
- 
+  {
+    name: "Coorporate",
+    href: `${PathRouter.coorporate}`,
+    icon:BuildingOffice2Icon ,
+    permissions: [{ code: "company_restaurant", type: "*" }],
+  },
   {
     name: "Clients",
     href: "/customer",
     icon: IdentificationIcon,
     permissions: [{ code: "customer", type: "*" }],
+  },
+   {
+    name: "notification",
+    href: "/notification",
+    icon: BellIcon,
+    permissions: [{ code: "*", type: "*" }],
   },
   {
     name: "Delivers",
@@ -102,16 +119,16 @@ export const navigationData: INavigation[] = [
   {
     name: "Methode de paiement",
     href: "/payment_type",
-    icon: BanknotesIcon,
+    icon: WalletIcon,
     permissions: [{ code: "payment_type", type: "*" }],
   },
   {
-    name: "Payement",
-    href: "/payment",
+    name: "Transaction",
+    href:`/${PathRouter.transaction}`,
     icon: BanknotesIcon,
     permissions: [{ code: "transaction", type: "*" }],
   },
-  { name: "Facture", href: "/facture", icon: WalletIcon, permissions: [{ code: "*", type: "*" }] },
+  { name: "Cadeaux / Remise", href: `/${PathRouter.gift}`, icon: GiftIcon, permissions: [{ code: "*", type: "*" }] },
   // { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
   // { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
   {

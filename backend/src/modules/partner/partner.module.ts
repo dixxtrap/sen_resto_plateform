@@ -4,6 +4,7 @@ import { Partner } from 'src/typeorm';
 import {
   CompanyRestaurant,
   CompanyRestaurantBase,
+  Coorporate,
   Restaurant,
 } from 'src/typeorm/company_restaurant.entity';
 import { Customer } from 'src/typeorm/customer.entity';
@@ -23,6 +24,8 @@ import { WalletStatusModule } from '../wallet_status/wallet_status.module';
 import { PaymentType } from 'src/typeorm/payment_type.entity';
 import { PaymentTypeController } from './payment_type/payment_type.controller';
 import { PaymentTypeService } from './payment_type/payment_type.service';
+import { CoorporateService } from './coorporate/coorporate.service';
+import { CoorporateController } from './coorporate/coorporate.controller';
 
 @Module({
   imports: [
@@ -35,6 +38,7 @@ import { PaymentTypeService } from './payment_type/payment_type.service';
       CompanyRestaurant,
       CompanyRestaurantBase,
       PaymentType,
+      Coorporate,
     ]),
     WalletStatusModule,
   ],
@@ -45,6 +49,7 @@ import { PaymentTypeService } from './payment_type/payment_type.service';
     DeliverController,
     PartnerController,
     PaymentTypeController,
+    CoorporateController,
   ],
   providers: [
     PartnerService,
@@ -53,6 +58,7 @@ import { PaymentTypeService } from './payment_type/payment_type.service';
     CustomerService,
     DeliverService,
     PaymentTypeService,
+    CoorporateService,
   ],
   exports: [
     CompanyRestaurantService,

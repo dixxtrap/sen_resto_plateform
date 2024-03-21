@@ -7,11 +7,29 @@ import {
 } from 'src/typeorm/role_permissison.entity';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, In, Repository } from 'typeorm';
+import { PermissionService } from '../permission/permission.service';
 @Injectable()
 export class RolePermissionService {
   constructor(
     @InjectRepository(RolePermission) private repos: Repository<RolePermission>,
+    private permission: PermissionService,
   ) {}
+  initroleAdmin() {
+    return this.permission.getAll().then((value) => {
+      return Promise.all(
+        value.map((e) => {
+          return this.create({
+            body: {
+              roleId: parseInt(process.env.SUPER_ADMIN_ROLE_ID),
+              permissionId: e.id,
+              canUse: true,
+              canInherit: true,
+            },
+          });
+        }),
+      );
+    });
+  }
   create({ body }: { body: RolePermissionDto }) {
     return this.repos
       .save(this.repos.create(body))

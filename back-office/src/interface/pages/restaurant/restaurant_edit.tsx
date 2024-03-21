@@ -74,7 +74,7 @@ await fetch(`/v1/restaurant/update/${oldRestaurant?.id}`,{
        <ProtecterPage permissions={[{code:"update_restaurant_profile", type:"update"}]}>
        <label htmlFor="file">
         <input type="file" hidden id="file" name="file" onChange={handleImage}/>
-        {preview?<img src={preview} className="h-20 rounded-md"/>:oldRestaurant?.imagePath?<img src={`/v1/${oldRestaurant?.imagePath}`} className="h-20 rounded-md"/>:<CameraIcon className="h-20 text-secondary-500 "/>}
+        {preview?<img  alt='' src={preview} className="h-20 rounded-md"/>:oldRestaurant?.imagePath?<img  alt='' src={`/v1/${oldRestaurant?.imagePath}`} className="h-20 rounded-md"/>:<CameraIcon className="h-20 text-secondary-500 "/>}
         </label>
        </ProtecterPage>
      </div>

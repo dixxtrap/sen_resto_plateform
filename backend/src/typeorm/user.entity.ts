@@ -34,7 +34,7 @@ export class User {
   roleId: number;
   @ManyToOne(() => Role, { nullable: true })
   role: Role;
-  @Column('date', { nullable: true, default: null })
+  @Column('datetime', { nullable: true, default: null })
   birthday: Date;
   @Column(() => Coordonates)
   coordonates: Coordonates;

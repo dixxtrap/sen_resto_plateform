@@ -17,6 +17,9 @@ export class CompanyRestaurantBase extends Partner {
 
 @ChildEntity()
 export class Restaurant extends CompanyRestaurantBase {}
+
+@ChildEntity()
+export class Coorporate extends CompanyRestaurantBase {}
 @ChildEntity()
 export class CompanyRestaurant extends CompanyRestaurantBase {}
 

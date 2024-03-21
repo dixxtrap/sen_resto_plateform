@@ -3,7 +3,6 @@ import {
   BeforeInsert,
   Column,
   Entity,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
   Tree,
   TreeChildren,
@@ -15,7 +14,7 @@ import {
 export class ModuleEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true, default: null })
   name: string;
   @TreeParent()
   parent: ModuleEntity;

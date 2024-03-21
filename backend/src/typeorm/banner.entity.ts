@@ -1,6 +1,11 @@
 import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
 import { CreationDetails, CreationDetailsDto } from './details.entity';
 import { ApiProperty } from '@nestjs/swagger';
+
+export enum BannerType {
+  WEB = 'web',
+  MOBILE = 'mobile',
+}
 @Entity()
 export class Banner {
   @PrimaryGeneratedColumn()
@@ -11,6 +16,8 @@ export class Banner {
   audioUrl: string;
   @Column()
   imageUrl: string;
+  @Column({ enum: BannerType, type: 'enum' })
+  type: BannerType;
   @Column()
   description: string;
   @Column('date')
@@ -29,6 +36,8 @@ export class BannerDto {
   audioUrl: string;
   @ApiProperty()
   imageUrl: string;
+  @ApiProperty()
+  banner: string;
   @ApiProperty()
   description: string;
   @ApiProperty()

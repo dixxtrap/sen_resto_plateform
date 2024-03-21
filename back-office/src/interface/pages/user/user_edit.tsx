@@ -1,4 +1,4 @@
-import  { useEffect } from "react";
+import { useEffect } from "react";
 import { CustomForm } from "../../components/custom_form";
 import { Input } from "../../components/input";
 import {
@@ -51,7 +51,7 @@ export const UserEdit = () => {
   }, [oldUser, setValue]);
   const _onSubmit = (body: User) => {
     console.log(body);
-    update({ id: parseInt(id!), user: body });
+    update({ id: parseInt(id!), user: {...body} });
   };
   const showRole = (role: RoleDto) => {
     return role.children?.length! > 0 ? (

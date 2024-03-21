@@ -22,7 +22,7 @@ import { JwtAuthGuard } from './jwt_auth.guard';
 @ApiTags('security')
 export class SecurityController {
   constructor(private service: SecurityService) {}
-  
+
   @Get('user/profile')
   @UseGuards(JwtAuthGuard)
   userProfile(@Body() body: LoginDto, @Req() req: Request) {
@@ -58,7 +58,7 @@ export class SecurityController {
     );
   }
 
-  @Get('forgot_password')
+  @Get('forgot_password_verification')
   forgotPaswordVerification(
     @Query('token') token: string,
     @Res() res: Response,
@@ -68,12 +68,8 @@ export class SecurityController {
       `${process.env.CLIENT_HOSTNAME}/define-password?token=${token}`,
     );
   }
-  @Post('definePassword')
-  definePassword(
-    @Query('token') token: string,
-    @Body() body: DefinePasswordDto,
-  ) {
-    body.token = token;
+  @Post('define_password')
+  definePassword(@Body() body: DefinePasswordDto) {
     return this.service.definePassword(body);
   }
   @Post('forgot_password')

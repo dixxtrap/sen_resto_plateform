@@ -10,17 +10,18 @@ import { LoginDto } from './security.dto';
 import { JwtService } from '@nestjs/jwt';
 
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
-import { EmailService } from 'src/utils/mail.service';
 import { CryptoService } from 'src/utils/crypto_service';
 import { UserDto } from 'src/typeorm/user.entity';
 import { CustomerService } from '../partner/customer/customer.service';
+import { WsCatch } from 'src/utils/catch';
+import { MailerService } from '../mailer/mailer.service';
 
 @Injectable()
 export class SecurityService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
-    private mailService: EmailService,
+    private mailService: MailerService,
     private customerService: CustomerService,
   ) {}
   async login(body: LoginDto) {
@@ -30,20 +31,14 @@ export class SecurityService {
     if (!user)
       throw new HttpException({ ...HttpExceptionCode.LOGIN_FAILLURE }, 401);
     // if (user.isActive == false) throw new UnauthorizedException();
-    const {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      passwordCrypt,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      password,
-      ...rest
-    } = user;
+    const { passwordCrypt, password, ...rest } = user;
     console.log(user);
     if (user.password === CryptoService.createHash(body.password)) {
       return { ...rest };
     }
 
     // 💡inplement the logic
-    throw new UnauthorizedException();
+    throw new WsMessage(HttpExceptionCode.NOT_FOUND);
   }
   async loginWithOtp(body: LoginDto) {
     const user = await this.userService.findByEmail({ email: body.username });
@@ -75,14 +70,16 @@ export class SecurityService {
     token: string;
     password: string;
   }) {
+    console.log(token);
+    console.log(password);
     const decode = await this.jwtService.verify(token, {
       secret: process.env.CRYPTO_KEY,
     });
-
+   
     if (decode) {
       return await this.userService.definePassword({ id: decode.id, password });
     }
-    throw new InternalServerErrorException();
+    throw new WsMessage(HttpExceptionCode.LOGIN_FAILLURE);
   }
   async sendMailForACtivation(item: string) {
     const user = await this.userService.findByEmail({ email: item });
@@ -98,15 +95,14 @@ export class SecurityService {
     const { id, firstname, lastname, email } = user;
     if (id) {
       const token = await this.jwtService.sign(
-        { id, firstname, lastname },
+        { id, firstname, lastname, email },
         {
           secret: process.env.CRYPTO_KEY,
-          expiresIn: 60 * 15 + 's',
+          expiresIn: 24 * 60 * 15 + 's',
         },
       );
-      EmailService.sendForgotPasswordMail({
-        to: email,
-        entityName: 'orgisation',
+      this.mailService.sendActivationMail({
+        to: 'djiga2015@gmail.com',
         token,
       });
       return HttpExceptionCode.SUCCEEDED;
@@ -114,6 +110,7 @@ export class SecurityService {
     throw new NotFoundException();
   }
   userLogin({ phone, code }: { phone: string; code: string }) {
+    console.log(code);
     return this.customerService
       .getByPhone({ phone })
       .then((user) => {
@@ -130,10 +127,6 @@ export class SecurityService {
         }
         throw new WsMessage(HttpExceptionCode.NOT_FOUND);
       })
-      .catch((err) => {
-        if (err instanceof WsMessage) throw err;
-        console.log(err);
-        throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
+      .catch(WsCatch);
   }
 }

@@ -8,6 +8,7 @@ import { useLoginMutation } from "../../../core/features/security.slice";
 import * as Yup from "yup";
 import { useGetUserRoleQuery } from "../../../core/features/auth.slice";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 export const Login = () => {
   const [login, { isError, isSuccess, isLoading, reset, data }] =
     useLoginMutation();
@@ -78,12 +79,12 @@ export const Login = () => {
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{" "}
             <div className="text-sm">
-              <a
-                href="#"
+              <Link
+              to={'forget-password'}
                 className="font-semibold text-indigo-600 hover:text-indigo-500"
               >
                 Mot de passe oublié ?
-              </a>
+              </Link>
             </div>
           </p>
         </div>

@@ -15,8 +15,8 @@ export class CardService {
       .then((value) => {
         if (value) return value;
         throw new WsMessage(HttpExceptionCode.FAILLURE);
-      }) 
-      .catch((err) => { 
+      })
+      .catch((err) => {
         if (err instanceof WsMessage) throw err;
         console.log(err);
         throw new WsMessage(HttpExceptionCode.FAILLURE);
@@ -46,8 +46,9 @@ export class CardService {
         }),
       )
         .then((value) => {
-          if (value) throw new WsMessage(HttpExceptionCode.SUCCEEDED);
-          else throw new WsMessage(HttpExceptionCode.FAILLURE);
+          if (value) {
+            throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+          } else throw new WsMessage(HttpExceptionCode.FAILLURE);
         })
         .catch((err) => {
           if (err instanceof WsMessage) throw err;

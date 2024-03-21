@@ -1,8 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import {
-  CompanyRestaurantBase,
-
-} from './company_restaurant.entity';
+import { CompanyRestaurantBase } from './company_restaurant.entity';
 import { CreationDetails, CreationDetailsDto } from './details.entity';
 import { ApiProperty } from '@nestjs/swagger';
 @Entity()

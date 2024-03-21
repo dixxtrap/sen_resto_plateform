@@ -16,6 +16,10 @@ export class PermissionController {
   getAll() {
     return this.service.getAll();
   }
+  @Get('init')
+  getInit() {
+    return this.service.initPermission();
+  }
   @Put('update/:id')
   update(@Body() body: PermissionDto, @Param('id') id: number) {
     return this.service.update({ body, id });

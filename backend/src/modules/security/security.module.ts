@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { EmailService } from 'src/utils/mail.service';
 import { JwtStrategy } from './jwt.strategy';
 import { PartnerModule } from '../partner/partner.module';
+import { MailerModule } from '../mailer/mailer.module';
 @Module({
   imports: [
     JwtModule.register({
@@ -18,6 +19,7 @@ import { PartnerModule } from '../partner/partner.module';
     }),
     UserModule,
     PartnerModule,
+    MailerModule,
     PassportModule.register({ session: true, defaultStrategy: 'local' }),
     // TypeOrmModule.forFeature([]),x
   ],

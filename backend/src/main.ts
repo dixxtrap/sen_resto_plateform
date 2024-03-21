@@ -14,7 +14,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableVersioning({ defaultVersion: '1', type: VersioningType.URI });
   const config = new DocumentBuilder()
-    .setTitle('Card Management System')
+    .setTitle('Restauration System && Card Management System')
     .setDescription('The cats API description')
     .setVersion('1.0')
     .addBearerAuth()

@@ -8,5 +8,6 @@ import { CardAllocationController } from './card_allocation.controller';
   imports: [TypeOrmModule.forFeature([CardAllocation])],
   controllers: [CardAllocationController],
   providers: [CardAllocationService],
+  exports: [CardAllocationService],
 })
 export class CardAllocationModule {}

@@ -9,12 +9,13 @@ import { TablePagination } from "../../../components/table_pagination";
 import { Status } from "../../../components/status";
 import { formatDate } from "../../../utils/date_format";
 import {  useState } from "react";
-import { CheckIcon } from "@heroicons/react/20/solid";
+import { CheckBadgeIcon, CheckIcon } from "@heroicons/react/20/solid";
 import { PermissionDto } from "../../../../core/models/permission.dto";
 import { RolePermissionDto } from "../../../../core/models/permission_role.dto";
 import { Title } from "../../../components/title";
 import { Alert, DialogAlert } from "../../../components/alert_success";
 import { useGetPermissionQuery } from "../../../../core/features/permission.slice";
+import { clsx } from "../../../utils/clsx";
 
 export const RolePermissionEdit = () => {
   const { data: permissions = [],isLoading:isLoadingPermission } = useGetPermissionQuery("");
@@ -76,34 +77,36 @@ export const RolePermissionEdit = () => {
        <Title title="Liste des permission" />
      </div>
    </div>
-   <div className="grow h-fit  w-full overflow-y-auto flex flex-col   textSubtileValue ">
+   <div className="fgrow h-fit  w-full overflow-y-auto flex flex-wrap gap-2  textSubtileValue">
+   <div className={clsx(" flex flex-wrap gap-2   ")}>
      {permissions
        .map((item) => (
          role?.rolePermission?.some((rp) => rp.permissionId === item.id)?null:
-         <button key={`role_permission_add_${item.id}`} onClick={()=>handleListPermission(item)} className=" flex justify-between  p-2 border-b border-gray-500/40">
-          <div className="flex flex-col">
-          <div className="flex flex-col items-start ">
-             <span className="font-semibold">{item.name}</span>
+         <button key={`role_permission_add_${item.id}`} onClick={()=>handleListPermission(item)} className={clsx(" flex justify-between rounded-sm  ring-inset ring-gray-200 ring-1   p-2 ", listPermission.some(p=>p.id===item.id)?'bg-secondary-400/30 ':'')}>
+          
+             <span className="font-normal">{item.name}</span>
           
           
-             <span className="lowercase text-gray-500 "> {item.code}</span>
-           </div>
-          </div>
-          <div className="ring-2 ring-gray-500/60 rounded-md h-5 w-5 ">
-           {listPermission.some(p=>p.id===item.id)&&  <CheckIcon  className="text-teal-50 h-5 p-0.5 w-5 m-auto bg-secondary-500 rounded-md" />}
-          </div>
+             
+         
+          
+           {listPermission.some(p=>p.id===item.id)&&  <CheckBadgeIcon  className="text-secondary-500 h-5  w-5 m-auto  rounded-md ml-2" />}
+         
          </button>
        ))}
        <div className="sticky bottom-0 bg-white  pt-0.5 dark:bg-black  ">
        
-         {listPermission.length > 0 && (
-     <button className="button primary " onClick={() =>{ addPremissionSubmit()}}>
-     {" "}
-     Ajouter les permission
-   </button>
- )}
+        
        </div>
+    
    </div>
+  <div className="grow"></div>
+     </div>
+     {listPermission.length > 0 && (<button className="button primary " onClick={() =>{ addPremissionSubmit()}}>
+   
+   Ajouter les permission
+ </button>
+)}
  </div>
 </DialogAlert>)
   return (

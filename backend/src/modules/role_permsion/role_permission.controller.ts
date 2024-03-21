@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { RolePermissionService } from './role_permission.service';
 import { ApiTags } from '@nestjs/swagger';
 import { RolePermissionDto } from 'src/typeorm/role_permissison.entity';
@@ -9,6 +9,10 @@ export class RolePermissionController {
   @Post('create')
   create(@Body() body: RolePermissionDto) {
     return this.serrvice.create({ body });
+  }
+  @Get('init')
+  init() {
+    return this.serrvice.initroleAdmin();
   }
   @Post('update')
   update(@Body() body: RolePermissionDto) {

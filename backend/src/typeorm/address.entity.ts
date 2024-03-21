@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column } from 'typeorm';
+import { Column, PrimaryGeneratedColumn } from 'typeorm';
 
 export class Address {
   @Column({ default: null, nullable: true })
@@ -21,4 +21,15 @@ export class AddressDto {
   country: string;
   @ApiProperty()
   postalCode: string;
+}
+
+export class AddressBase {
+  @PrimaryGeneratedColumn()
+  id: number;
+  @Column()
+  name: string;
+}
+export class AddressBaseDto {
+  @ApiProperty()
+  name: string;
 }

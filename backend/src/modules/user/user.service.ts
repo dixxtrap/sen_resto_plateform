@@ -1,14 +1,21 @@
 import { HttpException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { logInfo } from 'src/app_log';
 import { User } from 'src/typeorm';
 import { UserDto } from 'src/typeorm/user.entity';
+import { WsCatch } from 'src/utils/catch';
 import { CryptoService } from 'src/utils/crypto_service';
-import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
+import { HttpExceptionCode } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
+import { MailerService } from '../mailer/mailer.service';
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private repos: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private repos: Repository<User>,
+    private jwt: JwtService,
+    private mailer: MailerService,
+  ) {}
   async createAdmin(roleId: number) {
     //     SUPER_ADMIN_EMAIL=Kalanji2023@gmail.com
     // SUPER_ADMIN_PASSWORD=kalanji2023
@@ -43,7 +50,19 @@ export class UserService {
     console.log(body);
     return this.repos
       .save(this.repos.create({ ...body, details: { byId: by.id } }))
-      .then((value) => {
+      .then(async (value) => {
+        const { id, email, firstname, lastname } = value;
+        const token = await this.jwt.sign(
+          { id, firstname, lastname, email },
+          {
+            secret: process.env.CRYPTO_KEY,
+            expiresIn: 24 * 60 * 15 + 's',
+          },
+        );
+        this.mailer.sendActivationMail({
+          to: 'dakspro2007@gmail.com',
+          token,
+        });
         if (value) return HttpExceptionCode.SUCCEEDED;
         throw new Error('Not created');
       })
@@ -56,19 +75,13 @@ export class UserService {
     return this.repos
       .find({ relations: { role: true } })
       .then((value) => value)
-      .catch((err) => {
-        console.log(err);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 400);
-      });
+      .catch(WsCatch);
   }
   getById({ id }: { id: number }) {
     return this.repos
       .findOne({ where: { id }, relations: { role: true } })
       .then((value) => value)
-      .catch((err) => {
-        console.log(err);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 400);
-      });
+      .catch(WsCatch);
   }
   update({ id, by, body }: { id: number; by: UserDto; body: UserDto }) {
     logInfo({ by, action: `update user idenfier by Id= ${id}` });
@@ -77,10 +90,7 @@ export class UserService {
       .then((value) => {
         if (value.affected > 1) return HttpExceptionCode.SUCCEEDED;
       })
-      .catch((err) => {
-        console.log(err);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 400);
-      });
+      .catch(WsCatch);
   }
   findByEmail({ email }: { email: string }) {
     return this.repos
@@ -89,10 +99,7 @@ export class UserService {
         if (value) return value;
         throw new Error(`email not found`);
       })
-      .catch((err) => {
-        console.log(err);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 400);
-      });
+      .catch(WsCatch);
   }
   findByEmailForLogin({ email }: { email: string }) {
     return this.repos
@@ -104,10 +111,7 @@ export class UserService {
         if (value) return value;
         throw new Error(`email not found`);
       })
-      .catch((err) => {
-        console.log(err);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 400);
-      });
+      .catch(WsCatch);
   }
   async definePassword({ id, password }: { id: number; password: string }) {
     return this.repos.update(
@@ -129,9 +133,6 @@ export class UserService {
         },
       })
       .then((value) => value)
-      .catch((err) => {
-        console.log(err);
-        throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
+      .catch(WsCatch);
   }
 }

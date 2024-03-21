@@ -72,4 +72,22 @@ export class CustomerService {
         throw new WsMessage(HttpExceptionCode.FAILLURE);
       });
   }
+  createBulk({ body }: { body: CustomerDto[] }) {
+    return this.repos.manager
+      .transaction((manager) => {
+        return Promise.all(
+          body.map((e) => {
+            return manager.save(manager.create(Customer, e));
+          }),
+        )
+          .then((value) => {
+            return value;
+          })
+          .catch((error) => {});
+      })
+      .then((value) => {
+        return value;
+      })
+      .catch((err) => {});
+  }
 }

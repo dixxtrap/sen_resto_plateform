@@ -12,7 +12,12 @@ export class CreationDetails {
   @Column({ nullable: true, default: null })
   byId: number;
 }
-
+export class CreationDetailsWithoutBy {
+  @CreateDateColumn()
+  createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
 export class CreationDetailsDto {
   createdAt?: Date;
 

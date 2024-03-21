@@ -40,7 +40,6 @@ export class OrderService {
 
   addProductToOrder({
     customerId,
-    productId,
     partnerId,
   }: {
     partnerId: number;

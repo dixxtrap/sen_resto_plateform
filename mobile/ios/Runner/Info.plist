@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Require location permission to fetch bank branch near you.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Require location permission to fetch bank branch near you.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Require location permission to fetch bank branch near you.</string>
 </dict>
 </plist>
