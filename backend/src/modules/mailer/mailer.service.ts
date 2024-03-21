@@ -22,7 +22,7 @@ export class MailerService {
       "Sen Rest'o",
     );
 
-    const recipients = [new Recipient('djiga2015@gmail.com', 'Djiga Salane')];
+    const recipients = [new Recipient(to)];
 
     const emailParams = new EmailParams()
       .setFrom(sentFrom)
