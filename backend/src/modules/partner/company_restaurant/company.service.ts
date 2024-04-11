@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PartyType } from 'aws-sdk/clients/customerprofiles';
 import { unlink } from 'fs';
+import { S3Service } from 'src/modules/s3/s3.service';
 import { WalletStatusService } from 'src/modules/wallet_status/wallet_status.service';
 import { CompanyRestaurant } from 'src/typeorm';
 import { AddressDto } from 'src/typeorm/address.entity';
 import { CompanyRestaurantBaseDto } from 'src/typeorm/company_restaurant.entity';
 import { CoordonatesDto } from 'src/typeorm/coordonates.entity';
+import { BaseResponse } from 'src/typeorm/response_base';
 import { UserDto } from 'src/typeorm/user.entity';
+import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
@@ -16,6 +20,7 @@ export class CompanyRestaurantService {
     @InjectRepository(CompanyRestaurant)
     private repos: Repository<CompanyRestaurant>,
     private walletStatusService: WalletStatusService,
+    private s3Service: S3Service,
   ) {}
   async itinitCompany(byId?: number) {
     const exist = await this.repos.exist({ where: { shortname: 'Sen Resto' } });
@@ -54,19 +59,29 @@ export class CompanyRestaurantService {
         throw new WsMessage(HttpExceptionCode.FAILLURE);
       });
   }
-  update({ id, body }: { id: number; body: CompanyRestaurantBaseDto }) {
+  update({
+    id,
+    body,
+    file,
+  }: {
+    id: number;
+    body: CompanyRestaurantBaseDto;
+    file?: Express.Multer.File;
+  }) {
     console.log(body);
     return this.repos
       .findOne({ where: { id: Equal(id) } })
-      .then((old) => {
+      .then(async (old) => {
         if (
           old &&
+          file &&
           old.imagePath &&
           body.imagePath &&
           old.imagePath !== body.imagePath
         ) {
-          unlink(old.imagePath, () => {
-            console.log(`file deleted: ${old.imagePath}`);
+          body.imagePath = await this.s3Service.uploadFileToS3AndDeleteLocal({
+            file,
+            oldPath: old.imagePath,
           });
         }
         return this.repos.update({ id: Equal(id) }, body).then((result) => {
@@ -94,21 +109,17 @@ export class CompanyRestaurantService {
                 });
             }),
           ).then((result) => {
-            return result;
+            return BaseResponse.success(result);
           });
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
-      .catch((err) => {
-        console.log(err);
-        if (err instanceof WsMessage) throw err;
-        throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
+      .catch(WsCatch);
   }
   getById({ id }: { id: number }) {
     return this.repos
       .findOne({ where: { id: Equal(id) } })
       .then((result) => {
-        if (result) return result;
+        if (result) return BaseResponse.success(result);
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
       .catch((err) => {

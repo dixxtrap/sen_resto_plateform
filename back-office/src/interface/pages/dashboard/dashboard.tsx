@@ -9,6 +9,7 @@ import plateMapImg from "../../../assets/svg/plateMap.svg";
 import { useGetResttaurantQuery } from "../../../core/features/restaurant.slice";
 import {  useNavigate } from "react-router-dom";
 import { BanknotesIcon, CakeIcon, UserIcon, WalletIcon } from "@heroicons/react/24/outline";
+import { useGetCompanyQuery } from "../../../core/features/company.slice";
 const containerStyle = {
   width: "fit",
   height: "100vh",
@@ -32,13 +33,16 @@ const destination = {
 // }
 export const GoogleMapComponent: React.FC = () => {
   const nav = useNavigate();
-  const { data: restos = [] } = useGetResttaurantQuery("");
+  const { data: restos  } = useGetResttaurantQuery("");
+  const { data: company } = useGetCompanyQuery("");
   const loadScript = useLoadScript({
-    googleMapsApiKey: "AIzaSyBvAWNwnWriL2711NBIetCY0y54WzVNeMA",
+    googleMapsApiKey: "AIzaSyCyTEPGkA3I3Wr9X7xYWn7hDN6h1XLSG2k",
   });
+  console.log(restos)
+  console.log(company)
   useEffect(() => {}, []);
 
-  return (
+  return ( 
     <>
     <div className="  grid grid-cols-4 h-24  gap-4 pb-5">
     {  [
@@ -66,16 +70,30 @@ export const GoogleMapComponent: React.FC = () => {
           zoom={13.5}
         >
           {/* Marker */}
-          {restos.map((e) => (
+          {restos?.data.map((e) => (
             <MarkerF
               key={`key_${e.name}`}
               position={{ lat: e.location?.latitude!??17, lng: e.location?.longitude!??14 }}
-              icon={img}
+              icon={ img}
               // label={<span style={{fontWeight:"bold"}}> {e.name}</span>}
               
               onClick={() => {
                 nav(`/restaurant/details/${e.id}`);
               }}
+              
+            />
+          ))}
+          {company?.data.map((e) => (
+            <MarkerF
+              key={`key_${e.name}`}
+              position={{ lat: e.location?.latitude!??17, lng: e.location?.longitude!??14 }}
+              icon={  img}
+              // label={<span style={{fontWeight:"bold"}}> {e.name}</span>}
+              
+              onClick={() => {
+                nav(`/organisation/details/${e.id}`);
+              }}
+              
             />
           ))}
           <MarkerF position={destination} icon={plateMapImg} />

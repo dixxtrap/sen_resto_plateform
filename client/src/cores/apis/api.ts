@@ -1,22 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Plate, ProductDto } from "../models/product";
-import { IPagination, IPaginationResult } from "../models/pagination.model";
+import {  ProductDto } from "../models/product";
+import { IPagination } from "../models/pagination.model";
 import { CompanyDto } from "../models/company.dto";
+import { BaseResponse } from "../models/base_response";
 
 
-export const api = createApi({
+export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
-  reducerPath: "api",
+  reducerPath: "baseApi",
   endpoints: (builder) => ({
-    getProduct: builder.query<ProductDto[],IPagination>({
-      query: (filter) =>
-        `ws/product/all?page=${filter.page}&pageSize=${filter.pageSize}&search=${filter.search}&fromDate=${filter.fromDate}' `,
-    }),
-    getCompany: builder.query<[CompanyDto], string>({
+    getCompany: builder.query<BaseResponse<CompanyDto[]>, string>({
       query: () =>
         `ws/company/all`,
     }),
    
   }),
 });
-export const { useGetCompanyQuery, useGetProductQuery} = api;
+export const { useGetCompanyQuery} = baseApi;

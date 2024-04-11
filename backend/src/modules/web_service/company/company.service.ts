@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompanyRestaurantBase } from 'src/typeorm';
+import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { IsNull, Repository, In } from 'typeorm';
 
@@ -19,7 +20,7 @@ export class WsCompanyService {
         },
       })
       .then((result) => {
-        return result;
+        return BaseResponse.success(result.sort(() => Math.random() - 0.5));
       })
       .catch((err) => {
         console.log(err);

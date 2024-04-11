@@ -1,10 +1,11 @@
-import { Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, ManyToOne, PrimaryGeneratedColumn, Entity } from 'typeorm';
 import { Partner } from './partner.entity';
 import { Customer } from './customer.entity';
 import { Card } from './card.entity';
 import { CreationDetails, CreationDetailsDto } from './details.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
+@Entity()
 export class Assignment {
   @PrimaryGeneratedColumn()
   id: number;

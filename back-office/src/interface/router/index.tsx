@@ -19,6 +19,8 @@ import { ForgetPassword } from "../pages/login/forget_password";
 import { SuccessRequete } from "../pages/login/success";
 import { coorporateRouter } from "./coorporate";
 import { giftRouter } from "./gift.router";
+import { cardAllocationRouter } from "./card_allocation.router";
+import { bannerRouter } from "./banner.router";
 
 export const router = createBrowserRouter([
   {
@@ -56,7 +58,9 @@ export const router = createBrowserRouter([
       paymentRouter,
       permissionRouter,
       deliverRouter,
-      cardRouter
+      cardRouter,
+      cardAllocationRouter,
+      bannerRouter
     ],
   },
 ]);

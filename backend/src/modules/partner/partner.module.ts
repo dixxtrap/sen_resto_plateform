@@ -26,6 +26,7 @@ import { PaymentTypeController } from './payment_type/payment_type.controller';
 import { PaymentTypeService } from './payment_type/payment_type.service';
 import { CoorporateService } from './coorporate/coorporate.service';
 import { CoorporateController } from './coorporate/coorporate.controller';
+import { S3Module } from '../s3/s3.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { CoorporateController } from './coorporate/coorporate.controller';
       Coorporate,
     ]),
     WalletStatusModule,
+    S3Module,
   ],
   controllers: [
     CompanyRestaurantController,

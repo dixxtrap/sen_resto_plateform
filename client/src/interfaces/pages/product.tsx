@@ -1,8 +1,7 @@
-import { useGetPlatesQuery, useGetProductQuery, useGetTagsQuery } from "../../cores/apis/api";
+import {  useGetProductQuery } from "../../cores/apis/product.slice";
 import { initPagination } from "../../cores/models/pagination.model";
-import { PlateItem } from "../components/plate_item";
-import clsx from "clsx";
-import { AutoCompletionCompanies } from "../components/auto-completion";
+import { PlateItem } from "../components/product_item";
+import { AutoCompletionCompanies } from "../components/auto_completion";
 import { Input } from "../components/input";
 import { useProfileQuery } from "../../cores/apis/security.slice";
 import { useState } from "react";
@@ -12,7 +11,7 @@ import { LoginForm } from "../components/protectted_action";
 export const PlateList = () => {
   const {data:profile, isSuccess:isLogin}=useProfileQuery("")
   const[showLogin, setShowLogin]=useState(false)
-const {data:products=[], isLoading, isSuccess}=useGetProductQuery(initPagination)
+const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
   return (
     <>
       {isLoading && <div>loding....</div>}
@@ -42,7 +41,7 @@ const {data:products=[], isLoading, isSuccess}=useGetProductQuery(initPagination
               ))}
             </div> */}
             <div onClick={()=>!isLogin&&setShowLogin(true)} className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4  xl:gap-x-6">
-              {products!.map((product) => (
+              {products!.data.map((product) => (
                 <PlateItem product={product} isLogin={isLogin} />
               ))}
             </div>

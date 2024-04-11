@@ -7,7 +7,7 @@ import { Img } from "../../components/image_updatable";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 
 export const PaymentTypeList = () => {
-  const { data: paymentType = [] } = useGetPaymentTypeQuery("");
+  const { data: paymentType  } = useGetPaymentTypeQuery("");
   return (
     <>
       <TablePagination
@@ -24,7 +24,7 @@ export const PaymentTypeList = () => {
         ]}
         createPath="/payment_type/create"
         isPaginated={false}
-        trs={paymentType.map((e) => (
+        trs={paymentType?.data.map((e) => (
           <tr className="whitespace-nowrap  max-w-xs text-sm text-gray-500 py-2">
             <td>
               <div className="flex gap-x-3 items-center " >

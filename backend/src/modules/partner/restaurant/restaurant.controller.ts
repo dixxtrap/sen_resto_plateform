@@ -47,6 +47,6 @@ export class RestaurantController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     if (file) body.imagePath = file?.path ?? null;
-    return this.service.update({ id, body });
+    return this.service.update({ id, body, file });
   }
 }

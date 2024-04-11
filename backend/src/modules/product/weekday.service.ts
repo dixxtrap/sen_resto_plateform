@@ -9,18 +9,21 @@ export class WeekdayService implements OnModuleInit {
   constructor(@InjectRepository(Weekday) private repos: Repository<Weekday>) {}
   onModuleInit() {
     //     throw new Error('Method not implemented.');
-    //     this.initDay();
+    this.initDay();
   }
   initDay() {
-    Promise.all(
-      weekDayData.map((item) => {
-        try {
-          this.repos.save(item);
-        } catch (error) {
-          console.log(error);
-        }
-      }),
-    );
+    this.repos.find().then((result) => {
+      if (result.length > 0) return null;
+      Promise.all(
+        weekDayData.map((item) => {
+          try {
+            this.repos.save(item);
+          } catch (error) {
+            return null;
+          }
+        }),
+      );
+    });
   }
   getAll() {
     return this.repos

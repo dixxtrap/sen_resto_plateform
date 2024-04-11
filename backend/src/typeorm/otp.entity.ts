@@ -17,6 +17,8 @@ export class Otp {
   id: number;
   @ManyToOne(() => OtpConfig)
   config: OtpConfig;
+  @Column({ default: null, nullable: true })
+  configId: number;
   @Column()
   code: string;
   @Column()
@@ -28,13 +30,16 @@ export class Otp {
   @Column(() => CreationDetailsWithoutBy)
   details: CreationDetailsWithoutBy;
 }
-export class OtpDto {
-  @ApiProperty()
-  configId: number;
+export class OtpVerificationDto {
   @ApiProperty()
   to: string;
   @ApiProperty()
   code: string;
+}
+export class OtpDto extends OtpVerificationDto {
+  @ApiProperty()
+  configId: number;
+
   @ApiProperty()
   status: string;
   @ApiProperty()

@@ -11,7 +11,7 @@ import { useGetCompanyChildrenQuery } from "../../../core/features/company.slice
 
 export const UserCreate = () => {
   const { data: roles  } = useGetRolesQuery("");
-  const { data: companies = [] } = useGetCompanyChildrenQuery("");
+  const { data: companies  } = useGetCompanyChildrenQuery("");
 
   const [createUser, { isSuccess, isError, isLoading, reset }] =
     useCreateUserMutation();
@@ -99,7 +99,7 @@ export const UserCreate = () => {
         </Input>
         <Input label="Organisation">
           <select className={clsx("input", "h-9")} {...register("parentId")}>
-            {companies.map((e) => (
+            {companies?.data.map((e) => (
               <option className="input dark:bg-black" value={e.id}>
                 {e.name}
               </option>

@@ -15,10 +15,7 @@ import { UserDto } from 'src/typeorm/user.entity';
 import { AuthenticatedGuard } from '../security/authenticated.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { HttpExceptionCode } from 'src/utils/http_exception_code';
-import {
-  ProductManagementDayDto,
-  ProductManagementDto,
-} from 'src/typeorm/product_management.entity';
+import { ProductManagementDayDto } from 'src/typeorm/product_management.entity';
 
 @Controller('product')
 @ApiTags('product')

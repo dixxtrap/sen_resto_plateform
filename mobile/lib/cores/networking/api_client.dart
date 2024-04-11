@@ -6,15 +6,20 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mobile/cores/config/environment.dart';
 import 'package:mobile/cores/networking/interceptors/pretty_dio_logger.dart';
-import 'package:mobile/interfaces/utils/log.dart';
-
+import 'package:mobile/cores/networking/interceptors/token_interceptor.dart';
+import 'package:mobile/cores/package/cache_manager/manager_dio.dart';
+import 'package:mobile/utils/helper/log.dart';
+import 'package:mobile/locator.dart';
 
 import '../model/base_response.dart';
 import 'api_url.dart';
 
-const Duration _defaultConnectTimeout = Duration(seconds: Duration.secondsPerMinute);
-const Duration _defaultReceiveTimeout = Duration(seconds: Duration.secondsPerMinute);
+const Duration _defaultConnectTimeout =
+    Duration(seconds: Duration.secondsPerMinute);
+const Duration _defaultReceiveTimeout =
+    Duration(seconds: Duration.secondsPerMinute);
 
 abstract class RemoteSource {
   Future<dynamic> get(
@@ -42,14 +47,13 @@ abstract class RemoteSource {
 }
 
 class ApiClient implements RemoteSource {
-  static const List<String> noAuthUrls = [
-
-  ];
+  static const List<String> noAuthUrls = [ApiUri.PRODUCT_URI];
 
   // static final baseUrl = Environment().config.baseUrl;
   // static final imageUrl = Environment().config.imageUrl;
-  static final baseUrl ='';
-  static final imageUrl = '';
+  static final baseUrl = Environment().config.baseUrl;
+  static final imageUrl = Environment().config.imageUrl;
+
   final Dio _dio = Dio();
 
   ApiClient() {
@@ -61,7 +65,8 @@ class ApiClient implements RemoteSource {
 
     _dio.interceptors.addAll(
       [
-    
+        locator<DioCacheManager>().interceptor,
+        TokenInterceptor(),
       ],
     );
 
@@ -96,9 +101,9 @@ class ApiClient implements RemoteSource {
 
       var baseResponse = BaseResponse.fromJson(response.data);
 
-      if (baseResponse.status == true)
+      if (baseResponse.status == true) {
         return response.data;
-      else {
+      } else {
         throw StatusException(baseResponse.errorMessage);
       }
     } catch (e) {
@@ -223,7 +228,8 @@ class ApiClient implements RemoteSource {
         options: options,
         cancelToken: cancelToken,
       );
-      if (response.headers.map['content-type'].toString() == '[application/pdf]') {
+      if (response.headers.map['content-type'].toString() ==
+          '[application/pdf]') {
         return response;
       } else {
         try {

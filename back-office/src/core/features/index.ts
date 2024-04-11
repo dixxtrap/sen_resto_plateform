@@ -15,6 +15,9 @@ import { permissionApi } from "./permission.slice";
 import { moduleApi } from "./module.slice";
 import { categoryApi } from "./category.slice";
 import { coorporateApi } from "./coorporate.slice";
+import { cardApi } from "./card.slice";
+import { cardAllocationApi } from "./card_allocation.slice";
+import { bannerApi } from "./banner.slice";
 const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
@@ -32,6 +35,9 @@ const store = configureStore({
     [moduleApi.reducerPath ]: moduleApi.reducer,
     [categoryApi.reducerPath ]: categoryApi.reducer,
     [coorporateApi.reducerPath ]: coorporateApi.reducer,
+    [cardApi.reducerPath]:cardApi.reducer,
+    [cardAllocationApi.reducerPath]:cardAllocationApi.reducer,
+    [bannerApi.reducerPath]:bannerApi.reducer,
     theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -51,6 +57,9 @@ customerApi.middleware,
       permissionApi.middleware, 
       moduleApi.middleware, 
       categoryApi.middleware, 
+      cardApi.middleware,
+      cardAllocationApi.middleware,
+      bannerApi.middleware
     ),
 });
 

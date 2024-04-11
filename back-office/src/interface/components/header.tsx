@@ -57,8 +57,8 @@ export const Header: FC<{
              
 
               <span className=" text-xl font-bold">
-                {user?.parent?.parent?.shortname === "Sen Resto"
-                  ? user.parent?.name :user?.parent?.shortname === "SR"? user?.parent?.name
+              {user?.parent?.parent?.id === 1
+                  ? user.parent?.name :user?.parent?.id === 1? user?.parent?.name
                   : user?.parent?.parent?.name}
               </span>
             </div>

@@ -10,6 +10,7 @@ import { CompanyRestaurantBase } from './company_restaurant.entity';
 import { CreationDetails } from './details.entity';
 import { Card } from './card.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from './user.entity';
 export enum AllocationStatusEnum {
   initiate = 'initiate',
   accepted = 'accepted',
@@ -29,9 +30,9 @@ export class CardAllocation {
   @Column({ nullable: true, default: null })
   receiverId: number;
   @Column({ type: 'varchar' })
-  startSerialNumber: string;
+  startSerial: string;
   @Column({ type: 'varchar' })
-  endSerialNumber: string;
+  endSerial: string;
   @Column()
   quantity: number;
   @Column()
@@ -40,8 +41,14 @@ export class CardAllocation {
   @ManyToMany(() => Card)
   @JoinTable({ name: 'card_allocation_details' })
   card: Card[];
-  @Column()
+  @Column({ nullable: true, default: null })
   motif: string;
+  @ManyToOne(() => User)
+  acceptedBy: User;
+  @Column({ nullable: true, default: null })
+  acceptedById: number;
+  @Column({ nullable: true, default: null })
+  rejectionMotif: string;
   @Column({
     type: 'enum',
     enum: AllocationStatusEnum,
@@ -54,18 +61,23 @@ export class CardAllocation {
 }
 
 export class CardAllocationDto {
+  id?: number;
   @ApiProperty()
   label: string;
+  @ApiProperty()
+  rejectionMotif: string;
   @ApiProperty()
   motif: string;
   @ApiProperty()
   senderId: number;
   @ApiProperty()
+  quantity: number;
+  @ApiProperty()
   status: AllocationStatusEnum;
   @ApiProperty()
   receiverId: number;
   @ApiProperty()
-  startSerialNumber: string;
+  startSerial: string;
   @ApiProperty({ type: 'varchar' })
-  endSerialNumber: string;
+  endSerial: string;
 }

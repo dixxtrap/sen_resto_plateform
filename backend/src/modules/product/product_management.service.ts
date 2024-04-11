@@ -11,6 +11,7 @@ import { WeekdayService } from './weekday.service';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { UserDto } from 'src/typeorm/user.entity';
 import { ProductDto } from 'src/typeorm/product.entity';
+import { BaseResponse } from 'src/typeorm/response_base';
 @Injectable()
 export class ProductManagementService {
   constructor(
@@ -135,7 +136,7 @@ export class ProductManagementService {
         },
       })
       .then((value) => {
-        if (value) return value;
+        if (value) return BaseResponse.success(value);
         throw new WsMessage(HttpExceptionCode.NOT_FOUND);
       })
       .catch((err) => {
@@ -152,7 +153,7 @@ export class ProductManagementService {
         relations: { product: { file: true } },
       })
       .then((value) => {
-        if (value) return value;
+        if (value) return BaseResponse.success(value);
         throw new WsMessage(HttpExceptionCode.NOT_FOUND);
       })
       .catch((err) => {
@@ -170,7 +171,7 @@ export class ProductManagementService {
         },
       })
       .then((value) => {
-        if (value) return value;
+        if (value) return BaseResponse.success(value);
         throw new WsMessage(HttpExceptionCode.NOT_FOUND);
       })
       .catch((err) => {

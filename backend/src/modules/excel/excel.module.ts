@@ -6,6 +6,7 @@ import { ExcelController } from './excel.controller';
 @Module({
   imports: [MulterConfig],
   providers: [ExcelService],
+  exports: [ExcelService],
   controllers: [ExcelController],
 })
 export class ExcelModule {}

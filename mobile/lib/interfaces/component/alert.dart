@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/interfaces/utils/assets_svg.dart';
-import 'package:mobile/interfaces/utils/constant.dart';
-import 'package:mobile/interfaces/utils/svg_icon.dart';
+import 'package:mobile/utils/color_ressources.dart';
+import 'package:mobile/utils/helper/assets_svg.dart';
+import 'package:mobile/utils/helper/constant.dart';
+
+import 'package:mobile/utils/helper/svg_icon.dart';
 
 class Alert {
   static info(BuildContext context,
@@ -77,7 +79,7 @@ class Alert {
                 builder: (BuildContext context, double value, Widget? child) {
                   return const SvgIcon(
                     AssetSvg.favorite,
-                    color: kprimary,
+                    color: ColorResources.PRIMARY_APP_COLOR,
                     size: 50,
                   );
                 },

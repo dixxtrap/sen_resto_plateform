@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/interfaces/utils/constant.dart';
+import 'package:mobile/utils/color_ressources.dart';
 
-import '../utils/assets_svg.dart';
-import '../utils/svg_icon.dart';
+import 'package:mobile/utils/helper/constant.dart';
+import 'package:mobile/utils/style.dart';
+
+import '../../utils/helper/assets_svg.dart';
+import '../../utils/helper/svg_icon.dart';
 
 class CustomAppBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
@@ -16,10 +19,7 @@ class CustomAppBar extends StatelessWidget
     return AppBar(
       toolbarOpacity: 0.57,
       automaticallyImplyLeading: true,
-      title: Text('Sen Resto',
-          style: getTextTheme(context)
-              .titleMedium!
-              .copyWith(fontWeight: FontWeight.bold)),
+      title: Text('Sen Resto', style: AppStyle.poppinsBold()),
       actions: [
         IconButton(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
@@ -31,7 +31,7 @@ class CustomAppBar extends StatelessWidget
             onPressed: () {},
             icon: SvgIcon(
               AssetSvg.bell,
-              color: kprimary,
+              color: ColorResources.PRIMARY_APP_COLOR,
               size: 25,
             ))
       ],

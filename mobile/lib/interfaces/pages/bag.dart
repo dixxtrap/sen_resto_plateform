@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mobile/cores/providers/gateway.provider.dart';
 import 'package:mobile/interfaces/pages/page_with_bottom_navigator_bar.dart';
-import 'package:mobile/interfaces/pages/restaurant_details.dart';
-import 'package:mobile/interfaces/utils/kprint.dart';
+import 'package:mobile/utils/helper/kprint.dart';
 
-class Bag extends ConsumerStatefulWidget {
-  const Bag({Key? key}) : super(key: key);
+class Bag extends StatefulWidget {
+  const Bag({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _BagState();
+  State<Bag> createState() => _BagState();
 }
 
-class _BagState extends ConsumerState<Bag> {
-  GatewayNotifier? provider;
+class _BagState extends State<Bag> {
   BitmapDescriptor? restoBitMap;
   BitmapDescriptor? plateBitMap;
   final destination = const LatLng(14.757556, -17.390524);
@@ -26,22 +22,24 @@ class _BagState extends ConsumerState<Bag> {
     zoom: 12.4746,
   );
 
-  void getPolypoint() async {
-    kprint("------------------------getPolyline------------------------");
-    PolylinePoints polylinePoints = PolylinePoints();
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        "AIzaSyBvAWNwnWriL2711NBIetCY0y54WzVNeMA",
-        PointLatLng(source.latitude, source.longitude),
-        PointLatLng(destination.latitude, destination.longitude));
-    if (result.points.isNotEmpty) {
-      kprint("------------------------point not empty------------------------");
+  // void getPolypoint() async {
+  //   kprint("------------------------getPolyline------------------------");
+  //   PolylinePoints polylinePoints = PolylinePoints();
+  //   // PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //   //     // "AIzaSyBvAWNwnWriL2711NBIetCY0y54WzVNeMA",
+  //   //     // kpay key
+  //   //     "AIzaSyCyTEPGkA3I3Wr9X7xYWn7hDN6h1XLSG2k",
+  //   //     PointLatLng(source.latitude, source.longitude),
+  //   //     PointLatLng(destination.latitude, destination.longitude));
+  //   if (result.points.isNotEmpty) {
+  //     kprint("------------------------point not empty------------------------");
 
-      for (var e in result.points) {
-        palylineCoordinates.add(LatLng(e.latitude, e.longitude));
-      }
-      setState(() {});
-    }
-  }
+  //     for (var e in result.points) {
+  //       palylineCoordinates.add(LatLng(e.latitude, e.longitude));
+  //     }
+  //     setState(() {});
+  //   }
+  // }
 
   getBitMap() {
     BitmapDescriptor.fromAssetImage(
@@ -59,11 +57,9 @@ class _BagState extends ConsumerState<Bag> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getPolypoint();
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       try {
-        provider = ref.watch(gatewayProvider);
-        provider?.getData(refresh: true);
         getBitMap();
         // ignore: empty_catches
       } catch (e) {}
@@ -72,7 +68,6 @@ class _BagState extends ConsumerState<Bag> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = ref.watch(gatewayProvider);
     return PageWithBottomNavigator(
       currentIndex: 2,
       body: GoogleMap(
@@ -92,32 +87,32 @@ class _BagState extends ConsumerState<Bag> {
             position: destination,
             icon: plateBitMap ?? BitmapDescriptor.defaultMarker,
           ),
-          if (provider.restaurant != null)
-            ...provider.restaurant!.map((e) => Marker(
-                markerId: MarkerId("resto_${e.id}"),
-                visible: true,
-                infoWindow: InfoWindow(
-                    title: e.name,
-                    snippet: "snippset",
-                    onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => RestoDetails(
-                              resto: e,
-                            ),
-                          ),
-                        )),
-                icon: restoBitMap ?? BitmapDescriptor.defaultMarker,
-                // onTap:,
-                position: LatLng(e.laltitude!, e.longitude!)))
+          // if (provider.restaurant != null)
+          //   ...provider.restaurant!.map((e) => Marker(
+          //       markerId: MarkerId("resto_${e.id}"),
+          //       visible: true,
+          //       infoWindow: InfoWindow(
+          //           title: e.name,
+          //           snippet: "snippset",
+          //           onTap: () => Navigator.push(
+          //                 context,
+          //                 MaterialPageRoute<void>(
+          //                   builder: (BuildContext context) => RestoDetails(
+          //                     resto: e,
+          //                   ),
+          //                 ),
+          //               )),
+          //       icon: restoBitMap ?? BitmapDescriptor.defaultMarker,
+          //       // onTap:,
+          //       position: LatLng(e.laltitude!, e.longitude!)))
         },
-        polylines: {
-          Polyline(
-              polylineId: const PolylineId("route"),
-              points: palylineCoordinates,
-              color: Colors.redAccent,
-              width: 3)
-        },
+        // polylines: {
+        //   Polyline(
+        //       polylineId: const PolylineId("route"),
+        //       points: palylineCoordinates,
+        //       color: Colors.redAccent,
+        //       width: 3)
+        // },
       ),
     );
   }

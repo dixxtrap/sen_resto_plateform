@@ -15,6 +15,7 @@ import { MulterConfig } from 'src/utils/multer.config';
 import { ProductFileService } from './product_file.service';
 import { ProductFileController } from './product_file.controller';
 import { ProductFile } from 'src/typeorm/product_file.entity';
+import { S3Module } from '../s3/s3.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ProductFile } from 'src/typeorm/product_file.entity';
       Weekday,
     ]),
     MulterConfig,
+    S3Module,
   ],
   controllers: [ProductController, ProductFileController],
   providers: [

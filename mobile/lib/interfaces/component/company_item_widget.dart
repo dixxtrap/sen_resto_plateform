@@ -3,11 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mobile/cores/env.dart';
 import 'package:mobile/cores/model/company.dart';
-import 'package:mobile/interfaces/utils/assets_svg.dart';
-import 'package:mobile/interfaces/utils/svg_icon.dart';
+import 'package:mobile/utils/helper/assets_svg.dart';
+import 'package:mobile/utils/helper/svg_icon.dart';
 
+import '../../utils/color_ressources.dart';
 import '../pages/company_details.dart';
-import '../utils/constant.dart';
+import 'package:mobile/utils/helper/constant.dart';
 
 class CompanyItemWidget extends StatelessWidget {
   const CompanyItemWidget({super.key, required this.company});
@@ -17,7 +18,7 @@ class CompanyItemWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-          color: kprimary.withOpacity(.99),
+          color: ColorResources.PRIMARY_APP_COLOR.withOpacity(.99),
           borderRadius: BorderRadius.circular(kpadding / 4),
           border:
               Border.all(color: getTheme(context).primaryColor.withOpacity(.1)),
@@ -57,8 +58,7 @@ class CompanyItemWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   boxShadow: const [BoxShadow()],
                   image: DecorationImage(
-                      image: NetworkImage(
-                          "${Env.fileBase}/${company.profile!.id}"),
+                      image: NetworkImage("${company.imagePath}"),
                       fit: BoxFit.fill),
                   borderRadius: BorderRadius.circular(10)),
               child: ClipRRect(
@@ -76,9 +76,7 @@ class CompanyItemWidget extends StatelessWidget {
                           getTheme(context).cardColor.withOpacity(.4),
                           getTheme(context).primaryColor.withOpacity(.17),
                         ])),
-                    child: Image.network(
-                        "${Env.fileBase}/${company.profile!.id}",
-                        fit: BoxFit.contain),
+               
                   ),
                 ),
               ),
@@ -123,7 +121,7 @@ class CompanyItemWidget extends StatelessWidget {
                         color: Colors.white,
                         size: 18,
                       ),
-                      Text("${company.restaurants!.length}",
+                      Text("{company.restaurants!.length}",
                           style: getTextTheme(context).bodyMedium!.copyWith(
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white,
@@ -136,7 +134,7 @@ class CompanyItemWidget extends StatelessWidget {
                         color: Colors.white,
                         size: 18,
                       ),
-                      Text("${company.restaurants!.length!}",
+                      Text("{company.restaurants!.length!}",
                           style: getTextTheme(context).bodyMedium!.copyWith(
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white,

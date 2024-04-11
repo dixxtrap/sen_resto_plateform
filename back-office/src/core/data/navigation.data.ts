@@ -20,7 +20,8 @@ import {
   UsersIcon,
   WalletIcon,
   HomeModernIcon,
-  GiftIcon
+  GiftIcon,
+  MegaphoneIcon
 } from "@heroicons/react/24/solid";
 import {
   ForwardRefExoticComponent,
@@ -129,6 +130,12 @@ export const navigationData: INavigation[] = [
     permissions: [{ code: "transaction", type: "*" }],
   },
   { name: "Cadeaux / Remise", href: `/${PathRouter.gift}`, icon: GiftIcon, permissions: [{ code: "*", type: "*" }] },
+  {
+    name: "Publicité",
+    href: `${PathRouter.banner}`,
+    icon:MegaphoneIcon ,
+    permissions: [{ code: "read_banner", type: "*" }],
+  },
   // { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
   // { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
   {

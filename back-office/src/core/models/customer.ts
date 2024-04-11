@@ -12,7 +12,7 @@ export class Customer {
         firstname?: string
         lastname?: string
        location?:CoordonatesDto
-        isEnable?: boolean
+       
        details?:CreationDetailDto
   isActive?: boolean
       }
@@ -21,11 +21,11 @@ export class Customer {
       export const customerSchema=yup.object({
 id:yup.number(),
 phone:yup.string(),
-address:addressSchema,
+address:addressSchema.notRequired().nullable(),
 firstname:yup.string(),
 lastname:yup.string(),
-location: coordonatesSchema,
-isEnable:yup.boolean(),
+location: coordonatesSchema.notRequired().nullable(),
+isActive:yup.boolean(),
 isPhoneVeirified:yup.boolean(),
       })
       

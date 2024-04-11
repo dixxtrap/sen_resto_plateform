@@ -1,97 +1,87 @@
-
-
-import 'package:mobile/cores/model/document.dart';
-import 'package:mobile/interfaces/utils/kprint.dart';
-
-import 'restaurant.dart';
+import 'package:mobile/cores/model/address_data.dart';
+import 'package:mobile/cores/model/details.dart';
+import 'package:mobile/cores/model/location_data.dart';
 
 class Company {
   int? id;
-  String? name;
-  String? shortName;
-  String? email;
-  String? description;
-  String? address;
-  String? city;
-  String? country;
-  String? postalCode;
   String? phone;
-  double? laltitude;
-  double? longitude;
   bool? isActive;
-  bool? canPublish;
-  String? createdAt;
-  String? updatedAt;
-  Photo? profile;
-  List<Restaurant>? restaurants;
+  bool? isBloqued;
+  String? email;
+  String? imagePath;
+  int? parentId;
+  String? shortname;
+  String? description;
+  String? name;
+  String? type;
+  String? closingTime;
+  String? openingTime;
+  Location? location;
+  Address? address;
+  Details? details;
 
   Company(
       {this.id,
-      this.name,
-      this.shortName,
-      this.email,
-      this.description,
-      this.address,
-      this.city,
-      this.country,
-      this.postalCode,
       this.phone,
-      this.laltitude,
-      this.longitude,
       this.isActive,
-      this.canPublish,
-      this.createdAt,
-      this.updatedAt,
-      this.profile,
-      this.restaurants});
+      this.isBloqued,
+      this.email,
+      this.imagePath,
+      this.parentId,
+      this.shortname,
+      this.description,
+      this.name,
+      this.closingTime,
+      this.openingTime,
+      this.location,
+      this.address,
+      this.details});
 
   Company.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    shortName = json['short_name'];
-    email = json['email'];
-    description = json['description'];
-    address = json['address'];
-    city = json['city'];
-    country = json['country'];
-    postalCode = json['postal_code'];
     phone = json['phone'];
-   laltitude = double.parse(json['laltitude'].toString());
-    longitude = double.parse(json['longitude'].toString());
+    type = json['type'];
     isActive = json['isActive'];
-    canPublish = json['canPublish'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    kprint("-----------------------toJson---------------------------");
-    profile =
-        json['profile'] != null ? Photo.fromJson(json['profile']) : null;
-    if (json['restaurants'] != null) {
-      restaurants = <Restaurant>[];
-      json['restaurants'].forEach((v) {
-        restaurants!.add(Restaurant.fromJson(v));
-      });
-    }
+    isBloqued = json['isBloqued'];
+    email = json['email'];
+    imagePath = json['imagePath'];
+    parentId = json['parentId'];
+    shortname = json['shortname'];
+    description = json['description'];
+    name = json['name'];
+    closingTime = json['closingTime'];
+    openingTime = json['openingTime'];
+    location =
+        json['location'] != null ? Location.fromJson(json['location']) : null;
+    address =
+        json['address'] != null ? Address.fromJson(json['address']) : null;
+    details =
+        json['details'] != null ? Details.fromJson(json['details']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['name'] = name;
-    data['short_name'] = shortName;
-    data['email'] = email;
-    data['description'] = description;
-    data['address'] = address;
-    data['city'] = city;
-    data['country'] = country;
-    data['postal_code'] = postalCode;
     data['phone'] = phone;
-    data['laltitude'] = laltitude;
-    data['longitude'] = longitude;
     data['isActive'] = isActive;
-    data['canPublish'] = canPublish;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-
+    data['isBloqued'] = isBloqued;
+    data['email'] = email;
+    data['imagePath'] = imagePath;
+    data['parentId'] = parentId;
+    data['shortname'] = shortname;
+    data['description'] = description;
+    data['name'] = name;
+    data['closingTime'] = closingTime;
+    data['openingTime'] = openingTime;
+    if (location != null) {
+      data['location'] = location!.toJson();
+    }
+    if (address != null) {
+      data['address'] = address!.toJson();
+    }
+    if (details != null) {
+      data['details'] = details!.toJson();
+    }
     return data;
   }
 }

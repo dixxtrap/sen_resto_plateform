@@ -10,7 +10,15 @@ export class WsMessage extends HttpException {
     status: number;
     code: string;
   }) {
-    super({ message, code, status }, status);
+    super(
+      {
+        message,
+        code,
+        sessionExpired: status === 401 ? true : false,
+        status: status === 200 ? true : false,
+      },
+      status,
+    );
     this.name = 'CustomError';
     this.code = code;
     Object.setPrototypeOf(this, WsMessage.prototype);
@@ -53,9 +61,14 @@ export const HttpExceptionCode = {
     message: "Une Erreur c'est produite vueillez réessayer",
   },
   INSUFFISANT_BALANCE: {
-    statusCode: 'faillure',
-    code: 500,
+    code: 'faillure',
+    status: 500,
     message: 'Solde insufficasant',
+  },
+  INSUFFISANT_QUANTITY: {
+    code: 'faillure',
+    status: 400,
+    message: 'Insuffisant quantity',
   },
   NOT_FOUND: {
     code: 'NOT_FOUND',

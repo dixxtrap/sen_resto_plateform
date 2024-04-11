@@ -36,7 +36,7 @@ const _onSubmit=()=>{
        { showDialog&&<DialogAlert onClose={()=>{setShowDialog(false)}} isOpen={true}>
         <label  htmlFor='file'>
        <input type="file" hidden  id="file" name="file" onChange={handleImage}/>
-       {preview?<img src={preview} className=""/>:  <CameraIcon className='w-full  text-secondary-300'/>}
+       {preview?<img title='image' src={preview} className=""/>:  <CameraIcon className='w-full  text-secondary-300'/>}
        </label>  
        <div className='flex  pt-2  justify-between'>
         <button className='button secondary' onClick={_onSubmit} >Valider</button>

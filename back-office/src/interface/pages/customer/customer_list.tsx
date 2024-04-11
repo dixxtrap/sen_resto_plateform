@@ -1,4 +1,4 @@
-import { useCustomerQuery } from "../../../core/features/customer.slice";
+import { useGetCustomerQuery } from "../../../core/features/customer.slice";
 import { TablePagination } from "../../components/table_pagination";
 import { Link } from "react-router-dom";
 import { Status } from "../../components/status";
@@ -6,19 +6,22 @@ import { formatDate } from "../../utils/date_format";
 
 export const CustomerList = () => {
   const {
-    data: customers = [],
+    data: customers,
     isLoading,
     isError,
     isSuccess,
-  } = useCustomerQuery("");
-  console.log(isSuccess)
+    error
+  } = useGetCustomerQuery("");
+ 
   return (
     <>
-      {isLoading&&<span>chargement</span>}
-      {isError&&<span>error</span>}
+
       
       <TablePagination
-        
+        isError={isError}
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+        error={error}
         title="Clients"
         th={[
           "Nom Complet",
@@ -32,7 +35,7 @@ export const CustomerList = () => {
         subtitle="Liste des Clients"
         trs={
           <>
-            {customers.map((customer) => (
+            {customers?.data.map((customer) => (
               <tr className=" whitespace-nowrap text-sm text-slate-500 ">
                 <td className=" ">{customer!.firstname} {customer!.lastname}</td>
                 <td className="">{customer!.phone}</td>
@@ -55,13 +58,13 @@ export const CustomerList = () => {
                 <td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                   <Link
                     to={`/customer/details/${customer.id}`}
-                    className="last_td"
+                    className="last_td accept"
                   >
                     Details<span className="sr-only"> {customer.phone}</span>
                   </Link>
                   <Link
                     to={`/customer/edit/${customer.id}`}
-                    className="last_td"
+                    className="last_td default"
                   >
                     Modifier<span className="sr-only"> {customer.phone}</span>
                   </Link>

@@ -54,3 +54,31 @@
       .text.value,.textSubtileValue{
         @apply  text-gray-600 dark:text-gray-400
       }
+
+      .title1{
+        @apply font-bold text-7xl py-2
+      }
+      .title2{
+        @apply font-bold text-xl py-1
+      }
+      .title3{
+        @apply font-bold  
+      }
+      .subtitle1{
+        @apply font-light text-xl text-justify 
+      }
+      .subtitle1.desc{
+        @apply text-gray-600 text-sm
+      }
+      .illus{
+        @apply lg:h-80 md:h-80 
+      }
+      .illus.desc{ 
+        @apply bg-gradient-to-tr from-primary-500/30  to-primary-500  rounded-md my-2 
+      }
+     .illus.desc.left{
+       @apply mr-4
+     }
+     .illus.desc.right{
+      @apply ml-4
+    }

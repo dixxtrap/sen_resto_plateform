@@ -20,12 +20,12 @@ export const PlatesDetails = () => {
     <Alert isOpen={isLoading}/>
       <div>
         <div className="flex gap-x-3 shrink-0 items-center">
-         {productManagement?.product?.file?.length!>0? 
-         <img src={`/v1/${productManagement?.product?.file![0].path!}` } className="h-20 rounded-md"/>
+         {productManagement?.data.product?.file?.length!>0? 
+         <img title="image" src={`${productManagement?.data.product?.file![0].path!}` } className="h-20 rounded-md"/>
          :<CakeIcon className="h-8  md:h-20 text-secondary-500 bg-secondary-100 p-2 rounded-md"/>}
           <Title
-            title={productManagement?.product?.name}
-            subTitle={`les details du restaurant ${productManagement?.product?.name}`}
+            title={productManagement?.data.product?.name}
+            subTitle={`les details du restaurant ${productManagement?.data.product?.name}`}
           />
         </div>
         <div className="mt-6 border-t text-left border-gray-500/20">
@@ -35,7 +35,7 @@ export const PlatesDetails = () => {
                 Nom{" "}
               </dt>
               <dd className="mt-1 text-sm leading-6 textSubtileValue sm:col-span-2 sm:mt-0">
-                {productManagement?.product?.name}
+                {productManagement?.data.product?.name}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -43,7 +43,7 @@ export const PlatesDetails = () => {
                 Prix
               </dt>
               <dd className="mt-1 text-sm leading-6 textSubtileValue sm:col-span-2 sm:mt-0">
-                {productManagement?.product?.price} F CFA
+                {productManagement?.data.product?.price} F CFA
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -51,7 +51,7 @@ export const PlatesDetails = () => {
                 Reduction
               </dt>
               <dd className="mt-1 text-sm leading-6 textSubtileValue sm:col-span-2 sm:mt-0">
-                {productManagement?.product?.reduction}%
+                {productManagement?.data.product?.reduction}%
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -59,7 +59,7 @@ export const PlatesDetails = () => {
                 Description
               </dt>
               <dd className="mt-1 text-sm leading-6 textSubtileValue sm:col-span-2 sm:mt-0">
-                {productManagement?.product?.description}
+                {productManagement?.data.product?.description}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -67,7 +67,7 @@ export const PlatesDetails = () => {
                 Date de creation
               </dt>
               <dd className="mt-1 text-sm leading-6 textSubtileValue sm:col-span-2 sm:mt-0">
-                {productManagement?.product?.details?.createdAt &&formatDate(productManagement?.product?.details?.createdAt!)}
+                {productManagement?.data.product?.details?.createdAt &&formatDate(productManagement?.data.product?.details?.createdAt!)}
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -75,7 +75,7 @@ export const PlatesDetails = () => {
                 Jours de Vente
               </dt>
               <dd className="mt-1 text-sm leading-6 textSubtileValue flex gap-x-5 flex-wrap sm:col-span-2 sm:mt-0">
-               {productManagement?.productManagementDay?.map(managementDay=> <div className="flex  text-slate-600  items-center gap-x-2">
+               {productManagement?.data.productManagementDay?.map(managementDay=> <div className="flex  text-slate-600  items-center gap-x-2">
                   <span className="textSubtileValue">{managementDay.day?.name}</span>
                   <div
                   className={clsx(
@@ -102,51 +102,17 @@ export const PlatesDetails = () => {
                 Image
               </dt>
               <dd className="mt-1 text-sm  flex textSubtileValue gap-x-2  sm:col-span-2 sm:mt-0">
-                {productManagement?.product?.file! && productManagement?.product.file!?.length>0 ? productManagement?.product?.file!.map((e) => (
+                {productManagement?.data.product?.file! &&productManagement?.data.product.file!?.length>0 ? productManagement?.data.product?.file!.map((e) => (
                   // <Img
                   //   className="h-8  md:h-16 rounded-md"
                   //   hasImg={e.photo.filename!==null&&e.photo.size!=0}
                   //   imgId={e.photoId}
                   // />
-                 <img src={`/v1/${e.path}`}  className="h-20 rounded-md" />
+                 <img title="daxx" src={`${e.path}`}  className="h-20 rounded-md" />
                 )):<CakeIcon className="h-8  md:h-20 text-indigo-500 bg-indigo-100 p-2 rounded-md"/>}
               </dd>
             </div>
-            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 textSubtile">Attachments</dt>
-            <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-              <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
-                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                  <div className="flex w-0 flex-1 items-center">
-                    <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                    <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                      <span className="truncate font-medium">resume_back_end_developer.pdf</span>
-                      <span className="flex-shrink-0 text-gray-400">2.4mb</span>
-                    </div>
-                  </div>
-                  <div className="ml-4 flex-shrink-0">
-                    <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                      Download
-                    </a>
-                  </div>
-                </li>
-                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                  <div className="flex w-0 flex-1 items-center">
-                    <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                    <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                      <span className="truncate font-medium">coverletter_back_end_developer.pdf</span>
-                      <span className="flex-shrink-0 text-gray-400">4.5mb</span>
-                    </div>
-                  </div>
-                  <div className="ml-4 flex-shrink-0">
-                    <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                      Download
-                    </a>
-                  </div>
-                </li>
-              </ul>
-            </dd>
-          </div> */}
+        
           </dl>
         </div>
       </div>

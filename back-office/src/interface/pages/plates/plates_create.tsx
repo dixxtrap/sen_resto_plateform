@@ -13,7 +13,7 @@ import { ShowCategorySelect } from "./show_category_select";
 
 
 export const PlateCreate = () => {
-  const { data: categories = [], isLoading: isTagLoading } =
+  const { data: categories, isLoading: isTagLoading } =
     useGetCategoryQuery("");
   const [categoryList, setCategoryList] = useState<CategoryDto[]>([]);
   const [createPlate, { isError, isSuccess, isLoading, error, data, reset }] =
@@ -66,7 +66,7 @@ export const PlateCreate = () => {
         >
           <div className="input">
             <div className="   grid grid-cols-2 md:grid-cols-4  gap-3 ">
-              {categories[0]?.children?.map((e) =>
+              {categories?.data[0]?.children?.map((e) =>
                 <ShowCategorySelect categoryList={categoryList} setCategoryList={setCategoryList} category={e} isChild={false}/>
               )}
             </div>

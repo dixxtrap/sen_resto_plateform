@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Status } from '../../components/status'
 
 export const UserList = () => {
-        const {data:users=[]}=useGetUserQuery("")
+        const {data:users}=useGetUserQuery("")
   return (
     <div>
     <TablePagination 
@@ -14,7 +14,7 @@ export const UserList = () => {
     th={["Nom & Prenom", "Role", "Adresse", "Téléphone","status", ""]}
     trs={
         <>
-                 {users.map((user) => (
+                 {users?.data.map((user) => (
                         <tr key={user.email+"_"+user.id}>
                           <td className="">
                             <div className="flex items-center">
@@ -40,10 +40,10 @@ export const UserList = () => {
                        <Status status={ user.isActive!} inactiveText='Inactif' activeText='Actif' />
                           </td>
                           <td className="last_td_container">
-                            <Link to={`/user/details/${user.id}`}className="last_td">
+                            <Link to={`/user/details/${user.id}`}className="last_td accept">
                               Details<span className="sr-only"> {user.phone}</span>
                             </Link>
-                            <Link to={`/user/edit/${user.id}`} className="last_td">
+                            <Link to={`/user/edit/${user.id}`} className="last_td default">
                               Modifier<span className="sr-only"> {user.phone}</span>
                             </Link>
                           </td>

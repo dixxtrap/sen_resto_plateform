@@ -11,6 +11,10 @@ export class CustomerController {
   getAll() {
     return this.service.getAll();
   }
+  @Get('by_id/:id')
+  getById(@Param('id') id: number) {
+    return this.service.getById({ id });
+  }
   @Post('create')
   create(@Body() body: CustomerDto) {
     return this.service.create({ body });

@@ -2,12 +2,13 @@ import { RouteObject } from "react-router-dom";
 import { CardList } from "../pages/card/card_list";
 import { CardCreate } from "../pages/card/card_create";
 import { CardDetails } from "../pages/card/card_details";
+import { CardHome } from "../pages/card/card_home";
 
 export const cardRouter:RouteObject={
         path:"card",
         children:[
                 {path:"",
-                 element:<CardList/> , 
+                 element:<CardHome/> , 
                  index:true
                 },
                  {

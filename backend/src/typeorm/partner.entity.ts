@@ -12,6 +12,7 @@ import { CreationDetails } from './details.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { CompanyRestaurant, Restaurant } from './company_restaurant.entity';
 import { Contrat } from './contrat.entity';
+import { bool } from 'aws-sdk/clients/signer';
 
 @Entity({})
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -43,17 +44,20 @@ export abstract class Partner {
   details: CreationDetails;
   @ManyToOne(() => Contrat)
   contrat: Contrat;
+  @Column()
   type: string;
 }
 
 export class PartnerDto {
-  id: number;
+  id?: number;
   @ApiProperty()
   location: CoordonatesDto;
   @ApiProperty()
   address: AddressDto;
   @ApiProperty()
   phone: string;
+  @ApiProperty()
+  isActive: boolean;
   @ApiProperty()
   email: string;
   @ApiProperty()

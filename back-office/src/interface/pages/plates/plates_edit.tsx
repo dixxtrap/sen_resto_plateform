@@ -43,11 +43,11 @@ export const PlatesEdit = () => {
   };
   useEffect(() => {
     if (old) {
-      setValue("name", old.name);
-      setValue("description", old.description);
-      setValue("price", old.price);
-      setValue("reduction", old.reduction);
- setCategoryList(old.category!??[])
+      setValue("name", old.data.name);
+      setValue("description", old.data.description);
+      setValue("price", old.data.price);
+      setValue("reduction", old.data.reduction);
+ setCategoryList(old.data.category!??[])
      
     }
   }, [old]);
@@ -58,12 +58,12 @@ export const PlatesEdit = () => {
     {  isError&&<Alert isOpen={true} type="faillure"  title="Error" message={(error as WsMessage).message! }/>}:
       {old&&categories&&
         <div className="flex flex-col divide-y darkDivider">
-          <Title title={old.name} subTitle="Modifier le plat" />
+          <Title title={old.data.name} subTitle="Modifier le plat" />
           <div className="flex flex-wrap gap-2 py-2">
-            {old?.file?.map((e) => (
-             <ProductFileUpdate path={e.path!}  id={e.id!} productId={old?.id!} />
+            {old?.data.file?.map((e) => (
+             <ProductFileUpdate path={e.path!}  id={e.id!} productId={old?.data.id!} />
             ))}
-            <ProductCreateFile productId={old.id!}/>
+            <ProductCreateFile productId={old.data.id!}/>
             {/* <ImgPreview
               name={`plate_file_last`}
               canUpdateAfter={true}
@@ -106,7 +106,7 @@ export const PlatesEdit = () => {
               <div className="input">
                 <div className="   items-start  flex-wrap flex  ">
                 <div className="   grid grid-cols-5  gap-3 ">
-              {categories[0]?.children?.map((e) =>
+              {categories?.data[0].children?.map((e) =>
                 <ShowCategorySelect key={`key_${e.id}`} categoryList={categoryList} setCategoryList={setCategoryList} category={e} isChild={false}/>
               )}
             </div>

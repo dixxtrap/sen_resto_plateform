@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { Status } from "../../components/status";
 import { formatDate } from "../../utils/date_format";
 import { ProtecterPage } from "../../components/protecter_page";
-import { BuildingStorefrontIcon } from "@heroicons/react/24/outline";
+import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
+
 
 export const RestaurantList = () => {
-  const { data: restaurants = [] } = useGetResttaurantQuery("");
+  const { data: restaurants } = useGetResttaurantQuery("");
   return (
     <div>
       <TablePagination
@@ -27,15 +28,16 @@ export const RestaurantList = () => {
         ]}
         trs={
           <>
-            {restaurants.map((restaurant) => (
+            {restaurants?.data.map((restaurant) => (
               <tr key={restaurant.email} className="">
                 <td className="flex  items-center">
-                  <div className=" flex-shrink-0  w-16 mr-2 content-center flex  justify-center ">
-                  {  restaurant.imagePath? <img src={`/v1/${restaurant.imagePath!}`} className='h-8 rounded-md  ' alt=""  />:<BuildingStorefrontIcon className='h-8 p-1 text-primary-500  bg-secondary-500/20 ring-2 mr-2  ring-secondary-500/80 rounded-md'/>}
+                  <div className=" flex-shrink-0  w-16 mr-2  content-center flex  justify-start ">
+                  {  restaurant.imagePath? <img src={`${restaurant.imagePath!}`} className='h-8 rounded-md  ' alt=""  />:<BuildingStorefrontIcon className='h-8 pr-1 text-primary-500    mr-2 rounded-md'/>}
                     {/* <ImgPreview  name={`img_${restaurant.id}`} img={ restaurant.company.short_name=="SR" ? restaurant.profile!:restaurant.company.profile!}/> */}
 
                    
                   </div>
+                  
                   <div className="flex flex-col font-bold">{restaurant.name}</div>
                 </td>
                
@@ -57,20 +59,20 @@ export const RestaurantList = () => {
                 <ProtecterPage isPage={false} permissions={[{code:"PRODUCT_MANAGEMENT", type:"CREATE"}]}>
                 <Link
                     to={`/restaurant/plats/${restaurant.id}`}
-                    className="last_td"
+                    className="last_td reject"
                   >
-                    product<span className="sr-only">, {restaurant.phone}</span>
+                    Product<span className="sr-only">, {restaurant.phone}</span>
                   </Link>
                 </ProtecterPage>
                   <Link
                     to={`/restaurant/details/${restaurant.id}`}
-                    className="last_td"
+                    className="last_td accept"
                   >
                     Details<span className="sr-only">, {restaurant.phone}</span>
                   </Link>
                   <Link
                     to={`/restaurant/edit/${restaurant.id}`}
-                    className="last_td"
+                    className="last_td default"
                   >
                     Modifier
                     <span className="sr-only">, {restaurant.phone}</span>

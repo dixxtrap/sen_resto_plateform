@@ -38,17 +38,17 @@ console.log(changed)
   });
   useEffect(() => {
     if (old) {
-      setValue("name", old.name!);
-      setValue("shortname", old.shortname!);
-      setValue("email", old.email!);
-      setValue("phone", old.phone!);
-      setValue("address.streetAddress", old.address!.streetAddress);
-      setValue("address.city", old.address?.city!);
-      setValue("address.country", old.address?.country!);
-      setValue("description", old.description!);
-      setValue("address.country", old.address?.country!);
-      setValue("location.latitude", old.location?.latitude!);
-      setValue("location.longitude", old.location?.longitude!);
+      setValue("name", old?.data.name!);
+      setValue("shortname", old?.data.shortname!);
+      setValue("email", old?.data.email!);
+      setValue("phone", old?.data.phone!);
+      setValue("address.streetAddress", old?.data.address!.streetAddress);
+      setValue("address.city", old?.data.address?.city!);
+      setValue("address.country", old?.data.address?.country!);
+      setValue("description", old?.data.description!);
+      setValue("address.country", old?.data.address?.country!);
+      setValue("location.latitude", old?.data.location?.latitude!);
+      setValue("location.longitude", old?.data.location?.longitude!);
     }
   }, [old, setValue]);
 
@@ -57,7 +57,7 @@ console.log(changed)
     if(file){
       const formData = new FormData();
       formData.append("file", file!);
-await fetch(`/v1/company_restaurant/update/${old?.id}`,{
+await fetch(`/v1/company_restaurant/update/${old?.data?.id}`,{
   method: "PUT",
   body: formData,
 })
@@ -73,7 +73,7 @@ await fetch(`/v1/company_restaurant/update/${old?.id}`,{
           <div>
         <label htmlFor="file">
         <input type="file" hidden id="file" name="file" onChange={handleImage}/>
-        {preview?<img src={preview} className="h-20"/>:old.imagePath?<img src={`/v1/${old.imagePath}`} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
+        {preview?<img  title="img" src={preview} className="h-20"/>:old?.data.imagePath?<img  title="img"  src={`${old?.data.imagePath}`} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
         </label>
      </div>
 

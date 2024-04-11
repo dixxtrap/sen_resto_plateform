@@ -51,7 +51,7 @@ export const Navigation: FC<{
                 alt=""
 
                 className="h-8 md:h-10  bg-gradient-to-tr  backdrop-blur-lg  rounded-md"
-                 src={`/v1/${user.parent.imagePath}`}
+                 src={`${user.parent.imagePath}`}
                 />
               )}
                  <span className=" text-xl font-bold text-white ">
@@ -116,7 +116,7 @@ export const ShortNav = () => {
                 <img
                 alt=""
                 className=" h-8 md:h-10  rounded-md backdrop-blur-lg"
-                 src={`/v1/${user.parent.imagePath}`}
+                 src={`${user.parent.imagePath}`}
                 />
               
               )}

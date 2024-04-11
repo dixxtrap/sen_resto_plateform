@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Permission } from 'src/typeorm';
 import {
@@ -10,16 +10,19 @@ import { Equal, Repository } from 'typeorm';
 import { ModuleService } from '../module/module.service';
 
 @Injectable()
-export class PermissionService {
+export class PermissionService implements OnModuleInit {
   constructor(
     @InjectRepository(Permission) private repos: Repository<Permission>,
     private module: ModuleService,
   ) {}
+  onModuleInit() {
+    this.initPermission();
+  }
   initPermission() {
     return this.module.getAll().then((value) => {
       return Promise.all(
-        value.map((e) => {
-          const permissions = [
+        value.data.map((e) => {
+          return [
             PermissionActionEnum.create,
             PermissionActionEnum.read,
             PermissionActionEnum.update,
@@ -28,15 +31,21 @@ export class PermissionService {
             PermissionActionEnum.all,
           ].map((action) => {
             console.log(`${action}_${e.name}`);
-            return this.repos.create({
-              action: action,
-              moduleId: e.id,
-              name: `${action}_${e.name}`,
-              code: `${action}_${e.name}`,
-            });
-          });
-          return this.repos.save(permissions).then((p) => {
-            return p;
+            return this.repos
+              .exist({
+                where: {
+                  code: `${action}_${e.name}`,
+                },
+              })
+              .then((exist) => { 
+                if (!exist)
+                  return this.repos.save({
+                    action: action,
+                    moduleId: e.id,
+                    name: `${action}_${e.name}`,
+                    code: `${action}_${e.name}`,
+                  });
+              });
           });
         }),
       );

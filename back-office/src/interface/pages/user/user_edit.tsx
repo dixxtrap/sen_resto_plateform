@@ -17,7 +17,7 @@ import { RoleDto } from "../../../core/models/role.dto";
 
 export const UserEdit = () => {
   const { data: roles  } = useGetRolesQuery("");
-  const { data: companies = [] } = useGetCompanyChildrenQuery("");
+  const { data: companies} = useGetCompanyChildrenQuery("");
   const { id } = useParams();
   const {
     data: oldUser,
@@ -35,18 +35,18 @@ export const UserEdit = () => {
   } = useForm({ resolver: yupResolver(userSchema) });
   useEffect(() => {
     if (oldUser) {
-      setValue("firstname", oldUser.firstname!);
-      setValue("lastname", oldUser.lastname!);
-      setValue("birthday", oldUser.birthday!);
-      setValue("email", oldUser.email!);
-      setValue("roleId", oldUser.roleId!);
-      setValue("phone", oldUser.phone!);
-      setValue("parentId", oldUser.parentId!);
-      setValue("address.streetAddress", oldUser.address?.streetAddress!);
-      setValue("address.country", oldUser.address?.country!);
-      setValue("address.city", oldUser.address?.city!);
-      console.log(oldUser.birthday)
-      setValue("birthday", oldUser.birthday);
+      setValue("firstname", oldUser.data.firstname!);
+      setValue("lastname", oldUser.data.lastname!);
+      setValue("birthday", oldUser.data.birthday!);
+      setValue("email", oldUser.data.email!);
+      setValue("roleId", oldUser.data.roleId!);
+      setValue("phone", oldUser.data.phone!);
+      setValue("parentId", oldUser.data.parentId!);
+      setValue("address.streetAddress", oldUser.data.address?.streetAddress!);
+      setValue("address.country", oldUser.data.address?.country!);
+      setValue("address.city", oldUser.data.address?.city!);
+      console.log(oldUser.data.birthday)
+      setValue("birthday", oldUser.data.birthday);
     }
   }, [oldUser, setValue]);
   const _onSubmit = (body: User) => {
@@ -56,11 +56,11 @@ export const UserEdit = () => {
   const showRole = (role: RoleDto) => {
     return role.children?.length! > 0 ? (
       <optgroup className="dark:bg-black" label={role.name}>
-        <option selected={oldUser?.roleId===role.id} value={role.id} className="dark:bg-black">
+        <option selected={oldUser?.data.roleId===role.id} value={role.id} className="dark:bg-black">
           {role.name}
         </option>
         {role.children?.map((role2) => (
-          <option selected={oldUser?.roleId===role2.id} className="dark:bg-black" value={role2.id}>
+          <option selected={oldUser?.data.roleId===role2.id} className="dark:bg-black" value={role2.id}>
             {role2.name}
           </option>
         ))}
@@ -134,7 +134,7 @@ export const UserEdit = () => {
                   className={clsx("input", "h-9")}
                   {...register("parentId")}
                 >
-                  {companies.map((e) => (
+                  {companies?.data.map((e) => (
                     <option className="input" value={e.id}>
                       {e.name}
                     </option>

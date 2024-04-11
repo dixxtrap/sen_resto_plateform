@@ -12,7 +12,7 @@ import { Alert } from "../../components/alert_success";
 export const PlateList = () => {
   const { data: day=[] } = useGetDayQuery(null);
   const {
-    data: productManagements = [],
+    data: productManagements ,
     isSuccess,
     isLoading,
   } = useGetRestaurantProductQuery(``);
@@ -36,12 +36,12 @@ createTitle="Creer un nouveau Produit"
         trs={
           isSuccess && (
             <>
-              {productManagements?.map((productManagement) => (
+              {productManagements?.data.map((productManagement) => (
                 <tr key={`plate_${productManagement.product?.id}`}>
                   <td className="">
                     <div className="flex items-center gap-x-0">
                       <div className=" flex-shrink-0 w-10">
-                       {productManagement.product?.file && productManagement.product?.file.length!>0?<img src={`/v1/${productManagement.product?.file![0].path}`} className="h-7 rounded-md"/>:<BuildingStorefrontIcon className="h-7" />}
+                       {productManagement.product?.file && productManagement.product?.file.length!>0?<img title='image' src={`${productManagement.product?.file![0].path}`} className="h-7 rounded-md"/>:<BuildingStorefrontIcon className="h-7" />}
                           {/* <Img
                             hasImg={true}
                             icon={<BuildingStorefrontIcon className="h-7" />}
@@ -79,13 +79,13 @@ createTitle="Creer un nouveau Produit"
                   )}
                 
                   <td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    <Link to={`/product/details/${productManagement.productId}`} className="last_td">
+                    <Link to={`/product/details/${productManagement.productId}`} className="last_td reject">
                       Voir detail
                     </Link>
-                    <Link to={`/product/edit/${productManagement.productId}`} className="last_td">
+                    <Link to={`/product/edit/${productManagement.productId}`} className="last_td accept">
                       Modifier le Produit
                     </Link>
-                    <Link to={`/product/management/${productManagement.productId}`} className="last_td">
+                    <Link to={`/product/management/${productManagement.productId}`} className="last_td default">
                       Modifier le menu
                     </Link>
                   </td>

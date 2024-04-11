@@ -1,7 +1,6 @@
 import {
   HttpException,
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -31,6 +30,7 @@ export class SecurityService {
     if (!user)
       throw new HttpException({ ...HttpExceptionCode.LOGIN_FAILLURE }, 401);
     // if (user.isActive == false) throw new UnauthorizedException();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordCrypt, password, ...rest } = user;
     console.log(user);
     if (user.password === CryptoService.createHash(body.password)) {
@@ -75,7 +75,6 @@ export class SecurityService {
     const decode = await this.jwtService.verify(token, {
       secret: process.env.CRYPTO_KEY,
     });
-   
     if (decode) {
       return await this.userService.definePassword({ id: decode.id, password });
     }
@@ -98,11 +97,11 @@ export class SecurityService {
         { id, firstname, lastname, email },
         {
           secret: process.env.CRYPTO_KEY,
-          expiresIn: 24 * 60 * 15 + 's',
+          expiresIn: 24 * 60 * 60 + 's',
         },
       );
       this.mailService.sendActivationMail({
-        to: 'djiga2015@gmail.com',
+        to: email,
         token,
       });
       return HttpExceptionCode.SUCCEEDED;

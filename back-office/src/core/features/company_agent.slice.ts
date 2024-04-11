@@ -4,7 +4,7 @@ import { User } from "../models/user.dto";
 export const companyAgentApi = createApi({
   reducerPath: "companyAgentApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/v1/" }),
-  tagTypes: ["companyAgent"],
+  tagTypes: ["companyAgent","security"],
   endpoints: (builder) => ({
     getCompanyUser: builder.query<
       [
@@ -18,7 +18,7 @@ export const companyAgentApi = createApi({
       string
     >({
       query: () => "company_agent",
-      providesTags: ["companyAgent"],
+      providesTags: ["companyAgent",'security'],
     }),
     switchCompanyUserStatus: builder.mutation<
       { id: number; user: User },

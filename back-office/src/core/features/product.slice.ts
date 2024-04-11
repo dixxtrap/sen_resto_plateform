@@ -4,24 +4,25 @@ import { errorTrasform } from "./error_transformer";
 import { WsMessage } from "../models/error.dto";
 import { ProductManagementDto } from "../models/product_management";
 import { DayDto, ProductManagementDayDto } from "../models/product_management_day";
+import { BaseResponse } from "./base_response";
 
 export const productApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
   reducerPath: "product",
-  tagTypes: ["product"],
+  tagTypes: ["product","security"],
   endpoints: (builder) => ({
-    getProduct: builder.query<ProductDto[], string>({
+    getProduct: builder.query<BaseResponse<ProductDto[]>, string>({
       query: () => "product/all",
-      providesTags: ["product"],
+      providesTags:["product","security"],
     }),
    
-    getRestaurantProduct: builder.query<ProductManagementDto[], string>({
+    getRestaurantProduct: builder.query<BaseResponse<ProductManagementDto[]>, string>({
       query: () =>`product/protect/product_management`,
-      providesTags: ["product"],
+      providesTags: ["product","security"],
     }),
-    getRestaurantProductById: builder.query<ProductManagementDto[], number>({
+    getRestaurantProductById: builder.query<BaseResponse<ProductManagementDto[]>, number>({
       query: (id) =>`/product/protect/by_id/available/product_management/${id}`,
-      providesTags: ["product"],
+      providesTags: ["product","security"],
     }),
     updateProductManagementDay: builder.mutation< WsMessage, ProductManagementDayDto[]>({
       query: (body) =>({
@@ -31,23 +32,23 @@ body:body
       }),
       invalidatesTags: ["product"],
     }),
-    getRestaurantUserProduct: builder.query<ProductDto[], string>({
+    getRestaurantUserProduct: builder.query<BaseResponse<ProductDto[]>, string>({
       query: () =>`product/restaurant/user`,
-      providesTags: ["product"],
+      providesTags: ["product","security"],
     }),
-    getProductById: builder.query<ProductDto, number>({
+    getProductById: builder.query<BaseResponse<ProductDto>, number>({
       query: (id) => "product/by_id/" + id,
-      providesTags: ["product"],
+      providesTags:["product","security"],
     }),
     getDay: builder.query<DayDto[], null>({
       query: () => "product/weekday",
-      providesTags: ["product"],
+      providesTags: ["product","security"],
     }),
-    getProductManagementById: builder.query<ProductManagementDto, number>({
+    getProductManagementById: builder.query<BaseResponse<ProductManagementDto>, number>({
       query: (id) => "product/protect/by_id/product_management/" + id,
-      providesTags: ["product"],
+      providesTags: ["product","security"],
     }),
-    addProductManagementById: builder.mutation<ProductManagementDto, {id:number, body:ProductDto[]}>({
+    addProductManagementById: builder.mutation<WsMessage, {id:number, body:ProductDto[]}>({
       query: ({id, body}) => ({
         url:"product/protect/by_id/add_multiple_product_management/" + id,
         body:body,
@@ -63,7 +64,7 @@ body:body
       }),
       invalidatesTags: ["product"],
     }),
-    updateProduct: builder.mutation<ProductDto, { product: ProductDto; id: number }>({
+    updateProduct: builder.mutation<WsMessage, { product: ProductDto; id: number }>({
       query: ({ id, product }) => ({
         url: `product/update/by_id/${id}`,
         method: "PUT",

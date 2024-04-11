@@ -8,5 +8,5 @@ import 'package:mobile/cores/networking/result_state.dart';
 import '../model/base_response.dart';
 
 class ApiCubit<R extends BaseResponse> extends Cubit<ResultState<R>> {
-  ApiCubit() : super(Idle());
+  ApiCubit() : super(const Idle());
 }

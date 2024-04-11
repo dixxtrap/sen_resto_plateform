@@ -103,4 +103,27 @@ export class MailerService {
       text: content,
     });
   }
+  async sentMessage({ to, message }: { to: string; message: string }) {
+    const raw = JSON.stringify({
+      mobileNumber: to,
+      fromName: 'KPay Test',
+      text: message,
+      secret: 'pk2ssmz01ra7n981kubrig',
+      isCritical: true,
+    });
+
+    const requestOptions = {
+      body: raw,
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    };
+    const result = await fetch(
+      'https://gateway-test.zuulu.net/sms/send',
+      requestOptions,
+    );
+
+    if (result.ok) console.log(`message envoyé a ${to} `);
+    else console.log(`message non  envoyé a ${to} `);
+    return { status: 'sent' };
+  }
 }

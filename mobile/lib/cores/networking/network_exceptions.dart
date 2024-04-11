@@ -1,5 +1,5 @@
 /*
- * Copyright ©2021. PayNet Systems. All Rights Reserved.
+ * Copyright ©2024. Dax Systems. All Rights Reserved.
  */
 
 import 'dart:io';
@@ -7,7 +7,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:mobile/interfaces/utils/log.dart';
+import 'package:mobile/utils/helper/log.dart';
 
 import 'api_client.dart';
 
@@ -47,7 +47,8 @@ abstract class NetworkExceptions with _$NetworkExceptions {
 
   const factory NetworkExceptions.defaultError(String error) = DefaultError;
 
-  const factory NetworkExceptions.responseCodeError(String responseCode, String error) = ResponseCode;
+  const factory NetworkExceptions.responseCodeError(
+      String responseCode, String error) = ResponseCode;
 
   const factory NetworkExceptions.unexpectedError() = UnexpectedError;
 
@@ -58,77 +59,84 @@ abstract class NetworkExceptions with _$NetworkExceptions {
       if (error is DioException) {
         switch (error.type) {
           case DioExceptionType.cancel:
-            networkExceptions = NetworkExceptions.requestCancelled();
+            networkExceptions = const NetworkExceptions.requestCancelled();
             break;
           case DioExceptionType.connectionTimeout:
-            networkExceptions = NetworkExceptions.requestTimeout();
+            networkExceptions = const NetworkExceptions.requestTimeout();
             break;
           case DioExceptionType.connectionError:
-            networkExceptions = NetworkExceptions.noInternetConnection();
+            networkExceptions = const NetworkExceptions.noInternetConnection();
             break;
           case DioExceptionType.receiveTimeout:
-            networkExceptions = NetworkExceptions.sendTimeout();
+            networkExceptions = const NetworkExceptions.sendTimeout();
             break;
           case DioExceptionType.badResponse:
-            networkExceptions = NetworkExceptions.handleException(error.response);
+            networkExceptions =
+                NetworkExceptions.handleException(error.response);
             break;
           case DioExceptionType.sendTimeout:
-            networkExceptions = NetworkExceptions.sendTimeout();
+            networkExceptions = const NetworkExceptions.sendTimeout();
             break;
           case DioExceptionType.unknown:
-            networkExceptions = NetworkExceptions.noInternetConnection();
+            networkExceptions = const NetworkExceptions.noInternetConnection();
             break;
           case DioExceptionType.badCertificate:
-            networkExceptions = NetworkExceptions.badRequest();
+            networkExceptions = const NetworkExceptions.badRequest();
             break;
         }
       } else if (error is StatusException) {
         networkExceptions = NetworkExceptions.defaultError(error.error);
       } else if (error is FormatException) {
-        networkExceptions = NetworkExceptions.defaultError("Unable to process the data");
+        networkExceptions =
+            const NetworkExceptions.defaultError("Unable to process the data");
       } else if (error is SocketException) {
-        networkExceptions = NetworkExceptions.noInternetConnection();
+        networkExceptions = const NetworkExceptions.noInternetConnection();
       } else {
-        networkExceptions = NetworkExceptions.unexpectedError();
+        networkExceptions = const NetworkExceptions.unexpectedError();
       }
       return networkExceptions;
     } on FormatException catch (_) {
-      return NetworkExceptions.formatException();
+      return const NetworkExceptions.formatException();
     } catch (_) {
-      return NetworkExceptions.unexpectedError();
+      return const NetworkExceptions.unexpectedError();
     }
   }
 
   static NetworkExceptions handleException(Response? response) {
     if (response!.data != null) {
-      if (response.data['responseCode'] == 'P03' || response.data['responseCode'] == 'P04') {
+      if (response.data['responseCode'] == 'P03' ||
+          response.data['responseCode'] == 'P04') {
         return NetworkExceptions.responseCodeError(
-            response.data['responseCode'], "${response.data["errors"][0]["longMessage"]}");
+            response.data['responseCode'],
+            "${response.data["errors"][0]["longMessage"]}");
       } else {
-        return NetworkExceptions.defaultError("${response.data["errors"][0]["longMessage"]}");
+        return NetworkExceptions.defaultError(
+            "${response.data["message"] ?? response.data["errors"][0]["longMessage"]}");
       }
-    } else
+    } else {
       switch (response.statusCode) {
         case 400:
         case 401:
         case 403:
-          return NetworkExceptions.unauthorizedRequest();
+          return const NetworkExceptions.unauthorizedRequest();
         case 404:
-          return NetworkExceptions.notFound("Not found");
+          return const NetworkExceptions.notFound("Not found");
         case 409:
-          return NetworkExceptions.conflict();
+          return const NetworkExceptions.conflict();
         case 408:
-          return NetworkExceptions.requestTimeout();
+          return const NetworkExceptions.requestTimeout();
         case 500:
-          return NetworkExceptions.internalServerError();
+          return const NetworkExceptions.internalServerError();
         case 503:
-          return NetworkExceptions.serviceUnavailable();
+          return const NetworkExceptions.serviceUnavailable();
         default:
           var responseCode = response.statusCode;
           return NetworkExceptions.defaultError(
-            tr("Received invalid status code:", args: [responseCode.toString()]),
+            tr("Received invalid status code:",
+                args: [responseCode.toString()]),
           );
       }
+    }
   }
 
   static String getErrorMessage(NetworkExceptions error) {

@@ -12,7 +12,7 @@ const config: MysqlConnectionOptions = {
   entities: entities,
   database: 'sen_resto',
   synchronize: true,
-  logging: ['error'],
+  // logging: ['error'],
   //   ssl: {
   //     // Enable SSL if required
   //     ca: fs.readFileSync('path/to/ca.crt'),

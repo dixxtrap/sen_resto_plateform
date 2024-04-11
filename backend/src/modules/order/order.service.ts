@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order, OrderStatus } from 'src/typeorm/order.entity';
+import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository } from 'typeorm';
 
@@ -20,7 +21,7 @@ export class OrderService {
         where: { customerId, partnerId, status: OrderStatus.OnBag },
       })
       .then((order) => {
-        if (order) return order;
+        if (order) return BaseResponse.success(order) as BaseResponse<Order>;
         return this.repos
           .save(
             this.repos.create({
@@ -29,7 +30,9 @@ export class OrderService {
               status: OrderStatus.OnBag,
             }),
           )
-          .then((newOrder) => newOrder);
+          .then(
+            (newOrder) => BaseResponse.success(newOrder) as BaseResponse<Order>,
+          );
       })
       .catch((err) => {
         if (err instanceof WsMessage) throw err;

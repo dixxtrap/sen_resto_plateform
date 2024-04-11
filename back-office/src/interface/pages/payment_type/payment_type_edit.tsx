@@ -19,7 +19,7 @@ import { handlePreview } from "../../utils/handle_preview";
 import { CameraIcon } from "@heroicons/react/20/solid";
 
 export const PaymentTypeEdit = () => {
-  const id = parseInt(useParams().id!);
+  const id = useParams().id!;
   const [preview, setPreview] = useState<string>();
   const [file, setFile] = useState<File>();
   const [changed, setChanged] = useState<boolean>(false);
@@ -60,14 +60,14 @@ export const PaymentTypeEdit = () => {
   });
   useEffect(() => {
     if (old) {
-      setValue("name", old!.name!);
-      setValue("shortname", old!.shortname!);
-      setValue("phone", old!.phone!);
-      setValue("email", old!.email!);
-      setValue("description", old.description);
-      setValue("fees", old.fees);
-      setValue("invertFees", old.invertFees);
-      setValue("isActive", old.isActive);
+      setValue("name", old?.data.name!);
+      setValue("shortname", old?.data!.shortname!);
+      setValue("phone", old?.data!.phone!);
+      setValue("email", old?.data!.email!);
+      setValue("description", old?.data.description);
+      setValue("fees", old?.data.fees);
+      setValue("invertFees", old?.data.invertFees);
+      setValue("isActive", old?.data.isActive);
     }
   }, [old, setValue]);
 
@@ -77,8 +77,8 @@ export const PaymentTypeEdit = () => {
     <div>
       <Title title="Terminaison de Paiement" />
       <label htmlFor="file">
-        <input type="file" hidden id="file" name="file" onChange={handleImage}/>
-        {preview?<img src={preview} className="h-20"/>:old?.imagePath?<img src={`/v1/${old?.imagePath}`} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
+        <input type="file" hidden  id="file" name="file" onChange={(event)=>handleImage(event)}/>
+        {preview?<img title="payment type" src={preview} className="h-20"/>:old?.data.imagePath?<img title="payment type" src={`${old?.data?.imagePath}`} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
         </label>
       <CustomForm
         onSubmit={_onsubmit}

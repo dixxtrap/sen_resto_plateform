@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { CompanyDto } from "../models/company.dto";
 import { WsMessage } from "../models/error.dto";
+import { BaseResponse } from "./base_response";
 
 export const coorporateApi = createApi({
-  reducerPath: "coorporateApi",
+  reducerPath: "coorporate",
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
-  tagTypes: ["coorporate"],
+  tagTypes: ["coorporate",'security'],
 
   endpoints: (builder) => ({
     createCoorporate: builder.mutation<CompanyDto| WsMessage, CompanyDto>({
@@ -14,24 +15,24 @@ export const coorporateApi = createApi({
         method: "POST",
         body: coorporate,
       }),
-      invalidatesTags: ["coorporate"],
+      invalidatesTags: ["coorporate", 'security'],
     }),
-    getCoorporate:builder.query<CompanyDto[],string>({
+    getCoorporate:builder.query<BaseResponse<CompanyDto[]>,string>({
         query:()=>"/coorporate/all",
-        providesTags:["coorporate"]
+        providesTags:["coorporate",'security']
 }),
 
-getCoorporateById: builder.query<Partial<CompanyDto> ,string>({
-        query: (id)=>`/coorporate_restaurant/byId/${id}`,
-        providesTags:["coorporate"]
+getCoorporateById: builder.query<BaseResponse<Partial<CompanyDto>> ,string>({
+        query: (id)=>`/coorporate/byId/${id}`,
+        providesTags:["coorporate",'security']
 }),
-updateCoorporateById: builder.mutation<CompanyDto, { id: number, coorporate: CompanyDto }>({
+updateCoorporateById: builder.mutation<BaseResponse<CompanyDto>, { id: number, coorporate: CompanyDto }>({
         query: ({id,coorporate}) => ({
-          url: `/coorporate_restaurant/update/${id}`,
+          url: `/coorporate/update/${id}`,
           method: "PUT",
           body: coorporate,
         }),
-        invalidatesTags: ["coorporate"],
+        invalidatesTags: ["coorporate",'security'],
       }),
   }),
 });

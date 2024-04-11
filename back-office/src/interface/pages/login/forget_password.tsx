@@ -10,7 +10,7 @@ import { useGetUserRoleQuery } from "../../../core/features/auth.slice";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 export const ForgetPassword = () => {
-  const [login, { isError, isSuccess, isLoading, reset, data }] =
+  const [login, { isError, isSuccess, isLoading, reset, error }] =
     useResetPasswordByEmailMutation();
   const { refetch } = useGetUserRoleQuery("");
   const {
@@ -50,7 +50,7 @@ export const ForgetPassword = () => {
             isSuccess={isSuccess}
             onFinish={() => reset()}
             isLoading={isLoading}
-            
+            error={error}
             onSubmit={handleSubmit(_onSubmit)}
             successPath="/dashboard"
           >

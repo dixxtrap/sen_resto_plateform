@@ -16,10 +16,10 @@ export const RestaurantPlatManagement = () => {
   const { id } = useParams();
   const {data:restaurant}=useGetRestaurantByIdQuery(parseInt(id!))
   const {
-    data: productManagements = [],
+    data: productManagements ,
     isLoading,isSuccess
   } = useGetRestaurantProductByIdQuery(parseInt(id!));
-  const {data : allProduct=[]}=useGetRestaurantProductQuery("")
+  const {data : allProduct}=useGetRestaurantProductQuery("")
 
 console.log("",productManagements)
 //   const handleClick=(item: ProductManagementDto)=>{
@@ -35,23 +35,26 @@ console.log("",productManagements)
     <div className="flex flex-col ">
       <div className="flex justify-between items-end ">
       <Title
-          title={`${restaurant?.name}`}
+          title={`${restaurant?.data.name}`}
           subTitle={`Lister des produits ${""}`}
         />
-       <RestaurantAddProduct productManagement={allProduct.filter(item=>!productManagements.some(item2=>item.productId===item2.productId))}/>
+       <RestaurantAddProduct productManagement={allProduct?.data.filter(item=>!productManagements?.data.some(item2=>item.productId===item2.productId))!}/>
        
         </div>
       <TablePagination th={["nom", "description",""]} trs={<>
-      { !isLoading&& isSuccess &&productManagements.map(productManagement=><tr>
+      { !isLoading&& isSuccess &&productManagements.data.map(productManagement=><tr>
         <td>
           <div className="flex items-center gap-2 font-bold">
-            <img src={`/v1/${productManagement.product?.file![0].path}`} className="h-10 rounded-md" alt="" />
-       <span>   {productManagement.product?.name }</span>
+            <img src={`${productManagement?.product?.file![0].path}`} className="h-10 rounded-md" alt="" />
+       <span>   {productManagement?.product?.name }</span>
           </div>
          
         </td>
         <td>
-          {productManagement.product?.description}
+        <span className="w- overflow-hidden   text- ">
+          
+        {productManagement?.product?.description?.slice(0,20)}
+        </span>
         </td>
       </tr>)}
       </>} />

@@ -18,10 +18,10 @@ export const RoleList = () => {
        
      <div className="grow"></div>
       <div className=" flex gap-2 justify-between  ">
-      <Link to={`/security/role/permission/${role.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60">Permissions</Link>
+      <Link to={`/security/role/permission/${role.id}`} className="last_td accept">Permissions</Link>
 
-      <Link to={`/security/role/details/${role.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60">details</Link>
-      <Link to={`/security/role/create/${role.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60"> + role</Link>
+      <Link to={`/security/role/details/${role.id}`} className="last_td reject">Details</Link>
+      <Link to={`/security/role/create/${role.id}`} className="last_td default">Ajouter Sous Role</Link>
       </div>
     </div>
      </div>
@@ -34,10 +34,10 @@ export const RoleList = () => {
     <div className="flex justify-between items-center">
     <Title title={`Roles : ${roles?.name}`} subTitle="liste des roles et de leurs sous roles"/>
 
-      <div className="flex gap-2">      <Link to={`/security/role/permission/${roles?.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60">Permissions</Link>
+      <div className="flex gap-2">      <Link to={`/security/role/permission/${roles?.id}`} className="last_td accept">Permissions</Link>
 
-<Link to={`/security/role/details/${roles?.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60">details</Link>
-<Link to={`/security/role/create/${roles?.id}`} className="inline-flex justify-center text-xs font-semibold text-center rounded-full  px-5 py-1 min-w-[80px]  my-1 ring-2 ring-inset text-secondary-50 bg-secondary-500 dark:bg-secondary-800/90 ring-secondary-100/60"> + role</Link></div>
+<Link to={`/security/role/details/${roles?.id}`} className="last_td reject">Details</Link>
+<Link to={`/security/role/create/${roles?.id}`} className="last_td default">Ajouter  Sous Role</Link></div>
     </div>
 
      <div className="dark:bg-gray-500/5 bg-gray-100/5 ">

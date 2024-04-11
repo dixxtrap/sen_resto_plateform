@@ -1,14 +1,20 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { bdName } from 'src/mysql.config';
 import { ModuleEntity, ModuleEntityDto } from 'src/typeorm/module.entity';
+import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
 @Injectable()
-export class ModuleService {
+export class ModuleService implements OnModuleInit {
   constructor(
     @InjectRepository(ModuleEntity) private repos: Repository<ModuleEntity>,
   ) {}
+  onModuleInit() {
+    this.initialTable();
+  }
+
   async initialTable() {
     const root =
       (await this.repos.findOne({ where: { name: 'root' } })) ??
@@ -23,16 +29,20 @@ export class ModuleService {
         console.log(value);
         return Promise.all(
           value.map(async (item) => {
-            return this.repos
-              .save(
-                this.repos.create({
-                  name: item.Tables_in_sen_resto,
-                  parentId: root.id,
-                }),
-              )
-              .then((module) => {
-                return module;
-              });
+            const exits = await this.repos.exist({
+              where: { name: item[`Tables_in_${bdName}`] },
+            });
+            if (!exits)
+              return this.repos
+                .save(
+                  this.repos.create({
+                    name: item[`Tables_in_${bdName}`],
+                    parentId: root.id,
+                  }),
+                )
+                .then((module) => {
+                  return module;
+                });
           }),
         );
       },
@@ -57,7 +67,12 @@ export class ModuleService {
       });
   }
   getAll() {
-    return this.repos.find();
+    return this.repos
+      .find()
+      .then(
+        (result) =>
+          BaseResponse.success(result) as BaseResponse<ModuleEntity[]>,
+      );
   }
   get() {
     return this.repos.manager

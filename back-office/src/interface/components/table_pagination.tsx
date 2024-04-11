@@ -8,6 +8,10 @@ import {
 } from "@heroicons/react/24/outline";
 import  { FC, Fragment, ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
+import { Title } from "./title";
+import { Alert } from "./alert_success";
+import { getWsMessage } from "../../core/features/error_transformer";
+import { TextConstant } from "../../core/data/textConstant";
 type TablePaginationProps = {
   th?: string[];
   trs?: ReactNode;
@@ -16,6 +20,10 @@ type TablePaginationProps = {
   createPath?: string;
   isPaginated?: boolean;
   createTitle?:string,
+  isLoading?:boolean,
+  isError?:boolean,
+  isSuccess?:boolean,
+  error?:unknow,
 
 };
 export const TablePagination: FC<TablePaginationProps> = ({
@@ -26,17 +34,19 @@ export const TablePagination: FC<TablePaginationProps> = ({
   createTitle,
   createPath,
   isPaginated = true,
+  isError, 
+  isSuccess=true,
+  isLoading,
+  error
 }) => {
   const [selected, setSelected] = useState(10);
   return (
+    <>
+    {isError && <span >{getWsMessage(error)}</span>}
+    {isLoading && <Alert type="loading" message={TextConstant.loading}/>}
     <div className="px-1 sm:px-2 lg:px-2   py-4 rounded-md" >
-      <div className="sm:flex sm:items-start justify-between items-start">
-        <div className="sm:flex flex-col items-start justify-start grow">
-          <h1 className="text-base font-semibold leading-6 title">
-            {title}
-          </h1>
-          <p className="mt-2 text-sm ">{subtitle}</p>
-        </div>
+      <div className="flex  justify-between items-center">
+     {title && <Title title={title} subTitle={subtitle}/>}
         {createPath && (
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
             <Link
@@ -77,24 +87,24 @@ export const TablePagination: FC<TablePaginationProps> = ({
         </div>
         <input type="date" className="input max-w-xs" />
       </div>}
-      <div className="mt-4 flow-root">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <table className="min-w-full divide-y dark:divide-kdarkdivider">
-              <thead>
-                <tr>
+      <div className="mt-8 flow-root">
+        <div className="">
+          <div className="inline-block min-w-full p-2 bgInput border darkDivider rounded-md align-middle">
+            <table className="min-w-full border-separate border-spacing-0">
+              <thead className="sticky top-16 z-50  backdrop-blur-xl backdrop-filter ">
+                <tr className="">
                   {th?.map((s, i) => (
                     <th
                       scope="col"
                       key={i + "_th"}
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-kdarktext sm:pl-0"
+                      className="border-b darkDivider py-3.5  pr-3 text-left text-sm font-semibold  "
                     >
                       {s}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 darkDivider text-xs ">{trs}</tbody>
+              <tbody className=" text-xs ">{isSuccess&& trs}</tbody>
             </table>
           </div>
         </div>
@@ -191,5 +201,6 @@ export const TablePagination: FC<TablePaginationProps> = ({
         </div>}
       </div>
     </div>
+    </>
   );
 };

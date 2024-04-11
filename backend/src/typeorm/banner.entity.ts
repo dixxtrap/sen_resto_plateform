@@ -12,7 +12,7 @@ export class Banner {
   id: number;
   @Column()
   title: string;
-  @Column()
+  @Column({ nullable: true, default: null })
   audioUrl: string;
   @Column()
   imageUrl: string;
@@ -20,13 +20,13 @@ export class Banner {
   type: BannerType;
   @Column()
   description: string;
-  @Column('date')
+  @Column('datetime')
   start: Date;
-  @Column('date')
+  @Column('datetime')
   end: Date;
   @Column(() => CreationDetails)
   details: CreationDetails;
-  @Column()
+  @Column({ default: true })
   isActive: boolean;
 }
 export class BannerDto {

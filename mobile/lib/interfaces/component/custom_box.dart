@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../utils/constant.dart';
+import 'package:mobile/utils/helper/constant.dart';
+
 
 class CustomBox extends StatelessWidget {
   CustomBox({Key? key, required this.child, this.margin, this.padding})

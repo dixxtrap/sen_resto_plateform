@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
-import 'package:mobile/cores/model/plat.dart';
 import 'package:mobile/cores/model/restaurant.dart';
 import 'package:mobile/interfaces/component/custom_box.dart';
 import 'package:mobile/interfaces/component/resto_item.dart';
 import 'package:mobile/interfaces/component/title.dart';
 import 'package:mobile/interfaces/pages/page_with_bottom_navigator_bar.dart';
-import 'package:mobile/interfaces/pages/plat_details.dart';
-import 'package:mobile/interfaces/utils/constant.dart';
+import 'package:mobile/interfaces/pages/product_details.dart';
+import 'package:mobile/utils/color_ressources.dart';
+import 'package:mobile/utils/helper/constant.dart';
 
 class RestoDetails extends StatefulWidget {
   const RestoDetails({super.key, required this.resto});
@@ -17,7 +16,6 @@ class RestoDetails extends StatefulWidget {
 }
 
 class _RestoDetailsState extends State<RestoDetails> {
-  List<Plat>? plates;
   @override
   void initState() {
     super.initState();
@@ -27,7 +25,6 @@ class _RestoDetailsState extends State<RestoDetails> {
   }
 
   _getPlate() async {
-    plates = await Gateway.getPlatByRestaurant(widget.resto.id!);
     setState(() {});
   }
 
@@ -47,7 +44,7 @@ class _RestoDetailsState extends State<RestoDetails> {
                 padding: EdgeInsets.all(kpadding / 2),
                 width: double.maxFinite,
                 decoration: BoxDecoration(
-                    color: kprimary,
+                    color:  ColorResources.PRIMARY_APP_COLOR,
                     borderRadius: BorderRadius.circular(kpadding / 4)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -133,18 +130,18 @@ class _RestoDetailsState extends State<RestoDetails> {
                       )
                     ],
                   )),
-              if (plates != null)
-                Table(
-                  children: List.generate(
-                      (plates!.length / 2).toInt(),
-                      (i) => TableRow(
-                          children: List.generate(
-                              2,
-                              (j) => TableCell(
-                                  child: plates!.length > i * 2 + j
-                                      ? PlateItem2(plate: plates![i * 2 + j])
-                                      : SizedBox())))),
-                )
+              // if (plates != null)
+              //   Table(
+              //     children: List.generate(
+              //         (plates!.length / 2).toInt(),
+              //         (i) => TableRow(
+              //             children: List.generate(
+              //                 2,
+              //                 (j) => TableCell(
+              //                     child: plates!.length > i * 2 + j
+              //                         ? PlateItem2(plate: plates![i * 2 + j])
+              //                         : SizedBox())))),
+              //   )
             ],
           ),
         ),
@@ -152,60 +149,60 @@ class _RestoDetailsState extends State<RestoDetails> {
   }
 }
 
-class PlateItem2 extends StatelessWidget {
-  const PlateItem2({
-    super.key,
-    required this.plate,
-  });
+// class PlateItem2 extends StatelessWidget {
+//   const PlateItem2({
+//     super.key,
+//     required this.plate,
+//   });
 
-  final Plat plate;
+ 
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(kpadding / 2),
-      child: InkWell(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => PlateDetails(
-              plate: plate,
-            ),
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ImageItem(
-                id: plate.file![0].photoId!,
-                width: double.maxFinite,
-                height: getWidth(context) / 2.5),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Wrap(
-                spacing: 10,
-                children: [
-                  Text(
-                    plate.name!,
-                    style: getTextTheme(context)
-                        .bodySmall!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 20,
-                    child: Text(
-                      "${plate.price}F",
-                      style: getTextTheme(context).bodySmall!.copyWith(
-                          color: kprimary, fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: EdgeInsets.all(kpadding / 2),
+//       child: InkWell(
+//         onTap: () => Navigator.push(
+//           context,
+//           MaterialPageRoute<void>(
+//             builder: (BuildContext context) => PlateDetails(
+//               plate: plate,
+//             ),
+//           ),
+//         ),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             ImageItem(
+//                 id: plate.file![0].photoId!,
+//                 width: double.maxFinite,
+//                 height: getWidth(context) / 2.5),
+//             Padding(
+//               padding: const EdgeInsets.all(8.0),
+//               child: Wrap(
+//                 spacing: 10,
+//                 children: [
+//                   Text(
+//                     plate.name!,
+//                     style: getTextTheme(context)
+//                         .bodySmall!
+//                         .copyWith(fontWeight: FontWeight.bold),
+//                   ),
+//                   SizedBox(
+//                     height: 20,
+//                     child: Text(
+//                       "${plate.price}F",
+//                       style: getTextTheme(context).bodySmall!.copyWith(
+//                           color: kprimary, fontWeight: FontWeight.bold),
+//                     ),
+//                   )
+//                 ],
+//               ),
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

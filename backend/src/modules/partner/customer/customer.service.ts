@@ -1,5 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer, CustomerDto } from 'src/typeorm/customer.entity';
+import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
@@ -37,7 +38,7 @@ export class CustomerService {
     return this.repos
       .find()
       .then((result) => {
-        if (result) return result;
+        if (result) return BaseResponse.success(result);
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
       .catch((err) => {
@@ -50,8 +51,8 @@ export class CustomerService {
     return this.repos
       .findOne({ where: { id: Equal(id) } })
       .then((result) => {
-        if (result) return result;
-        else throw new WsMessage(HttpExceptionCode.FAILLURE);
+        if (result) return BaseResponse.success(result);
+        else;
       })
       .catch((err) => {
         console.log(err);
@@ -64,7 +65,10 @@ export class CustomerService {
       .findOne({ where: { phone: Equal(phone) } })
       .then((result) => {
         if (result) return result;
-        else throw new WsMessage(HttpExceptionCode.FAILLURE);
+        else
+          return this.repos
+            .save(this.repos.create({ phone }))
+            .then((result2) => result2);
       })
       .catch((err) => {
         console.log(err);
@@ -83,7 +87,7 @@ export class CustomerService {
           .then((value) => {
             return value;
           })
-          .catch((error) => {});
+          .catch((_error) => {});
       })
       .then((value) => {
         return value;

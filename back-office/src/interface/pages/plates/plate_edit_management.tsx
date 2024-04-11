@@ -33,7 +33,7 @@ const [listProductManagement, setListProductManagement]= useState<ProductManagem
 //       setValue("tag", old.tag);
 //       console.log(watch("tagIds"));
 
-setListProductManagement(old.productManagementDay!);
+setListProductManagement(old.data.productManagementDay!);
     }
   }, [old]);
 const handleManagement=(item:ProductManagementDayDto)=>{
@@ -53,9 +53,10 @@ const onsubmit=handleSubmit(()=>{
         <div className="flex flex-col divide-y darkDivider">
           <Title title="Plat" subTitle="Modifier le plat" />
           <div className="flex flex-wrap gap-2 py-2">
-            {old?.product?.file?.map((e) => (
+            {old?.data.product?.file?.map((e) => (
               <img
-                src={`/v1/${e.path}`}
+              title="daxxion"
+                src={`${e.path}`}
                 className="h-14 w-14 md:h-28 md:w-28 rounded-md"
       
               />
@@ -71,19 +72,19 @@ const onsubmit=handleSubmit(()=>{
           >
             <div className="flex justify-between">
               <span>Nom du plat</span>
-              <span className="detailsValue">{old.product?.name}</span>
+              <span className="detailsValue">{old.data.product?.name}</span>
             </div>
             <div className="flex justify-between">
               <span>Prix</span>
-              <span className="detailsValue">{old.product?.price}</span>
+              <span className="detailsValue">{old.data.product?.price}</span>
             </div>
             <div className="flex justify-between">
               <span>Reduction</span>
-              <span className="detailsValue">{old.product?.reduction}</span>
+              <span className="detailsValue">{old.data.product?.reduction}</span>
             </div>
             <div className="flex  items-start text-start flex-col ">
               <span className="detailsValue">Description</span>
-              <span className="">{old.product?.description}</span>
+              <span className="subtitle">{old.data.product?.description}</span>
             </div>
          <div className="flex gap-4">
             

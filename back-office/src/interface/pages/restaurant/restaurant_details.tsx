@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Img } from "../../components/image_updatable";
 import { Title } from "../../components/title";
 import { Alert } from "../../components/alert_success";
+import { DetailItem } from "../../components/details_item";
+
 
 export const RestaurantDetails = () => {
   const { id } = useParams();
@@ -19,8 +21,8 @@ export const RestaurantDetails = () => {
           <div className="flex gap-x-3 shrink-0 items-center">
           <Img
           className="h-8  md:h-20"
-          hasImg={restaurant!.imagePath!==null}
-          imgPath={restaurant?.imagePath}
+          hasImg={restaurant!.data.imagePath!==null}
+          imgPath={restaurant?.data.imagePath}
         />
             {/* <Img
               className="h-8  md:h-20 rounded-md"
@@ -36,34 +38,20 @@ export const RestaurantDetails = () => {
               }
             /> */}
             <Title
-              title={restaurant?.name}
-              subTitle={`les details du restaurant ${restaurant?.name}`}
+              title={restaurant?.data.name}
+              subTitle={`les details du restaurant ${restaurant?.data.name}`}
             />
           </div>
           <div className="mt-6 border-t text-left border-gray-500/30">
             <dl className="divide-y divide-gray-500/30">
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 textSubtile">
-                  Full name
-                </dt>
-                <dd className="mt-1 text-sm leading-6 ttextSubtileValue sm:col-span-2 sm:mt-0">
-                  {restaurant?.name}
-                </dd>
-              </div>
-              <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                <dt className="text-sm font-medium leading-6 textSubtile">
-                  Email
-                </dt>
-                <dd className="mt-1 text-sm leading-6 ttextSubtileValue sm:col-span-2 sm:mt-0">
-                  {restaurant?.email}
-                </dd>
-              </div>
+              <DetailItem label='Email' value={restaurant?.data.email}/>
+              
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium leading-6 textSubtile">
                   Addresse
                 </dt>
                 <dd className="mt-1 text-sm leading-6 ttextSubtileValue sm:col-span-2 sm:mt-0">
-                  {restaurant?.address?.streetAddress}
+                  {restaurant?.data.address?.streetAddress}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -79,7 +67,7 @@ export const RestaurantDetails = () => {
                   Description
                 </dt>
                 <dd className="mt-1 text-sm leading-6 ttextSubtileValue sm:col-span-2 sm:mt-0">
-                  {restaurant?.description}
+                  {restaurant?.data.description}
                 </dd>
               </div>
               {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

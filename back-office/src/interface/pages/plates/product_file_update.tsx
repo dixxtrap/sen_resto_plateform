@@ -1,5 +1,5 @@
 import { CameraIcon } from "@heroicons/react/20/solid";
-import  { FC, useState } from "react";
+import  { FC, useEffect, useState } from "react";
 import { DialogAlert } from "../../components/alert_success";
 import { handlePreview } from "../../utils/handle_preview";
 import { useGetRefetchMutation } from "../../../core/features/product.slice";
@@ -13,7 +13,7 @@ export const ProductFileUpdate: FC<ProductCreateFileProps> = ({
   path,
   id,
 }) => {
-  const [refetch, {}] = useGetRefetchMutation();
+  const [refetch, {isLoading}] = useGetRefetchMutation();
   const [preview, setPreview] = useState<string>();
   const [file, setFile] = useState<File>();
   const [changed, setChanged] = useState<boolean>(false);
@@ -42,6 +42,10 @@ export const ProductFileUpdate: FC<ProductCreateFileProps> = ({
       });
     }
   };
+  useEffect(() => {
+    
+  }, [isLoading])
+  
   const _onDelete = () => {
 
       fetch(`/v1/product_file/delete/${id}`, { method: "DELETE" }).then(
@@ -64,13 +68,13 @@ export const ProductFileUpdate: FC<ProductCreateFileProps> = ({
   };
   return (
     <div>
-      <div onClick={() => setShowDialog(true)}>
+     { !isLoading&&!showDialog&&<div onClick={() => setShowDialog(true)}>
         {path ? (
-          <img src={`/v1/${path}`} className="h-20 w-20 rounded-md" />
+          <img title='image' src={`${path}`} className="h-20 w-20 rounded-md" />
         ) : (
           <CameraIcon className="h-20 text-primary-500 bg-secondary-400/30 ring-2 ring-inset ring-secondary-400 rounded-md p-2" />
         )}
-      </div>
+      </div>}
       {changed&& <></>}
       {showDialog && (
         <DialogAlert
@@ -89,9 +93,9 @@ export const ProductFileUpdate: FC<ProductCreateFileProps> = ({
               onChange={handleImage}
             />
             {preview ? (
-              <img src={preview} className="" />
+              <img title='image'  src={preview} className="" />
             ) : path ? (
-              <img src={`/v1/${path}`} className="" />
+              <img title='image' src={`${path}`} className="" />
             ) : (
               <CameraIcon className="w-full  text-secondary-300" />
             )}

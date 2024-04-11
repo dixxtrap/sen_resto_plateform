@@ -11,4 +11,4 @@ import { OtpConfigController } from './otp.controller';
   providers: [OtpConfigService],
   exports: [OtpConfigService],
 })
-export class OtpModule {}
+export class OtpConfigModule {}

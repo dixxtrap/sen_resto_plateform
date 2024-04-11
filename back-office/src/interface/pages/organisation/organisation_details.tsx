@@ -16,12 +16,12 @@ export const OrganisationDetails = ({}:{type?:string}) => {
       <div className="flex gap-x-3 shrink-0 items-center">
         <Img
           className="h-8  md:h-20"
-          hasImg={company!.imagePath!==null}
-          imgPath={company?.imagePath}
+          hasImg={company!.data.imagePath!==null}
+          imgPath={company?.data.imagePath}
         />
         <Title
-          title={company?.name}
-          subTitle={`les details du restaurant ${company?.name}`}
+          title={company?.data.name}
+          subTitle={`les details du restaurant ${company?.data.name}`}
         />
       </div>
       <div className="mt-6 border-t text-left border-gray-500">
@@ -31,7 +31,7 @@ export const OrganisationDetails = ({}:{type?:string}) => {
               Nom 
             </dt>
             <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0 text value">
-              {company?.name}
+              {company?.data.name}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -39,7 +39,7 @@ export const OrganisationDetails = ({}:{type?:string}) => {
               Email
             </dt>
             <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0  text value">
-              {company?.email}
+              {company?.data.email}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -47,9 +47,9 @@ export const OrganisationDetails = ({}:{type?:string}) => {
               Addresse
             </dt>
             <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0  text value">
-              {company?.address?.streetAddress}-
-              {company?.address?.city}-
-              {company?.address?.country}
+              {company?.data.address?.streetAddress}-
+              {company?.data.address?.city}-
+              {company?.data.address?.country}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -65,7 +65,7 @@ export const OrganisationDetails = ({}:{type?:string}) => {
               Description
             </dt>
             <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0 text value">
-              {company?.description}
+              {company?.data.description}
             </dd>
           </div>
           {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

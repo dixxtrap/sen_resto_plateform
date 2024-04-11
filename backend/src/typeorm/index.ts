@@ -35,6 +35,9 @@ import { Commission } from './commission.entity';
 import { OtpConfig } from './otp_config';
 import { Otp } from './otp.entity';
 import { City, Commune, Region } from './city.entity';
+import { Assignment } from './assignment.entity';
+import { Banner } from './banner.entity';
+import { ProductRaiting } from './product_rating.entity';
 
 // export
 export {
@@ -72,6 +75,7 @@ export const entities = [
   Order,
   CardAllocation,
   Card,
+  Assignment,
   CardAllocationDetails,
   Transac,
   WalletStatus,
@@ -81,5 +85,7 @@ export const entities = [
   Otp,
   Region,
   City,
-  Commune
+  Commune,
+  Banner,
+  ProductRaiting,
 ];

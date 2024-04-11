@@ -27,7 +27,7 @@ export class ProductFileController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     if (file) body.path = file?.path ?? null;
-    return this.service.create(body);
+    return this.service.create({ body, file });
   }
   @Put('update/:id')
   @UseGuards(AuthenticatedGuard)
@@ -38,15 +38,12 @@ export class ProductFileController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     if (file) body.path = file?.path ?? null;
-    return this.service.update({ body, id });
+    return this.service.update({ body, id, file });
   }
   @Delete('delete/:id')
   @UseGuards(AuthenticatedGuard)
   @UseInterceptors(fileInterCeptorImg)
-  delete(
-    @Param('id') id: number,
-  ) {
-   
+  delete(@Param('id') id: number) {
     return this.service.delete({ id });
   }
 }

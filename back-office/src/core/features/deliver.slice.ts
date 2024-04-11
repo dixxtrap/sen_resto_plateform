@@ -4,7 +4,7 @@ import { DeliverDto } from "../models/deliver.dto";
 export const deliverApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
   reducerPath: "deliver",
-  tagTypes: ["deliver"],
+  tagTypes: ["deliver",'security'],
   endpoints: (builder) => ({
     updateDeliver: builder.mutation<DeliverDto,{ id:number, deliver:DeliverDto}>({
       query: ({id, deliver}) => ({
@@ -12,15 +12,15 @@ export const deliverApi = createApi({
         method: "PUT",
         body: deliver,
       }),
-      invalidatesTags: ["deliver"],
+      invalidatesTags: ["deliver",'security'],
     }),
     deliver: builder.query<DeliverDto[], string>({
       query: () => "deliver/all",
-      providesTags: ["deliver"],
+      providesTags: ["deliver",'security'],
     }),
     deliverById: builder.query<DeliverDto, number>({
       query: (id) => `deliver/${id}`,
-      providesTags: ["deliver"],
+      providesTags: ["deliver",'security'],
     }),
   }),
 });

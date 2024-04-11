@@ -11,13 +11,37 @@ import { CustomerService } from '../partner/customer/customer.service';
 import { SecurityModule } from '../security/security.module';
 import { WsCustomerController } from './customer/customer.controller';
 import { WsCustomerService } from './customer/customer.service';
+import { Customer } from 'src/typeorm/customer.entity';
+import { MailerModule } from '../mailer/mailer.module';
+import { OtpModule } from '../otp/otp.module';
+import { Banner } from 'src/typeorm/banner.entity';
+import { WsBannerController } from './banner/banner.controller';
+import { WsBannerService } from './banner/banner.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Product, CompanyRestaurantBase, Partner]),
-    SecurityModule
+    TypeOrmModule.forFeature([
+      Product,
+      Customer,
+      CompanyRestaurantBase,
+      Partner,
+      Banner,
+    ]),
+    SecurityModule,
+    MailerModule,
+    OtpModule,
   ],
-  controllers: [WsCompanyController, WsProductController, WsCustomerController],
-  providers: [WsProductService, WsCompanyService, WsCustomerService],
+  controllers: [
+    WsCompanyController,
+    WsProductController,
+    WsCustomerController,
+    WsBannerController,
+  ],
+  providers: [
+    WsProductService,
+    WsCompanyService,
+    WsCustomerService,
+    WsBannerService,
+  ],
 })
 export class WebServiceModule {}

@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { useGetUserRoleQuery } from "../../../core/features/auth.slice";
 import { useEffect } from "react";
 export const DefinePassword = () => {
-  const [login, { isError, isSuccess, isLoading, reset, data }] =
+  const [login, { isError, isSuccess, isLoading, reset, error }] =
   useDefinePasswordMutation();
   const { refetch } = useGetUserRoleQuery("");
   const {
@@ -56,8 +56,9 @@ export const DefinePassword = () => {
             isSuccess={isSuccess}
             onFinish={() => reset()}
             isLoading={isLoading}
+            error={error}
             onSubmit={handleSubmit(_onSubmit)}
-            successPath="/login"
+            successPath="/"
           >
             <Input
               label="Mot de passe"

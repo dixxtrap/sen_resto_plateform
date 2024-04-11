@@ -38,7 +38,7 @@ export const RestaurantEdit = () => {
     if(file){
       const formData = new FormData();
       formData.append("file", file!);
-await fetch(`/v1/restaurant/update/${oldRestaurant?.id}`,{
+await fetch(`/v1/restaurant/update/${oldRestaurant?.data?.id}`,{
   method: "PUT",
   body: formData,
 })
@@ -47,18 +47,18 @@ await fetch(`/v1/restaurant/update/${oldRestaurant?.id}`,{
   });
   useEffect(() => {
     if (oldRestaurant) {
-      setValue("name", oldRestaurant.name!);
-      setValue("phone", oldRestaurant.phone!);
-      setValue("shortname", oldRestaurant.shortname!);
-      setValue("email", oldRestaurant.email!);
-      setValue("description", oldRestaurant.description!);
-      setValue("address.country", oldRestaurant.address?.country!);
-      setValue("address.city", oldRestaurant.address?.city!);
-      setValue("address.streetAddress", oldRestaurant.address?.streetAddress!);
-      setValue("location.latitude", oldRestaurant.location?.latitude!);
-      setValue("location.longitude", oldRestaurant.location?.longitude!);
-      setValue("openingTime", oldRestaurant.openingTime!);
-      setValue("closingTime", oldRestaurant.closingTime!);
+      setValue("name", oldRestaurant.data.name!);
+      setValue("phone", oldRestaurant.data.phone!);
+      setValue("shortname", oldRestaurant.data.shortname!);
+      setValue("email", oldRestaurant.data.email!);
+      setValue("description", oldRestaurant.data.description!);
+      setValue("address.country", oldRestaurant.data.address?.country!);
+      setValue("address.city", oldRestaurant.data.address?.city!);
+      setValue("address.streetAddress", oldRestaurant.data.address?.streetAddress!);
+      setValue("location.latitude", oldRestaurant.data.location?.latitude!);
+      setValue("location.longitude", oldRestaurant.data.location?.longitude!);
+      setValue("openingTime", oldRestaurant.data.openingTime!);
+      setValue("closingTime", oldRestaurant.data.closingTime!);
     }
   }, [oldRestaurant, setValue]);
 
@@ -67,14 +67,14 @@ await fetch(`/v1/restaurant/update/${oldRestaurant?.id}`,{
       <Alert type="loading" title="Recuperation" isOpen={isRestaurantLoading} />
       <Title
         title="Restaurant"
-        subTitle={"Modifier le restaurant" + " " + oldRestaurant?.name}
+        subTitle={"Modifier le restaurant" + " " + oldRestaurant?.data?.name}
       />
       {changed&& <></>}
     <div>
        <ProtecterPage permissions={[{code:"update_restaurant_profile", type:"update"}]}>
        <label htmlFor="file">
         <input type="file" hidden id="file" name="file" onChange={handleImage}/>
-        {preview?<img  alt='' src={preview} className="h-20 rounded-md"/>:oldRestaurant?.imagePath?<img  alt='' src={`/v1/${oldRestaurant?.imagePath}`} className="h-20 rounded-md"/>:<CameraIcon className="h-20 text-secondary-500 "/>}
+        {preview?<img  alt='' src={preview} className="h-20 rounded-md"/>:oldRestaurant?.data?.imagePath?<img  alt='' src={`${oldRestaurant.data?.imagePath}`} className="h-20 rounded-md"/>:<CameraIcon className="h-20 text-secondary-500 "/>}
         </label>
        </ProtecterPage>
      </div>

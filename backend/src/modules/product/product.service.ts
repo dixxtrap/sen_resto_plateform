@@ -8,6 +8,7 @@ import { ProductManagementService } from './product_management.service';
 import { WeekdayService } from './weekday.service';
 import { ProductCategory } from 'src/typeorm/product_category.entity';
 import { ProductManagementDayDto } from 'src/typeorm/product_management.entity';
+import { BaseResponse } from 'src/typeorm/response_base';
 
 @Injectable()
 export class ProductService {
@@ -86,7 +87,7 @@ export class ProductService {
       .findOne({ where: { id }, relations: { category: true, file: true } })
       .then((value) => {
         console.log(value);
-        if (value) return value;
+        if (value) return BaseResponse.success(value);
         throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
       .catch((err) => {
@@ -100,7 +101,9 @@ export class ProductService {
     return this.productManagementService.getAll({ by });
   }
   getProductMamangementById({ id, by }: { by: UserDto; id: number }) {
-    return this.productManagementService.getById({ by, id });
+    return this.productManagementService
+      .getById({ by, id })
+      .then((result) => BaseResponse.success(result));
   }
   addMultiProductManagement({
     body,

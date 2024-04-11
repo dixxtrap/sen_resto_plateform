@@ -1,18 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { api } from "./api";
+import { baseApi } from "./api";
 import { securityApi } from "./security.slice";
 import themeReducer from "../theme/theme.slice"
+import { productApi } from "./product.slice";
 const store = configureStore({
   reducer: {
-    [api.reducerPath]: api.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
+    [productApi.reducerPath]: productApi.reducer,
    [securityApi.reducerPath]:securityApi.reducer,
    theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
-      api.middleware,
+      baseApi.middleware,
       securityApi.middleware,
-    
+      productApi.middleware
     ),
 });
 

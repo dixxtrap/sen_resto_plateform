@@ -26,7 +26,7 @@ export const Img = ({
                 <img
                   className={className+ " rounded-md"}
                   alt="djig"
-                  src={`/v1/${imgPath}`}
+                  src={`${imgPath}`}
                 />
               ) : (
                 <span >

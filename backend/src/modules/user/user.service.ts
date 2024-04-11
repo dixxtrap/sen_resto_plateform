@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { logInfo } from 'src/app_log';
@@ -9,6 +9,7 @@ import { CryptoService } from 'src/utils/crypto_service';
 import { HttpExceptionCode } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 import { MailerService } from '../mailer/mailer.service';
+import { BaseResponse } from 'src/typeorm/response_base';
 @Injectable()
 export class UserService {
   constructor(
@@ -56,31 +57,31 @@ export class UserService {
           { id, firstname, lastname, email },
           {
             secret: process.env.CRYPTO_KEY,
-            expiresIn: 24 * 60 * 15 + 's',
+            expiresIn: 24 * 60 * 60 + 's',
           },
         );
         this.mailer.sendActivationMail({
-          to: 'dakspro2007@gmail.com',
+          to: email,
           token,
         });
         if (value) return HttpExceptionCode.SUCCEEDED;
         throw new Error('Not created');
       })
-      .catch((err) => {
-        console.log(err);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 400);
-      });
+      .catch(WsCatch);
   }
-  get() {
+  get({ by }: { by: UserDto }) {
     return this.repos
-      .find({ relations: { role: true } })
-      .then((value) => value)
+      .find({
+        relations: { role: true },
+        where: { parent: [{ parentId: by.parentId }, { id: by.parentId }] },
+      })
+      .then((value) => BaseResponse.success(value))
       .catch(WsCatch);
   }
   getById({ id }: { id: number }) {
     return this.repos
       .findOne({ where: { id }, relations: { role: true } })
-      .then((value) => value)
+      .then((value) => BaseResponse.success(value))
       .catch(WsCatch);
   }
   update({ id, by, body }: { id: number; by: UserDto; body: UserDto }) {
@@ -88,7 +89,7 @@ export class UserService {
     return this.repos
       .update({ id: Equal(id) }, { ...body })
       .then((value) => {
-        if (value.affected > 1) return HttpExceptionCode.SUCCEEDED;
+        if (value.affected >= 1) return HttpExceptionCode.SUCCEEDED;
       })
       .catch(WsCatch);
   }

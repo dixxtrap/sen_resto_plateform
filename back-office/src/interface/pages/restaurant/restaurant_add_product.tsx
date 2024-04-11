@@ -46,7 +46,7 @@ const _onsubmit=()=>{
 
          <button key={`role_permission_add_${item.id}`}   onClick={()=>handleListProduct(item.product!)} className=" flex justify-start gap-2  p-2 border-b border-gray-500/40 hover:bg-gray-500/20">
      <div className='h-10  w-10 ' >
-     { item.product?.file?.length!>0&& <img src={`/v1/${item.product?.file![0].path}`} className='h-full'/>}
+     { item.product?.file?.length!>0&& <img title='daxx' src={`${item.product?.file![0].path}`} className='h-full'/>}
      </div>
           <div className="flex grow   flex-col">
           <div className="flex ">

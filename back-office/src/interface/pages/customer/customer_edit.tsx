@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import { CustomForm } from "../../components/custom_form";
 import {
-  useCustomerByIdQuery,
+  useGetCustomerByIdQuery,
   useUpdateCustomerMutation,
 } from "../../../core/features/customer.slice";
 import { useParams } from "react-router-dom";
@@ -10,58 +10,57 @@ import { Input } from "../../components/input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Customer, customerSchema } from "../../../core/models/customer";
+import { TextConstant } from "../../../core/data/textConstant";
 
 export const CustomerEdit = () => {
-  const id = parseInt(useParams().id!);
+  const {id} = useParams();
   const { data: oldCustomer, isLoading: isCustomerLoading } =
-    useCustomerByIdQuery(id);
-  const [update, { isLoading, isSuccess, isError }] =
+  useGetCustomerByIdQuery(id!);
+  const [update, { isLoading, isSuccess, isError , error}] =
     useUpdateCustomerMutation();
   const {
     register,
     handleSubmit,setValue,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(customerSchema),
+ resolver:yupResolver(customerSchema)
   });
-  const _onSubmit = (body: Customer ) => {
+  const _onSubmit = handleSubmit((body ) => {
     console.log(body);
-    update({customer:body, id:id})
-  };
+    update({customer:body as Customer, id:id!})
+  });
   useEffect(() => {
    if(oldCustomer){
-    setValue("firstname", oldCustomer.firstname),
-    setValue("firstname", oldCustomer.firstname),
-    setValue("address.city", oldCustomer.address?.city);
-    setValue("address.country", oldCustomer.address?.country);
-    setValue("address.streetAddress", oldCustomer.address?.streetAddress);
-    setValue("phone", oldCustomer.phone);
-    setValue("location.latitude", oldCustomer.location?.latitude);
-    setValue("location.longitude", oldCustomer.location?.longitude);
-    setValue("isPhoneVeirified", oldCustomer.isPhoneVeirified);
-    setValue("isEnable", oldCustomer.isEnable);
+    setValue("firstname", oldCustomer.data.firstname),
+    setValue("lastname", oldCustomer.data.firstname),
+  
+
+    setValue("phone", oldCustomer.data.phone);
+    setValue("isPhoneVeirified", oldCustomer.data.isPhoneVeirified??false);
+    setValue("isActive", oldCustomer.data.isActive??true);
    }
   }, [oldCustomer, setValue])
   
   return (
     <>
-      {<Alert isOpen={isCustomerLoading} />}
+      
       <CustomForm
         title="Client"
-        subTitle={`Modifier le client ${oldCustomer?.firstname}`}
+        subTitle={`Modifier le client ${oldCustomer?.data?.firstname}`}
         isError={isError}
         isSuccess={isSuccess}
-        isLoading={isLoading}
-        onSubmit={handleSubmit(_onSubmit)}
+        isLoading={isLoading||isCustomerLoading}
+        error={error}
+        onSubmit={_onSubmit}
       >
-        <Input label="Prenom" error={errors.firstname?.message!}>
+        <Input label={TextConstant.firstname} error={errors.firstname?.message!}>
           <input className="input"   {...register("firstname")}/>
         </Input>
-        <Input label="Nom" error={errors.lastname?.message!}>
+        <Input label={TextConstant.lastname} error={errors.lastname?.message!}>
           <input className="input"   {...register("lastname")}/>
         </Input>
-        <Input label="Adresse" >
-          <input className="input"  {...register("address.streetAddress")}/>
+        <Input label={TextConstant.phone} error={errors.phone?.message!}>
+          <input className="input"   {...register("phone")}/>
         </Input>
         <Input label="Laltitude">
           <input className="input" {...register("location.latitude")} />

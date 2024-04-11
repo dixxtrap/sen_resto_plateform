@@ -1,12 +1,5 @@
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { InjectRepository } from '@nestjs/typeorm';
-import {
-  CompanyRestaurantBase,
-  CompanyRestaurantBaseDto,
-} from 'src/typeorm/company_restaurant.entity';
-import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
-import { Repository } from 'typeorm';
 import { PartnerService } from './partner.service';
 import { AuthenticatedGuard } from '../security/authenticated.guard';
 import { Request } from 'express';

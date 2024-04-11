@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
-import config from '../mysql.config';
+import config from './mysql.config';
 import { join } from 'path';
 import { ModuleModule } from './modules/module/module.module';
 import { CategoryModule } from './modules/category/category.module';
@@ -18,8 +18,13 @@ import { ProductModule } from './modules/product/product.module';
 import { WebServiceModule } from './modules/web_service/web_service.module';
 import { WalletStatusModule } from './modules/wallet_status/wallet_status.module';
 import { ExcelModule } from './modules/excel/excel.module';
-import { OtpModule } from './modules/otp_config/otp.module';
+import { OtpConfigModule } from './modules/otp_config/otp.module';
 import { MailerModule } from './modules/mailer/mailer.module';
+import { CardModule } from './modules/card/card.module';
+import { S3Module } from './modules/s3/s3.module';
+import { BannerModule } from './modules/banner/banner.module';
+import { OtpModule } from './modules/otp/otp.module';
+import { ProductRaitingModule } from './modules/product_rating/product_rating.module';
 @Module({
   imports: [
     SecurityModule,
@@ -48,6 +53,11 @@ import { MailerModule } from './modules/mailer/mailer.module';
     ExcelModule,
     OtpModule,
     MailerModule,
+    CardModule,
+    S3Module,
+    BannerModule,
+    OtpConfigModule,
+    ProductRaitingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

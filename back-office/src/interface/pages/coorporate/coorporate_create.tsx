@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CompanyDto, companySchema } from "../../../core/models/company.dto";
 
 export const CoorporateCreate = () => {
-    const [createCompany, { isError, isSuccess, isLoading, reset }] =
+    const [createCompany, { isError, isSuccess, isLoading, reset , error}] =
     useCreateCoorporateMutation();
   const {
     register,
@@ -22,7 +22,7 @@ export const CoorporateCreate = () => {
   return (
     <div className="flex flex-col divide-y gap-y-2 ">
       
-      <CustomForm  title="Compagnie" isLoading={isLoading} isError={isError} isSuccess={isSuccess}  subTitle="Creer une nouvelle compagnie" onSubmit={handleSubmit(_onsubmit)} onFinish={reset} >
+      <CustomForm  title="Compagnie" error={error} isLoading={isLoading} isError={isError} isSuccess={isSuccess}  subTitle="Creer une nouvelle compagnie" onSubmit={handleSubmit(_onsubmit)} onFinish={reset} >
         <Input
           label="Nom"
           error={errors.name?.message}

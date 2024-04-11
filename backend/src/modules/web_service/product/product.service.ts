@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
 import { Product } from 'src/typeorm/product.entity';
+import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
-import { Repository } from 'typeorm';
+import { Repository, Not, Equal } from 'typeorm';
 
 @Injectable()
 export class WsProductService {
@@ -10,11 +12,42 @@ export class WsProductService {
   getAll() {
     return this.repos
       .find({
+        relations: { file: true, parent: true },
+        select: { parent: { shortname: true, id: true } },
+      })
+      .then((result) => {
+        return BaseResponse.success(result.sort(() => Math.random() - 0.5));
+      })
+      .catch((err) => {
+        console.log(err);
+        throw new WsMessage(HttpExceptionCode.FAILLURE);
+      });
+  }
+  getAllByCompanyId({ id }: { id: number }) {
+    return this.repos
+      .find({
+        where: { parentId: id },
+        relations: { file: true, parent: true },
+        select: { parent: { shortname: true, id: true } },
+      })
+      .then((result) => {
+        return BaseResponse.success(result.sort(() => Math.random() - 0.5));
+      })
+      .catch((err) => {
+        console.log(err);
+        throw new WsMessage(HttpExceptionCode.FAILLURE);
+      });
+  }
+
+  getDiscounted() {
+    return this.repos
+      .find({
+        where: { reduction: Not(Equal(0)) },
         relations: { category: true, file: true, parent: true },
         select: { parent: { shortname: true, id: true } },
       })
       .then((result) => {
-        return result.sort(() => Math.random() - 0.5);
+        return BaseResponse.success(result);
       })
       .catch((err) => {
         console.log(err);

@@ -1,38 +1,40 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { CompanyDto } from "../models/company.dto";
 import { WsMessage } from "../models/error.dto";
+import { BaseResponse } from "./base_response";
+import { axiosBaseQuery } from "./axios_base_query";
 
 export const restaurantApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
+  baseQuery: axiosBaseQuery({ baseUrl: "/v1" }),
   reducerPath: "restaurant",
-  tagTypes: ["restaurant"],
+  tagTypes: ["restaurant","security"],
   endpoints: (builder) => ({
-    getResttaurant: builder.query<CompanyDto[], string>({
-      query: () => `restaurant/all`,
-      providesTags: ["restaurant"],
+    getResttaurant: builder.query<BaseResponse<CompanyDto[]>, string>({
+      query: () => ({url:"/restaurant/all"}),
+      providesTags: ["restaurant","security"],
     }),
-    createRestaurant: builder.mutation<CompanyDto, CompanyDto>({
+    createRestaurant: builder.mutation<BaseResponse<CompanyDto>, CompanyDto>({
       query: (restaurant) => ({
-        url: "restaurant/create",
+        url: "/restaurant/create",
         method: "POST",
         body: restaurant,
       }),
       invalidatesTags: ["restaurant"],
     }),
     updateRestaurantById: builder.mutation<
-      CompanyDto | WsMessage,
+    BaseResponse<CompanyDto> | WsMessage,
       { id: number; restos: CompanyDto }
     >({
       query: ({ id, restos }) => ({
-        url: `restaurant/update/${id}`,
+        url: `/restaurant/update/${id}`,
         method: "PUT",
         body: restos,
       }),
       invalidatesTags: ["restaurant"],
     }),
-    getRestaurantById: builder.query<CompanyDto, number>({
-      query: (id) => `restaurant/byId/${id}`,
-      providesTags: ["restaurant"],
+    getRestaurantById: builder.query<BaseResponse<CompanyDto>, number>({
+      query: (id) => ({url:`restaurant/byId/${id}`}),
+      providesTags: ["restaurant","security"],
     }),
   }),
 });
