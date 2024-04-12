@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist', // Output directory
-    assetsDir: 'src/assets', // Assets directory
+    assetsDir: 'assets', // Assets directory
     // Other build options
   },
   server: {
