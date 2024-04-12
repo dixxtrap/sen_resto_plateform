@@ -9,5 +9,11 @@ server:{
   proxy:{
     "/v1":"http://localhost:3000/"
   }
+},
+preview:{
+  port:3001,
+  proxy:{
+    "/v1":"http://localhost:3000/"
+  }
 }
 })
