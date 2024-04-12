@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from 'src/typeorm/product.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
-import { Repository, Not, Equal } from 'typeorm';
+import { Repository, Not, Equal, Like, In } from 'typeorm';
 
 @Injectable()
 export class WsProductService {
@@ -12,6 +12,26 @@ export class WsProductService {
   getAll() {
     return this.repos
       .find({
+        relations: { file: true, parent: true },
+        select: { parent: { shortname: true, id: true } },
+      })
+      .then((result) => {
+        return BaseResponse.success(result.sort(() => Math.random() - 0.5));
+      })
+      .catch((err) => {
+        console.log(err);
+        throw new WsMessage(HttpExceptionCode.FAILLURE);
+      });
+  }
+  search({ name, categoryIds }: { name: string; categoryIds: number[] }) {
+    return this.repos
+      .find({
+        where: {
+          name: Like(name),
+          ...(categoryIds && categoryIds.length > 0
+            ? { category: In(categoryIds) }
+            : {}),
+        },
         relations: { file: true, parent: true },
         select: { parent: { shortname: true, id: true } },
       })

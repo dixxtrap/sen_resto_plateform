@@ -19,17 +19,17 @@ class CustomAppBar extends StatelessWidget
     return AppBar(
       toolbarOpacity: 0.57,
       automaticallyImplyLeading: true,
-      title: Text('Sen Resto', style: AppStyle.poppinsBold()),
+      title: Text('Sen Rest\' 0', style: AppStyle.poppinsBold(fontSize: 20)),
       actions: [
         IconButton(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
             style: IconButton.styleFrom(
-              minimumSize: Size(0, 0),
-              fixedSize: Size(35, 35),
-              padding: EdgeInsets.all(0),
+              minimumSize: const Size(0, 0),
+              fixedSize: const Size(35, 35),
+              padding: const EdgeInsets.all(0),
             ),
             onPressed: () {},
-            icon: SvgIcon(
+            icon: const SvgIcon(
               AssetSvg.bell,
               color: ColorResources.PRIMARY_APP_COLOR,
               size: 25,

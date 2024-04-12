@@ -17,23 +17,27 @@ export const restaurantApi = createApi({
       query: (restaurant) => ({
         url: "/restaurant/create",
         method: "POST",
-        body: restaurant,
+        data: restaurant,
       }),
       invalidatesTags: ["restaurant"],
     }),
     updateRestaurantById: builder.mutation<
-    BaseResponse<CompanyDto> | WsMessage,
-      { id: number; restos: CompanyDto }
+ WsMessage,
+      { id: number; restos: CompanyDto , file:File}
     >({
-      query: ({ id, restos }) => ({
+      query: ({ id, restos , file}) => ({
         url: `/restaurant/update/${id}`,
         method: "PUT",
-        body: restos,
+        data: {...restos, file:file},
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }),
+      
       invalidatesTags: ["restaurant"],
     }),
     getRestaurantById: builder.query<BaseResponse<CompanyDto>, number>({
-      query: (id) => ({url:`restaurant/byId/${id}`}),
+      query: (id) => ({url:`/restaurant/byId/${id}`}),
       providesTags: ["restaurant","security"],
     }),
   }),

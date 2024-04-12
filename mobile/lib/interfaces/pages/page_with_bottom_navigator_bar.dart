@@ -24,7 +24,7 @@ class PageWithBottomNavigator extends StatefulWidget {
 class _PageWithBottomNavigatorState extends State<PageWithBottomNavigator> {
   static final List<String> _tabsRoute = <String>[
     "home",
-    "search",
+    "products",
     "bag",
     "restaurant",
     "profile",
@@ -35,7 +35,7 @@ class _PageWithBottomNavigatorState extends State<PageWithBottomNavigator> {
         getTheme(context).colorScheme.onBackground.withOpacity(.7);
     return Scaffold(
       appBar: const CustomAppBar(),
-     
+
       backgroundColor: ColorResources.WHITE_COLOR,
       bottomNavigationBar: _tabsRoute.length > widget.currentIndex
           ? BottomNavigationBar(

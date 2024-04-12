@@ -19,12 +19,15 @@ export const paymentTypeApi = createApi({
     }),
     updatePaymentType: builder.mutation<
       PaymentType,
-      { paymentType: PaymentType; id: string }
+      { paymentType: PaymentType; id: string, file:File }
     >({
-      query: ({ id, paymentType }) => ({
+      query: ({ id, paymentType, file }) => ({
         url: `payment_type/by_id/${id}`,
         method: "PUT",
-        body: paymentType,
+        data: {...paymentType, file},
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }),
       invalidatesTags: ["payment_type"],
     }),
@@ -32,7 +35,7 @@ export const paymentTypeApi = createApi({
       query: (paymentType) => ({
         url: "payment_type/create",
         method: "POST",
-        body: paymentType,
+        data: paymentType,
       }),
       invalidatesTags: ["payment_type"],
     }),

@@ -14,7 +14,7 @@ class PartnerHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(kSpaceM),
+      padding: const EdgeInsets.all(kSpaceM),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -28,19 +28,22 @@ class PartnerHeaderWidget extends StatelessWidget {
               style: AppStyle.poppinsRegular(
                   fontSize: 10, color: ColorResources.BLACK47_COLOR),
             ),
-            SizedBox(
+            const SizedBox(
               height: kSpaceM * 2,
             ),
             Row(
               children: [
                 SizedBox(
                   width: 120,
-                  child: CachedImage(
-                      identifier: '$APP_NAME-$COMPANY_TYPE-${partner.id}',
-                      placeHolder: AssetImg.plat,
-                      url: partner.imagePath!),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(kSpaceS),
+                    child: CachedImage(
+                        identifier: '$APP_NAME-$COMPANY_TYPE-${partner.id}',
+                        placeHolder: AssetImg.plat,
+                        url: partner.imagePath!),
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: kSpaceM,
                 ),
                 Expanded(
@@ -53,14 +56,14 @@ class PartnerHeaderWidget extends StatelessWidget {
                 ))
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: kSpaceM * 2,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                       horizontal: kSpaceM, vertical: kSpaceS),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(kSpaceS),
@@ -68,11 +71,11 @@ class PartnerHeaderWidget extends StatelessWidget {
                           ColorResources.SECONDARY_APP_COLOR.withOpacity(.4)),
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         CupertinoIcons.phone_fill,
                         size: kSpaceS * 2,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: kSpaceS,
                       ),
                       Text(
@@ -84,18 +87,18 @@ class PartnerHeaderWidget extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                       horizontal: kSpaceM, vertical: kSpaceS),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(kSpaceS),
                       color: ColorResources.PRIMARY_APP_COLOR.withOpacity(.4)),
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         CupertinoIcons.calendar,
                         size: kSpaceS * 2,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: kSpaceS,
                       ),
                       Text(

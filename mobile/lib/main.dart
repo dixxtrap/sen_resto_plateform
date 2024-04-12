@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/application.dart';
 import 'package:mobile/interfaces/pages/login.dart';
-import 'package:mobile/interfaces/pages/search.dart';
+import 'package:mobile/interfaces/pages/product/product_screen.dart';
 import 'package:mobile/interfaces/pages/set_otp/set_opt.dart';
 import 'package:mobile/interfaces/pages/set_phone/set_phone.dart';
 import 'package:mobile/interfaces/pages/splash_screen/splash_screen.dart';
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       routes: {
         "home": (context) => Home(),
-        "search": (context) => const Search(),
+        "products": (context) => const ProductsScreen(),
         "restaurant": (context) => Restaurant(),
         "bag": (context) => const Bag(),
         "login": (context) => Login(),

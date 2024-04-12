@@ -1,11 +1,10 @@
 // s3.service.ts
 
-import { Injectable, StreamableFile } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
-import { S3 } from 'aws-sdk';
+import * as S3 from 'aws-sdk/clients/s3';
 import { promises as fsPromises, createReadStream } from 'fs';
 import { ConfigService } from '@nestjs/config';
-import { Readable } from 'stream';
 
 @Injectable()
 export class S3Service {
@@ -28,7 +27,10 @@ export class S3Service {
       .deleteObject(
         {
           Bucket: this.config.getOrThrow('S3_BUCKET_NAME'),
-          Key: this.config.getOrThrow('S3_PUBLIC') + '/' + name,
+          Key:
+            this.config.getOrThrow('S3_PUBLIC') + path.split('/dev').length > 0
+              ? this.config.getOrThrow('S3_BUCKET_DIR')
+              : '' + '/' + name,
         },
         () => {},
       )
@@ -44,7 +46,6 @@ export class S3Service {
   }
   async createFileToS3AndDeleteLocal({
     file,
-    name,
   }: {
     file: Express.Multer.File;
     name?: string;
@@ -52,7 +53,12 @@ export class S3Service {
     const uploadResult = await this.s3
       .upload({
         Bucket: this.config.getOrThrow('S3_BUCKET_NAME'),
-        Key: this.config.getOrThrow('S3_PUBLIC') + '/' + file.filename,
+        Key:
+          this.config.getOrThrow('S3_PUBLIC') +
+          '/' +
+          this.config.getOrThrow('S3_BUCKET_DIR') +
+          '/' +
+          file.filename,
         // Body: file.stream,
         Body: createReadStream(file.path),
 

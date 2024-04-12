@@ -48,15 +48,8 @@ export const PaymentTypeEdit = () => {
   });
   const _onsubmit = handleSubmit(async (body: PaymentType) => {
     console.log(body);
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file!);
-      await fetch(`/v1/payment_type/by_id/${id}`, {
-        method: "PUT",
-        body: formData,
-      });
-    }
-    update({ id: id, paymentType: body });
+   
+    update({ id: id, paymentType: body, file:file! });
   });
   useEffect(() => {
     if (old) {

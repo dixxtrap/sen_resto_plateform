@@ -8,6 +8,6 @@ export class WsCategoryController {
   constructor(private service: WsCategoryService) {}
   @Get('all')
   getAll() {
-    return this.service.getAll(); 
+    return this.service.getAll();
   }
 }

@@ -12,7 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CompanyDto, companySchema } from "../../../core/models/company.dto";
 import { Title } from "../../components/title";
 import { handlePreview } from "../../utils/handle_preview";
-import { CameraIcon } from "@heroicons/react/24/outline";
+import { CameraIcon } from "@heroicons/react/24/solid";
 import { ProtecterPage } from "../../components/protecter_page";
 
 export const RestaurantEdit = () => {
@@ -34,19 +34,13 @@ export const RestaurantEdit = () => {
   const { data: oldRestaurant, isLoading: isRestaurantLoading } =
     useGetRestaurantByIdQuery(parseInt(id!));
   const _onSubmit =handleSubmit(async  (body: CompanyDto) => {
-    console.log(body);
-    if(file){
-      const formData = new FormData();
-      formData.append("file", file!);
-await fetch(`/v1/restaurant/update/${oldRestaurant?.data?.id}`,{
-  method: "PUT",
-  body: formData,
-})
-    }
-    updateCompany({ id: parseInt(id!), restos: body! });
+    console.log(body)
+    console.log(file)
+    updateCompany({ id: parseInt(id!), restos: body!, file:file! });
   });
   useEffect(() => {
     if (oldRestaurant) {
+      setPreview(oldRestaurant.data.imagePath!);
       setValue("name", oldRestaurant.data.name!);
       setValue("phone", oldRestaurant.data.phone!);
       setValue("shortname", oldRestaurant.data.shortname!);
@@ -74,10 +68,11 @@ await fetch(`/v1/restaurant/update/${oldRestaurant?.data?.id}`,{
        <ProtecterPage permissions={[{code:"update_restaurant_profile", type:"update"}]}>
        <label htmlFor="file">
         <input type="file" hidden id="file" name="file" onChange={handleImage}/>
-        {preview?<img  alt='' src={preview} className="h-20 rounded-md"/>:oldRestaurant?.data?.imagePath?<img  alt='' src={`${oldRestaurant.data?.imagePath}`} className="h-20 rounded-md"/>:<CameraIcon className="h-20 text-secondary-500 "/>}
+        {preview?<img  alt='' src={preview} className="h-20 rounded-md"/>:<CameraIcon className="h-20 text-secondary-500 "/>}
         </label>
        </ProtecterPage>
      </div>
+     daxx
       <CustomForm
         isError={isError}
         onFinish={() => reset()}

@@ -35,6 +35,7 @@ console.log(changed)
   });
   useEffect(() => {
     if (old) {
+      setPreview(old.data.imagePath);
       setValue("name", old.data.name!);
       setValue("shortname", old.data.shortname!);
       setValue("email", old.data.email!);
@@ -50,16 +51,8 @@ console.log(changed)
   }, [old, setValue]);
 
   const _onSubmit = handleSubmit(async (data: CompanyDto) => {
-    console.log(data);
-    if(file){
-      const formData = new FormData();
-      formData.append("file", file!);
-await fetch(`/v1/coorporate/update/${old?.data?.id}`,{
-  method: "PUT",
-  body: formData,
-})
-    }
-    update({ id: parseInt(id), coorporate: data });
+   
+    update({ id: parseInt(id), coorporate: data, file:file! });
   });
   return !isOldSuccess ? (
     <Alert isOpen={isOldLoading} type="loading" title="Recuperation" />
@@ -69,9 +62,9 @@ await fetch(`/v1/coorporate/update/${old?.data?.id}`,{
         <Title title="Compagnie" />
           <div>
         <label htmlFor="file">
-        {old.data.imagePath}
+     
         <input type="file" hidden id="file" name="file" onChange={handleImage} onLoad={handleImage} onLoadedData={handleImage}  />
-        {preview?<img title="daxx" src={preview} className="h-20"/>:old.imagePath?<img title="daxx" src={`${old.imagePath}`} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
+        {preview?<img title="daxx" src={preview} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
         </label>
      </div>
 

@@ -14,7 +14,7 @@ export const companyApi = createApi({
       query: (company: CompanyDto) => ({
         url: "/company_restaurant/create",
         method: "POST",
-        body: company,
+        data: company,
       }),
       invalidatesTags: ["company"],
     }),
@@ -30,12 +30,16 @@ getCompanyById: builder.query<BaseResponse<CompanyDto> ,string>({
         query: (id)=>({url:`/company_restaurant/byId/${id}`}),
         providesTags:["company",'security']
 }),
-updateCompanyById: builder.mutation<BaseResponse<CompanyDto>, { id: number, company: CompanyDto }>({
-        query: ({id,company}) => ({
+updateCompanyById: builder.mutation<BaseResponse<CompanyDto>, { id: number, company: CompanyDto, file:File }>({
+        query: ({id,company, file}) => ({
           url: `/company_restaurant/update/${id}`,
           method: "PUT",
-          body: company,
+          data: {...company, file},
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }),
+        
         invalidatesTags: ["company"],
       }),
   }),

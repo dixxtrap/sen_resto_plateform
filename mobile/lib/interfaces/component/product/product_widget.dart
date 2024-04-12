@@ -1,4 +1,4 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/cores/model/product.dart';
 import 'package:mobile/utils/color_ressources.dart';
@@ -86,6 +86,52 @@ class ProductWidget extends StatelessWidget {
                 )),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ProductWidgetV2 extends StatelessWidget {
+  const ProductWidgetV2({super.key, required this.product});
+  final Product product;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(kSpaceS),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(kSpaceS),
+          color: ColorResources.WHITE_SMOKE),
+      child: ListTile(
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(kSpaceS),
+          child: CachedImage(
+              identifier: '$APP_NAME-product-${product.id}',
+              placeHolder: AssetImg.menu,
+              url: product.file![0].path as String),
+        ),
+        contentPadding: const EdgeInsets.only(
+            left: kSpaceS / 2, right: kSpaceS / 2, bottom: kSpaceS),
+        isThreeLine: false,
+        minVerticalPadding: 0,
+        horizontalTitleGap: kSpaceS,
+        titleAlignment: ListTileTitleAlignment.bottom,
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text("${product.price} FCFA"),
+            Icon(CupertinoIcons.chevron_right_circle_fill)
+          ],
+        ),
+        dense: true,
+        title: Text(
+          product.name!,
+          style: AppStyle.poppinsBold(),
+        ),
+        subtitle: Text(
+          product.description!,
+          maxLines: 1,
+        ),
       ),
     );
   }

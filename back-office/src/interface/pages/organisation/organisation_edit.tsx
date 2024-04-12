@@ -37,7 +37,7 @@ console.log(changed)
     resolver: yupResolver(companySchema),
   });
   useEffect(() => {
-    if (old) {
+    if (old) {setPreview(old.data.imagePath)
       setValue("name", old?.data.name!);
       setValue("shortname", old?.data.shortname!);
       setValue("email", old?.data.email!);
@@ -54,15 +54,7 @@ console.log(changed)
 
   const _onSubmit = handleSubmit(async (data: CompanyDto) => {
     console.log(data);
-    if(file){
-      const formData = new FormData();
-      formData.append("file", file!);
-await fetch(`/v1/company_restaurant/update/${old?.data?.id}`,{
-  method: "PUT",
-  body: formData,
-})
-    }
-    update({ id: parseInt(id), company: data });
+    update({ id: parseInt(id), company: data, file:file! });
   });
   return !isOldSuccess ? (
     <Alert isOpen={isOldLoading} type="loading" title="Recuperation" />
@@ -73,7 +65,8 @@ await fetch(`/v1/company_restaurant/update/${old?.data?.id}`,{
           <div>
         <label htmlFor="file">
         <input type="file" hidden id="file" name="file" onChange={handleImage}/>
-        {preview?<img  title="img" src={preview} className="h-20"/>:old?.data.imagePath?<img  title="img"  src={`${old?.data.imagePath}`} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
+        {preview?<img  title="img" src={preview} className="h-20"/>
+         :<CameraIcon className="h-20 text-secondary-500"/>}
         </label>
      </div>
 

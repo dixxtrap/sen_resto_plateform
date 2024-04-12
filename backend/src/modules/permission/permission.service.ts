@@ -37,7 +37,7 @@ export class PermissionService implements OnModuleInit {
                   code: `${action}_${e.name}`,
                 },
               })
-              .then((exist) => { 
+              .then((exist) => {
                 if (!exist)
                   return this.repos.save({
                     action: action,
