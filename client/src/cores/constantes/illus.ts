@@ -1,3 +1,3 @@
 export class Illus{
-    static  deliver:string='src/assets/illustration/deliver.png'
+    static  deliver:string='assets/illustration/deliver.png'
 }
