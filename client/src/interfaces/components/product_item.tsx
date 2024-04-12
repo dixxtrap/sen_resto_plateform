@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ProductDto } from "../../cores/models/product";
 import { PlusIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 
-import { constant } from "../../utils/constant";
+
 import { PlateItemPoppup } from "./order_poppup";
 
 

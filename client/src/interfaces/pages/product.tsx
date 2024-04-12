@@ -9,7 +9,7 @@ import { DialogAlert } from "../components/dialog";
 import { LoginForm } from "../components/protectted_action";
 
 export const PlateList = () => {
-  const {data:profile, isSuccess:isLogin}=useProfileQuery("")
+  const { isSuccess:isLogin}=useProfileQuery("")
   const[showLogin, setShowLogin]=useState(false)
 const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
   return (

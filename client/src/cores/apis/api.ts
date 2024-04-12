@@ -1,6 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {  ProductDto } from "../models/product";
-import { IPagination } from "../models/pagination.model";
 import { CompanyDto } from "../models/company.dto";
 import { BaseResponse } from "../models/base_response";
 

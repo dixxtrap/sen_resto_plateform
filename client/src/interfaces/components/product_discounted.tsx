@@ -1,4 +1,3 @@
-import React from 'react'
 import { useGetProductDistcountedQuery } from '../../cores/apis/product.slice'
 import { initPagination } from '../../cores/models/pagination.model'
 import { Str } from '../../cores/constantes/str'

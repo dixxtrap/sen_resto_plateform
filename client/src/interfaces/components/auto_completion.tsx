@@ -3,13 +3,12 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { useGetCompanyQuery } from "../../cores/apis/api";
 import clsx from "clsx";
-import { constant } from "../../utils/constant";
 import { CompanyDto } from "../../cores/models/company.dto";
 
 export const AutoCompletionCompanies = () => {
   const [query, setQuery] = useState("");
   const [selectedCompany, setSelectedCompany] = useState(null);
-  const { data: companies, isLoading, isSuccess } = useGetCompanyQuery("");
+  const { data: companies, isSuccess } = useGetCompanyQuery("");
   console.log(companies);
   const [filteredPeople, setFilteredPeople] = useState<CompanyDto[]>([]);
   useEffect(() => {

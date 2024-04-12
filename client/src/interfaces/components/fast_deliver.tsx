@@ -1,4 +1,3 @@
-import React from 'react'
 import { Str } from '../../cores/constantes/str'
 import { ImgAssets } from '../../cores/constantes/img'
 

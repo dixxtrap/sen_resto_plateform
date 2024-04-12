@@ -1,6 +1,3 @@
-import { RestaurantDto } from "./restaurant.dto";
-
-import { FileDocument } from "./file_document";
 import { CreationDetailDto } from "./creation_details.dto";
 import { CoordonatesDto } from "./coordonates.dto";
 import { AddressDto } from "./address.dto";
