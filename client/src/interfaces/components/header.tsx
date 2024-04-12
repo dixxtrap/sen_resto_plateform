@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import logo from "../../assets/react.svg";
+import logo from "/assets/react.svg";
 import { constant, links } from "../../utils/constant";
 import { Link, NavLink } from "react-router-dom";
 import clsx from "clsx";
