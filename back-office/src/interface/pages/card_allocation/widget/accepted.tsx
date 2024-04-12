@@ -1,17 +1,16 @@
-import React, { FC, useEffect, useState } from 'react'
+import  { FC, useEffect, useState } from 'react'
 import { CardAllocationDto } from '../../../../core/models/card_allocation.dto'
 import { DialogAlert } from '../../../components/alert_success'
 import { CustomForm } from '../../../components/custom_form'
 import { Input } from '../../../components/input'
 import { useAcceptAllocationMutation } from '../../../../core/features/card_allocation.slice'
 import { useForm } from 'react-hook-form'
-import { getWsMessage } from '../../../../core/features/error_transformer'
 type AcceptesCardAllocationProps={
     cardAllocation:CardAllocationDto
 }
 export const AccepteCardAllocation :FC<AcceptesCardAllocationProps>= ({cardAllocation}) => {
   const [accept, {isLoading, isSuccess, isError, error, reset}]=useAcceptAllocationMutation();
-  const {handleSubmit, register}=useForm({
+  const {handleSubmit, }=useForm({
     defaultValues:{
       motif:''
     }
@@ -33,7 +32,7 @@ if(isSuccess==true){
     <>
       {isOpen && (
         <DialogAlert isOpen={isOpen} onClose={() => {setIsOpen(false)}}>
-          <CustomForm onFinish={reset} validationText='Accepter' successPath='#' isError={isError} isLoading={isLoading} isSuccess={isSuccess} errorMessage={getWsMessage(error??{})} onSubmit={_onSubmit} title="Accepter les Carte">
+          <CustomForm onFinish={reset} validationText='Accepter' successPath='#' isError={isError} isLoading={isLoading} isSuccess={isSuccess} error={error} onSubmit={_onSubmit} title="Accepter les Carte">
             <Input label="Label">
               <input readOnly value={cardAllocation.label} className="input"/>
             </Input>

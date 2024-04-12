@@ -5,7 +5,6 @@ import {  ProductDto, productSchema } from "../../../core/models/product";
 import { useCreateProductMutation } from "../../../core/features/product.slice";
 import { Input } from "../../components/input";
 import { Alert } from "../../components/alert_success";
-import { WsMessage } from "../../../core/models/error.dto";
 import { useGetCategoryQuery } from "../../../core/features/category.slice";
 import { CategoryDto } from "../../../core/models/category.dto";
 import { useState } from "react";
@@ -39,7 +38,7 @@ export const PlateCreate = () => {
         isError={isError}
         isSuccess={isSuccess}
         isLoading={isLoading}
-        errorMessage={(error as WsMessage | undefined)?.message ?? ""}
+        error={error}
         successMessage={data?.message ?? ""}
         onSubmit={handleSubmit(_onSubmit)}
         onFinish={reset}

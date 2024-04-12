@@ -1,8 +1,7 @@
-import React, { FC, ReactNode } from 'react'
+
 import { useGetCardAllocationDetailsQuery } from '../../../core/features/card_allocation.slice'
 import { useParams } from 'react-router-dom'
-import { Alert } from '../../components/alert_success'
-import { Title } from '../../components/title'
+
 import { DetailItem } from '../../components/details_item'
 import { Details } from '../../components/details'
 import { formatDate } from '../../utils/date_format'

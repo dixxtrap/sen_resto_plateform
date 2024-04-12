@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { useGetBannerByIdQuery, useGetBannerQuery } from "../../../core/features/banner.slice"
+import { useGetBannerByIdQuery } from "../../../core/features/banner.slice"
 import { Details } from "../../components/details"
 import { DetailItem } from "../../components/details_item"
 import { TextConstant } from "../../../core/data/textConstant"

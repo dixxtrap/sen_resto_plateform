@@ -1,4 +1,4 @@
-import { resolvePath, useParams } from "react-router-dom"
+import {  useParams } from "react-router-dom"
 import { useGetBannerByIdQuery, useUpdateBannerMutation } from "../../../core/features/banner.slice"
 import { useForm } from "react-hook-form";
 import { CustomForm } from "../../components/custom_form";
@@ -34,19 +34,19 @@ export const BannerEdit = () => {
   }, [isSuccess,data])
 
   return (
-   <CustomForm onSubmit={_onsubmit} isError={isError} isLoading={isLoading} error={error} isSuccess={isSuccess} >
-    
-    <Input label="Image">
+   <CustomForm onSubmit={_onsubmit} isError={isError} isLoading={isLoading||isOldSuccess} error={error} isSuccess={isSuccess} >
+    <Input label="Image" >
         <input
           type="file"
           hidden
           id="file"
           name="file"
+          
           onChange={(event) => handlerFile(event)}
         />
         <PreviewerImg preview={preview!} />
       </Input>
-    <Input label="label">
+    <Input label="label" error={errors.title?.message!}>;
     <input {...register('title')} className="input"/>
     </Input>
      <Input label={TextConstant.description}>

@@ -1,9 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { createApi } from "@reduxjs/toolkit/dist/query/react";
 import { BaseResponse } from "./base_response";
 import { BannerDto } from "../models/banner.dto";
 import { axiosBaseQuery } from "./axios_base_query";
 import { WsMessage } from "../models/error.dto";
-import { errorTrasform } from "./error_transformer";
 
 export const bannerApi = createApi({
   baseQuery: axiosBaseQuery({ baseUrl: "/v1" }),

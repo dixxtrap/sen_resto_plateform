@@ -4,10 +4,9 @@ import { useForm } from "react-hook-form";
 import { CustomForm } from "../../components/custom_form";
 import { SignInDto } from "../../../core/models/login.dto";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDefinePasswordMutation, useLoginMutation } from "../../../core/features/security.slice";
+import { useDefinePasswordMutation } from "../../../core/features/security.slice";
 import * as Yup from "yup";
 import { useGetUserRoleQuery } from "../../../core/features/auth.slice";
-import { useEffect } from "react";
 export const DefinePassword = () => {
   const [login, { isError, isSuccess, isLoading, reset, error }] =
   useDefinePasswordMutation();

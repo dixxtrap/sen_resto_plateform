@@ -1,6 +1,4 @@
 import { useGetCardQuery } from "../../../core/features/card.slice"
-import { CardStatusEnum } from "../../../core/models/card.dto"
-import { Alert } from "../../components/alert_success"
 import { TablePagination } from "../../components/table_pagination"
 import { formatDate } from "../../utils/date_format"
 

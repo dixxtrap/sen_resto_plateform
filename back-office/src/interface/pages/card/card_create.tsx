@@ -8,8 +8,7 @@ import { Constant } from "../../../core/data/constante";
 import { Title } from "../../components/title";
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import {saveAs} from'file-saver';
-import { Alert, DialogAlert } from "../../components/alert_success";
-import { TextConstant } from "../../../core/data/textConstant";
+
 import { TablePagination } from "../../components/table_pagination";
 import { useNavigate } from "react-router-dom";
 import { useGetCardQuery } from "../../../core/features/card.slice";
@@ -17,8 +16,8 @@ export const CardCreate = () => {
   const nav=useNavigate();
   const {refetch}=useGetCardQuery('');
         const [file, setFile]=useState<File>()
-        const [isLoading, setIsLoading]=useState<boolean>();
-        const [isError, setIsError]=useState<boolean>();
+        const [, setIsLoading]=useState<boolean>();
+        const [, setIsError]=useState<boolean>();
         const [cards, setCards]=useState<{total?:number,header:CardDto,start?:CardDto,end?:CardDto}>()
   const { register, handleSubmit,  } = useForm({
     defaultValues: {

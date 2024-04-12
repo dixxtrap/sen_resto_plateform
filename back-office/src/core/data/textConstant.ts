@@ -3,7 +3,7 @@ export class TextConstant {
 
   static Uid: string = "uid";
   static lastname : string = "Nom";
-  static name : string = "Nom";
+
   static start : string = "Debut";
   static end : string = "Fin";
   static date  : string = "Date";

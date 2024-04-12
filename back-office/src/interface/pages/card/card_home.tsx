@@ -1,5 +1,5 @@
 import { Tab } from '@headlessui/react'
-import React from 'react'
+
 import { CardList } from './card_list'
 import { CardCreate } from './card_create'
 import { CardAllocationList } from '../card_allocation/card_allocation_list'

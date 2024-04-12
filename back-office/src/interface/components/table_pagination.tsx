@@ -23,7 +23,7 @@ type TablePaginationProps = {
   isLoading?:boolean,
   isError?:boolean,
   isSuccess?:boolean,
-  error?:unknow,
+  error?:any,
 
 };
 export const TablePagination: FC<TablePaginationProps> = ({

@@ -6,20 +6,19 @@ import { useState } from "react";
 import { handlePreview } from "../../utils/handle_preview";
 import { PreviewerImg } from "../../components/previewer_img";
 import { BannerDto, BannerSchema } from "../../../core/models/banner.dto";
-import { getWsMessage } from "../../../core/features/error_transformer";
 
 export const BannerCreate = () => {
     const [create, {isLoading, isError, error, isSuccess}]=useCreateBannerMutation();
     const [preview, setPreview]=useState<string>();
     const [file, setFile]=useState<File>();
-    const [changed, setChanged]=useState<boolean>(false);
+    const [, setChanged]=useState<boolean>(false);
     const handleImage = handlePreview({
         previewImage: preview!,
         setPreviewImage: setPreview,
         setFile: setFile,
         setChanged: setChanged,
       });
-    const {handleSubmit, register, formState:{errors}}=useForm({resolver:BannerSchema})
+    const {handleSubmit, register}=useForm({resolver:BannerSchema})
     const _onsubmit=handleSubmit((data)=>{
 console.log(file);
 create({file:file!, body:data as BannerDto})

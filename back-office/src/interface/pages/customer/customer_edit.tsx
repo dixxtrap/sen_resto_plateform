@@ -5,7 +5,6 @@ import {
   useUpdateCustomerMutation,
 } from "../../../core/features/customer.slice";
 import { useParams } from "react-router-dom";
-import { Alert } from "../../components/alert_success";
 import { Input } from "../../components/input";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

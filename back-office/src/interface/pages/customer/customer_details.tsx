@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom"
 import { useGetCustomerByIdQuery } from "../../../core/features/customer.slice"
 import { Details } from "../../components/details";
 import { DetailItem } from "../../components/details_item";
-import { getWsMessage } from "../../../core/features/error_transformer";
 import { TextConstant } from "../../../core/data/textConstant";
 
 export const CustomerDetails = () => {

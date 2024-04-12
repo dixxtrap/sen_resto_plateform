@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { useGetCompanyChildrenQuery } from '../../../core/features/company.slice'
 import { CustomForm } from '../../components/custom_form'
 import { Input } from '../../components/input'

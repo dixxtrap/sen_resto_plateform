@@ -1,7 +1,6 @@
-import React, { FC, ReactNode } from 'react'
+import  { FC, ReactNode } from 'react'
 import { Alert } from './alert_success'
 import { Title } from './title'
-import { DetailItem } from './details_item'
 import { getWsMessage } from '../../core/features/error_transformer'
 type DetailsProps={
     isSuccess?:boolean,

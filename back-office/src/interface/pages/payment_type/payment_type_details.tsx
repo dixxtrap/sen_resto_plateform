@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useGetPaymentTypeByIdQuery } from "../../../core/features/payment_type.slice"
 import { Details } from "../../components/details"
-import { getWsMessage } from "../../../core/features/error_transformer"
 import { DetailItem } from "../../components/details_item"
 import { TextConstant } from "../../../core/data/textConstant"
 

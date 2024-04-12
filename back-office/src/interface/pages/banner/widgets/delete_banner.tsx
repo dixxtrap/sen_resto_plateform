@@ -1,4 +1,3 @@
-import React from 'react'
 import { CustomForm } from '../../../components/custom_form'
 import { useDeleteBannerMutation } from '../../../../core/features/banner.slice'
 import { useForm } from 'react-hook-form'

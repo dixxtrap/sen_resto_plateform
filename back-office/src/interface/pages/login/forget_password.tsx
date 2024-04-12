@@ -2,12 +2,11 @@ import { Input } from "../../components/input";
 import { Logo } from "../../components/logo";
 import { useForm } from "react-hook-form";
 import { CustomForm } from "../../components/custom_form";
-import { SignInDto } from "../../../core/models/login.dto";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useLoginMutation, useResetPasswordByEmailMutation } from "../../../core/features/security.slice";
+import {  useResetPasswordByEmailMutation } from "../../../core/features/security.slice";
 import * as Yup from "yup";
 import { useGetUserRoleQuery } from "../../../core/features/auth.slice";
-import { useEffect } from "react";
+
 import { Link } from "react-router-dom";
 export const ForgetPassword = () => {
   const [login, { isError, isSuccess, isLoading, reset, error }] =
@@ -25,7 +24,6 @@ export const ForgetPassword = () => {
   });
 
   const _onSubmit = async ({email}:{email?:string}) => {
-    console.log(data);
     await login({email:email!});
     refetch();
 

@@ -1,5 +1,4 @@
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
-import React from 'react'
 
 export const SuccessRequete = () => {
   return (
