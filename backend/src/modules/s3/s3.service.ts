@@ -27,10 +27,9 @@ export class S3Service {
       .deleteObject(
         {
           Bucket: this.config.getOrThrow('S3_BUCKET_NAME'),
-          Key:
-            this.config.getOrThrow('S3_PUBLIC') + path.split('/dev').length > 0
-              ? this.config.getOrThrow('S3_BUCKET_DIR')
-              : '' + '/' + name,
+          Key: ` ${this.config.getOrThrow(
+            'S3_PUBLIC',
+          )}/${this.config.getOrThrow('S3_BUCKET_DIR')}/${name}`,
         },
         () => {},
       )

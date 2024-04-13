@@ -42,7 +42,7 @@ class Application implements FlutterApplication {
     configureLocator();
     const String environment = String.fromEnvironment(
       'ENVIRONMENT',
-      defaultValue: Environment.DEV,
+      defaultValue: Environment.UAT,
     );
     Environment().initConfig(environment);
     // await initFirebase();

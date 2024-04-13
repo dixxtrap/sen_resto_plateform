@@ -6,8 +6,8 @@ import 'base_config.dart';
 
 class UatConfig implements BaseConfig {
   @override
-  String get baseUrl => 'https://uatmobile.niookobok.com/rest/';
-  // String get baseUrl => 'https://192.168.1.4:9090/rest/';
+  // String get baseUrl => '54.234.195.123/';
+  String get baseUrl => 'http://54.234.195.123:3000/v1/';
 
   @override
   String get imageUrl => 'http://uatadmin.niookobok.com/image?id=';
