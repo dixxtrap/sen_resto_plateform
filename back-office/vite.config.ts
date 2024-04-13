@@ -12,13 +12,13 @@ export default defineConfig({
 server:{
   port:3001,
   proxy:{
-    "/v1":"http://34.228.58.47::3000/"
+    "/v1":"http://34.228.58.47:3000"
   }
 },
 preview:{
   port:3001,
   proxy:{
-    "/v1":"http://34.228.58.47::3000/"
+    "/v1":"http://34.228.58.47:3000"
   }
 }
 })
