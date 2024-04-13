@@ -6,7 +6,7 @@ export const categoryApi=createApi({
         baseQuery:fetchBaseQuery({baseUrl:"/v1"}),
         reducerPath:"category",
         tagTypes:["category"],
-        endpoints:(builder)=>({
+        endpoints:(builder)=>({ 
                 getCategory:builder.query<BaseResponse<CategoryDto[]>, string>({
                         query:()=>"/category/all"
                         , providesTags:["category"]
