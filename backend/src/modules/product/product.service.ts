@@ -103,7 +103,7 @@ export class ProductService {
   getProductMamangementById({ id, by }: { by: UserDto; id: number }) {
     return this.productManagementService
       .getById({ by, id })
-      .then((result) => BaseResponse.success(result));
+      .then((result) => result);
   }
   addMultiProductManagement({
     body,

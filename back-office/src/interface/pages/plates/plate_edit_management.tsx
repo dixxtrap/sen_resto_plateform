@@ -26,12 +26,12 @@ const [listProductManagement, setListProductManagement]= useState<ProductManagem
 
   useEffect(() => {
     if (old) {
-//       setValue("name", old.name);
-//       setValue("description", old.description);
-//       setValue("price", old.price);
-//       setValue("reduction", old.reduction);
-//       setValue("tag", old.tag);
-//       console.log(watch("tagIds"));
+    // setValue("name", old.data.name);
+    //   setValue("description", old.data.description);
+    //   setValue("price", old.data.price);
+    //   setValue("reduction", old.data.reduction);
+    //   setValue("tag", old.data.tag);
+    //   console.log(watch("tagIds"));
 
 setListProductManagement(old.data.productManagementDay!);
     }
@@ -49,7 +49,7 @@ const onsubmit=handleSubmit(()=>{
     <>
       <Alert isOpen={isOldLoading } type="loading"  title="Recuperation"/>
       <Alert isOpen={isError} type="loading"  title="Recuperation"/>
-      {old&&
+      {old?.data&&
         <div className="flex flex-col divide-y darkDivider">
           <Title title="Plat" subTitle="Modifier le plat" />
           <div className="flex flex-wrap gap-2 py-2">

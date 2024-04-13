@@ -80,7 +80,19 @@ export class UserService {
   }
   getById({ id }: { id: number }) {
     return this.repos
-      .findOne({ where: { id }, relations: { role: true } })
+      .findOne({
+        where: { id },
+        relations: { role: true, parent: true },
+        select: {
+          id: true,
+          firstname: true,
+          lastname: true,
+          email: true,
+          phone: true,
+          address: { city: true, country: true, streetAddress:true},
+          parent: { name: true, shortname: true, imagePath: true, id: true },
+        },
+      })
       .then((value) => BaseResponse.success(value))
       .catch(WsCatch);
   }

@@ -18,6 +18,8 @@ export class TextConstant {
   static revertFees: string = "Frais Operateur";
   static notKnown:string='Non Reseigné';
   static email: string = "Email";
+  static organiwation: string = "Organisation";
+  static address: string = "Adresse";
   static label: string = "Label";
   static  description: string = "Description";
   static  logo: string = "Logo";

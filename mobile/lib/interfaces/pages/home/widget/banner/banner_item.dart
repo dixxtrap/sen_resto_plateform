@@ -25,7 +25,7 @@ class BannerItem extends StatelessWidget {
             height: 80,
             child: CachedImage(
               identifier: '$APP_NAME-banner-${banner.id!}',
-              placeHolder: AssetImg.restaurant,
+              placeHolder: AssetImg.menu,
               url: banner.imageUrl!,
               fit: BoxFit.fill,
             ),
