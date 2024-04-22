@@ -33,17 +33,19 @@ const destination = {
 // }
 export const GoogleMapComponent: React.FC = () => {
   const nav = useNavigate();
+  const key = import.meta.env.VITE_MY_VARIABLE;
   const { data: restos  } = useGetResttaurantQuery("");
   const { data: company } = useGetCompanyQuery("");
   const loadScript = useLoadScript({
-    googleMapsApiKey: "AIzaSyCyTEPGkA3I3Wr9X7xYWn7hDN6h1XLSG2k",
+    googleMapsApiKey: 'AIzaSyAkkKGmA3OpeRzTdTzy_o48pp1MlK2hiZ4',
   });
   console.log(restos)
-  console.log(company)
+  console.log(key)
   useEffect(() => {}, []);
 
   return ( 
     <>
+   
     <div className="  grid grid-cols-4 h-24  gap-4 pb-5">
     {  [
       {number:12005600, label:"Solde",  color:"card0",icon: <UserIcon className="h-full"/>},
@@ -62,12 +64,15 @@ export const GoogleMapComponent: React.FC = () => {
     </div>
     </div>)}
     </div>
-    <div className="h-fit max-h-[800px] rounded-md overflow-hidden">
+
+    <div className="h-fit max-h-[800px] text-white rounded-md overflow-hidden">
       {loadScript.isLoaded ? (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
           zoom={13.5}
+          clickableIcons={true}
+          
         >
           {/* Marker */}
           {restos?.data.map((e) => (
@@ -75,8 +80,7 @@ export const GoogleMapComponent: React.FC = () => {
               key={`key_${e.name}`}
               position={{ lat: e.location?.latitude!??17, lng: e.location?.longitude!??14 }}
               icon={ img}
-              // label={<span style={{fontWeight:"bold"}}> {e.name}</span>}
-              
+              label={e.name}
               onClick={() => {
                 nav(`/restaurant/details/${e.id}`);
               }}
@@ -87,9 +91,9 @@ export const GoogleMapComponent: React.FC = () => {
             <MarkerF
               key={`key_${e.name}`}
               position={{ lat: e.location?.latitude!??17, lng: e.location?.longitude!??14 }}
-              icon={  img}
-              // label={<span style={{fontWeight:"bold"}}> {e.name}</span>}
-              
+              icon={img}
+              label={e.name}
+            
               onClick={() => {
                 nav(`/organisation/details/${e.id}`);
               }}

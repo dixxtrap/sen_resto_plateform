@@ -4,7 +4,7 @@ import { Role } from './role.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { CreationDetails } from './details.entity';
 
-@Entity()
+@Entity( )
 export class RolePermission {
   @ManyToOne(() => Permission, {})
   permission: Permission;

@@ -42,15 +42,15 @@ class _bannerWidgetState extends State<bannerWidget> {
                 );
               },
               loading: () {
-                return Center(
-                  child: const CircularProgressIndicator(),
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               },
               data: (data) {
                 return Container(
                     height: 130,
                     decoration:
-                        BoxDecoration(color: ColorResources.WHITE_SMOKE),
+                        const BoxDecoration(color: ColorResources.WHITE_SMOKE),
                     child: PageView.builder(
                         itemCount: data.data.length,
                         itemBuilder: (context, i) => BannerItem(

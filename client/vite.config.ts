@@ -18,7 +18,7 @@ export default defineConfig({
   preview:{
     port:3002,
     proxy:{
-      "/v1":"http://34.228.58.47:3000"
+      "/v1":"https://api.test.senresto.com"
     }
 }}
 )

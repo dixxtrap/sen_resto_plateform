@@ -62,7 +62,12 @@ export class CategoryService implements OnModuleInit {
       .then((value) => BaseResponse.success(value))
       .catch(WsCatch);
   }
-
+  async getAll() {
+    return this.repos
+      .find()
+      .then((value) => BaseResponse.success(value))
+      .catch(WsCatch);
+  }
   async update({ id, body }: { id: number; body: CategoryDto }) {
     return this.repos.manager
       .getTreeRepository(Category)

@@ -54,7 +54,7 @@ export const Navigation: FC<{
                  src={`${user.parent.imagePath}`}
                 />
               )}
-                 <span className=" text-xl font-bold text-white ">
+                 <span className=" text-xl font-bold text-white/0 ">
                 {user?.parent?.parent?.id === 1
                   ? user.parent?.name :user?.parent?.id === 1? user?.parent?.name
                   : user?.parent?.parent?.name}
@@ -66,7 +66,7 @@ export const Navigation: FC<{
                   >
                     <span className="sr-only">Close sidebar</span>
                     <XMarkIcon
-                      className="h-6 w-6 text-white"
+                      className="h-6 w-6 text-white/0"
                       aria-hidden="true"
                     />
                   </button>
@@ -110,7 +110,7 @@ export const Navigation: FC<{
 export const ShortNav = () => {
   const { data: user,  } = useProfileQuery("");
   return (
-    <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-20 lg:overflow-y-auto  border-r darkDivider  bg-slate-950 dark:bg-black/90 lg:pb-4">
+    <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-20 lg:overflow-y-auto  border-r darkDivider  bg-slate-100 dark:bg-black/90 lg:pb-4">
       <div className="flex h-16 shrink-0  p-2  items-center sticky top-0 justify-center">
       {user?.parent && user.parent.imagePath && (
                 <img
@@ -133,8 +133,8 @@ export const ShortNav = () => {
                 className={({ isActive }) =>
                   clsx(
                     isActive
-                    ? "bg-gradient-to-tr   from-slate-800 to-rose-500/20 text-rose-500"
-                    : "text-white/90 hover:text-white hover:bg-gray-700/50",
+                    ? "bg-gradient-to-tr   dark:from-slate-800  from-slate-400  to-rose-500/20 text-rose-500"
+                    : "dark:text-white/90 text-black/70 hover:text-white hover:bg-gray-700/50",
                     "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                   )
                 }

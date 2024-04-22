@@ -12,7 +12,9 @@ darkMode:"class",
           text:"#cccbca",
           TitleText:"#f0efee",
           // kdarkbg:"#1c2128",#23272f
-          kdarkbg:"#23272f"
+          // kdarkbg:"#23272f"
+          kdarkbg:"#0d1117"
+          
         },
      
         primary: {

@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Req,
   Res,
   UseGuards,
@@ -16,6 +17,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { CustomerDto } from 'src/typeorm/customer.entity';
 import { OtpVerificationDto } from 'src/typeorm/otp.entity';
+import { SetProfileDto } from 'src/typeorm/customer.entity';
 
 @Controller('ws/customer')
 @ApiTags('ws/customer')
@@ -36,6 +38,12 @@ export class WsCustomerController {
   profile(@Req() req: Request) {
     const by = req.user as CustomerDto;
     return this.service.getById(by.id);
+  }
+  @Put('profile')
+  @UseGuards(LocalAuthGuard)
+  setProfile(@Req() req: Request, @Body() body: SetProfileDto) {
+    const by = req.user as CustomerDto;
+    return this.service.setProfile({ by, body });
   }
   @Get('send_otp/:phone')
   sendOtp(@Param('phone') phone: string) {

@@ -79,6 +79,7 @@ export class UserDto {
   @ApiProperty({ type: () => CreationDetailsDto })
   details: CreationDetailsDto;
 }
+
 export class CreateUserDto extends UserDto {
   @ApiProperty()
   password: string;

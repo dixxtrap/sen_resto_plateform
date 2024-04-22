@@ -5,12 +5,13 @@ import { MailerService } from 'src/modules/mailer/mailer.service';
 import { OtpService } from 'src/modules/otp/otp.service';
 import { LoginDto } from 'src/modules/security/security.dto';
 import { SecurityService } from 'src/modules/security/security.service';
-import { Customer } from 'src/typeorm/customer.entity';
+import { Customer, CustomerDto } from 'src/typeorm/customer.entity';
 import { OtpVerificationDto } from 'src/typeorm/otp.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
+import { SetProfileDto } from 'src/typeorm/customer.entity';
 import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
-import { Repository } from 'typeorm';
+import { Repository } from 'src/typeorm/repository';
 @Injectable()
 export class WsCustomerService {
   constructor(
@@ -25,6 +26,16 @@ export class WsCustomerService {
       code: body.password,
     });
   }
+  async setProfile({ body, by }: { body: SetProfileDto; by: CustomerDto }) {
+    return this.repos
+      .update({ id: by.id }, body)
+      .then((result) => {
+        if (result.affected > 0)
+          throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+        throw new WsMessage(HttpExceptionCode.NOT_FOUND);
+      })
+      .catch(WsCatch);
+  }
   async sendOtp({ phone }: { phone: string }) {
     return this.otpService
       .generateOtp({ to: phone, configId: 1, channel: 'mobile' })
@@ -32,7 +43,7 @@ export class WsCustomerService {
         return this.mailService
           .sentMessage({
             to: phone,
-            message: `your code is ${otp.code}`,
+            message: `your  otp code  is ${otp.code}`,
           })
           .then((restult) => {
             if (restult.status == 'sent')

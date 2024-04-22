@@ -17,6 +17,9 @@ import { OtpModule } from '../otp/otp.module';
 import { Banner } from 'src/typeorm/banner.entity';
 import { WsBannerController } from './banner/banner.controller';
 import { WsBannerService } from './banner/banner.service';
+import { WsCategoryController } from './category/category.controller';
+import { WsCategoryService } from './category/category.service';
+import { Category } from 'src/typeorm/category.entity';
 
 @Module({
   imports: [
@@ -26,6 +29,7 @@ import { WsBannerService } from './banner/banner.service';
       CompanyRestaurantBase,
       Partner,
       Banner,
+      Category,
     ]),
     SecurityModule,
     MailerModule,
@@ -36,12 +40,14 @@ import { WsBannerService } from './banner/banner.service';
     WsProductController,
     WsCustomerController,
     WsBannerController,
+    WsCategoryController
   ],
   providers: [
     WsProductService,
     WsCompanyService,
     WsCustomerService,
     WsBannerService,
+    WsCategoryService
   ],
 })
 export class WebServiceModule {}

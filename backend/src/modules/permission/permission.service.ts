@@ -75,7 +75,7 @@ export class PermissionService implements OnModuleInit {
   }
   getAll() {
     return this.repos
-      .find({ relations: { module: true } })
+      .find({ relations: { module: true }, order: { module: { name: 1 } } })
       .then((result) => {
         return result;
       })

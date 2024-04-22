@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/cores/model/banner_data.dart';
 import 'package:mobile/utils/color_ressources.dart';
@@ -30,7 +29,7 @@ class BannerItem extends StatelessWidget {
               fit: BoxFit.fill,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: kSpaceS,
           ),
           Expanded(
@@ -52,7 +51,7 @@ class BannerItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: kSpaceS,
                 ),
                 Text(

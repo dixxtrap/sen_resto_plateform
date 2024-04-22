@@ -17,12 +17,14 @@ export const CoorporateList = () => {
          createPath={`${path}/${PathRouter.create}`}
          title={TextConstant.coorporateStr} subtitle='List des oraganisations  et status ' trs={
             <>
+            
              {companies?.data?.map((company) => (
                     <tr key={company.id!+company.name!}>
                       <td className="">
                         <div className="flex items-center">
                           <div className="  flex-shrink-0  w-16 mr-2 content-center flex  justify-start ">
                             {/* <ImgPreview name={`Prile_${company?.profile?.id}`} className='bg-blue-400 h-11' img={company.profile!}/> */}
+                            {companies.imagePath}
                             {  company.imagePath? <img src={`${company.imagePath!}`} className='h-8 rounded-md' alt=""  />:<BuildingOfficeIcon className='h-8 p-1 text-primary-500 bg-secondary-500/20 ring-2  ring-secondary-500/80 rounded-md'/>}
                           </div>
                             <div className="font-medium ">{company.name}</div>
