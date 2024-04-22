@@ -1,15 +1,18 @@
-import {  useGetProductQuery } from "../../cores/apis/product.slice";
-import { initPagination } from "../../cores/models/pagination.model";
-import { PlateItem } from "../components/product_item";
-import { AutoCompletionCompanies } from "../components/auto_completion";
-import { Input } from "../components/input";
-import { useProfileQuery } from "../../cores/apis/security.slice";
+import {  useGetProductQuery } from "../../../cores/apis/product.slice";
+import { initPagination } from "../../../cores/models/pagination.model";
+import { PlateItem } from "../../components/product_item";
+import { AutoCompletionCompanies } from "../../components/auto_completion";
+import { Input } from "../../components/input";
+import { useProfileQuery } from "../../../cores/apis/security.slice";
 import { useState } from "react";
-import { DialogAlert } from "../components/dialog";
-import { LoginForm } from "../components/protectted_action";
+import { DialogAlert } from "../../components/dialog";
+import { LoginForm } from "../../components/login_form";
+import { CategoryPageniationWidget } from "./widget/category_pagination_widget";
 
 export const PlateList = () => {
   const { isSuccess:isLogin}=useProfileQuery("")
+  const [category, setCategory]=useState<number>(0)
+  const [company, setCompany]=useState<number>(0)
   const[showLogin, setShowLogin]=useState(false)
 const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
   return (
@@ -19,13 +22,13 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
         <LoginForm action={()=>setShowLogin(false)}/></DialogAlert>}
       {products && isSuccess && (
         <div className="bg-white">
-          <div className="mx-auto max-w-2xl px-2  sm:px-6 lg:max-w-6xl xl:max-w-7xl   lg:px-8">
+          <div className="mx-auto  px-2      ">
             <h2 className="sr-only">Products</h2>
             <div className="flex items-center w-full justify-between py-3">
               <Input className="max-w-xs">
               <input className="input bg-white"  placeholder="Rechercher"  />
               </Input>
-              <AutoCompletionCompanies />
+              <AutoCompletionCompanies current={company} onclick={(id)=>setCompany(id)} />
             </div>
             {/* <div className="grid grid-cols-8 gap-5 gap-x-3 flex-wrap py-2 pb-8">
               {tags.slice(0, 8).map((tag) => (
@@ -40,9 +43,12 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
                 </div>
               ))}
             </div> */}
-            <div onClick={()=>!isLogin&&setShowLogin(true)} className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4  xl:gap-x-6">
+            <CategoryPageniationWidget current={category} onclick={(id)=>setCategory(id)} ></CategoryPageniationWidget>
+            <div  className="grid grid-cols-1  gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 md:px-10  lg:px-16 lg:gap-x-10">
               {products!.data.map((product) => (
+                <div onClick={()=>!isLogin&&setShowLogin(true)}>
                 <PlateItem product={product} isLogin={isLogin} />
+                </div>
               ))}
             </div>
           </div>

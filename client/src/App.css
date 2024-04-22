@@ -25,6 +25,9 @@
 .btn.primary {
   @apply bg-red-600  text-white hover:bg-red-700 focus:ring-red-500;
 }
-.btn.outline {
-  @apply ring-1 ring-slate-400/60 focus:ring-slate-500  border-none ;
+.btn.outlined {
+  @apply ring-1 ring-slate-400/10 font-bold focus:ring-slate-500/30      ;
+}
+.btn.secondary{
+  @apply ring-1 ring-secondary-400/60 bg-secondary-400 text-white font-bold text-xl focus:ring-secondary-500  border-none ;
 }

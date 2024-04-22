@@ -1,5 +1,7 @@
 export class WsMessage {
   message?: string;
   code?: string;
-  status?: number;
+  status?: boolean;
+  sessionExpired?:boolean;
+
 }

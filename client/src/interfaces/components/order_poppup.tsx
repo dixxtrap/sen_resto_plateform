@@ -1,11 +1,12 @@
 import { useState, Fragment } from "react";
 import { ProductDto } from "../../cores/models/product";
-import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { RadioGroup, Transition, Dialog } from "@headlessui/react";
 import clsx from "clsx";
-import { constant } from "../../utils/constant";
 import React from "react";
 import { Input } from "./input";
+import { MinusSmallIcon } from "@heroicons/react/24/solid";
+import { PlusSmallIcon } from "@heroicons/react/24/solid";
+import XMarkIcon from "@heroicons/react/24/solid/esm/XMarkIcon";
 
 export const PlateItemPoppup = ({
   open,
@@ -77,7 +78,7 @@ export const PlateItemPoppup = ({
                   <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:items-center lg:gap-x-8">
                     <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg  sm:col-span-4 lg:col-span-5">
                       <img
-                        src={`/v1/${selectedSize}`}
+                        src={`${selectedSize}`}
                         alt={product.name!}
                         className="object-cover object-center rounded-md"
                       />
@@ -107,7 +108,7 @@ export const PlateItemPoppup = ({
                                   >
                                     <RadioGroup.Label as="span">
                                       <img
-                                        src={`${constant.filePath}/${file.path}`}
+                                        src={`${file.path}`}
                                       />
                                     </RadioGroup.Label>
                                   </RadioGroup.Option>
@@ -166,24 +167,24 @@ export const PlateItemPoppup = ({
                           </div>
                           <div className="flex items-stretch gap-5 ">
                             <button
-                              className="btn outline"
+                              className="btn primary text-6xl font-semibold line-clamp-4  leading-4"
                               onClick={() => handleQuantity("decrement")}
                             >
-                              <MinusIcon className="h-5 font-bold" />
+                            <MinusSmallIcon className="w-10"/>
                             </button>
-                            <button className="btn outline">
-                              <span className="text-lg font-bold">
+                            <button className="btn primary">
+                              <span className="text-2xl   leading-4">
                                 {" "}
                                 {quantity}{" "}
                               </span>
                             </button>
                             <button
-                              className="btn outline"
+                              className="btn primary text-4xl font-semibold line-clamp-4  leading-4"
                               onClick={() => handleQuantity("increment")}
                             >
-                              <PlusIcon className="h-5" />
+                             <PlusSmallIcon className="w-10"/>
                             </button>
-                            <button type="submit" className="btn primary grow">
+                            <button type="submit" className="btn secondary grow">
                             Ajouter au panier
                             </button>
                           </div>

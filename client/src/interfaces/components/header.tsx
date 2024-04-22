@@ -54,7 +54,7 @@ export const Header = () => {
               </div> */}
 
               <div className=" lg:ml-4 lg:flex lg:items-center">
-                <div className="hidden lg:flex">{profile?.firstname} </div>
+                <div className="hidden lg:flex">{profile?.data.firstname} </div>
                 <button
                   type="button"
                   className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

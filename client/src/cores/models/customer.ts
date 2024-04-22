@@ -1,4 +1,5 @@
 import { AddressDto } from "./address.dto"
+import { CoordonatesDto } from "./coordonates.dto"
 import { CreationDetailDto } from "./creation_details.dto"
 
 
@@ -10,6 +11,7 @@ export class Customer {
         lastname?: string
        address?:AddressDto
     details?:CreationDetailDto
+    coordonates?:CoordonatesDto
       }
 
 
@@ -24,3 +26,8 @@ export class Customer {
 // isPhoneVeirified:yup.boolean(),
 //       })
       
+
+export class OtpVerificationDto {
+  to?: string;
+  code?: string;
+}

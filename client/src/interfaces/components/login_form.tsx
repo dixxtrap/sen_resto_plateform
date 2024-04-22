@@ -4,6 +4,7 @@ import {  DialogAlert } from './dialog'
 import { Input } from './input'
 import { useForm } from 'react-hook-form'
 import { Logo } from './logo'
+import { SetProfileForm } from './set_profile'
 type ProtectedActionProps={
         action:()=>void,
         children:ReactNode;
@@ -33,24 +34,30 @@ type LoginFormProps={
   action:()=>void,
 }
 export const LoginForm:FC<LoginFormProps> =({action})=>{
-  const [login, ]=useLoginMutation();
+  const [login, {isSuccess}]=useLoginMutation();
   const {register, handleSubmit }=useForm<{username:string, password:string}>({})
   const _onSubmit=handleSubmit((data)=>{
-    console.log(data)
+  
     login(data).unwrap().then(result=>{
       console.log(result)
-      action();
+   
     })
 
   })
 
   
-return( <form onSubmit={_onSubmit} className='flex items-center flex-col md:px-10'>
-  <Logo/>
-  <span className='font-bold  title text-2xl'>Connexion</span>
-<Input label='Telephone'>
-  <input {...register("username")}  className='input'/>
-  <button className='button primary'>Valider</button>
-</Input>
-</form>);
+return (<>
+ {isSuccess && <DialogAlert onClose={()=>{console.log("-------on closee----------");}} isOpen={true}>
+    <SetProfileForm  action={action}></SetProfileForm>
+    </DialogAlert>}
+  <form onSubmit={_onSubmit} className="flex items-center flex-col md:px-10">
+    <Logo />
+    <span className="font-bold  title text-2xl">Connexion</span>
+    <Input label="Telephone">
+      <input {...register("username")} className="input" />
+      <button className="button primary">Valider</button>
+    </Input>
+  </form>
+  </>
+);
 }
