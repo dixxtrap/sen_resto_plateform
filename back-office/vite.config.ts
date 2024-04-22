@@ -18,7 +18,7 @@ server:{
 preview:{
   port:3001,
   proxy:{
-    "/v1":"https://api.test.senresto.com"
+    "/v1":"http://54.243.19.16:3000"
   }
 }
 })
