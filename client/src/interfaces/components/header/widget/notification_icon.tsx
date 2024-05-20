@@ -1,4 +1,3 @@
-import React from 'react'
 import { HeaderIcon } from './header_icon'
 import { BellAlertIcon } from '@heroicons/react/24/solid'
 

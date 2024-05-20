@@ -23,7 +23,7 @@ export const PlateItemPoppup = ({
   const [selectedSize, setSelectedSize] = useState<string>(
     product?.file![0]?.path ?? ""
   );
-  const [addProduct,{isLoading, isSuccess, isError, error, reset}]=useAddProductMutation();
+  const [addProduct,{isLoading, isSuccess, isError, reset}]=useAddProductMutation();
   const { setValue, watch, handleSubmit, register, getValues } = useForm<{
     quantity: number;
     description: string;

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useGetBagQuery } from '../../../cores/apis/order.slice'
 import { Fetchingdata } from '../../components/fetching_data'
 import { OrderWidget } from './widget/order_widget';

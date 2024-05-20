@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "/assets/react.svg";
 import { constant, links } from "../../../utils/constant";
 import { Link, NavLink } from "react-router-dom";
@@ -10,7 +10,7 @@ import { BagIcon } from "./widget/bag_icon";
 import { NotificationIcon } from "./widget/notification_icon";
 
 export const Header = () => {
-  const { data: profile, isSuccess, isLoading, isError } = useProfileQuery("");
+  const { data: profile, isSuccess } = useProfileQuery("");
   return (
     <Disclosure as="nav" className=" shadow sticky top-0 backdrop-blur-md z-50">
       {({ open }) => (

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import  { FC } from 'react'
 import { OrderDto } from '../../../../cores/models/order.dto'
 import { Title } from '../../../components/title'
 import { TextConstant } from '../../../../cores/constant/textConstant';

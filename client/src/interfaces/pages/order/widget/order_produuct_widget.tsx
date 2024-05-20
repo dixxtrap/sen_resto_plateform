@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
+
 import { OrderProduct } from '../../../../cores/models/order.dto'
 import { TextConstant } from '../../../../cores/constant/textConstant';
 import { BanknotesIcon } from '@heroicons/react/24/solid';
+import { FC } from 'react';
 
 type ProductOrderWidgetProps={
   orderProduct:OrderProduct

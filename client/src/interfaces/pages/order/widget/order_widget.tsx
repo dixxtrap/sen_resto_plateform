@@ -1,6 +1,5 @@
 import { FC } from "react"
 import { OrderDto } from "../../../../cores/models/order.dto"
-import { Title } from "../../../components/title"
 import { OrderProductWidget } from "./order_produuct_widget"
 import { OrderDetailWidget } from "./oreder_detail_widget"
 
