@@ -1,3 +1,5 @@
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 import { FormProvider, useForm } from "react-hook-form";
 import ThemeProvider from "./core/providers/theme.provider";
 import { Provider } from "react-redux";

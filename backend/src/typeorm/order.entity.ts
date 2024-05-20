@@ -10,6 +10,13 @@ import { CreationDetails } from './details.entity';
 import { Customer } from './customer.entity';
 import { Deliver } from './deliver.entity';
 import { OrderProduct } from './order_product.entity';
+export class AddOrderDto {
+  productId: number;
+  partnerId: number;
+  customerId: number;
+  description: string;
+  quantity: number;
+}
 export enum OrderStatus {
   OnBag = 'onbag',
   Active = 'active',
@@ -50,6 +57,6 @@ export class Order {
     default: OrderStatus.OnBag,
   })
   status: OrderStatus;
-  @OneToMany(() => OrderProduct, (item) => item.orderId)
+  @OneToMany(() => OrderProduct, (item) => item.order)
   products: OrderProduct[];
 }

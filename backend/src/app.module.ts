@@ -2,10 +2,8 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 import config from './mysql.config';
-import { join } from 'path';
 import { ModuleModule } from './modules/module/module.module';
 import { CategoryModule } from './modules/category/category.module';
 import { RoleModule } from './modules/role/role.module';
@@ -28,13 +26,6 @@ import { ProductRaitingModule } from './modules/product_rating/product_rating.mo
 @Module({
   imports: [
     SecurityModule,
-    ServeStaticModule.forRoot({
-      serveRoot: '/v1/upload',
-      serveStaticOptions: {
-        index: 'upload',
-      },
-      rootPath: join(__dirname, '../..', 'upload'), // Path to the static files directory
-    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',

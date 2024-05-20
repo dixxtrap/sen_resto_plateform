@@ -1,15 +1,9 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 
 @Injectable()
-export class LocalAuthGuard implements CanActivate {
+export class LocalAuthGuardCustomer implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {

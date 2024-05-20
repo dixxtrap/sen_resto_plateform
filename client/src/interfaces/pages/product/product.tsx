@@ -1,12 +1,12 @@
 import {  useGetProductQuery } from "../../../cores/apis/product.slice";
 import { initPagination } from "../../../cores/models/pagination.model";
-import { PlateItem } from "../../components/product_item";
-import { AutoCompletionCompanies } from "../../components/auto_completion";
+import { PlateItem } from "./widget/product_item";
+import { AutoCompletionCompanies } from "./widget/auto_completion";
 import { Input } from "../../components/input";
 import { useProfileQuery } from "../../../cores/apis/security.slice";
 import { useState } from "react";
 import { DialogAlert } from "../../components/dialog";
-import { LoginForm } from "../../components/login_form";
+import { LoginForm } from "../../components/login/login_form";
 import { CategoryPageniationWidget } from "./widget/category_pagination_widget";
 
 export const PlateList = () => {

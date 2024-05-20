@@ -1,7 +1,7 @@
 
 import "./App.css";
 import { RouterProvider } from "react-router-dom";
-import { router } from "./route";
+import { router } from "./routes/route";
 import store from "./cores/apis/index.store";
 import { Provider } from "react-redux";
 import { FormProvider, useForm } from "react-hook-form";

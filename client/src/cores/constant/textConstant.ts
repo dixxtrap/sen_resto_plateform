@@ -18,6 +18,8 @@ export class TextConstant {
   static revertFees: string = "Frais Operateur";
   static notKnown:string='Non Reseigné';
   static email: string = "Email";
+  static quantity: string = "Quantité";
+  static Total: string = "Totale";
   static organiwation: string = "Organisation";
   static address: string = "Adresse";
   static city: string = "Ville";
@@ -26,5 +28,7 @@ export class TextConstant {
   static  logo: string = "Logo";
   static coorporateStr: string = "Coorporates";
   static Pan: string = "pan";
+  static Currency: string = "F CFA ";
+  static Minute: string = "min ";
   static internalServerError: string = "Une erreur interne s est produite";
 }

@@ -12,7 +12,7 @@ import {
 import { Request, Response } from 'express';
 import { WsCustomerService } from './customer.service';
 import { LoginDto } from 'src/modules/security/security.dto';
-import { LocalAuthGuard } from 'src/middleware/local_auth.guard';
+import { LocalAuthGuardCustomer } from 'src/middleware/local_auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { CustomerDto } from 'src/typeorm/customer.entity';
@@ -34,13 +34,13 @@ export class WsCustomerController {
     });
   }
   @Get('profile')
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuardCustomer)
   profile(@Req() req: Request) {
     const by = req.user as CustomerDto;
     return this.service.getById(by.id);
   }
   @Put('profile')
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuardCustomer)
   setProfile(@Req() req: Request, @Body() body: SetProfileDto) {
     const by = req.user as CustomerDto;
     return this.service.setProfile({ by, body });

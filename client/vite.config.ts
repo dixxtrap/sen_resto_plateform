@@ -18,7 +18,7 @@ export default defineConfig({
   preview:{
     port:3002,
     proxy:{
-      "/v1":"http://54.243.19.16:3000/"
+      "/v1":"184.73.166.128:3000/"
     }
 }}
 )

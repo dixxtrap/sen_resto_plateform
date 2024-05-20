@@ -5,9 +5,9 @@ import { WsMessage } from "../models/error.dto";
 
 export const securityApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
-  reducerPath: "securityApi",
+  reducerPath: "security",
 
-  tagTypes: ["security", "user"],
+  tagTypes: ["security", "user",'product'],
   endpoints: (builder) => ({
     login: builder.mutation<{ token: string }, SignInDto>({
       query: (item) => ({
@@ -15,7 +15,7 @@ export const securityApi = createApi({
         method: "POST",
         body: item,
       }),
-      invalidatesTags: ["security", "user"],
+      invalidatesTags: ["security", "user",'product'],
     }),
     definePassword: builder.mutation<{ token: string },{token:string,password:string }>({
       query: (item) => ({
@@ -23,7 +23,7 @@ export const securityApi = createApi({
         method: "POST",
         body: item,
       }),
-      invalidatesTags: ["security", "user"],
+      invalidatesTags: ["security", "user", 'product'],
     }),
     resetPasswordByEmail: builder.mutation<WsMessage,{email:string }>({
       query: (item) => ({
@@ -31,18 +31,18 @@ export const securityApi = createApi({
         method: "POST",
         body: item,
       }),
-      invalidatesTags: ["security", "user"],
+      invalidatesTags: ["security", "user",'product'],
     }),
     signout: builder.mutation<undefined, string>({
       query: () => ({
         url: "security/logout",
         method: "GET",
       }),
-      invalidatesTags: ["security"],
+      invalidatesTags: ["security",'product'],
     }),
     profile: builder.query<User, string>({
       query: () => "security/profile",
-      providesTags: ["security"],
+      providesTags: ["security","product"],
     }),
   }),
 });

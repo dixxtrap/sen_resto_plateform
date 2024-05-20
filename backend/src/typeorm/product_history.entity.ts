@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Product } from './product.entity';
 import { CreationDetails } from './details.entity';
+import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decorator';
 @Entity()
 export class ProductHistory {
   @PrimaryGeneratedColumn()
@@ -19,4 +20,17 @@ export class ProductHistory {
   productId: number;
   @Column(() => CreationDetails)
   details: CreationDetails;
+}
+
+export class ProductHistoryDto {
+  @ApiProperty()
+  name: string;
+  @ApiProperty()
+  price: number;
+  @ApiProperty()
+  reduction: number;
+  @ApiProperty()
+  cookingTime: number;
+  @ApiProperty()
+  productId: number;
 }

@@ -3,7 +3,7 @@ import {
   Entity,
   ManyToOne,
   PrimaryColumn,
-  OneToOne,
+  Index,
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
@@ -11,9 +11,11 @@ import { Weekday } from './weekday.entity';
 import { Partner } from './partner.entity';
 import { CompanyRestaurantBase } from './company_restaurant.entity';
 import { CreationDetails, CreationDetailsDto } from './details.entity';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decorator';
 import { Product } from './product.entity';
+
 @Entity()
+@Index(['productId', 'partnerId'])
 export class ProductManagement {
   @PrimaryGeneratedColumn()
   id: number;
@@ -21,7 +23,7 @@ export class ProductManagement {
   product: Product;
   @Column({ nullable: true, default: null })
   productId: number;
-  @OneToOne(() => CompanyRestaurantBase)
+  @ManyToOne(() => CompanyRestaurantBase)
   partner: CompanyRestaurantBase;
   @Column()
   partnerId: number;

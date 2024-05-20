@@ -12,6 +12,8 @@ import { Title } from "./title";
 import { Alert } from "./alert_success";
 import { getWsMessage } from "../../core/features/error_transformer";
 import { TextConstant } from "../../core/data/textConstant";
+import DatePicker from "react-date-picker";
+import { CalendarDaysIcon, XMarkIcon } from "@heroicons/react/24/solid";
 type TablePaginationProps = {
   th?: string[];
   trs?: ReactNode;
@@ -26,6 +28,9 @@ type TablePaginationProps = {
   error?:any,
 
 };
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 export const TablePagination: FC<TablePaginationProps> = ({
   trs,
   title,
@@ -40,6 +45,8 @@ export const TablePagination: FC<TablePaginationProps> = ({
   error
 }) => {
   const [selected, setSelected] = useState(10);
+  const [value, onChange] = useState<Value>(new Date());
+
   return (
     <>
     {isError && <span >{getWsMessage(error)}</span>}
@@ -85,13 +92,17 @@ export const TablePagination: FC<TablePaginationProps> = ({
             </div>
           </div>
         </div>
-        <input type="date" className="input max-w-xs" />
+        <DatePicker
+        calendarIcon={<CalendarDaysIcon className="h-5 hover:text-secondary-500"/>}
+        clearIcon={<XMarkIcon className="h-5 hover:text-secondary-500"/>}
+         locale="fr"  className={'  max-w-xs ring-0 p-0  border-none z-50 '} calendarClassName={'z-[2000] text-md rounded-md'} onChange={onChange} value={value} />
+       
       </div>}
       <div className="mt-8 flow-root">
         <div className="">
           <div className="inline-block min-w-full p-2 bgInput border darkDivider rounded-md align-middle">
             <table className="min-w-full border-separate border-spacing-0">
-              <thead className="sticky top-16 z-50  backdrop-blur-xl backdrop-filter ">
+              <thead className="sticky top-16 z-10  backdrop-blur-xl backdrop-filter ">
                 <tr className="">
                   {th?.map((s, i) => (
                     <th

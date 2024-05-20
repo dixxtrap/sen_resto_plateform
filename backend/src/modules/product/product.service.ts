@@ -4,20 +4,25 @@ import { Product, ProductDto } from 'src/typeorm/product.entity';
 import { UserDto } from 'src/typeorm/user.entity';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository } from 'typeorm';
-import { ProductManagementService } from './product_management.service';
-import { WeekdayService } from './weekday.service';
+import { ProductManagementService } from './management/product_management.service';
+import { WeekdayService } from './week_day/weekday.service';
 import { ProductCategory } from 'src/typeorm/product_category.entity';
 import { ProductManagementDayDto } from 'src/typeorm/product_management.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
+import { ProductHistory } from 'src/typeorm/product_history.entity';
+import { ProductHistoryService } from './history/product_history.service';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product) private repos: Repository<Product>,
+    @InjectRepository(ProductHistory)
+    private reposHistory: Repository<ProductHistory>,
     @InjectRepository(ProductCategory)
     private reposCategory: Repository<ProductCategory>,
     private productManagementService: ProductManagementService,
     private weekdayService: WeekdayService,
+    private productHistoryService: ProductHistoryService,
   ) {}
   create({ by, body }: { by: UserDto; body: ProductDto }) {
     return this.repos
@@ -36,6 +41,17 @@ export class ProductService {
             isActive: true,
           })
           .then(() => {
+            const { name, cookingTime, reduction, price } = value;
+            this.productHistoryService.create({
+              by,
+              body: {
+                name,
+                cookingTime,
+                reduction,
+                price,
+                productId: value.id,
+              },
+            });
             if (value) return HttpExceptionCode.SUCCEEDED;
             throw new WsMessage(HttpExceptionCode.FAILLURE);
           });
@@ -48,39 +64,54 @@ export class ProductService {
 
   update({ by, body, id }: { by: UserDto; body: ProductDto; id: number }) {
     const { category, ...rest } = body;
-    return this.repos
-      .update(
-        { id },
-        {
-          ...rest,
-        },
-      )
-      .then((value) => {
-        if (category.length > 0) {
-          return this.reposCategory
-            .delete({ productId: id })
-            .then(() => {
-              return Promise.all(
-                category.map((cat) => {
-                  this.reposCategory.save({
-                    productId: id,
-                    categoryId: cat.id,
-                  });
-                }),
-              );
-            })
-            .then(() => {
-              if (value) throw new WsMessage(HttpExceptionCode.SUCCEEDED);
-              throw new WsMessage(HttpExceptionCode.FAILLURE);
+    return this.repos.findOne({ where: { id } }).then((old) =>
+      this.repos
+        .update(
+          { id },
+          {
+            ...rest,
+          },
+        )
+        .then(async (value) => {
+          if (old.reduction !== rest.reduction || old.price !== rest.price)
+            await this.productHistoryService.create({
+              by,
+              body: {
+                name: body.name ?? old.name,
+                price: body.price ?? old.price,
+                reduction: body.reduction ?? old.reduction,
+                cookingTime: body.cookingTime ?? old.cookingTime,
+                productId: old.id,
+              },
             });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+          if (category.length > 0) {
+            return this.reposCategory
+              .delete({ productId: id })
+              .then(() => {
+                return Promise.all(
+                  category.map((cat) => {
+                    this.reposCategory.save({
+                      productId: id,
+                      categoryId: cat.id,
+                    });
+                  }),
+                );
+              })
+              .then(async () => {
+                if (value) throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+                throw new WsMessage(HttpExceptionCode.FAILLURE);
+              });
+          } else {
+            throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
 
-        if (err instanceof WsMessage) throw err;
-        throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
+          if (err instanceof WsMessage) throw err;
+          throw new WsMessage(HttpExceptionCode.FAILLURE);
+        }),
+    );
   }
   getProductById({ by, id }: { by: UserDto; id: number }) {
     return this.repos

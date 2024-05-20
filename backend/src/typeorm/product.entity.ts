@@ -11,7 +11,7 @@ import { CompanyRestaurantBase } from './company_restaurant.entity';
 import { CreationDetails, CreationDetailsDto } from './details.entity';
 import { ProductFile } from './product_file.entity';
 import { Category, CategoryDto } from './category.entity';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decorator';
 import { ProductRaiting } from './product_rating.entity';
 @Entity()
 export class Product {
@@ -48,7 +48,7 @@ export class Product {
 }
 
 export class ProductDto {
-  id?: number; 
+  id?: number;
   @ApiProperty()
   name?: string;
   @ApiProperty()

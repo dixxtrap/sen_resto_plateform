@@ -73,6 +73,28 @@ td{
 .cardNum{
   @apply p-2  rounded-md
 }
+.react-date-picker__wrapper{
+  @apply m-0 p-0
+}
+.react-date-picker ,.react-date-picker--closed ,.react-date-picker--enabled{
+  padding: 0;
+}
+.react-date-picker__wrapper {
+
+
+
+ padding: 0;
+ 
+ flex-grow: 1;
+ flex-shrink: 0;
+ border:none;
+
+ @apply input;
+ padding: 0;
+ @apply py-1 px-2;
+
+ display: flex;
+}
 .card0{
   @apply bg-amber-500/10  cardNum  dark:text-amber-400   text-amber-500
 }
