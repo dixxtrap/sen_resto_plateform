@@ -37,8 +37,9 @@ export class OtpConfigService implements OnModuleInit {
   getById({ id }: { id: number }) {
     return this.repos
       .findOne({ where: { id } })
-      .then((result) => {
+      .then(async (result) => {
         if (result) return BaseResponse.success(result);
+        return await this.init();
         throw new WsMessage(HttpExceptionCode.NOT_FOUND);
       })
       .catch(WsCatch);
