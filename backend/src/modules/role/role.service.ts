@@ -74,7 +74,7 @@ export class RoleService {
   create({ body }: { body: RoleDto }) {
     return this.repos.manager
       .getTreeRepository(Role)
-      .save({ ...body })
+      .save({ ...body, parent: { id: body.parentId } })
       .then((result) => {
         console.log(result);
         if (result) return HttpExceptionCode.SUCCEEDED;
