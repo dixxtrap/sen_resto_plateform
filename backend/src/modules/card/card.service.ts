@@ -22,7 +22,13 @@ export class CardService {
   ) {}
   create({ by, body }: { by: CreateUserDto; body: CardDto }) {
     return this.repos
-      .save(this.repos.create({ ...body, details: { byId: by.id } }))
+      .save(
+        this.repos.create({
+          ...body,
+          parentId: by.parentId,
+          details: { byId: by.id },
+        }),
+      )
       .then((value) => {
         if (value) throw new WsMessage(HttpExceptionCode.SUCCEEDED);
         throw new WsMessage(HttpExceptionCode.FAILLURE);
@@ -60,6 +66,7 @@ export class CardService {
                 serial: e['Numéro de série'],
                 uid: e.uid,
                 pan: e.pan,
+                parentId: by.parentId,
                 details: { byId: by.id },
               }),
             )

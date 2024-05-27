@@ -15,9 +15,9 @@ export enum CardStatusEnum {
 export class Card {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+  @Column({ unique: true })
   serial: string;
-  @Column()
+  @Column({ unique: true })
   uid: string;
   @Column()
   pan: string;

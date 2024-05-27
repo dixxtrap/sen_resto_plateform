@@ -58,6 +58,7 @@ export class CardAllocationService {
   }
 
   getCardAllocationDetails({ by, id }: { by: UserDto; id: number }) {
+    console.log(by);
     return this.repos
       .findOne({
         where: { id },

@@ -6,6 +6,7 @@ import { AddOrderDto, Order, OrderStatus } from 'src/typeorm/order.entity';
 import { OrderProduct } from 'src/typeorm/order_product.entity';
 import { Repository } from 'src/typeorm/repository';
 import { BaseResponse } from 'src/typeorm/response_base';
+import { CreateUserDto } from 'src/typeorm/user.entity';
 import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 
@@ -65,6 +66,70 @@ export class WsOrderService {
         return BaseResponse.success(result);
       });
   }
+  getByStatus = ({
+    by,
+    status,
+  }: {
+    by: CreateUserDto;
+    status: OrderStatus;
+  }) => {
+    return this.repos.find({
+      where: { status },
+      relations: {
+        partner: true,
+        products: {
+          productHistory: { product: { file: true } },
+        },
+      },
+      select: {
+        id: true,
+        partnerId: true,
+        details: {
+          createdAt: true,
+          updatedAt: true,
+        },
+        partner: {
+          name: true,
+          type: true,
+          parent: {
+            name: true,
+          },
+        },
+        products: {
+          quantity: true,
+          description: true,
+
+          productHistoryId: true,
+          productHistory: {
+            productId: true,
+            price: true,
+            reduction: true,
+            product: {
+              id: true,
+              name: true,
+              cookingTime: true,
+              description: true,
+              file: { path: true },
+            },
+          },
+        },
+      },
+    });
+  };
+  changeStatus = async ({
+    id,
+    status,
+  }: {
+    id: number;
+    status: OrderStatus;
+  }) => {
+    return this.repos
+      .update({ id }, { status: status })
+      .then(() => {
+        throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+      })
+      .catch(WsCatch);
+  };
   getOrderOrCreate = async ({
     customerId,
     partnerId,
