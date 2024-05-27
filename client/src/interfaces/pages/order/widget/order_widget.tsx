@@ -8,6 +8,12 @@ type OrderWidgetProps={
 }
 export const OrderWidget :FC<OrderWidgetProps> = ({order}) => {
   const [current , setCurrent]=useState(0)
+  const next=()=>{
+if(current>order.products.length) setCurrent(current+1)
+  }
+const after=()=>{
+if(current>0) setCurrent(current-1)
+}
   return (
     <div
       key={`order_${order.id}`}
@@ -16,7 +22,7 @@ export const OrderWidget :FC<OrderWidgetProps> = ({order}) => {
       <div className="flex  w-full">
         <div className="flex flex-col divide-y grow max-w-2xl bg-white ">
          
-            <OrderProductWidget orderProduct={order.products[current]} />
+            <OrderProductWidget next={next} after={after} orderProduct={order.products[current]} />
         
         </div>
         <OrderDetailWidget order={order} />

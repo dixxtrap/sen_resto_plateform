@@ -1,27 +1,28 @@
 
 import { OrderProduct } from '../../../../cores/models/order.dto'
-import { TextConstant } from '../../../../cores/constant/textConstant';
-import { ArrowLeftIcon, BanknotesIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/solid';
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from '@heroicons/react/24/solid';
 import { FC } from 'react';
 
 type ProductOrderWidgetProps={
-  orderProduct:OrderProduct
+  orderProduct:OrderProduct,
+  next:()=>void,
+  after:()=>void,
 }
-export const OrderProductWidget:FC<ProductOrderWidgetProps> = ({orderProduct}) => {
+export const OrderProductWidget:FC<ProductOrderWidgetProps> = ({orderProduct, next, after}) => {
   return (
     <div
       key={`p_${orderProduct.productHistoryId}_${orderProduct.partnerId}`}
       className="flex  flex-col item-center justify-center max-w-2xl  min-w-fit"
     >
      <div className='flex  item-center place-items-center justify-center justify-items-center'>
-      <ChevronDoubleLeftIcon className='h-16'></ChevronDoubleLeftIcon>
+      <ChevronDoubleLeftIcon onClick={after} className='h-16'></ChevronDoubleLeftIcon>
      {orderProduct.productHistory?.product?.file![0].path && (
         <img
           src={orderProduct.productHistory?.product?.file![0].path}
           className="w-9/12 rounded-md"
         />
       )}
-       <ChevronDoubleRightIcon className='h-16'></ChevronDoubleRightIcon>
+       <ChevronDoubleRightIcon onClick={next} className='h-16'></ChevronDoubleRightIcon>
      </div>
       <div className="flex flex-col items-center   w-full">
         <span className="title  font-serif text-xl font-bold">
