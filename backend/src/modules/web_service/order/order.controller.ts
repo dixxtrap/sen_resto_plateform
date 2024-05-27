@@ -15,7 +15,6 @@ import { AddOrderDto, OrderStatus } from 'src/typeorm/order.entity';
 import { LocalAuthGuardCustomer } from 'src/middleware/local_auth.guard';
 import { Request } from 'express';
 import { CustomerDto } from 'src/typeorm/customer.entity';
-import { OrderStatus } from 'aws-sdk/clients/outposts';
 @Controller('ws/order')
 @ApiTags('ws/order')
 export class WsOrderController {
