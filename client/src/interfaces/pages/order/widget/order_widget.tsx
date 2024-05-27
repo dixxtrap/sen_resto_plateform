@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import { OrderDto } from "../../../../cores/models/order.dto"
 import { OrderProductWidget } from "./order_produuct_widget"
 import { OrderDetailWidget } from "./oreder_detail_widget"
@@ -7,6 +7,7 @@ type OrderWidgetProps={
     order:OrderDto
 }
 export const OrderWidget :FC<OrderWidgetProps> = ({order}) => {
+  const [current , setCurrent]=useState(0)
   return (
     <div
       key={`order_${order.id}`}
@@ -14,9 +15,9 @@ export const OrderWidget :FC<OrderWidgetProps> = ({order}) => {
     >
       <div className="flex  w-full">
         <div className="flex flex-col divide-y grow max-w-2xl bg-white ">
-          {order.products.map((p) => (
-            <OrderProductWidget orderProduct={p} />
-          ))}
+         
+            <OrderProductWidget orderProduct={order.products[current]} />
+        
         </div>
         <OrderDetailWidget order={order} />
       </div>
