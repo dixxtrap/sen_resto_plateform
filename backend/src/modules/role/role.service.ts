@@ -76,7 +76,7 @@ export class RoleService {
     return this.repos.manager
       .getTreeRepository(Role)
       .save(
-        this.repos.manager.getTreeRepository(Role).create({
+        this.repos.create({
           name: body.name,
           description: body.description,
           code: body.code,
