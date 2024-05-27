@@ -80,7 +80,7 @@ export class RoleService {
           name: body.name,
           description: body.description,
           code: body.code,
-          parent: { id: body.parentId },
+          parentId: body.Parent.id,
         }),
       )
       .then((result) => {
