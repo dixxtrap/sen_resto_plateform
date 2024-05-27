@@ -18,7 +18,7 @@ export const CardAllocationCreate = () => {
         create(data);
     })
   return (
-   <CustomForm successPath='/card' onFinish={reset} onSubmit={_onsubmit} isError={isError} error={getWsMessage(error)} isSuccess={isSuccess}  isLoading={isLoading} confirmeBefore={true}  >
+   <CustomForm title='Transfert de carte' successPath='/card' onFinish={reset} onSubmit={_onsubmit} isError={isError} error={getWsMessage(error)} isSuccess={isSuccess}  isLoading={isLoading} confirmeBefore={true}  >
     <Input label='label' error={errors.label?.message}>
     <input className='input' {...register("label")}/>
     </Input>
