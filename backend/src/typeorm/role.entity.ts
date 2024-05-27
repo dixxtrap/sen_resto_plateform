@@ -47,5 +47,5 @@ export class RoleDto {
   @ApiProperty()
   parentId: number;
   @ApiProperty()
-  Parent: { id: number };
+  parent: { id: number };
 }
