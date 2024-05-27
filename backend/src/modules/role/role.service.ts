@@ -72,6 +72,7 @@ export class RoleService {
       });
   }
   create({ body }: { body: RoleDto }) {
+    console.log(body);
     return this.repos.manager
       .getTreeRepository(Role)
       .save(
