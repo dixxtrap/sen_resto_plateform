@@ -20,13 +20,13 @@ export const CardAllocationCreate = () => {
   return (
    <CustomForm title='Transfert de carte' successPath='/card' onFinish={reset} onSubmit={_onsubmit} isError={isError} error={getWsMessage(error)} isSuccess={isSuccess}  isLoading={isLoading} confirmeBefore={true}  >
     <Input label='label' error={errors.label?.message}>
-    <input className='input' {...register("label")}/>
+      <input className='input' {...register("label")}/>
     </Input>
     <Input label='Description' error={errors.motif?.message}>
-    <input className='input' {...register("motif")}/>
+      <input className='input' {...register("motif")}/>
     </Input>
     <Input label='Nombre de carte' error={errors.quantity?.message}>
-    <input className='input' {...register("quantity")}/>
+      <input className='input' {...register("quantity")}/>
     </Input>
     <Input label="Recepteur" error={errors.receiverId?.message}>
           <select

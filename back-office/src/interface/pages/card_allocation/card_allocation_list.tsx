@@ -18,6 +18,8 @@ export const CardAllocationList = () => {
       <TablePagination
        isError={isError} isSuccess={isSuccess} isLoading={isLoading} error={error}
         createPath={`/${PathRouter.cardAllocation}/${PathRouter.create}`}
+        createTitle='Nouvelle Allocatioin'
+
         th={[
           "label",
           "start Serial number",
