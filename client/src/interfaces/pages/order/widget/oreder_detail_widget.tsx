@@ -35,6 +35,7 @@ export const OrderDetailWidget:FC<OrderWidgetProps> = ({order}) => {
  <div className='flex  flex-col '>
    <OrderDetailsItem label={orderProduct.productHistory.product.name} value={`${orderProduct.productHistory.price} ${TextConstant.Currency}`}/>
    <OrderDetailsItem label={TextConstant.quantity} value={`${orderProduct.quantity}`}/>
+   <OrderDetailsItem label={TextConstant.description} value={`${orderProduct.description}`}/>
  </div>
    <OrderDetailsItem label={TextConstant.Total} magnify value={`${orderProduct.productHistory.price*orderProduct.quantity} ${TextConstant.Currency}`} />
  

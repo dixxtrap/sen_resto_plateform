@@ -9,7 +9,7 @@ type OrderWidgetProps={
 export const OrderWidget :FC<OrderWidgetProps> = ({order}) => {
   const [current , setCurrent]=useState(0)
   const next=()=>{
-if(current>order.products.length) setCurrent(current+1)
+if(current<order.products.length-1) setCurrent(current+1)
   }
 const after=()=>{
 if(current>0) setCurrent(current-1)
