@@ -44,7 +44,7 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
               ))}
             </div> */}
             <CategoryPageniationWidget current={category} onclick={(id)=>setCategory(id)} ></CategoryPageniationWidget>
-            <div  className="grid grid-cols-1  gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 md:px-10  lg:px-16 lg:gap-x-10">
+            <div  className="grid grid-cols-2 px-2  gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 md:px-10  lg:px-16 lg:gap-x-10 ">
               {products!.data.map((product) => (
                 <div onClick={()=>!isLogin&&setShowLogin(true)}>
                 <PlateItem product={product} isLogin={isLogin} />
