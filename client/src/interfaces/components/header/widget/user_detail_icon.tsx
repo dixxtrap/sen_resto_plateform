@@ -1,7 +1,7 @@
 
 import {  ChevronDownIcon, UserIcon } from '@heroicons/react/24/solid'
 import { HeaderIcon } from './header_icon';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {  Menu, Popover, Transition, PopoverButton, PopoverPanel } from '@headlessui/react';
 import { useProfileQuery } from '../../../../cores/apis/security.slice';
 import { BagIcon } from './bag_icon';
@@ -11,9 +11,8 @@ import { DialogAlert } from '../../dialog';
 import { LoginForm } from '../../login/login_form';
 
 export const UserDetailIcon = () => {
-    const {data:profile,isSuccess, isLoading, isError }=useProfileQuery('')
+    const {data:profile,isSuccess, isError }=useProfileQuery('')
     const [showLogin,setShowLogin]= useState<boolean>(false)
-    const nav=useNavigate();
     const _onclick=()=>{
 isError&&setShowLogin(true);
     }  
