@@ -11,9 +11,6 @@
 .plate:hover .describe {
   @apply block translate-y-0 ;
 }
-.title2 {
-  @apply text-lg font-semibold;
-}
 
 .plate {
   @apply  rounded-md overflow-hidden   ring-1 ring-slate-500/20 hover:shadow-md;

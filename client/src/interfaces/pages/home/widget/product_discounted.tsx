@@ -12,7 +12,7 @@ export const ProductDiscountedWidget = () => {
     {isLoading&&<span>chargement</span>}
     {isError&&<span>erreur interner</span>}
     {product&&isSuccess&& 
-    <div className='grid grid-cols-3 gap-4'>
+    <div className='grid grid-cols-2 md:grid-cols-3 gap-4 px-2'>
         {product.data.map(e=>
         <div
         key={`product_${e.id}`}

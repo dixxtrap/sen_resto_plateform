@@ -11,9 +11,9 @@ export const HomeCompany = () => {
     </div>
       {isLoading && <span>Chargement....</span>}
       {company && isSuccess && (
-        <div className="">
-          <dl className="mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:px-2 xl:px-0 gap-4 ">
-            {company.data.map((item, ) => (
+        <div className="px-2">
+          <dl className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 lg:px-2 xl:px-0 gap-4 ">
+            {company.data.slice(0, 6).map((item, ) => (
               <div
                 key={item.name}
                 className={clsx(

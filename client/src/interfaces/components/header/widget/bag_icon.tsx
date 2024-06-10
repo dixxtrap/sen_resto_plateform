@@ -12,6 +12,6 @@ nav('/order')
     }  
   return (
    
-      <HeaderIcon onclick={_onclick} icon={ <ShoppingBagIcon className='h-8 text-gray-500' />} value= {`${data?.data.length}`}/>
+      <HeaderIcon onclick={_onclick} icon={ <ShoppingBagIcon className='h-8' />} value= {`${data?.data.length}`}/>
   )
 }

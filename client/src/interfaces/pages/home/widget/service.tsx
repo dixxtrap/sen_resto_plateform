@@ -16,7 +16,7 @@ export const Services = () => {
     <div className='bg-white h-20 flex items-center justify-center divide-x-2  gap-3'>
     {serviceList.map(e=><div className='flex items-center gap-3 mx-4 px-4'>
       <e.icon className='text-slate-800 h-8'/> 
-      <span>
+      <span className='hidden md:block'>
         {e.title} 
       </span>
     </div>)}
