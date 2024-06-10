@@ -13,7 +13,7 @@ console.log(isLogin)
   return (
     <>
       <PlateItemPoppup open={open} setOpen={setOpen} product={product} />
-      <div className="flex flex-col items-center mt-12 pt-4  bg-gray-100  rounded-lg  ring-1  ring-black/10">
+      <div className="flex flex-col items-center mt-12 pt-4  bg-gray-100  rounded-lg   ring-1  ring-black/10">
         <img
           alt="logo"
           className="md:h-40  md:-mt-20 rounded-full h-32 -mt-16  ring-1 ring-gray-200"
@@ -40,7 +40,7 @@ console.log(isLogin)
               {product.parent?.shortname}
             </span>
           </div>
-          <div className="grid grid-cols-2  w-full divide-x  divide-gray-500/50 ">
+          <div className="grid grid-cols-2 rounded-b-lg  overflow-hidden w-full divide-x  divide-gray-500/50 ">
           <div className="flex gap-2 cursor-pointer  justify-starts p-2 place-items-end  hover:bg-secondary-400 hover:text-white">
             <StarIcon className="h-6" /> <span className="leading-3">{Str.favoris}</span>
           </div>
