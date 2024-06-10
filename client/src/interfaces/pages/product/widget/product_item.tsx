@@ -19,10 +19,10 @@ console.log(isLogin)
           className="md:h-40  md:-mt-20 rounded-full h-32 -mt-16  ring-1 ring-gray-200"
           src={product.file![0].path}
         />
-        <div className="flex flex-col w-full divide-y divide-gray-600">
-          <div className="flex flex-col item-center justify-center text-center ">
-            <span className="title2 text-center"> {product.name}</span>
-            <div className="flex gap-3 items-start justify-center">
+        <div className="flex flex-col w-full divide-y divide-gray-500/50 ">
+          <div className="flex flex-col item-center justify-center text-center pb-3">
+            <span className="title2 text-center leading-3 h-[60px]"> {product.name}</span>
+            <div className="flex gap-3 items-start justify-center ">
               {product.reduction != null && product.reduction > 0 && (
                 <span className="title3 line-through  decoration-2 text-gray-500">
                   {" "}
@@ -40,14 +40,14 @@ console.log(isLogin)
               {product.parent?.shortname}
             </span>
           </div>
-          <div className="grid grid-cols-2  w-full divide-x-2  divide-gray-500 ">
-          <div className="flex gap-2 items-center p-2 ">
-            <StarIcon className="h-8" /> {Str.favoris}
+          <div className="grid grid-cols-2  w-full divide-x  divide-gray-500/50 ">
+          <div className="flex gap-2 cursor-pointer  justify-starts p-2 place-items-end  hover:bg-secondary-400 hover:text-white">
+            <StarIcon className="h-6" /> <span className="leading-3">{Str.favoris}</span>
           </div>
 
-          <div className="flex gap-2 justify-end p-2  items-center">
-            {Str.bag}
-            <ShoppingBagIcon className="h-8" />
+          <div onClick={()=>setOpen(true)} className="flex  gap-2 cursor-pointer justify-end p-2  hover:bg-secondary-400 hover:text-white  place-items-end">
+           <span className="leading-3"> {Str.bag}</span>
+            <ShoppingBagIcon className="h-6" />
           </div>
         </div>
         </div>
