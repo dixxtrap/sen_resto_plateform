@@ -19,9 +19,7 @@ export const Alert :FC<AlertProps> =   ({isOpen=true,onClose=()=>{
 
 // const nav=useNavigate();
   return (
-    <>
-   
-  <Transition show={isOpen}   as={Fragment}>
+  <Transition.Root show={isOpen}   as={Fragment}>
       <Dialog as="div"  className={"relative z-[10000] " + theme}  onClose={onClose}>
         <Transition.Root
           as={Fragment}
@@ -36,7 +34,7 @@ export const Alert :FC<AlertProps> =   ({isOpen=true,onClose=()=>{
           <div className="fixed inset-0 bg-slate-900/10 backdrop-blur-md bg-opacity-75 transition-opacity" />
         </Transition.Root>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto">
+        <div className="fixed inset-0 z-10 top-0 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
               as={Fragment}
@@ -98,9 +96,7 @@ export const Alert :FC<AlertProps> =   ({isOpen=true,onClose=()=>{
           </div>
         </div>
       </Dialog>
-    </Transition>
-   
-    </>
+    </Transition.Root>
   )
 }
 

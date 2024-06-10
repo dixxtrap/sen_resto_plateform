@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "plate",
+        path: "product",
         element: <PlateList />,
       },
       {

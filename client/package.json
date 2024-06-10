@@ -10,7 +10,7 @@
     "preview": "vite preview --host"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
+    "@headlessui/react": "^2.0",
     "@heroicons/react": "^2.0.18",
     "@reduxjs/toolkit": "^1.9.7",
     "clsx": "^2.0.0",

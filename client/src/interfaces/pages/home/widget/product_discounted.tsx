@@ -22,7 +22,7 @@ export const ProductDiscountedWidget = () => {
           <span className='title2'> {e.name}</span>
           <div className='flex gap-3'>
           <span className='title3 line-through  decoration-2 text-gray-500'> {e.price} </span>
-          <span className='title3  text-primary-300'> {e.price!*(1-e.reduction!/100)} F CFA</span>
+          <span className='title3  text-primary-300'> {Math.round(e.price!*(1-e.reduction!/100))} F CFA</span>
           </div>
           <span className=' text-gray-500 text-sm '> {e.parent?.shortname}</span>
           </div>)}</div>}
