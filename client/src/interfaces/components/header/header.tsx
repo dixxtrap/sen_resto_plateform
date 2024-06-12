@@ -14,7 +14,7 @@ export const Header = () => {
               <div className="flex px-2 lg:px-0">
                 <Link to="/" className="flex flex-shrink-0 items-center">
                   <img alt="logo" src={logo} className="h-10" />
-                  <span className="text-2xl font-bold font-serif ml-4  text-kprimary-500">
+                  <span className="text-lg md:text-2xl font-bold font-serif ml-4  text-kprimary-500">
                     {constant.app_name}
                   </span>
                 </Link>

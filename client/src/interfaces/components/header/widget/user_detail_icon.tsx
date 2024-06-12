@@ -9,14 +9,20 @@ import { NotificationIcon } from './notification_icon';
 import {  useState } from 'react';
 import { DialogAlert } from '../../dialog';
 import { LoginForm } from '../../login/login_form';
+const unlockListMenu=[
+ 
+
+ {name:'Produits',icon:<HeaderIcon icon={<CakeIcon className='h-8'/>}/>, route:'product'}, 
+ { icon:<HeaderIcon icon={<HomeModernIcon className='h-8'/>}/>,name:'Restaurant', route:'notification',},
+//  {name:'Favoris', route:'favoris',}
+];
 const listMenu=[
     {name:'Commandes',icon:<BagIcon></BagIcon>, route:'order'},
 { icon:<NotificationIcon/>,name:'Notification', route:'notification',},
 {name:'Favoris', icon:<HeaderIcon icon={<StarIcon className='h-8'/>}/>,route:'favoris',},
 {name:'Caddeaux', icon:<HeaderIcon icon={<GiftIcon className='h-8'/>}/>,route:'favoris',},
 
- {name:'Produits',icon:<HeaderIcon icon={<CakeIcon className='h-8'/>}/>, route:'product'}, 
- { icon:<HeaderIcon icon={<HomeModernIcon className='h-8'/>}/>,name:'Restaurant', route:'notification',},
+...unlockListMenu
 //  {name:'Favoris', route:'favoris',}
 ];
 
@@ -51,7 +57,7 @@ isError&&setShowLogin(true);
       >
         <PopoverPanel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
           <div className="w-[300px] shrink rounded-xl bg-white p-4 text-sm  md:text-lg font-semibold leading-6 text-gray-900 shadow-lg ring-1 ring-gray-900/5">
-            {listMenu.map((item) => (
+            {(isError?unlockListMenu: listMenu).map((item) => (
               <Link key={item.name}  to={item.route!} className="flex items-center p-2 hover:text-secondary-400">
               {item.icon}  {item.name}
               </Link> 

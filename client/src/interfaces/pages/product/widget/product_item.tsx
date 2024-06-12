@@ -29,7 +29,7 @@ console.log(isLogin)
                   {product.price}{" "}
                 </span>
               )}
-              <span className="title3  text-primary-300">
+              <span className="title3  text-primary-500">
                 {" "}
                 {Math.fround(product.price! * (1 - product.reduction! / 100))} F
                 CFA
@@ -41,11 +41,11 @@ console.log(isLogin)
             </span>
           </div>
           <div className="grid grid-cols-2 rounded-b-lg  overflow-hidden w-full divide-x  divide-gray-500/50 ">
-          <div className="flex gap-2 cursor-pointer  justify-starts p-2 place-items-end  hover:bg-secondary-400 hover:text-white">
+          <div className="flex gap-2 cursor-pointer  justify-center p-2 place-items-end  hover:bg-secondary-400 hover:text-white">
             <StarIcon className="h-6" /> <span className="leading-3">{Str.favoris}</span>
           </div>
 
-          <div onClick={()=>setOpen(true)} className="flex  gap-2 cursor-pointer justify-end p-2  hover:bg-secondary-400 hover:text-white  place-items-end">
+          <div onClick={()=>{isLogin&&setOpen(true)}} className="flex  gap-2 cursor-pointer justify-center p-2  hover:bg-secondary-400 hover:text-white  place-items-end">
            <span className="leading-3"> {Str.bag}</span>
             <ShoppingBagIcon className="h-6" />
           </div>

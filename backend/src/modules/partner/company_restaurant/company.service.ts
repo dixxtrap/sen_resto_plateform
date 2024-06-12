@@ -72,13 +72,7 @@ export class CompanyRestaurantService {
     return this.repos
       .findOne({ where: { id: Equal(id) } })
       .then(async (old) => {
-        if (
-          old &&
-          file &&
-          old.imagePath &&
-          body.imagePath &&
-          old.imagePath !== body.imagePath
-        ) {
+        if (old && file && body.imagePath && old.imagePath !== body.imagePath) {
           body.imagePath = await this.s3Service.uploadFileToS3AndDeleteLocal({
             file,
             oldPath: old.imagePath,

@@ -25,9 +25,9 @@ export const errorTrasform = (response: FetchBaseQueryError| AxiosError) => {
                 code:data.code?? status,
                 status:data.status,
                 sessionExpired:data.sessionExpired,
-                message: data.message || 'An error occurred',
+                message: data.message ?? 'An error occurred',
         };
-        console.log("---------------------------error response -----------------------", errorModel);
+        console.log("-------------------------- -error response -----------------------", errorModel);
 
         return errorModel;
 }

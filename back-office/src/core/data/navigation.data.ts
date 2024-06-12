@@ -78,7 +78,7 @@ export const navigationData: INavigation[] = [
     name: "notification",
     href: "/notification",
     icon: BellIcon,
-    permissions: [{ code: "*", type: "*" }],
+    permissions: [{ code: "notification", type: "*" }],
   },
   {
     name: "Delivers",

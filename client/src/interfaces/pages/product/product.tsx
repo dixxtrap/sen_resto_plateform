@@ -24,10 +24,11 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
         <div className="bg-white">
           <div className="mx-auto  px-2      ">
             <h2 className="sr-only">Products</h2>
-            <div className="flex items-center w-full justify-between py-3">
+            <div className="flex items-center place-items-center w-full justify-between py-3">
               <Input className="max-w-xs">
               <input className="input bg-white"  placeholder="Rechercher"  />
               </Input>
+              <div className="w-10"></div>
               <AutoCompletionCompanies current={company} onclick={(id)=>setCompany(id)} />
             </div>
             {/* <div className="grid grid-cols-8 gap-5 gap-x-3 flex-wrap py-2 pb-8">

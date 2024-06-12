@@ -30,7 +30,7 @@ export const AutoCompletionCompanies:FC<AutoCompletionCompaniesProps> = ({curren
   return (
     companies &&
     isSuccess && (
-      <Combobox as="div" value={selectedCompany} onChange={setSelectedCompany}>
+      <Combobox as="div" value={selectedCompany} onChange={(value)=>{setSelectedCompany(value!)}}>
         {/* <Combobox.Label className="block text-sm font-medium leading-6 text-gray-900">
           Assigned to
         </Combobox.Label> */}

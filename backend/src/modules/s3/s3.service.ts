@@ -80,25 +80,29 @@ export class S3Service {
     file: Express.Multer.File;
     oldPath: string;
   }) {
-    if (oldPath) {
-      return await this.deleteFileToS3({ path: oldPath })
-        .then(async (isDelected) => {
-          console.log(
-            `==============${
-              isDelected ? 'supprimer' : 'non supprimer'
-            }==========`,
-          );
-          const uploadResult = await this.createFileToS3AndDeleteLocal({
-            file,
+    if (file) {
+      if (oldPath)
+        return await this.deleteFileToS3({ path: oldPath })
+          .then(async (isDelected) => {
+            console.log(
+              `==============${
+                isDelected ? 'supprimer' : 'non supprimer'
+              }==========`,
+            );
+            const uploadResult = await this.createFileToS3AndDeleteLocal({
+              file,
+            });
+            // Delete the file from the local filesystem after uploading to S3
+            return uploadResult;
+          })
+          .catch((err) => {
+            console.log('============error delecting==========');
+            console.log(err);
+            throw err;
           });
-          // Delete the file from the local filesystem after uploading to S3
-          return uploadResult;
-        })
-        .catch((err) => {
-          console.log('============error delecting==========');
-          console.log(err);
-          throw err;
-        });
+      return await this.createFileToS3AndDeleteLocal({
+        file,
+      });
     } else {
       const uploadResult = await this.createFileToS3AndDeleteLocal({ file });
       // Delete the file from the local filesystem after uploading to S3
