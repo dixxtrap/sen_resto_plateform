@@ -1,12 +1,12 @@
 import {
   ArrowRightCircleIcon,
   Bars3Icon,
-  TrashIcon,
 } from "@heroicons/react/24/outline";
 import {
   BellIcon,
   UserIcon,
   ChatBubbleBottomCenterIcon,
+  ArrowRightStartOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import { Navigate } from "react-router-dom";
 import { FC, useEffect } from "react";
@@ -15,7 +15,7 @@ import {
   useSignoutMutation,
 } from "../../core/features/security.slice";
 import { Alert } from "./alert_success";
-import { ActionIcon, Text, Button, Menu, rem, Group, Burger } from "@mantine/core";
+import { ActionIcon, Text, Button, Menu, rem, Group } from "@mantine/core";
 import { ThemeToggler } from "./theme_toggler/theme_toggler";
 import { multiSelectStyle } from "./form/custom_styles";
 export const Header: FC<{
@@ -23,7 +23,7 @@ export const Header: FC<{
   close: () => void;
 }> = ({ open }) => {
   const [
-    _,
+    signout,
     {
       isError: isDisconnecteError,
       isLoading: isDisconnecteLoading,
@@ -126,12 +126,13 @@ export const Header: FC<{
                     Transfer my data
                   </Menu.Item>
                   <Menu.Item
-                    color="red"
+                  
                     leftSection={
-                      <TrashIcon style={{ width: rem(14), height: rem(14) }} />
+                      <ArrowRightStartOnRectangleIcon className="size-6 p-1 rounded-full" />
                     }
-                  >
-                    Delete my account
+                    onClick={()=>signout("")}
+                    >
+                     Déconnexion
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
