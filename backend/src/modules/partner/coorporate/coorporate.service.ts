@@ -64,7 +64,7 @@ export class CoorporateService {
           });
           console.log(`==================${body.imagePath}===============`);
         }
-        return this.repos.update({ id: Equal(id) }, body).then((result) => {
+        return this.repos.update({ id: Equal(id) }, this.repos.create(body)).then((result) => {
           if (result.affected! > 0) return HttpExceptionCode.SUCCEEDED;
           else throw new WsMessage(HttpExceptionCode.FAILLURE);
         });

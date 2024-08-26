@@ -12,8 +12,8 @@ export class WsProductService {
   getAll() {
     return this.repos
       .find({
-        relations: { file: true, parent: true },
-        select: { parent: { shortname: true, id: true } },
+        relations: { file: true, parent: true , category:true},
+        select: { parent: { shortname: true, id: true , imagePath:true,},  category:{id:true, name:true}},
       })
       .then((result) => {
         return BaseResponse.success(result.sort(() => Math.random() - 0.5));

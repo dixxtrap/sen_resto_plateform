@@ -10,7 +10,7 @@ import { SecurityModule } from '../security/security.module';
 import { WsCustomerController } from './customer/customer.controller';
 import { WsCustomerService } from './customer/customer.service';
 import { Customer } from 'src/typeorm/customer.entity';
-import { MailerModule } from '../mailer/mailer.module';
+import { EmailerModule } from '../mailer/mailer.module';
 import { OtpModule } from '../otp/otp.module';
 import { Banner } from 'src/typeorm/banner.entity';
 import { WsBannerController } from './banner/banner.controller';
@@ -23,6 +23,9 @@ import { WsOrderService } from './order/order.service';
 import { Order } from 'src/typeorm/order.entity';
 import { OrderProduct } from '../../typeorm/order_product.entity';
 import { ProductModule } from '../product/product.module';
+import { WsPaymentTypeController } from './payment_type/payment_type.controller';
+import { WsPaymentTypeService } from './payment_type/payment_type.service';
+import { PaymentType } from 'src/typeorm/payment_type.entity';
 
 @Module({
   imports: [
@@ -35,9 +38,10 @@ import { ProductModule } from '../product/product.module';
       Category,
       Order,
       OrderProduct,
+      PaymentType
     ]),
     SecurityModule,
-    MailerModule,
+    EmailerModule,
     OtpModule,
     ProductModule,
   ],
@@ -48,6 +52,7 @@ import { ProductModule } from '../product/product.module';
     WsBannerController,
     WsCategoryController,
     WsOrderController,
+    WsPaymentTypeController
   ],
   providers: [
     WsProductService,
@@ -56,6 +61,7 @@ import { ProductModule } from '../product/product.module';
     WsBannerService,
     WsCategoryService,
     WsOrderService,
+    WsPaymentTypeService
   ],
 })
 export class WebServiceModule {}

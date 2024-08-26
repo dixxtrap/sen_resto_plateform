@@ -50,8 +50,7 @@ export class RestaurantService {
       .then(async (old) => {
         if (
           file &&
-          old &&
-          old.imagePath &&
+          old?.imagePath &&
           body.imagePath &&
           old.imagePath !== body.imagePath
         ) {
@@ -61,7 +60,7 @@ export class RestaurantService {
           });
           console.log(`==================${body.imagePath}===============`);
         }
-        return this.repos.update({ id: Equal(id) }, body).then((result) => {
+        return this.repos.update({ id: Equal(id) }, this.repos.create(body)).then((result) => {
           if (result.affected! > 0) return HttpExceptionCode.SUCCEEDED;
           else throw new WsMessage(HttpExceptionCode.FAILLURE);
         });
@@ -74,7 +73,7 @@ export class RestaurantService {
   }
   getAll({ by }: { by: UserDto }) {
     return this.repos
-      .find({ where: { parentId: by.parentId } })
+      .find({ where: { parentId: by.parentId } , relations:{city:{parent:{parent:true}}}})
       .then((result) => {
         if (result) return BaseResponse.success(result);
         else throw new WsMessage(HttpExceptionCode.FAILLURE);

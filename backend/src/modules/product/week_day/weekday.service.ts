@@ -12,18 +12,9 @@ export class WeekdayService implements OnModuleInit {
     this.initDay();
   }
   initDay() {
-    this.repos.find().then((result) => {
-      if (result.length > 0) return null;
-      Promise.all(
-        weekDayData.map((item) => {
-          try {
-            this.repos.save(item);
-          } catch (error) {
-            return null;
-          }
-        }),
-      );
-    });
+    this.repos.upsert(weekDayData.map(e=>this.repos.create(e)),{ conflictPaths: { name:true, dayNumber:true},
+    upsertType: 'on-duplicate-key-update',})
+    ;
   }
   getAll() {
     return this.repos

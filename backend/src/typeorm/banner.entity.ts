@@ -18,7 +18,7 @@ export class Banner {
   imageUrl: string;
   @Column({ enum: BannerType, type: 'enum' })
   type: BannerType;
-  @Column()
+  @Column('text')
   description: string;
   @Column('datetime')
   start: Date;

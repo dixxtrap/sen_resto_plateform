@@ -16,7 +16,7 @@ export class BannerService {
   ) {}
 
   getAll({ by }: { by: UserDto }) {
-    logInfo({ by, action: `get all  banner` });
+    logInfo({ by, action: `get all service nsws  banner` });
     return this.repos.find().then((result) => {
       return BaseResponse.success(result);
     });

@@ -33,13 +33,15 @@ export class CompanyRestaurantService {
           description: '',
           name: 'Sen Resto',
           location: new CoordonatesDto(),
-          address: new AddressDto(),
+          address: "",
           parentId: null,
           details: { byId: byId },
         }),
       );
   }
   create({ body, by }: { body: CompanyRestaurantBaseDto; by: UserDto }) {
+
+    console.log(body)
     return this.repos
       .save(
         this.repos.create({
@@ -78,7 +80,7 @@ export class CompanyRestaurantService {
             oldPath: old.imagePath,
           });
         }
-        return this.repos.update({ id: Equal(id) }, body).then((result) => {
+        return this.repos.update({ id: Equal(id) }, this.repos.create(body)).then((result) => {
           if (result.affected! > 0) return HttpExceptionCode.SUCCEEDED;
           else throw new WsMessage(HttpExceptionCode.FAILLURE);
         });
@@ -111,7 +113,7 @@ export class CompanyRestaurantService {
   }
   getById({ id }: { id: number }) {
     return this.repos
-      .findOne({ where: { id: Equal(id) } })
+      .findOne({ where: { id: Equal(id) } , relations:{city:{parent:{parent:{parent:true}}}}})
       .then((result) => {
         if (result) return BaseResponse.success(result);
         else throw new WsMessage(HttpExceptionCode.FAILLURE);

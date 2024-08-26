@@ -31,22 +31,10 @@ export class RoleController {
     @Body('permissions') permissions: RolePermissionDto[],
     @Param('id') id: number,
   ) {
-    return this.service.update({ body, id, permissions });
+    return this.service.update({ body, id });
   }
-  @Put('by_id/add_multiple_permission/:id')
-  addMultiplePermission(
-    @Body() permissions: PermissionDto[],
-    @Param('id') id: number,
-  ) {
-    return this.service.addMultiplePermission({ roleId: id, permissions });
-  }
-  @Put('by_id/remove_multiple_permission/:id')
-  removeMultiplePermission(
-    @Body() permissions: RolePermissionDto[],
-    @Param('id') id: number,
-  ) {
-    return this.service.removeMultiplePermission({ roleId: id, permissions });
-  }
+  
+
   @Get('by_id/:id')
   getById(@Param('id') id: number) {
     return this.service.getById({ id });

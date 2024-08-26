@@ -13,6 +13,7 @@ import { CompanyRestaurantBase } from './company_restaurant.entity';
 import { CryptoService } from 'src/utils/crypto_service';
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from './role.entity';
+import { City } from './city.entity';
 
 @Entity()
 export class User {
@@ -38,8 +39,12 @@ export class User {
   birthday: Date;
   @Column(() => Coordonates)
   coordonates: Coordonates;
-  @Column(() => Address)
-  address: Address;
+ @Column({nullable:true, default:null})
+ address:string
+  @ManyToOne(() => City)
+  city: City
+  @Column({ nullable: true, default: null })
+  cityId: number;
   @ManyToOne(() => CompanyRestaurantBase)
   parent: CompanyRestaurantBase;
   @Column({ default: true })
@@ -71,9 +76,8 @@ export class UserDto {
   email: string;
   @ApiProperty()
   coordonates: CoordonatesDto;
-  @ApiProperty({ type: () => AddressDto })
-  address?: AddressDto;
   parentId?: number;
+  cityId?: number;
   roleId?: number;
 
   @ApiProperty({ type: () => CreationDetailsDto })

@@ -1,3 +1,4 @@
+import { CustomerDto } from './../../../typeorm/customer.entity';
 import {
   Body,
   Controller,
@@ -14,7 +15,6 @@ import { WsOrderService } from './order.service';
 import { AddOrderDto, OrderStatus } from 'src/typeorm/order.entity';
 import { LocalAuthGuardCustomer } from 'src/middleware/local_auth.guard';
 import { Request } from 'express';
-import { CustomerDto } from 'src/typeorm/customer.entity';
 @Controller('ws/order')
 @ApiTags('ws/order')
 export class WsOrderController {
@@ -25,9 +25,11 @@ export class WsOrderController {
     const by = req.user as CustomerDto;
     return this.service.getBag({ by });
   }
-  @Put('update/status/:id')
-  changeStatus(@Param('id') id: number, @Query('status') status: string) {
-    return this.service.changeStatus({ id, status: status as OrderStatus });
+  @Put('consfirm_status/:id')
+  @UseGuards(LocalAuthGuardCustomer)
+  changeStatus(@Param('id') id: number, @Req() req :Request) {
+    const by= req.user as CustomerDto;
+    return this.service.confirmOrder({ id, by});
   }
   @Post('product/add')
   @UseGuards(LocalAuthGuardCustomer)

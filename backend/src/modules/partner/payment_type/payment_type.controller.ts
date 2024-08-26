@@ -13,11 +13,11 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { PaymentTypeService } from './payment_type.service';
 import { AuthenticatedGuard } from 'src/modules/security/authenticated.guard';
-import { CompanyRestaurantBaseDto } from 'src/typeorm/company_restaurant.entity';
 import { UserDto } from 'src/typeorm/user.entity';
 import { fileInterCeptorImg } from 'src/utils/multer.config';
 import { Request } from 'express';
-import { PaymentTypeDto } from 'src/typeorm/payment_type.entity';
+import { PaymentType, PaymentTypeDto } from 'src/typeorm/payment_type.entity';
+import { plainToClass } from 'class-transformer';
 @Controller('payment_type')
 @ApiTags('payment_type')
 export class PaymentTypeController {
@@ -46,12 +46,13 @@ export class PaymentTypeController {
   @Put('by_id/:id')
   @UseInterceptors(fileInterCeptorImg)
   update(
-    @Body() body: PaymentTypeDto,
+    @Body() body: any,
     @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    const b=plainToClass(PaymentTypeDto, body)
     console.log(file);
-    if (file) body.imagePath = file?.path ?? null;
-    return this.service.update({ id, body, file });
+    if (file) b.imagePath = file?.path ?? null;
+    return this.service.update({ id, body:b, file });
   }
 }

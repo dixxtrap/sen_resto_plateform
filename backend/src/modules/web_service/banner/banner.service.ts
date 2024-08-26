@@ -10,7 +10,7 @@ export class WsBannerService {
 
   getAll() {
     return this.repos
-      .find()
+      .find({relations:{}})
       .then((result) => BaseResponse.success<Banner[]>(result))
       .catch(WsCatch);
   }

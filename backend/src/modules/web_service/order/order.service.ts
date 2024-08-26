@@ -25,6 +25,7 @@ export class WsOrderService {
         relations: {
           partner: true,
           products: {
+            
             productHistory: { product: { file: true } },
           },
         },
@@ -39,6 +40,7 @@ export class WsOrderService {
             name: true,
             type: true,
             parent: {
+              id:true,
               name: true,
             },
           },
@@ -154,6 +156,13 @@ export class WsOrderService {
       ));
     return order;
   };
+
+  async confirmOrder({id}:{id:number,by:CustomerDto }){
+    return this.repos.update({id:id, status:OrderStatus.OnBag}, {status:OrderStatus.Active}).then((result)=>{
+      if(result.affected>0) throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+      throw new WsMessage(HttpExceptionCode.NOT_FOUND)
+    }).catch(WsCatch)
+  }
   async addProductToOrder({
     body,
     by,

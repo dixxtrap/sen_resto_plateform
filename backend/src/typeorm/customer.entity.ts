@@ -35,8 +35,8 @@ export class SetProfileDto {
   firstname: string;
   @ApiProperty()
   lastname: string;
-  @ApiProperty({ type: () => AddressDto })
-  address: AddressDto;
+  @ApiProperty( ) 
+  address: string;
   @ApiProperty()
   coordonates: CoordonatesDto;
 }

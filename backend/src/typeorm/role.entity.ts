@@ -45,6 +45,8 @@ export class RoleDto {
   @ApiProperty()
   description: string;
   @ApiProperty()
+  permissions?: number[];
+  @ApiProperty()
   parentId: number;
   @ApiProperty()
   parent: { id: number };

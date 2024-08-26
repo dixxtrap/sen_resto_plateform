@@ -8,6 +8,7 @@ import {
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, In, Repository } from 'typeorm';
 import { PermissionService } from '../permission/permission.service';
+import { WsCatch } from 'src/utils/catch';
 @Injectable()
 export class RolePermissionService {
   constructor(
@@ -67,71 +68,15 @@ export class RolePermissionService {
     permissions,
   }: {
     roleId: number;
-    permissions: RolePermissionDto[];
+    permissions: number[];
   }) {
     return this.repos
       .delete({
         roleId: Equal(roleId),
-        permissionId: In(permissions.map((item) => item.permissionId)),
       })
       .then(() => {
-        throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+        return  this.repos.save(permissions.map(p=>this.repos.create({roleId:roleId,permissionId:p }))).then(val=>{throw new  WsMessage(HttpExceptionCode.SUCCEEDED)})
       })
-      .catch((err) => {
-        if (err instanceof WsMessage) throw err;
-        else throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
-  }
-  addMultiple({
-    roleId,
-    permissions,
-  }: {
-    roleId: number;
-    permissions: PermissionDto[];
-  }) {
-    return Promise.all(
-      permissions.map((item) => {
-        try {
-          return this.create({
-            body: {
-              permissionId: item.id,
-              roleId: roleId,
-              canUse: true,
-              canInherit: true,
-            },
-          });
-        } catch (err) {}
-      }),
-    )
-      .then(() => {
-        console.log(
-          '--------------------add multiple success---------------------',
-        );
-        throw new WsMessage(HttpExceptionCode.SUCCEEDED);
-      })
-      .catch((err) => {
-        if (err instanceof WsMessage) throw err;
-        else throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
-  }
-  removeMultiple({
-    roleId,
-    permissions,
-  }: {
-    roleId: number;
-    permissions: RolePermissionDto[];
-  }) {
-    return this.repos
-      .delete({
-        roleId: Equal(roleId),
-        permissionId: In(permissions.map((p) => p.permissionId)),
-      })
-      .then(() => {
-        throw new WsMessage(HttpExceptionCode.SUCCEEDED);
-      })
-      .catch((err) => {
-        if (err instanceof WsMessage) throw err;
-        else throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
+      .catch(WsCatch);
   }
 }

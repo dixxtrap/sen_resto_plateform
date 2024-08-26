@@ -6,4 +6,4 @@ export const weekDayData = [
   { name: 'Thursday', dayNumber: 4 },
   { name: 'Friday', dayNumber: 5 },
   { name: 'Saturday', dayNumber: 6 },
-];
+];  

@@ -10,4 +10,8 @@ export class WsCategoryController {
   getAll() {
     return this.service.getAll();
   }
+  @Get('base')
+  getBase() {
+    return this.service.getBase();
+  }
 }

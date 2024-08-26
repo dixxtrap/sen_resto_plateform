@@ -1,33 +1,32 @@
-import { ManyToOne, Entity, OneToMany, Column } from 'typeorm';
-import { AddressBase, AddressBaseDto } from './address.entity';
-import { ApiProperty } from '@nestjs/swagger';
-@Entity()
-export class Region extends AddressBase {
-  @OneToMany(() => City, (e) => e.region)
-  city: City[];
-}
-export class RegionDto extends AddressBaseDto {}
-@Entity()
-export class City extends AddressBase {
-  @ManyToOne(() => Region)
-  region: Region;
-  @Column({ default: null, nullable: true })
-  regionId: number;
-  @OneToMany(() => Commune, (e) => e.city)
-  city: Commune[];
-}
-export class CityDto extends AddressBaseDto {
-  @ApiProperty()
-  regionId: number;
+import { Column } from "typeorm/decorator/columns/Column";
+import { PrimaryGeneratedColumn } from "typeorm/decorator/columns/PrimaryGeneratedColumn";
+import { Entity } from "typeorm/decorator/entity/Entity";
+import { ManyToOne } from "typeorm/decorator/relations/ManyToOne";
+import { OneToMany } from "typeorm/decorator/relations/OneToMany";
+import { CreationDetailsWithoutBy } from "./details.entity";
+
+
+
+export enum CityEnum{
+    REGION='REGION',
+    DEPARTEMENT='DEPARTEMENT',
+    ARRONDISSEMENT='ARRONDISSEMENT',
+     COMMUNE='COMMUNE' ,
 }
 @Entity()
-export class Commune extends AddressBase {
-  @ManyToOne(() => City)
-  city: City;
-  @Column({ default: null, nullable: true })
-  cityId: number;
-}
-export class CommuneDto extends AddressBaseDto {
-  @ApiProperty()
-  cityId: number;
+export class City{
+    @PrimaryGeneratedColumn()
+    id:number;
+    @Column()
+    name:string;
+    @Column({type:'enum', enum:CityEnum})
+    type:CityEnum;
+    @OneToMany(()=>City,(table)=>table.parent)
+    children:City[]
+    @ManyToOne(()=>City)
+    parent:City
+    @Column({nullable:true, default:null})
+    parentId:number
+    @Column(type => CreationDetailsWithoutBy, { prefix: false })
+    details: CreationDetailsWithoutBy; 
 }

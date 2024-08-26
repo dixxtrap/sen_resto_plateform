@@ -25,8 +25,10 @@ export class Product {
   price: number;
   @Column('double')
   reduction: number;
-  @Column('double')
-  cookingTime: number;
+  @Column()
+  cookingTime: string;
+  @Column({nullable:true, default:true})
+  isActive:boolean
   @OneToMany(() => ProductFile, (item) => item.product)
   file: ProductFile;
   @ManyToMany(() => Category, {
@@ -58,9 +60,10 @@ export class ProductDto {
   @ApiProperty()
   reduction: number;
   @ApiProperty()
-  cookingTime: number;
-  @ApiProperty({ type: () => CategoryDto })
-  category: CategoryDto[];
+  cookingTime: string;
+  @ApiProperty()
+  isActive: boolean;
+  categoryIds: number[];
   parentId: number;
   @ApiProperty({ type: () => CreationDetailsDto })
   details: CreationDetailsDto;

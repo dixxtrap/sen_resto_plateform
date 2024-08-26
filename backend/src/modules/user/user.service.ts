@@ -6,16 +6,16 @@ import { User } from 'src/typeorm';
 import { UserDto } from 'src/typeorm/user.entity';
 import { WsCatch } from 'src/utils/catch';
 import { CryptoService } from 'src/utils/crypto_service';
-import { HttpExceptionCode } from 'src/utils/http_exception_code';
+import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
-import { MailerService } from '../mailer/mailer.service';
+import { EmailerService } from '../mailer/mailer.service';
 import { BaseResponse } from 'src/typeorm/response_base';
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private repos: Repository<User>,
     private jwt: JwtService,
-    private mailer: MailerService,
+    private mailer: EmailerService,
   ) {}
   async createAdmin(roleId: number) {
     //     SUPER_ADMIN_EMAIL=Kalanji2023@gmail.com
@@ -60,8 +60,8 @@ export class UserService {
             expiresIn: 24 * 60 * 60 + 's',
           },
         );
-        this.mailer.sendActivationMail({
-          to: email,
+        this.mailer.sendUserConfirmation({
+          user: value,
           token,
         });
         if (value) return HttpExceptionCode.SUCCEEDED;
@@ -89,7 +89,7 @@ export class UserService {
           lastname: true,
           email: true,
           phone: true,
-          address: { city: true, country: true, streetAddress:true},
+        city:{name:true, id:true, parent:{name:true, id:true, parent:{name:true, id:true, parent:{name:true, id:true}}}},
           parent: { name: true, shortname: true, imagePath: true, id: true },
         },
       })
@@ -122,7 +122,7 @@ export class UserService {
       })
       .then((value) => {
         if (value) return value;
-        throw new Error(`email not found`);
+        throw new WsMessage(HttpExceptionCode.LOGIN_FAILLURE);
       })
       .catch(WsCatch);
   }

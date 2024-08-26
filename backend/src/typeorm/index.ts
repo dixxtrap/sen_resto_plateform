@@ -34,10 +34,11 @@ import { OrderProduct } from './order_product.entity';
 import { Commission } from './commission.entity';
 import { OtpConfig } from './otp_config';
 import { Otp } from './otp.entity';
-import { City, Commune, Region } from './city.entity';
+import { City} from './city.entity';
 import { Assignment } from './assignment.entity';
 import { Banner } from './banner.entity';
 import { ProductRaiting } from './product_rating.entity';
+import { Gift } from './gift.entity';
 
 // export
 export {
@@ -83,9 +84,8 @@ export const entities = [
   Commission,
   OtpConfig,
   Otp,
-  Region,
   City,
-  Commune,
   Banner,
   ProductRaiting,
+  Gift
 ];

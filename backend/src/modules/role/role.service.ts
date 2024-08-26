@@ -2,12 +2,13 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from 'src/typeorm';
 import { RoleDto } from 'src/typeorm/role.entity';
-import { HttpExceptionCode } from 'src/utils/http_exception_code';
+import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Like, Repository } from 'typeorm';
 import { RolePermissionService } from '../role_permsion/role_permission.service';
 import { RolePermissionDto } from 'src/typeorm/role_permissison.entity';
 import { PermissionDto } from 'src/typeorm/permission.entity';
 import { UserDto } from 'src/typeorm/user.entity';
+import { WsCatch } from 'src/utils/catch';
 
 @Injectable()
 export class RoleService {
@@ -98,35 +99,17 @@ export class RoleService {
   }: {
     id: number;
     body: RoleDto;
-    permissions: RolePermissionDto[];
-  }) {
+   
+    }) {
+    const { permissions,...rest} = body;
     return this.repos
-      .update({ id: Equal(id) }, body)
+      .update({ id: Equal(id) }, rest)
       .then((result) => {
-        if (result) return HttpExceptionCode.SUCCEEDED;
+        if(permissions&& permissions?.length>0)return  this.rolePermissionService.updateMultiple({roleId:id, permissions})
+        if (result.affected>0) throw new WsMessage(HttpExceptionCode.SUCCEEDED);
       })
-      .catch((e) => {
-        console.log(e);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 500);
-      });
+      .catch(WsCatch);
   }
 
-  addMultiplePermission({
-    roleId,
-    permissions,
-  }: {
-    roleId: number;
-    permissions: PermissionDto[];
-  }) {
-    return this.rolePermissionService.addMultiple({ roleId, permissions });
-  }
-  removeMultiplePermission({
-    roleId,
-    permissions,
-  }: {
-    roleId: number;
-    permissions: RolePermissionDto[];
-  }) {
-    return this.rolePermissionService.removeMultiple({ roleId, permissions });
-  }
+ 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Response } from 'express';
-import { MailerService } from 'src/modules/mailer/mailer.service';
+import { EmailerService } from 'src/modules/mailer/mailer.service';
 import { OtpService } from 'src/modules/otp/otp.service';
 import { LoginDto } from 'src/modules/security/security.dto';
 import { SecurityService } from 'src/modules/security/security.service';
@@ -18,7 +18,7 @@ export class WsCustomerService {
     private securityService: SecurityService,
     @InjectRepository(Customer) private repos: Repository<Customer>,
     private otpService: OtpService,
-    private mailService: MailerService,
+    private mailService: EmailerService,
   ) {}
   login({ body }: { body: LoginDto }) {
     return this.securityService.userLogin({
@@ -41,12 +41,12 @@ export class WsCustomerService {
       .generateOtp({ to: phone, configId: 1, channel: 'mobile' })
       .then((otp) => {
         return this.mailService
-          .sentMessage({
+          .senOtp({
             to: phone,
             message: `your  otp code  is ${otp.code}`,
           })
           .then((restult) => {
-            if (restult.status == 'sent')
+          
               throw new WsMessage(HttpExceptionCode.SUCCEEDED);
           });
       });

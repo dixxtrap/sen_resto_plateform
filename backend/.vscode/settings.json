@@ -1,6 +1,7 @@
 {
     "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
-    "editor.fontSize": 16,
+    "editor.fontSize": 13,
     "terminal.integrated.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
-    "editor.renderWhitespace": "trailing"
+    "editor.renderWhitespace": "trailing",
+    "workbench.sideBar.location": "right"
 }

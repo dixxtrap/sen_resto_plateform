@@ -19,6 +19,7 @@ export class PaymentTypeService {
     private s3Service: S3Service,
   ) {}
   create({ body, by }: { body: PaymentTypeDto; by: UserDto }) {
+    console.log(body);
     return this.repos
       .save(
         this.repos.create({
@@ -52,7 +53,7 @@ export class PaymentTypeService {
     body: PaymentTypeDto;
     file: Express.Multer.File;
   }) {
-    console.log(body);
+    console.log(typeof( body.isActive));
     return this.repos
       .findOne({ where: { id: Equal(id) } })
       .then(async (old) => {
@@ -63,7 +64,7 @@ export class PaymentTypeService {
           });
           console.log(`==================${body.imagePath}===============`);
         }
-        return this.repos.update({ id: Equal(id) }, body).then((result) => {
+        return this.repos.update({ id: Equal(id) }, {...body, isActive:`${body.isActive}`==='true'}).then((result) => {
           if (result.affected! > 0) return HttpExceptionCode.SUCCEEDED;
           else throw new WsMessage(HttpExceptionCode.FAILLURE);
         });

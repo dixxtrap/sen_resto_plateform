@@ -9,6 +9,8 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CompanyRestaurantService } from '../company_restaurant/company.service';
@@ -33,6 +35,7 @@ export class CompanyRestaurantController {
   @Post('create')
   @UseGuards(AuthenticatedGuard)
   @UseInterceptors(fileInterCeptorImg)
+  @UsePipes(new ValidationPipe({ transform: true }))
   create(
     @Body() body: CompanyRestaurantBaseDto,
     @Req() req: Request,

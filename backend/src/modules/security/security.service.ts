@@ -13,14 +13,14 @@ import { CryptoService } from 'src/utils/crypto_service';
 import { UserDto } from 'src/typeorm/user.entity';
 import { CustomerService } from '../partner/customer/customer.service';
 import { WsCatch } from 'src/utils/catch';
-import { MailerService } from '../mailer/mailer.service';
+import { EmailerService } from '../mailer/mailer.service';
 
 @Injectable()
 export class SecurityService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
-    private mailService: MailerService,
+    private mailService: EmailerService,
     private customerService: CustomerService,
   ) {}
   async login(body: LoginDto) {
@@ -35,8 +35,8 @@ export class SecurityService {
     console.log(user);
     if (user.password === CryptoService.createHash(body.password)) {
       return { ...rest };
-    }
-
+    } 
+ 
     // 💡inplement the logic
     throw new WsMessage(HttpExceptionCode.NOT_FOUND);
   }
@@ -100,8 +100,8 @@ export class SecurityService {
           expiresIn: 24 * 60 * 60 + 's',
         },
       );
-      this.mailService.sendActivationMail({
-        to: email,
+      this.mailService.sendUserConfirmation({
+        user: user,
         token,
       });
       return HttpExceptionCode.SUCCEEDED;

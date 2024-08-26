@@ -6,7 +6,14 @@ export class WsCategoryService {
   constructor(
     @InjectRepository(Category) private repos: Repository<Category>,
   ) {}
-  getAll() {
+  getBase() {
+    return this.repos
+      .find({ where: {parent: {name: Equal('root') }} })
+      .then((result) => {
+        return BaseResponse.success(result);
+      });
+  }
+getAll() {
     return this.repos
       .find({ where: { name: Not(Equal('root')) } })
       .then((result) => {
@@ -14,3 +21,4 @@ export class WsCategoryService {
       });
   }
 }
+  

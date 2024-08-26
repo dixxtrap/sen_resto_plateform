@@ -1,4 +1,6 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   Entity,
   ManyToOne,
@@ -13,6 +15,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { CompanyRestaurant, Restaurant } from './company_restaurant.entity';
 import { Contrat } from './contrat.entity';
 import { bool } from 'aws-sdk/clients/signer';
+import { City } from './city.entity';
+// import { IsBoolean } from 'class-validator';
 
 @Entity({})
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -23,7 +27,9 @@ export abstract class Partner {
   location: Coordonates;
   @Column()
   phone: string;
-  @Column({ default: true })
+  @Column({nullable:true, default:null})
+  address: string;
+  @Column({ type: 'boolean', default: false })
   isActive: boolean;
   @Column({ default: true })
   isBloqued: boolean;
@@ -31,8 +37,10 @@ export abstract class Partner {
   email: string;
   @Column({ nullable: true, default: null })
   imagePath: string;
-  @Column(() => Address)
-  address: Address;
+  @ManyToOne(() => City)
+  city: City;
+  @Column({ nullable: true, default: null })
+  cityId: number;
 
   @ManyToOne(() => Partner)
   parent: Partner | Restaurant | CompanyRestaurant;
@@ -46,6 +54,14 @@ export abstract class Partner {
   contrat: Contrat;
   @Column()
   type: string;
+  @BeforeInsert()
+  @BeforeUpdate()
+  changeBoolean() {
+    console.log(typeof(this.isActive))
+    this.isActive=`${this.isActive}`=='true'
+    this.isBloqued=`${this.isBloqued}`=='true'
+  }
+  
 }
 
 export class PartnerDto {
@@ -53,15 +69,18 @@ export class PartnerDto {
   @ApiProperty()
   location: CoordonatesDto;
   @ApiProperty()
-  address: AddressDto;
+  address: string;
   @ApiProperty()
   phone: string;
   @ApiProperty()
+  // @IsBoolean()
   isActive: boolean;
   @ApiProperty()
   email: string;
   @ApiProperty()
   imagePath: string;
+  @ApiProperty()
+  cityId: number;
   @ApiProperty()
   type: string;
   @ApiProperty()

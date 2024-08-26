@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Deliver, DeliverDto } from 'src/typeorm/deliver.entity';
+import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
@@ -37,7 +38,7 @@ export class DeliverService {
     return this.repos
       .find()
       .then((result) => {
-        if (result) return result;
+        if (result) return BaseResponse.successWithPagination(result, 10,20);
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
       .catch((err) => {

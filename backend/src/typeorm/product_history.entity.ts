@@ -12,8 +12,8 @@ export class ProductHistory {
   price: number;
   @Column('double')
   reduction: number;
-  @Column('double')
-  cookingTime: number;
+  @Column()
+  cookingTime: string;
   @ManyToOne(() => Product)
   product: Product;
   @Column()
@@ -30,7 +30,7 @@ export class ProductHistoryDto {
   @ApiProperty()
   reduction: number;
   @ApiProperty()
-  cookingTime: number;
+  cookingTime: string;
   @ApiProperty()
   productId: number;
 }

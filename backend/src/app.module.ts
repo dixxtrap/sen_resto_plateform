@@ -17,12 +17,14 @@ import { WebServiceModule } from './modules/web_service/web_service.module';
 import { WalletStatusModule } from './modules/wallet_status/wallet_status.module';
 import { ExcelModule } from './modules/excel/excel.module';
 import { OtpConfigModule } from './modules/otp_config/otp.module';
-import { MailerModule } from './modules/mailer/mailer.module';
+import { EmailerModule } from './modules/mailer/mailer.module';
 import { CardModule } from './modules/card/card.module';
 import { S3Module } from './modules/s3/s3.module';
 import { BannerModule } from './modules/banner/banner.module';
 import { OtpModule } from './modules/otp/otp.module';
 import { ProductRaitingModule } from './modules/product_rating/product_rating.module';
+import { CityModule } from './modules/city/city.module';
+import { OrderModule } from './modules/order/order.module';
 @Module({
   imports: [
     SecurityModule,
@@ -38,17 +40,19 @@ import { ProductRaitingModule } from './modules/product_rating/product_rating.mo
     RolePermissionModule,
     PartnerModule,
     UserModule,
+    OrderModule,
     ProductModule,
     WebServiceModule,
     WalletStatusModule,
     ExcelModule,
     OtpModule,
-    MailerModule,
+    EmailerModule,
     CardModule,
     S3Module,
     BannerModule,
     OtpConfigModule,
     ProductRaitingModule,
+    CityModule
   ],
   controllers: [AppController],
   providers: [AppService],
