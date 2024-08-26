@@ -6,7 +6,6 @@ import { LocalStrategy } from './local.strategy';
 import { SessionSerializer } from './session.serializer';
 import { UserModule } from '../user/user.module';
 import { JwtModule } from '@nestjs/jwt';
-import { EmailService } from 'src/utils/mail.service';
 import { JwtStrategy } from './jwt.strategy';
 import { PartnerModule } from '../partner/partner.module';
 import { EmailerModule } from '../mailer/mailer.module';
