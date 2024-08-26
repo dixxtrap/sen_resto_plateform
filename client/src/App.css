@@ -1,42 +1,30 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.bgInput {
+  @apply bg-slate-100/60;
+}
+.input {
+  @apply block w-full rounded-md  border-0 py-1.5   px-2  bgInput text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-[1.0px] focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.plate .describe {
+  @apply bg-gradient-to-b from-gray-100 via-gray-50 to-white absolute left-0 top-0 bottom-0 right-0   overflow-y-scroll p-2 duration-500 -translate-y-full;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.plate:hover .describe {
+  @apply block translate-y-0 ;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.plate {
+  @apply  rounded-md overflow-hidden   ring-1 ring-slate-500/20 hover:shadow-md;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.btn {
+  @apply mt-8 flex  items-center justify-center rounded-md  px-4 py-2 text-base font-medium  focus:outline-none focus:ring-2  focus:ring-offset-2;
 }
-
-.card {
-  padding: 2em;
+.btn.primary {
+  @apply bg-red-600  text-white hover:bg-red-700 focus:ring-red-500;
 }
-
-.read-the-docs {
-  color: #888;
+.btn.outlined {
+  @apply ring-1 ring-slate-400/10 font-bold focus:ring-slate-500/30      ;
+}
+.btn.secondary{
+  @apply ring-1 ring-secondary-400/60 bg-secondary-400 text-white font-bold text-xl focus:ring-secondary-500  border-none ;
 }

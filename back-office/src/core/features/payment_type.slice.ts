@@ -1,35 +1,41 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { createApi } from "@reduxjs/toolkit/dist/query/react";
 import { PaymentType } from "../models/payment_type";
+import { WsMessage } from "../models/error.dto";
+import { BaseResponse } from "./base_response";
+import { axiosBaseQuery } from "./axios_base_query";
 
 export const paymentTypeApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "/v1/" }),
+  baseQuery: axiosBaseQuery({ baseUrl: "/v1/" }),
   reducerPath: "payment_type",
-  tagTypes: ["payment_type"],
+  tagTypes: ["payment_type", 'security'],
   endpoints: (builder) => ({
-    getPaymentType: builder.query<PaymentType[], string>({
-      query: () => "payment_type",
-      providesTags: ["payment_type"],
+    getPaymentType: builder.query<BaseResponse<PaymentType[]>, string>({
+      query: () =>({url: "payment_type/all"}),
+      providesTags: ["payment_type",'security'],
     }),
-    getPaymentTypeById: builder.query<PaymentType, number>({
-      query: (id) => "payment_type/" + id,
-      providesTags: ["payment_type"],
+    getPaymentTypeById: builder.query<BaseResponse<PaymentType>, string>({
+      query: (id) => ({url:"payment_type/by_id/" + id}),
+      providesTags: ["payment_type",'security'],
     }),
     updatePaymentType: builder.mutation<
       PaymentType,
-      { paymentType: PaymentType; id: number }
+      { paymentType: PaymentType; id: string, file:File }
     >({
-      query: ({ id, paymentType }) => ({
-        url: `payment_type/${id}`,
+      query: ({ id, paymentType, file }) => ({
+        url: `payment_type/by_id/${id}`,
         method: "PUT",
-        body: paymentType,
+        data: {...paymentType, file},
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }),
       invalidatesTags: ["payment_type"],
     }),
-    createPaymentType: builder.mutation<PaymentType, PaymentType>({
-      query: (paymentTYpe) => ({
-        url: "payment_type",
+    createPaymentType: builder.mutation<WsMessage, PaymentType>({
+      query: (paymentType) => ({
+        url: "payment_type/create",
         method: "POST",
-        body: paymentTYpe,
+        data: paymentType,
       }),
       invalidatesTags: ["payment_type"],
     }),

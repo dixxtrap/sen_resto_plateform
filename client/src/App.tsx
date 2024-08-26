@@ -1,21 +1,29 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./components/header";
-import Home from "./pages/home";
-import { PlateList } from "./pages/plate/plate";
 
+import "./App.css";
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+import '@mantine/carousel/styles.css';
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/route";
+import store from "./cores/apis/index.store";
+import { Provider } from "react-redux";
+import ThemeProvider from "./cores/theme/theme.provider";
+import { MantineProvider } from "@mantine/core";
+import { APP_THEME } from "./theme";
 
+function App() {
+  return (
+    <MantineProvider theme={APP_THEME}>
+    <Provider store={store}>
+  <ThemeProvider>
+      
+      <RouterProvider router={router} />
+    
+      </ThemeProvider>
 
-
-export default function App(){
-  return(
-    <>
-      <BrowserRouter>
-        <Header/>
-        <Routes>
-          <Route path="/" element={<Home/>}/> 
-          <Route path="/plate" element={<PlateList/>}/>
-        </Routes>
-      </BrowserRouter> 
-    </>
-  )
+    </Provider>
+    </MantineProvider>
+  );
 }
+
+export default App;

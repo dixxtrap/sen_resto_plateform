@@ -2,3 +2,4 @@ node_modules
 dist
 src/mysql.config.ts
 .env
+./mysql.config.ts

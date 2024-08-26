@@ -1,15 +1,29 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { PermissionDto } from "../models/role.dto";
+import { PermissionDto } from "../models/permission.dto";
+import { WsMessage } from "../models/error.dto";
 
-export const permissionAPi = createApi({
+export const permissionApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
-  reducerPath: "permissionApi",
-  tagTypes: ["permissionApi"],
+  reducerPath: "permission",
+  tagTypes: ["permission",'security'],
   endpoints: (builder) => ({
     getPermission: builder.query<PermissionDto[], string>({
-      query: () => "permission",
+      query: () => "permission/all",
+      providesTags: ["permission",'security'],
     }),
+    createPermission: builder.mutation<
+    WsMessage,
+    PermissionDto 
+  >({
+    query: (body) => ({
+      url: `/permission/create`,
+      method: "POST",
+      body: body,
+    }),
+    invalidatesTags: ["permission",'security'],
+    // providesTags:['permissionApi']
+  }),
   }),
 });
 
-export const { useGetPermissionQuery } = permissionAPi;
+export const { useGetPermissionQuery, useCreatePermissionMutation } = permissionApi;

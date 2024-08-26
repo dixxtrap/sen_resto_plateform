@@ -1,34 +1,30 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
 export default {
   content: ["./src/**/*.{html,js,tsx,ts}"],
+darkMode:"class",
   theme: {
+  
     extend: {
+  
       colors: {
-        indigo: {
-          '50': '#fff1f2',
-          '100': '#ffe4e6',
-          '200': '#fecdd3',
-          '300': '#fda4af',
-          '400': '#fb7185',
-          '500': '#f43f5e',
-          '600': '#e11d48',
-          '700': '#be123c',
-          '800': '#9f1239',
-          '900': '#881337',
+        kdark:{
+          input:"rgb(23, 27, 34)",
+          background:"rgb(13, 17, 23)",
+          dropdown:"rgb(18, 22, 29)",
+          divider:"#414953",
+          text:"#cccbca",
+          TitleText:"#f0efee",
+          // kdarkbg:"#1c2128",#23272f
+          // kdarkbg:"#23272f"
+          kdarkbg:"#0d1117"
+          
         },
-        secondary: {
-          '50': '#e6fffa',
-          '100': '#b2f5ea',
-          '200': '#81e6d9',
-          '300': '#4fd1c5',
-          '400': '#38b2ac',
-          '500': '#319795',
-          '600': '#2c7a7b',
-          '700': '#285e61',
-          '800': '#234e52',
-          '900': '#1d4044',
-        },
+     
+        primary:colors.yellow,
+        secondary: colors.amber,
       },
+    
     },
   },
   plugins: [

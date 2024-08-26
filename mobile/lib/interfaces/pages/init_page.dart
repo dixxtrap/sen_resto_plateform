@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/interfaces/utils/assets_svg.dart';
-import 'package:mobile/interfaces/utils/constant.dart';
-import 'package:mobile/interfaces/utils/kprint.dart';
-import 'package:mobile/interfaces/utils/svg_icon.dart';
-import 'package:mobile/session.dart';
+import 'package:mobile/cores/services/preferences_service.dart';
+import 'package:mobile/locator.dart';
+import 'package:mobile/utils/color_ressources.dart';
+import 'package:mobile/utils/helper/assets_svg.dart';
+import 'package:mobile/utils/helper/constant.dart';
+
+import 'package:mobile/utils/helper/kprint.dart';
+import 'package:mobile/utils/helper/svg_icon.dart';
 
 class WelcomMessage {
   String asset;
@@ -38,26 +41,7 @@ class InitPage extends StatefulWidget {
 class _InitPageState extends State<InitPage> {
   final pageViewCtr = PageController(initialPage: 0);
   int index = 0;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _onStart();
-    });
-  }
-
-  _onStart() {
-    Session.loadData();
-    if (Session.stateOfKyc == StateOfKyc.initiate) {
-    } else if (Session.stateOfKyc != StateOfKyc.initiate) {
-      Navigator.pushReplacementNamed(
-        context,
-        "home",
-      );
-    }
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +57,7 @@ class _InitPageState extends State<InitPage> {
               style: getTextTheme(context).bodyMedium!.copyWith(
                   fontWeight: FontWeight.w800,
                   fontFamily: "italic",
-                  color: kprimary,
+                  color: ColorResources.PRIMARY_APP_COLOR,
                   fontSize: 20),
             ),
             const SizedBox(
@@ -124,7 +108,7 @@ class _InitPageState extends State<InitPage> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: index == i
-                                    ? kprimary
+                                    ? ColorResources.PRIMARY_APP_COLOR
                                     : getTheme(context).dividerColor),
                             width: index == i ? 30 : 10,
                             height: 10,
@@ -148,7 +132,9 @@ class _InitPageState extends State<InitPage> {
               height: kpadding * 2,
             ),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  await locator<PreferencesService>()
+                      .setSetup(StateOfSetup.registered);
                   Navigator.of(context).pushReplacementNamed("set_phone");
                 },
                 child: Text("skip"))

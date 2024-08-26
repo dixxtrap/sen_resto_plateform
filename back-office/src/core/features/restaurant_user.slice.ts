@@ -1,10 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { createApi } from "@reduxjs/toolkit/dist/query/react";
 import { User } from "../models/user.dto";
+import { axiosBaseQuery } from "./axios_base_query";
 
 export const restaurantUserApi=createApi({
         reducerPath: "restaurantAgentApi",
-        baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/v1/" }),
-        tagTypes: ["restaurantAgent"],
+        baseQuery: axiosBaseQuery({ baseUrl: "http://localhost:3001/v1/" }),
+        tagTypes: ["restaurantAgent","security"],
         endpoints: (builder) => ({
           getRestaurantUser: builder.query<
             [
@@ -18,8 +19,8 @@ export const restaurantUserApi=createApi({
             ],
             any
           >({
-            query: () => "restaurant_agent",
-            providesTags: ["restaurantAgent"],
+            query: () =>({url: "restaurant_agent"}),
+            providesTags: ["restaurantAgent","security"],
           }),
           switchRestaurantUserStatus: builder.mutation<
             { id: number; user: User },

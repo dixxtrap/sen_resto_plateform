@@ -13,7 +13,7 @@ export const securityRouter: RouteObject = {
 
       children: [
         { path: "", index: true, element: <RoleList /> },
-        { path: "role/create", element: <RoleCreate /> },
+        { path: "role/create/:id", element: <RoleCreate /> },
         { path: "role/edit/:id", element: <RoleEdit /> },
         { path: "role/permission/:id", element: <RolePermissionEdit /> },
         { path: "role/details/:id", element: <RoleDetails /> },

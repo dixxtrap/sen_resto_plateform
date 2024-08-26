@@ -1,142 +1,88 @@
-import React, { useEffect } from "react";
+import  { useEffect, useState } from "react";
 import { Title } from "../../components/title";
 import { CustomForm } from "../../components/custom_form";
-import { Input } from "../../components/input";
 import {
   useGetCompanyByIdQuery,
   useUpdateCompanyByIdMutation,
 } from "../../../core/features/company.slice";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { CompanyDto, companySchema } from "../../../core/models/company.dto";
+import { useForm } from "@mantine/form";
+import { CompanyDto } from "../../../core/models/company.dto";
 import { useParams } from "react-router-dom";
-import { ImgPreview } from "../../components/Img_preview";
 import { Alert } from "../../components/alert_success";
 import { CameraIcon } from "@heroicons/react/24/outline";
+import { handlePreview } from "../../utils/handle_preview";
+import {  TextInput } from "@mantine/core";
+import { TextConstant } from "../../../core/data/textConstant";
+import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
+import { AddressForm } from "../../components/form/address_form";
+import { CustomSwitchInput } from "../../components/switch";
 
 export const OrganisationEdit = () => {
   const id = useParams().id!;
+  const [preview, setPreview]=useState<string>();
+  const [file, setFile]=useState<File>();
+  const [changed, setChanged]=useState< boolean>(false);
+console.log(changed)
+  const handleImage=handlePreview({previewImage:preview!, setPreviewImage:setPreview, setFile:setFile, setChanged:setChanged})
   const {
     data: old,
     isLoading: isOldLoading,
     isSuccess: isOldSuccess,
-    refetch, 
   } = useGetCompanyByIdQuery(id);
-  const [update, { isError, isSuccess, isLoading }] =
+  const [update, { isError, isSuccess, isLoading, error,reset }] =
     useUpdateCompanyByIdMutation();
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(companySchema),
+  const form = useForm<CompanyDto>({
   });
   useEffect(() => {
     if (old) {
-      setValue("name", old.name!);
-      setValue("short_name", old.short_name!);
-      setValue("email", old.email!);
-      setValue("phone", old.phone!);
-      setValue("address", old.address!);
-      setValue("city", old.city!);
-      setValue("description", old.description!);
-      setValue("country", old.country!);
-      setValue("laltitude", old.laltitude!);
-      setValue("longitude", old.longitude!);
+      setPreview(old.data.imagePath)
+      console.log(old)
+      form.setValues(
+old.data
+      )
     }
-  }, [old, setValue]);
+  }, [isOldSuccess]);
 
-  const _onSubmit = handleSubmit((data: CompanyDto) => {
+  const _onSubmit = form.onSubmit(async (data: CompanyDto) => {
     console.log(data);
-    update({ id: parseInt(id), company: data });
+   const {regionId, departementId, municipalityId, ...rest}=data
+    update({ id: parseInt(id), company: rest as CompanyDto , file:file! });
   });
   return !isOldSuccess ? (
     <Alert isOpen={isOldLoading} type="loading" title="Recuperation" />
   ) : (
     <div>
-      <div className="flex flex-col justify-start divide-y gap-y-2 ">
+      <div className="flex flex-col justify-start divide-y divide-gray-500/10 gap-y-2 ">
         <Title title="Compagnie" />
           <div>
-               <ImgPreview
-          img={old!.profile!}
-          name={"profile"}
-          refresh={()=>refetch()}
-          
-          className="h-20 md:h-36  mr-auto  self-start place-self-start "
-        />
+        <label htmlFor="file">
+        <input type="file" hidden id="file" name="file" onChange={handleImage}/>
+        {preview?<img  title="img" src={preview} className="h-20"/>
+         :<CameraIcon className="h-20 text-secondary-500"/>}
+        </label>
      </div>
 
-        <CustomForm
-          isLoading={isLoading}
-          isError={isError}
-          isSuccess={isSuccess}
-          subTitle="Creer une nouvelle compagnie"
-          onSubmit={_onSubmit}
-        >
-          <Input
-            label="Nom"
-            error={errors.name?.message}
-            children={<input className="input" {...register("name")} />}
-          />
-          <Input
-            label="Abbréviation"
-            error={errors.short_name?.message}
-            children={<input className="input" {...register("short_name")} />}
-          />
-          <Input
-            label="Email"
-            error={errors.email?.message}
-            children={<input className="input" {...register("email")} />}
-          />
-          <Input
-            label="Téléphone"
-            error={errors.phone?.message}
-            children={<input className="input" {...register("phone")} />}
-          />
-          <Input
-            label="Description"
-            error={errors.phone?.message}
-            children={<input className="input" {...register("description")} />}
-          />
-          <Input
-            label="Adresse"
-            error={errors.address?.message}
-            children={<input className="input" {...register("address")} />}
-          />
-          <div className="flex gap-8  w-full flex-wrap">
-            <Input
-              label="Region"
-              className=" max-w-lg"
-              error={errors.city?.message}
-              children={<input className="input " {...register("city")} />}
-            />
-            <Input
-              label="Pays"
-              className=" max-w-lg"
-              error={errors.country?.message}
-              children={<input className="input " {...register("country")} />}
-            />
-          </div>
-          <div className="flex gap-8 w-full flex-wrap">
-            <Input
-              label="Longitude"
-              error={errors.longitude?.message}
-              className=" max-w-lg"
-              children={
-                <input className="input grow " {...register("longitude")} />
-              }
-            />
-            <Input
-              label="Laltitude"
-              error={errors.laltitude?.message}
-              className=" max-w-lg"
-              children={
-                <input className="input grow " {...register("laltitude")} />
-              }
-            />
-          </div>
-        </CustomForm>
+     <CustomForm  isLoading={isLoading && isOldLoading} isError={isError} isSuccess={isSuccess} error={error}  subTitle="Creer une nouvelle compagnie" onSubmit={_onSubmit} onFinish={reset} >
+
+<TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+
+
+<TextInput label={TextConstant.shortname} {...form.getInputProps("shortname")} error={form.errors["shortname"]} key={form.key("shortname")} />
+
+
+<TextInput label={TextConstant.email} {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
+
+
+<TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
+
+
+<TextInput label={TextConstant.description} {...form.getInputProps("description")} error={form.errors["description"]} key={form.key("description")} />
+
+
+{    old&&  isOldSuccess&&  <>   <AddressForm form={form}  isUpdatable />
+           <LaltitudeLongituide form={form} /></> }
+           <CustomSwitchInput label="Status" itemKey="isActive" form={form}/>
+</CustomForm>
       </div>
     </div>
   );

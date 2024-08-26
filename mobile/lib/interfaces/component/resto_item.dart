@@ -5,7 +5,7 @@ import 'package:mobile/cores/env.dart';
 import 'package:mobile/cores/model/restaurant.dart';
 import 'package:mobile/interfaces/pages/restaurant_details.dart';
 
-import '../utils/constant.dart';
+import 'package:mobile/utils/helper/constant.dart';
 
 class RestoItem extends StatelessWidget {
   const RestoItem({Key? key, required this.resto}) : super(key: key);
@@ -56,8 +56,8 @@ class ImageItem extends StatelessWidget {
                 blurRadius: 10,
                 blurStyle: BlurStyle.outer)
           ],
-          image: DecorationImage(
-              image: NetworkImage("${Env.fileBase}/${id}"), fit: BoxFit.fill),
+          // image: DecorationImage(
+          //     image: NetworkImage("${Env.fileBase}/${id}"), fit: BoxFit.fill),
           border: Border.all(
               color: getTheme(context).colorScheme.onBackground.withOpacity(.1),
               width: 0.5),
@@ -77,7 +77,7 @@ class ImageItem extends StatelessWidget {
                   getTheme(context).cardColor.withOpacity(.08),
                   getTheme(context).primaryColor.withOpacity(.03),
                 ])),
-            child: Image.network("${Env.fileBase}/$id", fit: BoxFit.contain),
+            // child: Image.network("${Env.fileBase}/$id", fit: BoxFit.contain),
           ),
         ),
       ),

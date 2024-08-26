@@ -1,39 +1,49 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { CompanyDto } from "../models/company.dto";
+import { createApi } from "@reduxjs/toolkit/dist/query/react";
+import { CompanyDto } from '../models/company.dto';
 import { WsMessage } from "../models/error.dto";
+import { BaseResponse } from "./base_response";
+import { axiosBaseQuery } from "./axios_base_query";
 
 export const companyApi = createApi({
   reducerPath: "companyApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
-  tagTypes: ["company"],
+  baseQuery: axiosBaseQuery({ baseUrl: "/v1" }),
+  tagTypes: ["company",'security'],
 
   endpoints: (builder) => ({
-    createCompany: builder.mutation<CompanyDto| WsMessage, CompanyDto>({
+    createCompany: builder.mutation<BaseResponse<CompanyDto>| WsMessage, CompanyDto>({
       query: (company: CompanyDto) => ({
-        url: "/company",
+        url: "/company_restaurant/create",
         method: "POST",
-        body: company,
+        data: company as CompanyDto,
       }),
       invalidatesTags: ["company"],
     }),
-    getCompany:builder.query<CompanyDto[],string>({
-        query:()=>"/company",
-        providesTags:["company"]
+    getCompany:builder.query<BaseResponse<CompanyDto[]>,string>({
+        query:()=>({url:"/company_restaurant/all"}),
+        providesTags:["company",'security']
 }),
-getCompanyById: builder.query<Partial<CompanyDto> ,string>({
-        query: (id)=>`/company/${id}`,
-        providesTags:["company"]
+getCompanyChildren:builder.query<BaseResponse<CompanyDto[]>,string>({
+  query:()=>({url:"/partner/children"}),
+  providesTags:["company",'security']
 }),
-updateCompanyById: builder.mutation<CompanyDto, { id: number, company: CompanyDto }>({
-        query: ({id,company}) => ({
-          url: `/company/${id}`,
+getCompanyById: builder.query<BaseResponse<CompanyDto> ,string>({
+        query: (id)=>({url:`/company_restaurant/byId/${id}`}),
+        providesTags:["company",'security']
+}),
+updateCompanyById: builder.mutation<BaseResponse<CompanyDto>, { id: number, company: CompanyDto, file:File }>({
+        query: ({id,company, file}) => ({
+          url: `/company_restaurant/update/${id}`,
           method: "PUT",
-          body: company,
+          data: {...company, file},
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }),
+        
         invalidatesTags: ["company"],
       }),
   }),
 });
 
 
-export const {useCreateCompanyMutation, useGetCompanyQuery, useGetCompanyByIdQuery, useUpdateCompanyByIdMutation}=companyApi
+export const {useCreateCompanyMutation,useGetCompanyChildrenQuery, useGetCompanyQuery, useGetCompanyByIdQuery, useUpdateCompanyByIdMutation}=companyApi

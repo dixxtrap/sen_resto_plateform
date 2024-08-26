@@ -6,7 +6,6 @@ import {
   CheckCircleIcon,
   LockClosedIcon,
 } from "@heroicons/react/20/solid";
-import { FileDocument } from "../../core/models/file_document";
 
 export const ImgPreview = ({
   img,
@@ -20,7 +19,7 @@ export const ImgPreview = ({
   icon,
   canUpdateAfter = false,
 }: {
-  img: FileDocument;
+  img: string;
   name: string;
   className?: string;
   url?: string;
@@ -32,7 +31,7 @@ export const ImgPreview = ({
   canUpdateAfter?: boolean;
 }) => {
   const [previewImage, setPreviewImage] = useState<string | undefined>(
-    img!.path ? `/v1/document/file/${img!.id}` : undefined
+    img ? `/v1/${img!}` : undefined
   );
   const [file, setFile] = useState<File | undefined>();
   const [changed, setChanged] = useState<boolean>(false);
@@ -47,16 +46,16 @@ export const ImgPreview = ({
 
     const formData = new FormData();
     formData.append("file", file!);
-    formData.append("oldPath", img!.path!);
+    formData.append("oldPath", img!);
     if (destination) formData.append("destination", destination);
-    const response = await fetch(url ?? `/v1/document/${img!.id}`, {
+    const response = await fetch(url ?? `/v1/${img}`, {
       method: method ?? "PUT",
       body: formData,
     });
     if (response.ok) {
       console.log(response.body);
       if (canUpdateAfter)
-        setPreviewImage(img!.path ? `/v1/document/file/${img!.id}` : undefined);
+        setPreviewImage(img! ? `/v1/document/file/${img!}` : undefined);
       if (refresh) refresh();
       setChanged(false);
     }

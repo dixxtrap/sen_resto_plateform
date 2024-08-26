@@ -1,22 +1,30 @@
-import { Switch } from "@headlessui/react"
-import { SunIcon } from "@heroicons/react/24/outline"
-import { MouseEventHandler } from "react"
+import { Switch } from "@mantine/core";
+import { UseFormReturnType } from "@mantine/form";
 
-export const CustomSwitch = ({ isLoading, onClick, isActive }: { isLoading: boolean, onClick?: (bool:boolean)=>void, isActive: boolean }) => {
+
+export const CustomSwitch = ({  onClick, isActive }: { isLoading: boolean, onClick?: (bool: boolean) => void, isActive: boolean }) => {
+        console.log(isActive)
         return (
                 <Switch
                         checked={isActive}
                         title="theme"
                         type="button"
-                      
-                        onChange={onClick}
-                        className={({checked})=>`${checked ? 'bg-secondary-500' : 'bg-gray-200'
-                                } relative inline-flex h-6 w-11 items-center rounded-md`}
+                        onClick={(event) => onClick!(event.currentTarget.checked)}
+                
+                
                 >
-                        <span className="sr-only">Enable notifications</span>
-                        <span
-                                className={`${isActive ? 'translate-x-6' : 'translate-x-1'
-                                        } inline-block h-4 w-4 transform rounded-md bg-white transition`}
-                        />
                 </Switch>);
+}
+
+export const CustomSwitchInput=({label,itemKey ,form}:{label?:string,itemKey:string,form:  UseFormReturnType<any, any>,})=>{
+        return (<div className="flex justify-between">
+                <span className="">
+                        {label??"Status"}
+                </span>   
+                <CustomSwitch
+isLoading={false}
+isActive={form.getValues()[itemKey]}
+onClick={(val) =>form.setFieldValue(itemKey, val)}
+/>
+</div>)
 }

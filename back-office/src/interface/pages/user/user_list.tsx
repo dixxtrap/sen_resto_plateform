@@ -1,56 +1,57 @@
-import React from 'react'
-import { TablePagination } from '../../components/table_pagination'
+import { TablePagination } from '../../components/table/table'
 import { useGetUserQuery } from '../../../core/features/auth.slice'
-import { Link } from 'react-router-dom'
 import { Status } from '../../components/status'
+import { Table } from '@mantine/core'
+import { TableActionItemDetails, TableActionItemEdit } from '../../components/table/action_item'
 
 export const UserList = () => {
-        const {data:users=[]}=useGetUserQuery("")
+        const users=useGetUserQuery("")
   return (
+    <div>
     <TablePagination 
+    {...users}
     title='Agents' 
     subtitle='Liste des Agents'
     createPath='/user/create'
     th={["Nom & Prenom", "Role", "Adresse", "Téléphone","status", ""]}
     trs={
         <>
-                 {users.map((user) => (
-                        <tr key={user.email+"_"+user.id}>
-                          <td className="whitespace-nowrap py-3 pl-4 pr-3 text-sm sm:pl-0">
+                 {users.data?.data.map((user) => (
+                        <Table.Tr key={user.email+"_"+user.id}>
+                          <Table.Td className="">
                             <div className="flex items-center">
                              
                              
 {/* <ImgPreview  name={`img_${user.id}`} img={ user.company.short_name=="SR" ? user.profile!:user.company.profile!}/> */}
                             
                              <div className='flex flex-col'>
-                             <div className="font-medium  text-gray-900">{user.firstname} {user.lastname}</div>
+                             <div className="font-bold  ">{user.firstname!} {user.lastname!}</div>
                                 
                              </div>
                                 
                             
                             </div>
-                          </td>
-                          <td className="">{user!.role!.name} {user!.role!.scope}</td>
+                          </Table.Td>
+                          <Table.Td className="">{user!.role!.name??""}   </Table.Td>
       
                         
                         
-                          <td className="">{user.address}-{user.city}</td>
-                          <td className="">{user.phone}</td>
-                          <td className="">
-                       <Status status={ user.status!} inactiveText='Inactif' activeText='Actif' />
-                          </td>
-                          <td className="last_td_container">
-                            <Link to={`/user/details/${user.id}`}className="last_td">
-                              Details<span className="sr-only"> {user.phone}</span>
-                            </Link>
-                            <Link to={`/user/edit/${user.id}`} className="last_td">
-                              Modifier<span className="sr-only"> {user.phone}</span>
-                            </Link>
-                          </td>
-                        </tr>
+                          <Table.Td className="">{user.address?.country!}-{user.address?.city}</Table.Td>
+                          <Table.Td className="">{user.phone}</Table.Td>
+                          <Table.Td className="">
+                       <Status status={ user.isActive!} inactiveText='Inactif' activeText='Actif' />
+                          </Table.Td>
+                          <Table.Td className="last_td_container">
+                          <TableActionItemDetails label='voir details' path={`/user/details/${user.id}`}/>
+                          <TableActionItemEdit label='voir details' path={`/user/edit/${user.id}`}/>
+                            
+                           
+                          </Table.Td>
+                        </Table.Tr>
                       ))}
                       </>}
        
     />
+    </div>
   )
 }

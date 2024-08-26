@@ -3,51 +3,77 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SecurityService } from './security.service';
-import { LoginDto } from './dto/loginDto';
+import { DefinePasswordDto, LoginDto } from './security.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthenticatedGuard } from './authenticated.guard';
+import { LocalAuthGuard } from './local_auth.guard';
+import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Request, Response } from 'express';
-import { exceptionCode } from 'src/data/exception_code';
-import { LocalAuthGuard } from 'src/middleware/local_auth.guard';
+import { UserDto } from 'src/typeorm/user.entity';
+import { JwtAuthGuard } from './jwt_auth.guard';
+
 @Controller('security')
-@ApiTags('Security')
+@ApiTags('security')
 export class SecurityController {
   constructor(private service: SecurityService) {}
-  @Post('/login')
-  async login(@Body() body: LoginDto, @Res() res: Response) {
-    const token = await this.service.login(body);
-    console.log(token);
-    res.cookie('access_token', 'Bearer ' + token, {
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      sameSite: 'none',
-    });
-    return res.status(200).json(exceptionCode.LOGIN_SUCCESS);
+
+  @Get('user/profile')
+  @UseGuards(JwtAuthGuard)
+  userProfile(@Body() body: LoginDto, @Req() req: Request) {
+    return req.user;
   }
-  @Get('/profile')
-  @ApiBearerAuth()
+  @Post('login')
   @UseGuards(LocalAuthGuard)
-  async profile(@Req() req: Request, @Res() res: Response) {
-    console.log(
-      '------------------------get profile--------------------------',
-    );
-    console.log(req['user']);
-    const user = await this.service.profile(req);
-    if (!user) {
-      res.clearCookie('access_token');
-      res.redirect('localhost:3000/');
-    }
-    return res.json(user);
+  login(@Body() body: LoginDto) {
+    console.log(body);
+    return HttpExceptionCode.LOGIN_SUCCESS;
   }
-  @Get('/signout')
-  async signout(@Res() res: Response) {
-    console.log(
-      `------------------deconnexion--------------- redirect to ${process.env.BAC_OFFICE_URL}`,
+
+  @ApiBearerAuth()
+  @UseGuards(AuthenticatedGuard)
+  @Get('profile')
+  profile(@Req() req: Request) {
+    const by = req['user'] as UserDto;
+    return this.service.getProfile(by);
+  }
+  @ApiBearerAuth()
+  @UseGuards(AuthenticatedGuard)
+  @Get('logout')
+  logout(@Req() req: Request, @Res() res: Response) {
+    req.logOut({}, (err) => err);
+    res.redirect(`${process.env.CLIENT_HOSTNAME}/login`);
+  }
+
+  @Get('activation')
+  verifierOtp(@Query('token') token: string, @Res() res: Response) {
+    console.log(token);
+    return res.redirect(
+      `${process.env.CLIENT_HOSTNAME}/define-password?token=${token}`,
     );
-    res.clearCookie('access_token', { sameSite: 'none' });
-    return res.status(200).json(exceptionCode.LOGOUT_SUCCESS);
+  }
+
+  @Get('forgot_password_verification')
+  forgotPaswordVerification(
+    @Query('token') token: string,
+    @Res() res: Response,
+  ) {
+    console.log(token);
+    return res.redirect(
+      `${process.env.CLIENT_HOSTNAME}/define-password?token=${token}`,
+    );
+  }
+  @Post('define_password')
+  definePassword(@Body() body: DefinePasswordDto) {
+    return this.service.definePassword(body);
+  }
+  @Post('forgot_password')
+  forgotPassword(@Body('email') body: string) {
+    return this.service.forgotPassword(body);
   }
 }

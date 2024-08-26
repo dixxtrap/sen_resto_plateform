@@ -1,78 +1,64 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Title } from "../../components/title";
 import { CustomForm } from "../../components/custom_form";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Plate, plateSchema } from "../../../core/models/plate";
+import { useForm } from "@mantine/form";
+import { ProductDto } from "../../../core/models/product";
 import {
-  useGetPlateByIdQuery,
-  useUpdatePlateMutation,
-} from "../../../core/features/plate.slice";
+  useGetProductByIdQuery,
+  useUpdateProductMutation,
+} from "../../../core/features/product.slice";
 import { useParams } from "react-router-dom";
-import { Input } from "../../components/input";
-import { ImgPreview } from "../../components/Img_preview";
-import { CameraIcon } from "@heroicons/react/24/outline";
-import { CustomSwitch } from "../../components/switch";
-import { useGetTagsQuery } from "../../../core/features/tag.slice";
+
 import { Alert } from "../../components/alert_success";
+import { useGetCategoryQuery } from "../../../core/features/category.slice";
+import { CategoryDto } from "../../../core/models/category.dto";
+import { WsMessage } from "../../../core/models/error.dto";
+import { ProductCreateFile } from "./product_file_create";
+import { ProductFileUpdate } from "./product_file_update";
+import { ComboboxData, MultiSelect, TextInput } from "@mantine/core";
+import { TextConstant } from "../../../core/data/textConstant";
+import { AppTextarea } from "../../components/form/app_textarea";
+import { multiSelectStyle } from "../../components/form/custom_styles";
+import { CustomSwitchInput } from "../../components/switch";
 export const PlatesEdit = () => {
+  const [_, setCategoryList] = useState<CategoryDto[]>([]);
   const id = parseInt(useParams().id!);
-  const { data: tags, isLoading: isTagLoading } = useGetTagsQuery("");
-  const [update, { isLoading, isSuccess, isError }] = useUpdatePlateMutation();
+  const { data: categories, isLoading: isTagLoading } = useGetCategoryQuery("");
+  const [update, { isLoading, isSuccess, isError, reset, error }] = useUpdateProductMutation();
 
   const {
     data: old,
-    isError: isOldError,
     isLoading: isOldLoading,
-    refetch,
-  } = useGetPlateByIdQuery(id);
-  const {
-    handleSubmit,
-    register,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(plateSchema),
-  });
-  const _onSubmit = (body: Plate) => {
+  } = useGetProductByIdQuery(id);
+  console.log(old)
+  const form= useForm({mode:'uncontrolled'});
+  const _onSubmit = form.onSubmit((body) => {
     console.log(body);
-    update({ id: id!, plate: body });
-  };
+    update({ id: id, product:body as ProductDto,  });
+  });
   useEffect(() => {
     if (old) {
-      setValue("name", old.name);
-      setValue("description", old.description);
-      setValue("price", old.price);
-      setValue("reduction", old.reduction);
-      setValue("tag", old.tag);
-      setValue("monday", old.monday);
-      setValue("tuesday", old.tuesday);
-      setValue("wednesday", old.wednesday);
-      setValue("thursday", old.thursday);
-      setValue("friday", old.friday);
-      setValue("saturday", old.saturday);
-      setValue("sunday", old.sunday);
-
-      console.log(watch("tagIds"));
+      const {category,file, ...rest}=old.data;
+      form.setValues(rest)
+      form.setFieldValue('categoryIds', old.data.category?.map(e=>`${e.id}`))
+ setCategoryList(old.data.category!??[])
+     
     }
   }, [old]);
-
+console.log("dat------old",old)
   return (
     <>
-      <Alert isOpen={isOldLoading && isTagLoading} type="loading"  title="Recuperation"/>
-      {old&&tags&&
-        <div className="flex flex-col divide-y">
-          <Title title="Plat" subTitle="Modifier le plat" />
-          <div className="flex flex-wrap">
-            {old?.file?.map((e) => (
-              <ImgPreview
-                name={`plate_file_${e.id}`}
-                className="h-14 w-14 md:h-28 md:w-28 rounded-md"
-                img={e.photo}
-              />
+    {(isOldLoading &&isTagLoading)&&  <Alert isOpen={true} type="loading"  title="Recuperation"/>}
+    {  isError&&<Alert isOpen={true} type="faillure"  title="Error" message={(error as WsMessage).message! }/>}:
+      {old&&categories&&
+        <div className="flex flex-col divide-y darkDivider">
+          <Title title={old.data.name} subTitle="Modifier le plat" />
+          <div className="flex flex-wrap gap-2 py-2">
+            {old?.data.file?.map((e) => (
+             <ProductFileUpdate key={`img_${e.id}`} path={e.path!}  id={e.id!} productId={old?.data.id!} />
             ))}
-            <ImgPreview
+            <ProductCreateFile productId={old.data.id!}/>
+            {/* <ImgPreview
               name={`plate_file_last`}
               canUpdateAfter={true}
               refresh={refetch}
@@ -83,126 +69,32 @@ export const PlatesEdit = () => {
               icon={
                 <CameraIcon className="h-14 w-14 md:h-28 md:w-28 text-indigo-500" />
               }
-            />
+            /> */}
           </div>
 
           <CustomForm
             isError={isError}
             isSuccess={isSuccess}
             isLoading={isLoading}
-            onSubmit={handleSubmit(_onSubmit)}
+            onSubmit={_onSubmit}
+            onFinish={reset}
           >
-            <Input label="Nom du plat" error={errors.name?.message}>
-              <input className="input" {...register("name")} />
-            </Input>
-            <Input label="Prix" error={errors.price?.message}>
-              <input className="input" {...register("price")} />
-            </Input>
-            <Input label="Reduction" error={errors.reduction?.message}>
-              <input className="input" {...register("reduction")} />
-            </Input>
-            <Input label="description" error={errors.description?.message}>
-              <textarea className="input" {...register("description")} />
-              <div className="flex flex-wrap w-full mt-4 gap-x-3">
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Lundi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("monday")!}
-                    onClick={(val) => setValue("monday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Mardi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("tuesday")!}
-                    onClick={(val) => setValue("tuesday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Mercredi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("wednesday")!}
-                    onClick={(val) => setValue("wednesday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Jeudi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("thursday")!}
-                    onClick={(val) => setValue("thursday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Vendredi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("friday")!}
-                    onClick={(val) => setValue("friday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Samedi
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("saturday")!}
-                    onClick={(val) => setValue("saturday", val)}
-                  />
-                </div>
-                <div className="switchBase">
-                  <span className="font-semibold mr-3 text-slate-600">
-                    Dimanche
-                  </span>
-                  <CustomSwitch
-                    isLoading={false}
-                    isActive={watch("sunday")!}
-                    onClick={(val) => setValue("sunday", val)}
-                  />
-                </div>
-              </div>
-            </Input>
-            <Input
-              label="Liste des tags #"
-              name="123456"
-              error={errors.tagIds?.message}
-            >
-              <div className="input">
-                <div className="   items-start  flex-wrap flex  ">
-                  {tags?.map((e) => (
-                    <label
-                      htmlFor={e.id + "_tag"}
-                      key={e.id + "_tag_label"}
-                      className="ml-4  text-left items-start justify-start  w-52  "
-                    >
-                      <input
-                        id={e.id + "_tag"}
-                        {...register("tagIds")}
-                        type="checkbox"
-                        defaultChecked={old!.tag!.some((t) => t.id === e.id)}
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        value={e.id}
-                      />{" "}
-                      <span> {e.name}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            </Input>
+           
+      <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+
+          
+      <TextInput label={TextConstant.price} {...form.getInputProps("price")} error={form.errors["price"]} key={form.key("price")} />
+
+           
+      <TextInput label={TextConstant.reduction} {...form.getInputProps("reduction")} error={form.errors["reduction"]} key={form.key("reduction")} />
+
+           
+      <AppTextarea form={form} />
+
+      <MultiSelect searchable error={form.errors['categoryIds']} {...form.getInputProps('categoryIds')} key={form.key("categoryIds")} label="Liste des tags #" classNames={{ pill: 'bg-opacity-5' }}
+          styles={multiSelectStyle}
+          data={categories?.data[0]?.children?.map(e => ({ group: e.name, items: e.children?.map(c => ({ label: c.name!, value: `${c.id}` })), })) as ComboboxData} />
+    <CustomSwitchInput itemKey={"isActive"}  form={form} />
           </CustomForm>
         </div>
       }

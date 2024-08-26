@@ -2,48 +2,58 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import config from './mysql.config';
-import { UserModule } from './modules/user/user.module';
-import { CompanyModule } from './modules/company/company.module';
-import { PermissionModule } from './modules/permission/permission.module';
 import { ConfigModule } from '@nestjs/config';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
-import { DocumentModule } from './modules/document_file/document_file.module';
-import { OrderModule } from './modules/order/order.module';
-import { PlateModule } from './modules/plate/plate.module';
-import { TagModule } from './modules/tag/tag.module';
-import { Customer } from './typeorm';
-import { CustomerModule } from './modules/customer/module';
+import config from './mysql.config';
+import { ModuleModule } from './modules/module/module.module';
+import { CategoryModule } from './modules/category/category.module';
+import { RoleModule } from './modules/role/role.module';
+import { PermissionModule } from './modules/permission/permssion.module';
+import { RolePermissionModule } from './modules/role_permsion/role_permission.module';
+import { PartnerModule } from './modules/partner/partner.module';
+import { UserModule } from './modules/user/user.module';
 import { SecurityModule } from './modules/security/security.module';
-import { PaymentTypeModule } from './modules/payment_type/payment_type.module';
-import { JWT } from './jtw';
-import { RoleModule } from './modules/role/module';
+import { ProductModule } from './modules/product/product.module';
+import { WebServiceModule } from './modules/web_service/web_service.module';
+import { WalletStatusModule } from './modules/wallet_status/wallet_status.module';
+import { ExcelModule } from './modules/excel/excel.module';
+import { OtpConfigModule } from './modules/otp_config/otp.module';
+import { EmailerModule } from './modules/mailer/mailer.module';
+import { CardModule } from './modules/card/card.module';
+import { S3Module } from './modules/s3/s3.module';
+import { BannerModule } from './modules/banner/banner.module';
+import { OtpModule } from './modules/otp/otp.module';
+import { ProductRaitingModule } from './modules/product_rating/product_rating.module';
+import { CityModule } from './modules/city/city.module';
+import { OrderModule } from './modules/order/order.module';
 @Module({
   imports: [
-    JWT,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'upload'), // Path to the static files directory
-    }),
+    SecurityModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
     TypeOrmModule.forRoot(config),
-    PermissionModule,
-    UserModule,
-    CustomerModule,
-    CompanyModule,
-
-    DocumentModule,
-    OrderModule,
-    PlateModule,
-    TagModule,
-    SecurityModule,
-    PaymentTypeModule,
+    ModuleModule,
+    CategoryModule,
     RoleModule,
+    PermissionModule,
+    RolePermissionModule,
+    PartnerModule,
+    UserModule,
+    OrderModule,
+    ProductModule,
+    WebServiceModule,
+    WalletStatusModule,
+    ExcelModule,
+    OtpModule,
+    EmailerModule,
+    CardModule,
+    S3Module,
+    BannerModule,
+    OtpConfigModule,
+    ProductRaitingModule,
+    CityModule
   ],
-
   controllers: [AppController],
   providers: [AppService],
 })

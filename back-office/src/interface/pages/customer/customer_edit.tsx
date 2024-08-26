@@ -1,68 +1,60 @@
 import {useEffect} from "react";
 import { CustomForm } from "../../components/custom_form";
 import {
-  useCustomerByIdQuery,
+  useGetCustomerByIdQuery,
   useUpdateCustomerMutation,
 } from "../../../core/features/customer.slice";
 import { useParams } from "react-router-dom";
-import { Alert } from "../../components/alert_success";
-import { Input } from "../../components/input";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Customer, customerSchema } from "../../../core/models/customer";
+import { useForm } from "@mantine/form";
+import { Customer } from "../../../core/models/customer";
+import { TextConstant } from "../../../core/data/textConstant";
+import { TextInput } from "@mantine/core";
+import { AddressForm } from "../../components/form/address_form";
+import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
 
 export const CustomerEdit = () => {
-  const id = parseInt(useParams().id!);
+  const {id} = useParams();
   const { data: oldCustomer, isLoading: isCustomerLoading } =
-    useCustomerByIdQuery(id);
-  const [update, { isLoading, isSuccess, isError }] =
+  useGetCustomerByIdQuery(id!);
+  const [update, { isLoading, isSuccess, isError , error}] =
     useUpdateCustomerMutation();
-  const {
-    register,
-    handleSubmit,setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(customerSchema),
+  const form= useForm({
+ 
   });
-  const _onSubmit = (body: Customer ) => {
+  const _onSubmit = form.onSubmit((body ) => {
     console.log(body);
-    update({customer:body, id:id})
-  };
+    update({customer:body as Customer, id:id!})
+  });
   useEffect(() => {
    if(oldCustomer){
-    setValue("displayName", oldCustomer.displayName),
-    setValue("adresse", oldCustomer.adresse);
-    setValue("phone", oldCustomer.phone);
-    setValue("laltitude", oldCustomer.laltitude);
-    setValue("longitude", oldCustomer.longitude);
-    setValue("isPhoneVeirified", oldCustomer.isPhoneVeirified);
-    setValue("isEnable", oldCustomer.isEnable);
+form.setValues(oldCustomer.data)
    }
-  }, [oldCustomer, setValue])
+  }, [oldCustomer])
   
   return (
     <>
-      {<Alert isOpen={isCustomerLoading} />}
+      
       <CustomForm
         title="Client"
-        subTitle={`Modifier le client ${oldCustomer?.displayName}`}
+        subTitle={`Modifier le client ${oldCustomer?.data?.firstname}`}
         isError={isError}
         isSuccess={isSuccess}
-        isLoading={isLoading}
-        onSubmit={handleSubmit(_onSubmit)}
+        isLoading={isLoading||isCustomerLoading}
+        error={error}
+        onSubmit={_onSubmit}
       >
-        <Input label="Nom complet">
-          <input className="input"   {...register("displayName")}/>
-        </Input>
-        <Input label="Adresse" >
-          <input className="input"  {...register("adresse")}/>
-        </Input>
-        <Input label="Laltitude">
-          <input className="input" {...register("laltitude")} />
-        </Input>
-        <Input label="Logitude">
-          <input className="input"  {...register("longitude")}/>
-        </Input>
+       
+        <TextInput label={TextConstant.firstname} {...form.getInputProps("firstname")} error={form.errors["firstname"]} key={form.key("firstname")} />
+
+        
+        <TextInput label={TextConstant.lastname} {...form.getInputProps("lastname")} error={form.errors["lastname"]} key={form.key("lastname")} />
+
+      
+        <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
+<AddressForm form={form} isUpdatable/>
+        
+<LaltitudeLongituide form={form}/>
+        
       </CustomForm>
     </>
   );

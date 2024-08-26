@@ -1,44 +1,22 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { OrderService } from './order.service';
-import { OrderAddPlate, OrderDto } from 'src/dto/order.dto';
-import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
-import { LocalAuthGuard } from 'src/middleware/local_auth.guard';
+import { Controller, Get, Param, Put, Req, UseGuards } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { OrderService } from "./order.service";
+import { AuthenticatedGuard } from "../security/authenticated.guard";
+import { UserDto } from "src/typeorm/user.entity";
+import {Request} from 'express'
+@Controller("order")
+@ApiTags("order")
+export class OrderController{
+    constructor(private service:OrderService){}
+        @Get('all')
+        getAll(){
+            return this.service.getAll()
+        }
 
-@Controller('order')
-@ApiTags('order')
-export class OrderController {
-  constructor(private service: OrderService) {}
-  @Get('')
-  getS() {
-    return this.service.getS();
-  }
- 
-  @Post('add_plate')
-  addPlate(@Body() body: OrderAddPlate) {
-    return this.service.addPlate(body);
-  }
-  @UseGuards(LocalAuthGuard)
-  @ApiBearerAuth()
-  @Get('user')
-  getOrderByUser(@Req() decoded: Request) {
-    return this.service.getOrderByUser(decoded['user']);
-  }
-  @Post()
-  create(@Body() body: OrderDto) {
-    return this.service.create(body);
-  }
-  @Get(':id')
-  get(@Param('id') id: number) {
-    return this.service.getById(id);
+     @Put('consfirm_status/:id')
+  @UseGuards(AuthenticatedGuard)
+  changeStatus(@Param('id') id: number, @Req() req :Request) {
+    const by= req.user as UserDto;
+    return this.service.preparingStatus({ id, by});
   }
 }

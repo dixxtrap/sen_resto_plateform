@@ -1,11 +1,12 @@
-import React, { FC } from 'react'
+import { Badge } from '@mantine/core'
+import  { FC } from 'react'
 type StatusProps = {
   status: boolean,
   activeText?: string,
   inactiveText?: string
 }
-export const Status: FC<StatusProps> = ({ status, activeText="active", inactiveText="inactive" }) => {
+export const Status: FC<StatusProps> = ({ status, activeText="Activer", inactiveText="Inactiver" }) => {
   return (
-    <span className={`inline-flex items-center text-xs rounded-md  px-5 py-1  my-1 ring-1 ring-inset  ${status ? "ring-teal-600/20 text-teal-700 bg-teal-50" : "ring-pink-600/20 text-pink-700 bg-pink-50"}`}>{status ? activeText : inactiveText}</span>
+    <Badge variant="light" color={status?'secondary':"primary"} radius={'xs'} className={`font-semibold  rounded-md     my-1   ${status ? " bg-secondary-500/20 text-secondary-500 " : "bg-primary-500/20 text-primary-500"}`}>{status ? activeText : inactiveText}</Badge>
   )
 }

@@ -1,22 +1,31 @@
-import { FormProvider, useForm } from "react-hook-form";
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 import ThemeProvider from "./core/providers/theme.provider";
 import { Provider } from "react-redux";
 import store from "./core/features";
-import Public from "./interface/pages/public/public";
+
 import { RouterProvider } from "react-router-dom";
 import { router } from "./interface/router";
+import {  MantineProvider } from '@mantine/core';
+import { DatesProvider } from '@mantine/dates';
+import { APP_THEME } from './theme';
 
 export  const App = () => {
-  const methods = useForm();
+
   return (
+    <MantineProvider theme={APP_THEME}>
+      <DatesProvider   settings={{ consistentWeeks: true }}>
     <Provider store={store}>
       <ThemeProvider>
-        <FormProvider {...methods}>
-          <div className="App h-screen w-screen   ">
+      
+          <div className="App   bg-white dark:text-slate-100 darkBg  ">
           <RouterProvider router={router} />
           </div>
-        </FormProvider>
+
       </ThemeProvider>
+
     </Provider>
+    </DatesProvider>
+    </MantineProvider>
   );
 };

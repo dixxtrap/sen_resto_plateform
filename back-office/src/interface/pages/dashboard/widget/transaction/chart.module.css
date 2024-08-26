@@ -1,0 +1,7 @@
+.recharts-rectangle{
+    @apply rounded-t-lg
+}
+.bg{
+    
+    /* background-color:   light-dark(var(--mantine-color-white), var(--mantine-color-dark-8)); */
+  }

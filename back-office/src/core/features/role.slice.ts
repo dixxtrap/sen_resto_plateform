@@ -1,49 +1,42 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { PermissionDto, PermissionRole, RoleDto } from "../models/role.dto";
+
 import { WsMessage } from "../models/error.dto";
+import { RoleDto } from "../models/role.dto";
 
 export const roleApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
-  tagTypes: ["role"],
+  tagTypes: ["role","security"],
   reducerPath: "roleApi",
   endpoints: (builder) => ({
-    getRoles: builder.query<RoleDto[], string>({
-      query: () => `/role`,
-      providesTags: ["role"],
+    getRoles: builder.query<RoleDto, string>({
+      query: () => `/role/all`,
+      providesTags: ["role","security"],
     }),
-
-    addPermissions: builder.mutation<
+     createRole: builder.mutation<
       WsMessage,
-      { id: number; body: PermissionDto[] }
+   RoleDto
     >({
-      query: ({ id, body }) => ({
-        url: `/role/permissions/${id}`,
-        method: "POST",
+      query: (body) => ({
+        url: `/role/create`,
+        method: "Post",
         body: body,
       }),
-      invalidatesTags: ["role"],
+      invalidatesTags: ["role","security"],
     }),
-    removePermissions: builder.mutation<
-      WsMessage,
-      { id: number; body: PermissionRole[] }
-    >({
-      query: ({ id, body }) => ({
-        url: `/role/deletePermissions/${id}`,
-        method: "POST",
-        body: body,
-      }),
-      invalidatesTags: ["role"],
-    }),
-    getNoValidPermission: builder.query<PermissionDto[], number>({
-      query: (id) => `role/noValidPermission/${id}`,
-      providesTags: ["role"],
+    updateRole: builder.mutation<WsMessage, {id:number,body:{permissions:string[]}}>({
+      query: ({id,body}) => ({url:`role/update/${id}`, body, method:"PUT"}),
+      invalidatesTags: ["role","security"], 
     }),
     getRolePermissionAndUser: builder.query<RoleDto, number>({
       query: (id) => `role/permission/${id}`,
-      providesTags: ["role"],
+      providesTags: ["role","security"], 
     }),
     getRoleById: builder.query<RoleDto, number>({
       query: (id) => `role/permission_user/${id}`,
+      providesTags: ["role","security"],
+    }),
+    getRolePermissionById: builder.query<RoleDto, number>({
+      query: (id) => `role/by_id/permsission/${id}`,
       providesTags: ["role"],
     }),
   }),
@@ -52,8 +45,8 @@ export const roleApi = createApi({
 export const {
   useGetRolesQuery,
   useGetRolePermissionAndUserQuery,
-  useAddPermissionsMutation,
-  useRemovePermissionsMutation,
-  useGetNoValidPermissionQuery,
-  useGetRoleByIdQuery
+  useGetRoleByIdQuery,
+useGetRolePermissionByIdQuery,
+  useCreateRoleMutation,
+useUpdateRoleMutation
 } = roleApi;

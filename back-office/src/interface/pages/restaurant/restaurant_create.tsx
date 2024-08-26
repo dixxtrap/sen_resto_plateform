@@ -1,93 +1,74 @@
-import React from "react";
+
 import { CustomForm } from "../../components/custom_form";
 import {
   useCreateRestaurantMutation,
-  useGetRestaurantByIdQuery,
 } from "../../../core/features/restaurant.slice";
-import { useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { Input } from "../../components/input";
-import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  RestaurantDto,
-  restaurantSchema,
-} from "../../../core/models/restaurant.dto";
+import { useForm } from "@mantine/form";
+import { CompanyDto } from '../../../core/models/company.dto';
+import {   TextInput } from "@mantine/core";
+import { TextConstant } from "../../../core/data/textConstant";
+import { TimeInput } from "@mantine/dates";
+import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
+import { AddressForm } from "../../components/form/address_form";
+import { AppTextarea } from "../../components/form/app_textarea";
 
 export const RestaurantCreate = () => {
-  const { id } = useParams();
-  const { data: oldRestaurant } = useGetRestaurantByIdQuery(parseInt(id!));
-  const [create, { isError, isLoading, isSuccess }] =
+  const [create, { isError, isLoading, isSuccess, reset }] =
     useCreateRestaurantMutation();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(restaurantSchema),
+  const form = useForm<CompanyDto>({
+    initialValues:{
+      openingTime:"08:00",
+      closingTime:"23:00",
+      location:{
+        latitude:0,
+        longitude:0
+      }
+    },
+    
   });
-  const _onSubmit =handleSubmit((body: RestaurantDto) => {
+  const _onSubmit = form.onSubmit((body) => {
+    console.log(`-------------------${body.description}`);
     console.log(body);
-    create(body);
+    create({ ...body });
   });
   return (
+    <>
     <CustomForm
       title="Restaurant"
       isError={isError}
       isLoading={isLoading}
       isSuccess={isSuccess}
-      subTitle={"Modifier le restaurant" + " " + oldRestaurant?.name}
+      subTitle={" Creer un nouveau restaurant"}
       onSubmit={_onSubmit}
+     onFinish={reset}
     >
-      <Input label="Nom du Restaurant" error={errors.name?.message}>
-        <input {...register("name")} className="input" />
-      </Input>
-      <Input label="Email" error={errors.email?.message}>
-        <input {...register("email")} className="input" />
-      </Input>
-      <Input label="Téléphone" error={errors.phone?.message}>
-        <input {...register("phone")} className="input" />
-      </Input>
-      <Input label="Description" error={errors.description?.message}>
-        <textarea {...register("description")} className="input" />
-      </Input>
-      <div className="flex gap-8 w-full flex-wrap">
-          <Input
-            label="Longitude"
-            error={errors.longitude?.message}
-            className=" max-w-lg"
+      
+    
+      <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
 
-            children={
-              <input className="input grow " {...register("longitude")} />
-            }
-          />
-          <Input
-            label="Laltitude"
-            error={errors.laltitude?.message}
-            className=" max-w-lg"
-            children={
-              <input className="input grow "{...register("laltitude")} />
-            }
-          />
+     
+      <TextInput label={TextConstant.shortname} {...form.getInputProps("shortname")} error={form.errors["shortname"]} key={form.key("shortname")} />
+
+      
+      <TextInput label={TextConstant.email} {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
+
+     
+      <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
+
+     
+    
+
+      <AppTextarea form={form} />
+        <AddressForm form={form } />
+        <LaltitudeLongituide form={ form} />
+      <div className="flex gap-8 w-full flex-wrap">
+        
+      <TimeInput label={"Ouverture"} {...form.getInputProps("openingTime")} error={form.errors["openingTime"]} key={form.key("openingTime")} />
+      <TimeInput label={"Fermuture"} {...form.getInputProps("closingTime")} error={form.errors["closingTime"]} key={form.key("closingTime")} />
+
+  
       </div>
-      <div className="flex gap-8 w-full flex-wrap">
-          <Input
-            label="Ouverture"
-            error={errors.openingTime?.message}
-            className=" max-w-lg"
-
-            children={
-              <input className="input grow " placeholder="00:00:00" {...register("openingTime")} />
-            }
-          />
-          <Input
-            label="Fermuture"
-            error={errors.closingTime?.message}
-            className=" max-w-lg"
-            children={
-              <input className="input grow "  placeholder="00:00:00" {...register("closingTime")} />
-            }
-          />
-        </div>
-    </CustomForm>
+    </CustomForm >
+      </>
   );
 };

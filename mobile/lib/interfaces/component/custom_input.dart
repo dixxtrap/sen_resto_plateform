@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile/interfaces/utils/constant.dart';
+import 'package:mobile/utils/color_ressources.dart';
+import 'package:mobile/utils/helper/constant.dart';
+
 
 class CustomInput extends StatelessWidget {
   const CustomInput(
@@ -92,7 +94,7 @@ class CustomInput extends StatelessWidget {
                           .withOpacity(.02))),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(kpadding / 4),
-                borderSide: const BorderSide(color: kprimary, width: 2),
+                borderSide: const BorderSide(color: ColorResources.PRIMARY_APP_COLOR, width: 2),
               )),
         ),
       ],

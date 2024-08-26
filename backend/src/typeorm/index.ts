@@ -1,74 +1,91 @@
-import { Company } from './company';
-import { Role } from './role';
-import { Restaurant } from './restaurant';
-import { Permission } from './permission';
-import { User } from './user';
-import { PermissionUser } from './permission_user';
-import { PermissionRole } from './permission_role';
-import { Plate } from './plate';
-import { RestaurantContact } from './restaurant_contact';
-import { CompanyContact } from './company_contact';
-import { Contact } from './contact';
-
-import { PaymentType } from './payment_type';
-import { Payment } from './payment';
-import { Order } from './order';
-import { FileDocument } from './document';
-import { PlateFile } from './plate_file';
-import { Tag } from './tag';
-import { TagPlate } from './tag_plat';
-import { Customer } from './customer';
-import { OrderPlate } from './order_plate';
-import { PlateHistory } from './plate_amount';
-import { PaymentTypeHistory } from './payment_type_history';
+import {
+  CompanyRestaurantBase,
+  CompanyRestaurant,
+  Restaurant,
+  Coorporate,
+} from './company_restaurant.entity';
+import { ModuleEntity } from './module.entity';
+import { Partner } from './partner.entity';
+import { PaymentType } from './payment_type.entity';
+import { Permission } from './permission.entity';
+import { Role } from './role.entity';
+import { RolePermission } from './role_permissison.entity';
+import { User } from './user.entity';
+import { Weekday } from './weekday.entity';
+import { Category } from './category.entity';
+import { Customer } from './customer.entity';
+import { Contrat } from './contrat.entity';
+import {
+  ProductManagement,
+  ProductManagementDay,
+} from './product_management.entity';
+import { ProductFile } from './product_file.entity';
+import { Product } from './product.entity';
+import { ProductHistory } from './product_history.entity';
+import { Order } from './order.entity';
+import { Deliver } from './deliver.entity';
+import { CardAllocation } from './card_allocation.entity';
+import { ProductCategory } from './product_category.entity';
+import { Card } from './card.entity';
+import { CardAllocationDetails } from './card_allocation_details.entity';
+import { Transac } from './transaction.entity';
+import { WalletStatus } from './wallet_status.entity';
+import { OrderProduct } from './order_product.entity';
+import { Commission } from './commission.entity';
+import { OtpConfig } from './otp_config';
+import { Otp } from './otp.entity';
+import { City} from './city.entity';
+import { Assignment } from './assignment.entity';
+import { Banner } from './banner.entity';
+import { ProductRaiting } from './product_rating.entity';
+import { Gift } from './gift.entity';
 
 // export
 export {
-  Company,
-  Role,
-  Restaurant,
-  Permission,
+  Partner,
+  CompanyRestaurant,
+  CompanyRestaurantBase,
+  Weekday,
   User,
-  PermissionUser,
-  PermissionRole,
-  Plate,
-  RestaurantContact,
-  Customer,
-  CompanyContact,
-  Contact,
-  PaymentType,
-  PaymentTypeHistory,
-  Payment,
-  Order,
-  FileDocument,
-  PlateFile,
-  TagPlate,
-  Tag,
-  OrderPlate,
-  PlateHistory,
+  Role,
+  Permission,
 };
 export const entities = [
-  Company,
-  Role,
-  Restaurant,
-  Permission,
+  Partner,
+  CompanyRestaurantBase,
+  CompanyRestaurant,
+  Coorporate,
+  Deliver,
+  Weekday,
   User,
-  PermissionUser,
-  PermissionRole,
-  Plate,
-  RestaurantContact,
-  CompanyContact,
-
-  Customer,
-
+  Role,
+  RolePermission,
+  Permission,
+  ModuleEntity,
   PaymentType,
-  PaymentTypeHistory,
-  Payment,
+  Category,
+  Restaurant,
+  Customer,
+  Contrat,
+  Product,
+  ProductCategory,
+  ProductFile,
+  ProductManagement,
+  ProductManagementDay,
+  ProductHistory,
   Order,
-  FileDocument,
-  PlateFile,
-  TagPlate,
-  Tag,
-  OrderPlate,
-  PlateHistory,
+  CardAllocation,
+  Card,
+  Assignment,
+  CardAllocationDetails,
+  Transac,
+  WalletStatus,
+  OrderProduct,
+  Commission,
+  OtpConfig,
+  Otp,
+  City,
+  Banner,
+  ProductRaiting,
+  Gift
 ];

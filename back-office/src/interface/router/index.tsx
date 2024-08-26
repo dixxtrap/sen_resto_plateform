@@ -10,6 +10,17 @@ import { securityRouter } from "./secutrity.router";
 import { paymentTypeRouter } from "./payment_type.router";
 import { orderRouter } from "./order.router";
 import { GoogleMapComponent } from "../pages/dashboard/dashboard";
+import { paymentRouter } from "./transaction.router";
+import { permissionRouter } from "./permission.router";
+import { deliverRouter } from "./deliver.router";
+import { DefinePassword } from "../pages/login/define_password";
+import { cardRouter } from "./card.router";
+import { ForgetPassword } from "../pages/login/forget_password";
+import { SuccessRequete } from "../pages/login/success";
+import { coorporateRouter } from "./coorporate";
+import { giftRouter } from "./gift.router";
+import { cardAllocationRouter } from "./card_allocation.router";
+import { bannerRouter } from "./banner.router";
 
 export const router = createBrowserRouter([
   {
@@ -18,11 +29,20 @@ export const router = createBrowserRouter([
     element: <Login />,
   },
   {
+    path: "define-password",
+    element: <DefinePassword />,
+  },
+  {
+    path: "forget-password",
+    element: <ForgetPassword />,
+  },
+  {path:'succeeded', element:<SuccessRequete/>},
+  {
     path: "",
     element: <Public />,
     children: [
       {
-        path: "dash",
+        path: "dashboard",
         element: <div><GoogleMapComponent/></div>,
       },
       organisationRouter,
@@ -33,6 +53,14 @@ export const router = createBrowserRouter([
       securityRouter,
       paymentTypeRouter,
       orderRouter,
+      coorporateRouter,
+      giftRouter,
+      paymentRouter,
+      permissionRouter,
+      deliverRouter,
+      cardRouter,
+      cardAllocationRouter,
+      bannerRouter
     ],
   },
 ]);

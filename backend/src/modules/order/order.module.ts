@@ -1,13 +1,14 @@
-import { Module } from '@nestjs/common';
-import { OrderController } from './order.controller';
-import { OrderService } from './order.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Order, OrderPlate, PlateHistory } from 'src/typeorm';
-import { JWT } from 'src/jtw';
+import { Module } from "@nestjs/common/decorators/modules";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Order } from "src/typeorm/order.entity";
+import { OrderController } from "./order.controller";
+import { OrderService } from "./order.service";
 
 @Module({
-  imports: [JWT, TypeOrmModule.forFeature([Order, OrderPlate, PlateHistory])],
-  controllers: [OrderController],
-  providers: [OrderService],
+    imports:[TypeOrmModule.forFeature
+        ([Order])
+    ]
+    ,controllers:[OrderController]
+    ,providers:[OrderService]
 })
-export class OrderModule {}
+export class OrderModule{}

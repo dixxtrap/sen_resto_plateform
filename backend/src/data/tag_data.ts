@@ -25,11 +25,6 @@ export const tagData = [
       'Une saveur umami, souvent décrite comme une sensation de richesse et de profondeur du goût.',
   },
   {
-    name: 'Épicé',
-    description:
-      'Une saveur épicée, associée aux épices comme le piment de Cayenne, le poivre de Sichuan, etc.',
-  },
-  {
     name: 'Herbacé',
     description:
       'Une saveur herbacée, évoquant les herbes fraîches comme le basilic, le persil, etc.',
@@ -177,11 +172,7 @@ export const tagData = [
     description:
       'Une saveur de mangue, caractéristique du goût sucré et juteux de la mangue mûre.',
   },
-  {
-    name: 'Cassis',
-    description:
-      'Une saveur de cassis, caractéristique du fruit noir et acidulé du cassissier.',
-  },
+
   {
     name: 'Abricot',
     description:

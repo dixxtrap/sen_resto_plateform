@@ -1,16 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/interfaces/pages/bag.dart';
-import 'package:mobile/interfaces/pages/profile.dart';
-import 'package:mobile/interfaces/pages/restaurant.dart';
-import 'package:mobile/interfaces/utils/constant.dart';
-import 'package:mobile/interfaces/utils/kprint.dart';
-import 'package:mobile/interfaces/utils/svg_icon.dart';
+import 'package:mobile/utils/color_ressources.dart';
+import 'package:mobile/utils/helper/constant.dart';
+
+import 'package:mobile/utils/helper/kprint.dart';
+import 'package:mobile/utils/helper/svg_icon.dart';
 
 import '../component/appbar.dart';
-import '../utils/assets_svg.dart';
-import 'home.dart';
-import 'setting.dart';
+import '../../utils/helper/assets_svg.dart';
 
 class PageWithBottomNavigator extends StatefulWidget {
   const PageWithBottomNavigator(
@@ -25,11 +22,9 @@ class PageWithBottomNavigator extends StatefulWidget {
 }
 
 class _PageWithBottomNavigatorState extends State<PageWithBottomNavigator> {
-  int _selectedIndex = 0;
-
-  static List<String> _tabsRoute = <String>[
+  static final List<String> _tabsRoute = <String>[
     "home",
-    "search",
+    "products",
     "bag",
     "restaurant",
     "profile",
@@ -39,14 +34,14 @@ class _PageWithBottomNavigatorState extends State<PageWithBottomNavigator> {
     Color iconColor =
         getTheme(context).colorScheme.onBackground.withOpacity(.7);
     return Scaffold(
-      appBar: CustomAppBar(),
-      resizeToAvoidBottomInset: true,
+      appBar: const CustomAppBar(),
 
+      backgroundColor: ColorResources.WHITE_COLOR,
       bottomNavigationBar: _tabsRoute.length > widget.currentIndex
           ? BottomNavigationBar(
               selectedItemColor: getTheme(context).colorScheme.onBackground,
               unselectedItemColor: getTheme(context).colorScheme.onBackground,
-              selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+              selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
               // selectedLabelStyle: getTextTheme(context).titleSmall,
 
               elevation: 12,
@@ -123,7 +118,7 @@ class _PageWithBottomNavigatorState extends State<PageWithBottomNavigator> {
               currentIndex: widget.currentIndex,
               onTap: (index) async {
                 kprint(index);
-                await Future.delayed(Duration(milliseconds: 300));
+                await Future.delayed(const Duration(milliseconds: 300));
                 Navigator.pushReplacementNamed(context, _tabsRoute[index]);
               })
           : null,

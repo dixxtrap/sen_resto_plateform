@@ -1,67 +1,97 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
 
+*{
+        font-family: 'roboto', "sans-serif";
+}
+@layer base{
+  :root{    --color-dark-input:23 27 34;
+    --color-dark-background:13 17 23;
+    --color-dark-dropdown:18 22 29;
+  }
+  }
 
-/* :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+.button{
+        @apply rounded-sm font-medium  py-2 px-3
+      }
+      .button.primary{
+        @apply bg-primary-500 dark:bg-primary-500 rounded-md text-white  ring-2 ring-primary-100/50 ring-inset  hover:bg-primary-500/90  duration-150
+      }
+      .button.secondary{
+        @apply bg-secondary-500 dark:bg-secondary-500 rounded-md text-white  ring-2 ring-secondary-100/50 ring-inset  hover:bg-secondary-500/90  duration-150
+      }
+      .button.tertiary{
+        @apply bg-gray-500 dark:bg-gray-500 rounded-md text-white  ring-2 ring-gray-100/50 ring-inset  hover:bg-gray-500/90  duration-150
+      }
+      .title{
+        @apply text-slate-900 dark:text-slate-50
+      }
+      
+      .card{
+        @apply bg-gradient-to-tr flex ring-[0.5px] ring-inset ring-gray-400/25 items-center px-3 gap-2 bg-slate-600/5  dark:bg-black/95  rounded-md  
+      }
+      .cardNum{
+        @apply p-2  rounded-md
+      }
+      .card0{
+        @apply bg-amber-500/10  cardNum  dark:text-amber-400   text-amber-500
+      }
+      .card1{
+        @apply bg-red-500/10  cardNum  dark:text-red-400  text-red-500
+      } 
+      .card2{
+        @apply bg-teal-500/10  cardNum  dark:text-teal-400  text-teal-500
+      }
+      .card3{
+        @apply bg-purple-500/10 cardNum  dark:text-indigo-400 text-indigo-500
+      }
+      
+      .detailsValue{
+        @apply font-bold mr-4 text-opacity-60;
+      }
+      
+      .text.subtitle,.textSubtile{
+        @apply font-bold text-gray-700 dark:text-gray-100
+      }
+      
+      .text.value,.textSubtileValue{
+        @apply  text-gray-600 dark:text-gray-400
+      }
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+      .title1{
+        @apply font-bold text-2xl md:text-7xl py-2 sm:py-1
+      }
+      .title2{
+        @apply font-bold text-lg md:text-xl py-1
+      }
+      .title3{
+        @apply font-bold  
+      }
+      .subtitle1{
+        @apply font-light text-xl text-justify 
+      }
+      .subtitle1.desc{
+        @apply text-gray-600 text-lg md:text-2xl
+      }
+      .illus{
+        @apply w-full  lg:w-96 md:h-80 
+      }
+      .illus.desc{ 
+        @apply bg-gradient-to-tr from-primary-500/30  to-primary-500  rounded-md my-2 
+      }
+     .illus.desc.left{
+       @apply md:mr-4
+     }
+     .illus.desc.right{
+      @apply md:ml-4
+    }
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -75,3 +105,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+

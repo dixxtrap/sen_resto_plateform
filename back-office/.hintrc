@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "button-type": "off",
+    "axe/forms": "off",
+    "typescript-config/strict": "off",
+    "typescript-config/consistent-casing": "off"
+  }
+}

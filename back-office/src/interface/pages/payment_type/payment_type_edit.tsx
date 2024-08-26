@@ -1,8 +1,5 @@
-import { useEffect } from "react";
-import { Input } from "../../components/input";
+import { useEffect, useState } from "react";
 import { CustomForm } from "../../components/custom_form";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
   useGetPaymentTypeByIdQuery,
   useUpdatePaymentTypeMutation,
@@ -10,81 +7,93 @@ import {
 import { useParams } from "react-router-dom";
 import {
   PaymentType,
-  paymentTypeSchema,
+
 } from "../../../core/models/payment_type";
 import { CustomSwitch } from "../../components/switch";
 import { Title } from "../../components/title";
-import { ImgPreview } from "../../components/Img_preview";
-import { Alert } from "../../components/alert_success";
+import { handlePreview } from "../../utils/handle_preview";
+import { CameraIcon } from "@heroicons/react/20/solid";
+import { useForm } from "@mantine/form";
+import { NumberInput, TextInput } from "@mantine/core";
+import { TextConstant } from "../../../core/data/textConstant";
 
 export const PaymentTypeEdit = () => {
-  const id = parseInt(useParams().id!);
-  const [update, { isLoading, isError, isSuccess,  }] =
+  const id = useParams().id!;
+  const [preview, setPreview] = useState<string>();
+  const [file, setFile] = useState<File>();
+  const [changed, setChanged] = useState<boolean>(false);
+  console.log(changed);
+  const handleImage = handlePreview({
+    previewImage: preview!,
+    setPreviewImage: setPreview,
+    setFile: setFile,
+    setChanged: setChanged,
+  });
+  const [update, { isLoading, isError, isSuccess, reset }] =
     useUpdatePaymentTypeMutation();
-  const { data: oldPaymentType, isLoading: isOldLoading, refetch } =
-    useGetPaymentTypeByIdQuery(id);
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(paymentTypeSchema),
+  const old = useGetPaymentTypeByIdQuery(id);
+  const form = useForm({
+    mode:"uncontrolled"
+  //  initialValues:old.data?.data!
   });
-  const _onsubmit = handleSubmit((body: PaymentType) => {
+  const _onsubmit = form.onSubmit(async (body: PaymentType) => {
     console.log(body);
-    update({ id: id, paymentType: body });
+    update({ id: id, paymentType: {...body}, file:file! });
   });
-        useEffect(() => {
-                if (oldPaymentType) {
-                        setValue("name", oldPaymentType!.name!);
-                        setValue("description", oldPaymentType.description);
-                        setValue("fees", oldPaymentType.fees);
-                        setValue("feesInvert", oldPaymentType.feesInvert);
-                        setValue("isActive", oldPaymentType.isActive);
+  useEffect(() => {
+    if (old.data) {
+      console.log(old.data)
+     form.setValues(old.data?.data)
+    }
+  }, [old.isSuccess]);
 
-              
-        }
-        }, [oldPaymentType, setValue])
-        
   return (
-        isOldLoading?<Alert type="loading" title="recuperation" message="Attendez un instant"/>:  <div>
-                  <Title title="Terminaison de Paiement" />
-                   <ImgPreview canUpdateAfter={true} refresh={()=>refetch()}  name="paymentt_type" className="h-20" img={oldPaymentType!.profile!}/>
-      <CustomForm
-        onSubmit={_onsubmit}
-        isSuccess={isSuccess}
-        isError={isError}
-        isLoading={isLoading}
-                  >
-                          <Input
-        label="Nom du Treminaison de Paiement"
-        error={errors.name?.message}
-      >
-        <input type="text" className="input" {...register("name")} />
-      </Input>
-      <Input label="Description" error={errors.description?.message}>
-        <textarea className="input" {...register("description")} />
-      </Input>
-      <Input label="Frais lors de la transaction" error={errors.fees?.message}>
-        <input type="text" className="input" {...register("fees")} />
-      </Input>
+       <div>
+      <Title title="Terminaison de Paiement" />
+      <label htmlFor="file">
+        <input type="file" hidden  id="file" name="file" onChange={(event)=>handleImage(event)}/>
+        {preview?<img title="payment type" src={preview} className="h-20"/>:old?.data?.data.imagePath?<img title="payment type" src={`${old?.data.data?.imagePath}`} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
+        </label>
+        <CustomForm
 
-      <Input label="Frais Chez L 'opérateur" error={errors.feesInvert?.message}>
-        <input type="text" className="input" {...register("feesInvert")} />
-      </Input>
+      isError={isError}
+      isSuccess={isSuccess}
+      isLoading={isLoading}
+      onSubmit={_onsubmit}
+      onFinish={reset}
+    >
+     
+      <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+
+     
+      <TextInput label={TextConstant.shortname} {...form.getInputProps("shortname")} error={form.errors["shortname"]} key={form.key("shortname")} />
+
+    
+      <TextInput label={TextConstant.description} {...form.getInputProps("description")} error={form.errors["description"]} key={form.key("description")} />
+
+    
+      <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
+      
+     
+      <TextInput label={TextConstant.email} {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
+
+     
+      <NumberInput suffix="%" label={"Frais lors de la transaction"} {...form.getInputProps("fees")} error={form.errors["fees"]} key={form.key("fees")} />
+
+    
+      <NumberInput suffix="%" label={"Frais Chez L 'opérateur"} {...form.getInputProps("invertFees")} error={form.errors["invertFees"]} key={form.key("invertFees")} />
+
                   <div className="flex justify-between">
                           <span className="">
                                   Status
                           </span>   
                           <CustomSwitch
         isLoading={false}
-        isActive={watch("isActive")!}
-        onClick={(val) => setValue("isActive", val)}
+        isActive={form.getValues().isActive}
+        onClick={(val) =>form.setFieldValue("isActive", val)}
       />
       </div>
-      </CustomForm>
+    </CustomForm>
     </div>
-  );
+)
 };

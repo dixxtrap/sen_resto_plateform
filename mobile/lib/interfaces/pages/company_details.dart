@@ -6,9 +6,11 @@ import 'package:mobile/cores/model/company.dart';
 import 'package:mobile/interfaces/component/appbar.dart';
 import 'package:mobile/interfaces/component/custom_box.dart';
 import 'package:mobile/interfaces/component/resto_item.dart';
-import 'package:mobile/interfaces/utils/assets_svg.dart';
-import 'package:mobile/interfaces/utils/constant.dart';
-import 'package:mobile/interfaces/utils/svg_icon.dart';
+import 'package:mobile/utils/color_ressources.dart';
+import 'package:mobile/utils/helper/assets_svg.dart';
+import 'package:mobile/utils/helper/constant.dart';
+
+import 'package:mobile/utils/helper/svg_icon.dart';
 
 class CompanyDetails extends StatefulWidget {
   CompanyDetails({Key? key, required this.company}) : super(key: key);
@@ -21,14 +23,14 @@ class _CompanyDetailsState extends State<CompanyDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            SizedBox(
+            const SizedBox(
               height: kpadding,
             ),
             Stack(
@@ -41,8 +43,8 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                     margin: EdgeInsets.symmetric(
                         horizontal: getWidth(context) * .05),
                     padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                        color: kprimary,
+                    decoration: const BoxDecoration(
+                        color: ColorResources.PRIMARY_APP_COLOR,
                         borderRadius: BorderRadius.vertical(
                             top: Radius.elliptical(100, 50),
                             bottom: Radius.circular(20))),
@@ -54,7 +56,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                       EdgeInsets.symmetric(horizontal: getWidth(context) * .05),
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                      color: kprimary.withOpacity(0),
+                      color: ColorResources.PRIMARY_APP_COLOR.withOpacity(0),
                       borderRadius: BorderRadius.circular(kpadding / 4)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,11 +66,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                         width: getWidth(context) * .8 * .4,
                         height: getWidth(context) * .8 * .4,
                         decoration: BoxDecoration(
-                            boxShadow: [BoxShadow()],
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "${Env.fileBase}/${widget.company.profile!.id}"),
-                                fit: BoxFit.fill),
+                            boxShadow: [const BoxShadow()],
+                            // image: DecorationImage(
+                            //     image: NetworkImage(
+                            //         "${Env.fileBase}/${widget.company.profile!.id}"),
+                            //     fit: BoxFit.fill),
                             borderRadius: BorderRadius.circular(10)),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
@@ -89,15 +91,15 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                                         .primaryColor
                                         .withOpacity(.17),
                                   ])),
-                              child: Image.network(
-                                  "${Env.fileBase}/${widget.company.profile!.id}",
-                                  fit: BoxFit.contain),
+                              // child: Image.network(
+                              //     "${Env.fileBase}/${widget.company.profile!.id}",
+                              //     fit: BoxFit.contain),
                             ),
                           ),
                         ),
                       ),
                       Text(
-                        widget.company.shortName!,
+                        ' widget.company.shortName!',
                         style: getTextTheme(context).bodyMedium!.copyWith(
                             color: Colors.white,
                             fontSize: 20,
@@ -108,14 +110,14 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                               color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.w300)),
-                      Wrap(
+                      const Wrap(
                         direction: Axis.horizontal,
                         runSpacing: 20,
                         children: [
-                          Text("${widget.company.restaurants!.length}",
-                              style: getTextTheme(context).bodyMedium!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
+                          // Text("${widget.company.restaurants!.length}",
+                          //     style: getTextTheme(context).bodyMedium!.copyWith(
+                          //         fontWeight: FontWeight.bold,
+                          //         color: Colors.white)),
                           SvgIcon(
                             AssetSvg.shop,
                             size: 18,
@@ -124,10 +126,10 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                           SizedBox(
                             width: kpadding * 2,
                           ),
-                          Text("${widget.company.restaurants!.length}",
-                              style: getTextTheme(context).bodyMedium!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white)),
+                          // Text("${widget.company.restaurants!.length}",
+                          //     style: getTextTheme(context).bodyMedium!.copyWith(
+                          //         fontWeight: FontWeight.bold,
+                          //         color: Colors.white)),
                           SvgIcon(
                             AssetSvg.like,
                             color: Colors.white,
@@ -140,7 +142,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: kpadding,
             ),
             CustomBox(
@@ -148,7 +150,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: kpadding / 4,
                     ),
                     Text(
@@ -157,7 +159,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                           .bodyMedium!
                           .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: kpadding / 8,
                     ),
                     RowItemBetween(
@@ -174,11 +176,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                     Divider(
                       color: onBackground(context).withOpacity(.1),
                     ),
-                    RowItemBetween(
+                    const RowItemBetween(
                       label: "Adresse",
-                      value: widget.company.address!,
+                      value: 'widget.company.address!',
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: kpadding / 4,
                     ),
                   ]),
@@ -188,7 +190,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: kpadding / 4,
                     ),
                     Text(
@@ -197,11 +199,11 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                           .bodyMedium!
                           .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: kpadding / 8,
                     ),
                     Text(widget.company.description!),
-                    SizedBox(
+                    const SizedBox(
                       height: kpadding / 4,
                     ),
                   ]),
@@ -211,7 +213,7 @@ class _CompanyDetailsState extends State<CompanyDetails> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: kpadding / 4,
                 ),
                 Text(
@@ -220,68 +222,69 @@ class _CompanyDetailsState extends State<CompanyDetails> {
                       .bodyMedium!
                       .copyWith(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: kpadding / 8,
                 ),
-                Wrap(
-                  runSpacing: kpadding / 2,
-                  spacing: kpadding / 2,
-                  children: widget.company.restaurants!
-                      .map((e) => Row(
-                            children: [
-                              ImageItem(
-                                  height: 40,
-                                  width: 40,
-                                  id: widget.company.shortName == "SR"
-                                      ? e.profile!.id!
-                                      : widget.company.profile!.id!),
-                              SizedBox(
-                                width: kpadding / 4,
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        e.name!,
-                                        style: getTextTheme(context)
-                                            .bodyMedium!
-                                            .copyWith(
-                                                fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(
-                                        width: kpadding,
-                                      ),
-                                      Text(
-                                        "${e.openingTime!.substring(0, 5)}/${e.closingTime!.substring(0, 5)}",
-                                        style: getTextTheme(context)
-                                            .bodySmall!
-                                            .copyWith(
-                                                color: onBackground(context)
-                                                    .withOpacity(.7)),
-                                      )
-                                    ],
-                                  ),
-                                  Text(e.address!,
-                                      style: getTextTheme(context)
-                                          .bodySmall!
-                                          .copyWith(
-                                              color: onBackground(context)
-                                                  .withOpacity(.7))),
-                                ],
-                              )
-                            ],
-                          ))
-                      .toList(),
-                ),
-                SizedBox(
+                // Wrap(
+                //   runSpacing: kpadding / 2,
+                //   spacing: kpadding / 2,
+                //   children: widget.company.restaurants!
+                //       .map((e) => Row(
+                //             children: [
+                //               ImageItem(
+                //                   height: 40,
+                //                   width: 40,
+                //                   id: widget.company.shortName == "SR"
+                //                       ? e.profile!.id!
+                //                       : widget.company.profile!.id!),
+                //               SizedBox(
+                //                 width: kpadding / 4,
+                //               ),
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.start,
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 children: [
+                //                   Row(
+                //                     children: [
+                //                       Text(
+                //                         e.name!,
+                //                         style: getTextTheme(context)
+                //                             .bodyMedium!
+                //                             .copyWith(
+                //                                 fontWeight: FontWeight.bold),
+                //                       ),
+                //                       SizedBox(
+                //                         width: kpadding,
+                //                       ),
+                //                       Text(
+                //                         "${e.openingTime!.substring(0, 5)}/${e.closingTime!.substring(0, 5)}",
+                //                         style: getTextTheme(context)
+                //                             .bodySmall!
+                //                             .copyWith(
+                //                                 color: onBackground(context)
+                //                                     .withOpacity(.7)),
+                //                       )
+                //                     ],
+                //                   ),
+                //                   Text(e.address!,
+                //                       style: getTextTheme(context)
+                //                           .bodySmall!
+                //                           .copyWith(
+                //                               color: onBackground(context)
+                //                                   .withOpacity(.7))),
+                //                 ],
+                //               )
+                //             ],
+                //           ))
+                //       .toList(),
+                // ),
+
+                const SizedBox(
                   height: kpadding / 4,
                 ),
               ],
             )),
-            SizedBox(
+            const SizedBox(
               height: kpadding,
             ),
           ],

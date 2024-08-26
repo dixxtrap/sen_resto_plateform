@@ -1,4 +1,11 @@
 ./back-office/node_modules
-./bd_api/node_modules
-./bd_api/src/mysql.config.ts
+./backend/node_modules
+./*/mysql.config.ts
+./backend/./mysql.config.ts
+./backend/upload/
+./backend/upload
+./backend/upload/img
+*/upload
+*/upload/img/
 ./client/node_modules
+*/dist/
