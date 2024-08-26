@@ -1,6 +1,7 @@
 ./back-office/node_modules
 ./backend/node_modules
 ./*/mysql.config.ts
+*/package-lock.json
 ./backend/./mysql.config.ts
 ./backend/upload/
 ./backend/upload

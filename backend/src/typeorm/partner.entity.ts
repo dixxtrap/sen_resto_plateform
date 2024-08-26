@@ -14,7 +14,6 @@ import { CreationDetails } from './details.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { CompanyRestaurant, Restaurant } from './company_restaurant.entity';
 import { Contrat } from './contrat.entity';
-import { bool } from 'aws-sdk/clients/signer';
 import { City } from './city.entity';
 // import { IsBoolean } from 'class-validator';
 
