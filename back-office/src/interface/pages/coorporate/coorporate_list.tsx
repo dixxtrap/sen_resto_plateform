@@ -1,10 +1,12 @@
 import BuildingOfficeIcon from "@heroicons/react/24/outline/BuildingOfficeIcon";
 import { useGetCoorporateQuery } from "../../../core/features/coorporate.slice";
 import { Status } from "../../components/status";
-import { TablePagination } from "../../components/table_pagination";
-import { Link,  } from "react-router-dom";
+import { TablePagination } from "../../components/table/table";
+
 import { PathRouter } from "../../router/path.route";
 import { TextConstant } from "../../../core/data/textConstant";
+import { Table } from "@mantine/core";
+import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item";
 
 
 export const CoorporateList = () => {
@@ -19,8 +21,8 @@ export const CoorporateList = () => {
             <>
             
              {companies?.data?.map((company) => (
-                    <tr key={company.id!+company.name!}>
-                      <td className="">
+                    <Table.Tr key={company.id!+company.name!}>
+                      <Table.Td className="">
                         <div className="flex items-center">
                           <div className="  flex-shrink-0  w-16 mr-2 content-center flex  justify-start ">
                             {/* <ImgPreview name={`Prile_${company?.profile?.id}`} className='bg-blue-400 h-11' img={company.profile!}/> */}
@@ -30,23 +32,20 @@ export const CoorporateList = () => {
                             <div className="font-medium ">{company.name}</div>
                             {/* <div className="mt-1 text-gray-500">{company.email}</div> */} 
                         </div>
-                      </td>
-                      <td className="">{company.email}</td>
-                      <td className="">{company.address?.streetAddress}/{company.address?.city}</td>
-                      <td className="">{company.phone}</td>
-                      <td className="font-bold">{company.balance} Fcfa</td>
-                      <td className="">
+                      </Table.Td>
+                      <Table.Td className="">{company.email}</Table.Td>
+                      <Table.Td className="">{company.address}</Table.Td>
+                      <Table.Td className="">{company.phone}</Table.Td>
+                      <Table.Td className="font-bold">{company.balance} Fcfa</Table.Td>
+                      <Table.Td className="">
                       <Status status={ company.isActive!} inactiveText='Inactif' activeText='Actif' />
-                      </td>
-                      <td className="last_td_container">
-                        <Link to={`${path}/details/${company.id}`} className="last_td accept">
-                          Details<span className="sr-only">, {company.phone}</span>
-                        </Link>
-                        <Link to={`${path}/edit/${company.id}`} className="last_td default">
-                          Modifier<span className="sr-only">, {company.phone}</span>
-                        </Link>
-                      </td>
-                    </tr>
+                      </Table.Td>
+                      <Table.Td className="last_td_container">
+                      <TableActionItemDetails label='voir details' path={`/coorporate/details/${company.id}`}/>
+                          <TableActionItemEdit label='voir details' path={`/coorporate/edit/${company.id}`}/>
+                            
+                      </Table.Td>
+                    </Table.Tr>
                   ))}
             </>
          }/>

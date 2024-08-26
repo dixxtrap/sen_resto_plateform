@@ -1,27 +1,19 @@
-import { Input } from "../../components/input";
 import { CustomForm } from "../../components/custom_form";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "@mantine/form";
 import {
-  PaymentType,
-  paymentTypeSchema,
+  PaymentType
 } from "../../../core/models/payment_type";
 import { useCreatePaymentTypeMutation } from "../../../core/features/payment_type.slice";
 import { CustomSwitch } from "../../components/switch";
+import { NumberInput, TextInput } from "@mantine/core";
+import { TextConstant } from "../../../core/data/textConstant";
 
 export const PaymentTypeCreate = () => {
   const [create, { isError, isLoading, isSuccess , reset}] =
     useCreatePaymentTypeMutation();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(paymentTypeSchema),
-  });
-  const _onsubmit = handleSubmit((body: PaymentType) => {
+  const form= useForm({
+  });  
+  const _onsubmit = form.onSubmit((body: PaymentType) => {
     console.log(body);
     create(body);
   });
@@ -35,41 +27,35 @@ export const PaymentTypeCreate = () => {
       onSubmit={_onsubmit}
       onFinish={reset}
     >
-      <Input
-        label="Nom du Treminaison de Paiement"
-        error={errors.name?.message}
-      >
-        <input type="text" className="input" {...register("name")} />
-      </Input>
-      <Input
-        label="Nom commerciale"
-        error={errors.shortname?.message}
-      >
-        <input type="text" className="input" {...register("shortname")} />
-      </Input>
-      <Input label="Description" error={errors.description?.message}>
-        <textarea className="input" {...register("description")} />
-      </Input>
-      <Input label="Téléphone" error={errors.phone?.message}>
-        <input type="text" className="input" {...register("phone")} />
-      </Input><Input label="Email" error={errors.email?.message}>
-        <input type="text" className="input" {...register("email")} />
-      </Input>
-      <Input label="Frais lors de la transaction" error={errors.fees?.message}>
-        <input type="text" className="input" {...register("fees")} />
-      </Input>
+     
+      <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
 
-      <Input label="Frais Chez L 'opérateur" error={errors.invertFees?.message}>
-        <input type="text" className="input" {...register("invertFees")} />
-      </Input>
+     
+      <TextInput label={TextConstant.shortname} {...form.getInputProps("shortname")} error={form.errors["shortname"]} key={form.key("shortname")} />
+
+    
+      <TextInput label={TextConstant.description} {...form.getInputProps("description")} error={form.errors["description"]} key={form.key("description")} />
+
+    
+      <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
+      
+     
+      <TextInput label={TextConstant.email} {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
+
+     
+      <NumberInput suffix="%" label={"Frais lors de la transaction"} {...form.getInputProps("fees")} error={form.errors["fees"]} key={form.key("fees")} />
+
+    
+      <NumberInput suffix="%" label={"Frais Chez L 'opérateur"} {...form.getInputProps("invertFees")} error={form.errors["invertFees"]} key={form.key("invertFees")} />
+
                   <div className="flex justify-between">
                           <span className="">
                                   Status
                           </span>   
                           <CustomSwitch
         isLoading={false}
-        isActive={watch("isActive")!}
-        onClick={(val) => setValue("isActive", val)}
+        isActive={form.watch("isActive", (val)=>{return val})!}
+        onClick={(val) =>form.setFieldValue("isActive", val)}
       />
       </div>
     </CustomForm>

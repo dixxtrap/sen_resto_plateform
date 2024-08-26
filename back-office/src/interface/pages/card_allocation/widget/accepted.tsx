@@ -2,21 +2,21 @@ import  { FC, useEffect, useState } from 'react'
 import { CardAllocationDto } from '../../../../core/models/card_allocation.dto'
 import { DialogAlert } from '../../../components/alert_success'
 import { CustomForm } from '../../../components/custom_form'
-import { Input } from '../../../components/input'
 import { useAcceptAllocationMutation } from '../../../../core/features/card_allocation.slice'
-import { useForm } from 'react-hook-form'
+import { useForm } from '@mantine/form'
+import { Textarea, TextInput } from '@mantine/core'
 type AcceptesCardAllocationProps={
     cardAllocation:CardAllocationDto
 }
 export const AccepteCardAllocation :FC<AcceptesCardAllocationProps>= ({cardAllocation}) => {
   const [accept, {isLoading, isSuccess, isError, error, reset}]=useAcceptAllocationMutation();
-  const {handleSubmit, }=useForm({
-    defaultValues:{
+  const form=useForm({
+    initialValues:{
       motif:''
     }
   })
     const [isOpen, setIsOpen]=useState<boolean>(false)
-const _onSubmit=handleSubmit((data)=>{
+const _onSubmit=form.onSubmit((data)=>{
  
   console.log('==========data=====', data);
   accept({id:cardAllocation.id!, motif:data.motif})
@@ -33,18 +33,18 @@ if(isSuccess==true){
       {isOpen && (
         <DialogAlert isOpen={isOpen} onClose={() => {setIsOpen(false)}}>
           <CustomForm onFinish={reset} validationText='Accepter' successPath='#' isError={isError} isLoading={isLoading} isSuccess={isSuccess} error={error} onSubmit={_onSubmit} title="Accepter les Carte">
-            <Input label="Label">
-              <input readOnly value={cardAllocation.label} className="input"/>
-            </Input>
-            <Input label="Quantité">
-            <input readOnly value={cardAllocation.quantity} className="input"/>
-            </Input>
-            <Input label="Description">
-            <textarea readOnly value={cardAllocation.motif} className="input"></textarea>
-            </Input>
-            <Input label="Motif">
-              <textarea className="input"></textarea>
-            </Input>
+           
+              <TextInput label="Label" readOnly value={cardAllocation.label} className="input"/>
+          
+           
+            <TextInput label="Quantité" readOnly value={cardAllocation.quantity} className="input"/>
+          
+           
+            <Textarea  label="Description" readOnly value={cardAllocation.motif} className="input"/>
+          
+           
+              <Textarea  label="Motif" className="input"/>
+          
           </CustomForm>
         </DialogAlert>
       )}

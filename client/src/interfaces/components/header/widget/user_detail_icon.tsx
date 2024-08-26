@@ -1,8 +1,6 @@
 
-import {  CakeIcon, ChevronDownIcon, GiftIcon, HomeModernIcon, StarIcon, UserIcon } from '@heroicons/react/24/solid'
+import {  CakeIcon, GiftIcon, HomeModernIcon, StarIcon } from '@heroicons/react/24/solid'
 import { HeaderIcon } from './header_icon';
-import { Link } from 'react-router-dom';
-import {  Popover, Transition, PopoverButton, PopoverPanel } from '@headlessui/react';
 import { useProfileQuery } from '../../../../cores/apis/security.slice';
 import { BagIcon } from './bag_icon';
 import { NotificationIcon } from './notification_icon';
@@ -39,7 +37,7 @@ isError&&setShowLogin(true);
    { isError && <DialogAlert   onClose={()=> setShowLogin(false)} isOpen={showLogin}>
         <LoginForm action={()=>setShowLogin(false)}/></DialogAlert>}
      
-        <Popover className="relative">
+        {/* <Popover className="relative">
       <PopoverButton className="inline-flex items-center gap-x-1  mt-2 md:mt-0 text-sm font-semibold leading-6 text-gray-900">
 <HeaderIcon onclick={_onclick} icon={<UserIcon className="h-8" />}/>
        
@@ -65,7 +63,7 @@ isError&&setShowLogin(true);
           </div>
         </PopoverPanel>
       </Transition>
-    </Popover>
+    </Popover> */}
     {/* Profile dropdown */}
   </div>
      

@@ -1,23 +1,28 @@
 
 import "./App.css";
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+import '@mantine/carousel/styles.css';
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/route";
 import store from "./cores/apis/index.store";
 import { Provider } from "react-redux";
-import { FormProvider, useForm } from "react-hook-form";
 import ThemeProvider from "./cores/theme/theme.provider";
+import { MantineProvider } from "@mantine/core";
+import { APP_THEME } from "./theme";
 
 function App() {
-  const methods = useForm();
   return (
+    <MantineProvider theme={APP_THEME}>
     <Provider store={store}>
   <ThemeProvider>
-      <FormProvider {...methods}>
+      
       <RouterProvider router={router} />
-      </FormProvider>
+    
       </ThemeProvider>
 
     </Provider>
+    </MantineProvider>
   );
 }
 

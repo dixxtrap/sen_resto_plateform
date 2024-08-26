@@ -42,7 +42,8 @@ confirmationMessage,
   const[isOpen ,setIsOpen ]=useState<boolean>(false);
   const firstButtonRef = useRef<HTMLButtonElement>(null);
   return (
-    <div className={btnClassName?"":"flex flex-col divide-y darkDivider gap-y-2 "}>
+    <>
+    <div className={btnClassName?"":"flex flex-col text-left divide-y darkDivider gap-y-2 "}>
       {isSuccess && <Navigate to={successPath??".."} />}
       {title &&<Title title={title} subTitle={subTitle} />}
       <form
@@ -52,7 +53,7 @@ confirmationMessage,
       >
         {children}
         {isOpen&& <DialogAlert  isOpen={isOpen} onClose={()=>{console.log("==============close=======")} }>
-       <div className="flex flex-col ">
+       <div className="flex flex-col  ">
         <ExclamationTriangleIcon className="text-primary-500 h-20"/>
        <span className="text-lg mx-auto font-bold">Confirmation</span>
         <span className="text-lg mx-auto">{confirmationMessage??'Voulez vous poursuivre cette action'}</span>
@@ -96,12 +97,14 @@ confirmationMessage,
         <button  hidden={true}  type="submit" ref={firstButtonRef}></button>
       </form>
   
-    { isSuccess&& <Alert isOpen={isSuccess} type="succeedded" title="Félicitation" message={successMessage} onClose={onFinish}/>}
-     {isError&& <Alert isOpen={isError} type="faillure" title="Ooops!" message={ getWsMessage(error)}  onClose={onFinish} />}
-    { isLoading&&<Alert isOpen={isLoading} type="loading" title="Traitement..."   onClose={onFinish} message="Patientez un moment "/>}
- 
+   
       {/* <Alert isOpen={isSuccess} type="succeedded" title="Félicitation"/> */}
       {/* <Alert isOpen={isError}/> */}
     </div>
+     { isSuccess&& <Alert isOpen={isSuccess} type="succeedded" title="Félicitation" message={successMessage} onClose={onFinish}/>}
+     {isError&& <Alert isOpen={isError} type="faillure" title="Ooops!" message={ getWsMessage(error)}  onClose={onFinish} />}
+    { isLoading&&<Alert isOpen={isLoading} type="loading" title="Traitement..."   onClose={onFinish} message="Patientez un moment "/>}
+ 
+    </>
   );
 };

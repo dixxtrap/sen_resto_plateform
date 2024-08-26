@@ -1,10 +1,25 @@
 import { useState } from "react";
 import { ProductDto } from "../../../../cores/models/product";
+import {
+  Card,
+  Image,
+  ActionIcon,
+  Group,
+  Text,
+  Avatar,
+  Badge,
+  useMantineTheme,
+  rem,
+  Pill,
+} from '@mantine/core';
 
+import classes from '../style/product_item.module.css';
 
 import { PlateItemPoppup } from "./order_poppup";
 import { ShoppingBagIcon, StarIcon } from "@heroicons/react/24/solid";
 import { Str } from '../../../../cores/constantes/str';
+import { BookmarkIcon, HeartIcon, ShareIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 
 
 export const PlateItem = ({ product, isLogin=true}: { product: ProductDto ,isLogin:boolean}) => {
@@ -56,3 +71,75 @@ console.log(isLogin)
     </>
   );
 };
+
+
+
+export const ProductItem=({ product}: { product: ProductDto })=> {
+  const theme = useMantineTheme();
+
+  return (
+    <Card withBorder  radius="md" className={clsx(classes.card, 'bg-table') }>
+          <Group >
+        <Avatar
+          src={product.parent?.imagePath}
+          radius="sm"
+        />
+        <div>
+          <Text fw={500}>{product.parent?.shortname}</Text>
+          <Text fz="xs" c="dimmed">
+            preparation {product.cookingTime}
+          </Text>
+        </div>
+      </Group>
+      <Card.Section mb="sm" className="p-2">
+        <Image
+        className="rounded-md"
+          src={product.file![0].path}
+          alt="Top 50 underrated plants for house decoration"
+          h={180}
+        />
+      </Card.Section>
+<Group  gap={1}>
+     {product.category?.slice(0,2)?.map(c=> <Pill radius={6} >
+        {c.name}
+      </Pill>)}
+      </Group>
+      <Text fw={700} className={classes.title} mt="xs">
+       {product.name}
+      </Text>
+
+  
+
+      <Card.Section className={classes.footer}>
+        <Group justify="space-between">
+          <Text fz="xs" c="dimmed">
+            733 people liked this
+          </Text>
+          <Group gap={0}>
+            <ActionIcon variant="subtle" color="gray">
+              <HeartIcon
+                style={{ width: rem(20), height: rem(20) }}
+                color={theme.colors.red[6]}
+               
+              />
+            </ActionIcon>
+            <ActionIcon variant="subtle" color="gray">
+              <BookmarkIcon
+                style={{ width: rem(20), height: rem(20) }}
+                color={theme.colors.yellow[6]}
+                
+              />
+            </ActionIcon>
+            <ActionIcon variant="subtle" color="gray">
+              <ShareIcon
+                style={{ width: rem(20), height: rem(20) }}
+                color={theme.colors.blue[6]}
+             
+              />
+            </ActionIcon>
+          </Group>
+        </Group>
+      </Card.Section>
+    </Card>
+  );
+}

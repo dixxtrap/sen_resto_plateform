@@ -1,8 +1,9 @@
 import { useGetCustomerQuery } from "../../../core/features/customer.slice";
-import { TablePagination } from "../../components/table_pagination";
-import { Link } from "react-router-dom";
+import { TablePagination } from "../../components/table/table";
 import { Status } from "../../components/status";
 import { formatDate } from "../../utils/date_format";
+import { Table } from "@mantine/core";
+import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item";
 
 export const CustomerList = () => {
   const {
@@ -36,40 +37,30 @@ export const CustomerList = () => {
         trs={
           <>
             {customers?.data.map((customer) => (
-              <tr className=" whitespace-nowrap text-sm text-slate-500 ">
-                <td className=" ">{customer!.firstname} {customer!.lastname}</td>
-                <td className="">{customer!.phone}</td>
-                <td className="">{customer!.address?.streetAddress}</td>
-                <td className="">{formatDate(customer!.details?.createdAt!)}</td>
-                <td className="">
+              <Table.Tr className=" whitespace-nowrap text-sm text-slate-500 ">
+                <Table.Td className=" ">{customer!.firstname} {customer!.lastname}</Table.Td>
+                <Table.Td className="">{customer!.phone}</Table.Td>
+                <Table.Td className="">{customer!.address?.streetAddress}</Table.Td>
+                <Table.Td className="">{formatDate(customer!.details?.createdAt!)}</Table.Td>
+                <Table.Td className="">
                   <Status
                     status={customer.isActive!}
                     inactiveText="Inactif"
                     activeText="Actif"
                   />
-                </td>
-                <td className="">
+                </Table.Td>
+                <Table.Td className="">
                   <Status
                     status={customer.isPhoneVeirified!}
                     inactiveText="Non Verifié"
                     activeText="Verifié"
                   />
-                </td>
-                <td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                  <Link
-                    to={`/customer/details/${customer.id}`}
-                    className="last_td accept"
-                  >
-                    Details<span className="sr-only"> {customer.phone}</span>
-                  </Link>
-                  <Link
-                    to={`/customer/edit/${customer.id}`}
-                    className="last_td default"
-                  >
-                    Modifier<span className="sr-only"> {customer.phone}</span>
-                  </Link>
-                </td>
-              </tr>
+                </Table.Td>
+                <Table.Td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                <TableActionItemDetails label='voir details' path={`/customer/details/${customer.id}`}/>
+                <TableActionItemEdit label='voir details' path={`/customer/edit/${customer.id}`}/>
+                </Table.Td>
+              </Table.Tr>
             ))}
           </>
         }

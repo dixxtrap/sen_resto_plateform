@@ -1,11 +1,11 @@
 import { CustomForm } from '../../../components/custom_form'
 import { useDeleteBannerMutation } from '../../../../core/features/banner.slice'
-import { useForm } from 'react-hook-form'
+import { useForm } from '@mantine/form'
 
 export const DeleteBanner = ({id}:{id:number}) => {
     const [deleteBaneer,{}]=useDeleteBannerMutation();
-    const {handleSubmit}=useForm()
-    const _onSubmit=handleSubmit((data)=>{
+    const form=useForm()
+    const _onSubmit=form.onSubmit((data)=>{
         console.log(data)
         deleteBaneer(id+'')
     })

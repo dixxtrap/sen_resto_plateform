@@ -1,15 +1,18 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+
 import { Alert } from "../../components/alert_success";
 import { CustomForm } from "../../components/custom_form";
-import { Input } from "../../components/input";
 import { Title } from "../../components/title";
-import { CompanyDto, companySchema } from "../../../core/models/company.dto";
+import { CompanyDto } from "../../../core/models/company.dto";
 import { useGetCoorporateByIdQuery, useUpdateCoorporateByIdMutation } from "../../../core/features/coorporate.slice";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { handlePreview } from "../../utils/handle_preview";
-import { useForm } from "react-hook-form";
+import { useForm } from "@mantine/form";
 import { CameraIcon } from "@heroicons/react/24/solid";
+import {  TextInput } from "@mantine/core";
+import { AddressForm } from "../../components/form/address_form";
+import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
+import { AppTextarea } from "../../components/form/app_textarea";
 
 export const CoorporateEdit = () => {
   const id = useParams().id!;
@@ -25,32 +28,17 @@ console.log(changed)
   } = useGetCoorporateByIdQuery(id);
   const [update, { isError, isSuccess, isLoading, reset }] =
     useUpdateCoorporateByIdMutation();
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(companySchema),
+  const form= useForm({
+  
   });
   useEffect(() => {
     if (old) {
-      setPreview(old.data.imagePath);
-      setValue("name", old.data.name!);
-      setValue("shortname", old.data.shortname!);
-      setValue("email", old.data.email!);
-      setValue("phone", old.data.phone!);
-      setValue("address.streetAddress", old.data.address!.streetAddress);
-      setValue("address.city", old.data.address?.city!);
-      setValue("address.country", old.data.address?.country!);
-      setValue("description", old.data.description!);
-      setValue("address.country", old.data.address?.country!);
-      setValue("location.latitude", old.data.location?.latitude!);
-      setValue("location.longitude", old.data.location?.longitude!);
+    form.setValues(old.data)
+    setPreview(old.data.imagePath)
     }
-  }, [old, setValue]);
+  }, [old]);
 
-  const _onSubmit = handleSubmit(async (data: CompanyDto) => {
+  const _onSubmit = form.onSubmit(async (data: CompanyDto) => {
    
     update({ id: parseInt(id), coorporate: data, file:file! });
   });
@@ -76,81 +64,23 @@ console.log(changed)
           onFinish={reset}
           onSubmit={_onSubmit}
         >
-          <Input
-            label="Nom"
-            error={errors.name?.message!}
-            children={<input className="input" {...register("name")} />}
-          />
-          <Input
-            label="Abbréviation"
-            error={errors.shortname?.message!}
-            children={<input className="input" {...register("shortname")} />}
-          />
-          <Input
-            label="Email"
-            error={errors.email?.message!}
-            children={<input className="input" {...register("email")} />}
-          />
-          <Input
-            label="Téléphone"
-            error={errors.phone?.message!}
-            children={<input className="input" {...register("phone")} />}
-          />
-          <Input
-            label="Description"
-            error={errors.phone?.message!}
-            children={<textarea className="input" {...register("description")} />}
-          />
           
-             <div className="flex gap-8  w-full flex-wrap">
-            <Input
-              label="Adresse"
-              className=" max-w-lg"
-              error={errors.address?.streetAddress?.message!}
-              children={<input className="input " {...register("address.streetAddress")} />}
-            />
+            <TextInput label="Nom" {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+         
+            <TextInput label="Abbréviation" {...form.getInputProps("shortname")} error={form.errors["shortname"]} key={form.key("shortname")} />
             
-            <Input
-              label="Code Postal"
-              className=" max-w-lg"
-              error={errors.address?.postalCode?.message!}
-              children={<input className="input " {...register("address.postalCode")} />}
-            />
-          </div>
-          <div className="flex gap-8  w-full flex-wrap">
-            <Input
-              label="Region"
-              className=" max-w-lg"
-              error={errors.address?.city?.message!}
-              children={<input className="input " {...register("address.city")} />}
-            />
+        
+            <TextInput label="Email" {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
             
-            <Input
-              label="Pays"
-              className=" max-w-lg"
-              error={errors.address?.country?.message!}
-              children={<input className="input " {...register("address.country")} />}
-            />
-          </div>
-          <div className="flex gap-8 w-full flex-wrap">
+         
+            <TextInput label="Téléphone" {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
             
-            <Input
-              label="Laltitude"
-              error={errors.location?.latitude?.message!}
-              className=" max-w-lg"
-              children={
-                <input className="input grow " {...register("location.latitude")} />
-              }
-            />
-            <Input
-              label="Longitude"
-              error={errors.location?.longitude?.message!}
-              className=" max-w-lg"
-              children={
-                <input className="input grow " {...register("location.longitude")} />
-              }
-            />   
-          </div>
+         
+            <AppTextarea form={form} />
+          
+          <AddressForm form={form} isUpdatable/>
+     
+<LaltitudeLongituide form={form}/>
         </CustomForm>
       </div>
     </div>

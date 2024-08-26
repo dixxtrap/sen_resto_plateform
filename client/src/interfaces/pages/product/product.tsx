@@ -1,6 +1,6 @@
 import {  useGetProductQuery } from "../../../cores/apis/product.slice";
 import { initPagination } from "../../../cores/models/pagination.model";
-import { PlateItem } from "./widget/product_item";
+import { PlateItem, ProductItem } from "./widget/product_item";
 import { AutoCompletionCompanies } from "./widget/auto_completion";
 import { Input } from "../../components/input";
 import { useProfileQuery } from "../../../cores/apis/security.slice";
@@ -8,9 +8,12 @@ import { useState } from "react";
 import { DialogAlert } from "../../components/dialog";
 import { LoginForm } from "../../components/login/login_form";
 import { CategoryPageniationWidget } from "./widget/category_pagination_widget";
+import { Select, TextInput } from "@mantine/core";
+import { useGetCategoryBaseQuery, useGetCategoryQuery } from "../../../cores/apis/api";
 
 export const PlateList = () => {
   const { isSuccess:isLogin}=useProfileQuery("")
+  const coategories=useGetCategoryBaseQuery("")
   const [category, setCategory]=useState<number>(0)
   const [company, setCompany]=useState<number>(0)
   const[showLogin, setShowLogin]=useState(false)
@@ -21,16 +24,10 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
       {showLogin && <DialogAlert   onClose={()=> setShowLogin(false)} isOpen={showLogin}>
         <LoginForm action={()=>setShowLogin(false)}/></DialogAlert>}
       {products && isSuccess && (
-        <div className="bg-white">
-          <div className="mx-auto  px-2      ">
+        <div className="bg-white ">
+          <div className="mx-auto  px-2  max-w-7xl    ">
             <h2 className="sr-only">Products</h2>
-            <div className="flex items-center place-items-center w-full justify-between py-3">
-              <Input className="max-w-xs">
-              <input className="input bg-white"  placeholder="Rechercher"  />
-              </Input>
-              <div className="w-10"></div>
-              <AutoCompletionCompanies current={company} onclick={(id)=>setCompany(id)} />
-            </div>
+            
             {/* <div className="grid grid-cols-8 gap-5 gap-x-3 flex-wrap py-2 pb-8">
               {tags.slice(0, 8).map((tag) => (
                 <div
@@ -45,10 +42,10 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
               ))}
             </div> */}
             <CategoryPageniationWidget current={category} onclick={(id)=>setCategory(id)} ></CategoryPageniationWidget>
-            <div  className="grid grid-cols-2 px-2  gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 md:px-10  lg:px-16 lg:gap-x-10 ">
+            <div  className="grid grid-cols-2   gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4  ">
               {products!.data.map((product) => (
                 <div onClick={()=>!isLogin&&setShowLogin(true)}>
-                <PlateItem product={product} isLogin={isLogin} />
+                <ProductItem product={product}  />
                 </div>
               ))}
             </div>

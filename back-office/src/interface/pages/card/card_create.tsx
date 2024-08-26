@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm } from "@mantine/form";
 import { CustomForm } from "../../components/custom_form";
 import { Input } from "../../components/input";
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import { Title } from "../../components/title";
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import {saveAs} from'file-saver';
 
-import { TablePagination } from "../../components/table_pagination";
+import { TablePagination } from "../../components/table/table";
 import { useNavigate } from "react-router-dom";
 import { useGetCardQuery } from "../../../core/features/card.slice";
 export const CardCreate = () => {
@@ -19,13 +19,13 @@ export const CardCreate = () => {
         const [, setIsLoading]=useState<boolean>();
         const [, setIsError]=useState<boolean>();
         const [cards, setCards]=useState<{total?:number,header:CardDto,start?:CardDto,end?:CardDto}>()
-  const { register, handleSubmit,  } = useForm({
-    defaultValues: {
+  const form = useForm({
+    initialValues: {
       label: "",
       motif: "",
     },
   });
-  const _onSubmit = handleSubmit((data) => {
+  const _onSubmit = form.onSubmit((data) => {
     console.log(data);
     setIsLoading(true);
     const form= new FormData()
@@ -142,10 +142,10 @@ return card;
         )}
       </label>
       <Input label={"Libellé"}>
-        <input {...register("label")} className="input" />
+        <input {...form.getInputProps("label")} className="input" />
       </Input>
       <Input label={"Commentaire"}>
-        <textarea {...register("label")} className="input" />
+        <textarea {...form.getInputProps("label")} className="input" />
       </Input>
     </CustomForm>
   );

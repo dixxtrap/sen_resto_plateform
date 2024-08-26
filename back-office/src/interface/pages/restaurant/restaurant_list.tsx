@@ -1,17 +1,22 @@
 import { useGetResttaurantQuery } from "../../../core/features/restaurant.slice";
-import { TablePagination } from "../../components/table_pagination";
 import { Link } from "react-router-dom";
 import { Status } from "../../components/status";
 import { formatDate } from "../../utils/date_format";
 import { ProtecterPage } from "../../components/protecter_page";
 import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
+import { TablePagination } from "../../components/table/table";
+import { Table } from "@mantine/core";
+import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item";
+import { PermissionCode } from "../../utils/per;ission_code";
 
 
 export const RestaurantList = () => {
-  const { data: restaurants } = useGetResttaurantQuery("");
+  const { data: restaurants ,...state} = useGetResttaurantQuery("");
+  console.log(restaurants)
   return (
     <div>
       <TablePagination
+      {...state}
         title="Restaurant"
         createPath="/restaurant/create"
         subtitle="Liste des Restaurants"
@@ -29,34 +34,43 @@ export const RestaurantList = () => {
         trs={
           <>
             {restaurants?.data.map((restaurant) => (
-              <tr key={restaurant.email} className="">
-                <td className="flex  items-center">
-                  <div className=" flex-shrink-0  w-16 mr-2  content-center flex  justify-start ">
-                  {  restaurant.imagePath? <img src={`${restaurant.imagePath!}`} className='h-8 rounded-md  ' alt=""  />:<BuildingStorefrontIcon className='h-8 pr-1 text-primary-500    mr-2 rounded-md'/>}
+              <Table.Tr key={restaurant.email} className="">
+                <Table.Td className="">
+                
                     {/* <ImgPreview  name={`img_${restaurant.id}`} img={ restaurant.company.short_name=="SR" ? restaurant.profile!:restaurant.company.profile!}/> */}
 
-                   
-                  </div>
-                  
-                  <div className="flex flex-col font-bold">{restaurant.name}</div>
-                </td>
+                    <div className="flex items-center">
+                        <div className=" pl-2 flex-shrink-0  w-16 mr-2 content-center flex  justify-start ">
+                          {/* <ImgPreview name={`Prile_${company?.profile?.id}`} className='bg-blue-400 h-11' img={company.profile!}/> */}
+                          {  restaurant.imagePath? <img src={`${restaurant.imagePath!}`} className='h-8 rounded-md' alt=""  />:<BuildingStorefrontIcon className='h-8 p-1 text-primary-500 bg-secondary-500/20 ring-2  ring-secondary-500/80 rounded-md'/>}
+                        </div>
+                       
+                          <div className="font-medium ">{restaurant.name}</div>
+                          {/* <div className="mt-1 text-gray-500">{company.email}</div> */}
+                      
+                      </div>  
                
-                <td className="">{restaurant.address?.streetAddress} - {restaurant.address?.city} - {restaurant.address?.country}</td>
-                <td className="">{restaurant.phone}</td>
+                  
+                 
+                </Table.Td>
+               
+                <Table.Td className="">{restaurant.address}{restaurant.city?.name}</Table.Td>
+                <Table.Td className="">{restaurant.phone}</Table.Td>
 
-                <td className="">
+                <Table.Td className="">
                   {restaurant.openingTime?.substring(0, 5)} /{" "}
                   {restaurant.closingTime?.substring(0, 5)}
-                </td>
-<td>
+                </Table.Td>
+<Table.Td>
 {formatDate(restaurant.details?.createdAt!)}
-</td>
-                <td className="">
+</Table.Td>
+                <Table.Td className="">
                   <Status status={restaurant.isActive!} />
-                </td>
+                </Table.Td>
 
-                <td className="relative whitespace-nowrap py-3 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                <ProtecterPage isPage={false} permissions={[{code:"PRODUCT_MANAGEMENT", type:"CREATE"}]}>
+                <Table.Td className="last_td_container">
+                  
+                <ProtecterPage isPage={false} permissions={[{code:PermissionCode.PRODUCT_MANAGEMENT, type:"CREATE"}]}>
                 <Link
                     to={`/restaurant/plats/${restaurant.id}`}
                     className="last_td reject"
@@ -64,21 +78,11 @@ export const RestaurantList = () => {
                     Product<span className="sr-only">, {restaurant.phone}</span>
                   </Link>
                 </ProtecterPage>
-                  <Link
-                    to={`/restaurant/details/${restaurant.id}`}
-                    className="last_td accept"
-                  >
-                    Details<span className="sr-only">, {restaurant.phone}</span>
-                  </Link>
-                  <Link
-                    to={`/restaurant/edit/${restaurant.id}`}
-                    className="last_td default"
-                  >
-                    Modifier
-                    <span className="sr-only">, {restaurant.phone}</span>
-                  </Link>
-                </td>
-              </tr>
+                <TableActionItemDetails label='voir details' path={`/restaurant/details/${restaurant.id}`}/>
+            <TableActionItemEdit label='Modifier le Produit' path={`/restaurant/edit/${restaurant.id}`}/>
+            
+                </Table.Td>
+              </Table.Tr>
             ))}
           </>
         }

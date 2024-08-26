@@ -1,6 +1,6 @@
 
 import { useGetCardAllocationQuery } from '../../../core/features/card_allocation.slice'
-import { TablePagination } from '../../components/table_pagination'
+import { TablePagination } from '../../components/table/table'
 import { formatDate } from '../../utils/date_format'
 import { Link } from 'react-router-dom'
 import { PathRouter } from '../../router/path.route'

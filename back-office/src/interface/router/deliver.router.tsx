@@ -1,8 +1,8 @@
 import { RouteObject } from "react-router-dom";
-import { DeliverCompanyDetails } from "../pages/deliver_company/deliver_company_details";
-import DeliverCompanyCreate from "../pages/deliver_company/deliver_company_create";
-import { DeliverCompanyEdit } from "../pages/deliver_company/deliver_company_edit";
-import { DeliverCompanyList } from "../pages/deliver_company/deliver_company_list";
+import { DeliverList } from "../pages/deliver/deliver_list";
+import { DeliverEdit } from "../pages/deliver/deliver_edit";
+import { DeliverCreate } from "../pages/deliver/deliver_create";
+import { DeliverDetails } from "../pages/deliver/deliver_details";
 
 export const deliverRouter:RouteObject={
         path:"deliver",
@@ -10,19 +10,19 @@ export const deliverRouter:RouteObject={
                 {
                         path:""
                         ,index:true,
-                        element:<DeliverCompanyList/>
+                        element:<DeliverList/>
                 },
                 {
-                        path:"edit:id",
-                        element:<DeliverCompanyEdit/>
+                        path:"edit/:id",
+                        element:<DeliverEdit/>
                 },
                 {
                         path:"create",
-                        element:<DeliverCompanyCreate/>
+                        element:<DeliverCreate/>
                 },
                 {
-                        path:"details:id",
-                        element:<DeliverCompanyDetails/>
+                        path:"details/:id",
+                        element:<DeliverDetails/>
                 }
         ]
 }

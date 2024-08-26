@@ -12,7 +12,7 @@ export const BannerDetails = () => {
   return (
     <Details isError={isError} isLoading={isLoading} isSuccess={isSuccess} error={error}>
 {isSuccess&&<>
-<DetailItem label={TextConstant.logo} value={<img title='logo' className="h-20 rounded-md" src={data?.data?.imageUrl}/>}/>
+<DetailItem label={TextConstant.logo} value={<img alt="daxx" title='logo' className="h-20 rounded-md" src={data?.data?.imageUrl}/>}/>
 <DetailItem label={TextConstant.name} value={data?.data?.title}/>
 <DetailItem label={TextConstant.description} value={data?.data?.description}/>
 <DetailItem label={TextConstant.startDate} value={formatDate(data?.data?.start!)}/>

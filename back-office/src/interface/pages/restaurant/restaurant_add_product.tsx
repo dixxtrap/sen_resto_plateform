@@ -1,14 +1,16 @@
 import  { useState } from 'react'
 import { ProductManagementDto } from '../../../core/models/product_management'
 import { ProductDto } from '../../../core/models/product'
-import { Alert, DialogAlert } from '../../components/alert_success'
-import { Title } from '../../components/title'
+import { Alert } from '../../components/alert_success'
 import { CheckIcon } from '@heroicons/react/20/solid'
 import { useAddProductManagementByIdMutation } from '../../../core/features/product.slice'
 import { useParams } from 'react-router-dom'
+import { Modal, Text } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { modalStyleProps } from '../../components/form/custom_styles'
 
 export const RestaurantAddProduct = ({productManagement}:{productManagement:ProductManagementDto[]}) => {
-  const [showDialog, setShowDialog]=useState<boolean>(false)
+  const [showDialog, {open, close}]=useDisclosure(false)
 const [listProduct, setListProduct]=useState<ProductDto[]>([]);
 const {id}=useParams()
 const[addProducts, {isLoading}]=useAddProductManagementByIdMutation()
@@ -23,24 +25,19 @@ const handleListProduct = (body: ProductDto) => {
 };
 const _onsubmit=()=>{
   addProducts({id:parseInt(id!), body:listProduct })
-  setShowDialog(false);
+  close();
   setListProduct([]);
 }
   return (
     <div>
-        <button className="button primary " onClick={() => setShowDialog(true)}>
+        <button className="button primary " onClick={() => open()}>
           {" "}
           Ajouter des permission
         </button>
         {isLoading&&<Alert isOpen={true} type='loading'/>}
-    {    showDialog&& <DialogAlert isOpen={true} onClose={() => setShowDialog(false)}>
+    {    showDialog&& <Modal title={ <Text size='lg' className='font-bold'  >Liste des permission</Text>} {...modalStyleProps} opened={showDialog} onClose={() => close()}>
  <div className="h-[75vh] relative flex flex-col">
-   <div className="sticky top-0 w-full">
-     <div>
-       <Title title="Liste des permission" />
-     </div>
-   </div>
-   <div className="grow h-fit  w-full overflow-y-auto flex flex-col   textSubtileValue ">
+   <div className="grow h-fit  w-full overflow-y-auto flex flex-col    ">
      {productManagement
        .map((item) => (
 
@@ -63,7 +60,7 @@ const _onsubmit=()=>{
           </div>
          </button>
        ))}
-       <div className="sticky bottom-0 bg-white  pt-0.5 dark:bg-black  ">
+       <div className="sticky bottom-0   pt-0.5 dark:bg-black  ">
        
          {listProduct.length > 0 && (
      <button className="button primary " onClick={() =>{ _onsubmit()}}>
@@ -74,7 +71,7 @@ const _onsubmit=()=>{
        </div>
    </div>
  </div>
-</DialogAlert>}
+</Modal>}
     </div>
   )
 }

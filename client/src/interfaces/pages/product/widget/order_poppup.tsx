@@ -1,15 +1,13 @@
-import { useState, Fragment } from "react";
+import { useState } from "react";
 import { ProductDto } from "../../../../cores/models/product";
-import { RadioGroup, Transition, Dialog } from "@headlessui/react";
-import clsx from "clsx";
-import React from "react";
+
 import { Input } from "../../../components/input";
-import { MinusSmallIcon } from "@heroicons/react/24/solid";
-import { PlusSmallIcon } from "@heroicons/react/24/solid";
+import { MinusSmallIcon , PlusSmallIcon} from "@heroicons/react/24/solid";
+import {useForm}from '@mantine/form'
 import XMarkIcon from "@heroicons/react/24/solid/esm/XMarkIcon";
-import { useForm } from "react-hook-form";
 import { CustomForm } from "../../../components/custom_form";
 import { useAddProductMutation } from "../../../../cores/apis/order.slice";
+import { Dialog, Textarea } from "@mantine/core";
 
 export const PlateItemPoppup = ({
   open,
@@ -24,39 +22,21 @@ export const PlateItemPoppup = ({
     product?.file![0]?.path ?? ""
   );
   const [addProduct,{isLoading, isSuccess, isError, reset}]=useAddProductMutation();
-  const { setValue, watch, handleSubmit, register, getValues } = useForm<{
-    quantity: number;
-    description: string;
-  }>({ defaultValues: { quantity: 1 } });
+  const form = useForm<{quantity:number, description:string}>({  });
   const handleQuantity = (method: "increment" | "decrement") => {
     console.log(`--------------------------${method}----------------------`);
-    const value = getValues().quantity;
+    const value = form.getValues().quantity;
     if (method == "increment") {
-      setValue("quantity", value + 1);
-    } else {
-      if (value > 1) {
-        setValue("quantity", value - 1);
+      form.setFieldValue("quantity", value + 1);
+    } else if (value > 1) {
+        form.setFieldValue("quantity", value - 1);
       }
-    }
   };
-const _onsubmit=handleSubmit((data)=>{
-  addProduct({productId:product!.id!, ...data})
+const _onsubmit=form.onSubmit((data)=>{
+  addProduct({productId:product.id!, ...data})
 })
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[100]" onClose={setOpen}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
-        </Transition.Child>
-
+   <Dialog opened={open}>
        <CustomForm onFinish={reset} onSubmit={_onsubmit} isError={isError} isSuccess={isSuccess} isLoading={isLoading}>
        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
@@ -67,16 +47,10 @@ const _onsubmit=handleSubmit((data)=>{
             >
               &#8203;
             </span>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
-              enterTo="opacity-100 translate-y-0 md:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 md:scale-100"
-              leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
+            <div
+           
             >
-              <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
+              <div className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
                 <div className="relative flex w-full items-center overflow-hidden bg-white  rounded-md backdrop-blur-lg px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                   <button
                     type="button"
@@ -94,7 +68,7 @@ const _onsubmit=handleSubmit((data)=>{
                         alt={product.name!}
                         className="object-cover object-center rounded-md"
                       />
-                      <RadioGroup
+                      {/* <RadioGroup
                         value={selectedSize}
                         onChange={setSelectedSize}
                         className="mt-2"
@@ -124,7 +98,7 @@ const _onsubmit=handleSubmit((data)=>{
                             </RadioGroup.Option>
                           ))}
                         </div>
-                      </RadioGroup>
+                      </RadioGroup> */}
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7 divide-y-2 ">
                       <h2 className="text-xl font-bold text-gray-900 sm:pr-12">
@@ -171,8 +145,8 @@ const _onsubmit=handleSubmit((data)=>{
                           {/* Size picker */}
                           <div className="mt-2">
                             <Input label="Details de la Commande">
-                              <textarea
-                                {...register("description")}
+                              <Textarea
+                                {...form.getInputProps("description")}
                                 className="input"
                               />
                             </Input>
@@ -188,7 +162,7 @@ const _onsubmit=handleSubmit((data)=>{
                             <button className="btn primary"   type="button">
                               <span className="text-2xl   leading-4">
                                 {" "}
-                                {watch("quantity")}
+                                {form.getValues().quantity}
                               </span>
                             </button>
                             <button
@@ -211,12 +185,13 @@ const _onsubmit=handleSubmit((data)=>{
                     </div>
                   </div>
                 </div>
-              </Dialog.Panel>
-            </Transition.Child>
+              </div>
+            </div>
           </div>
         </div>
        </CustomForm>
-      </Dialog>
-    </Transition.Root>
+   </Dialog>
   );
 };
+
+

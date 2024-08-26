@@ -1,4 +1,3 @@
-import * as Yup from "yup"
 import { CreationDetailDto } from "./creation_details.dto";
 import { ModuleDto } from "./module.dto";
 export class PermissionDto {
@@ -13,11 +12,4 @@ export class PermissionDto {
        
         details?:CreationDetailDto;
       }
-      
-      export const permissionSchema=Yup.object({
-        name:  Yup.string().required("champ obligatoire"),
-        action:  Yup.string().required("champ obligatoire"),
-        code:  Yup.string().required("champ obligatoire"),
-        moduleId:  Yup.number().required("champ obligatoire"),
-      })
       

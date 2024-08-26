@@ -8,16 +8,17 @@ import img from "../../../assets/svg/restoMap.svg";
 import plateMapImg from "../../../assets/svg/plateMap.svg";
 import { useGetResttaurantQuery } from "../../../core/features/restaurant.slice";
 import {  useNavigate } from "react-router-dom";
-import { BanknotesIcon, CakeIcon, UserIcon, WalletIcon } from "@heroicons/react/24/outline";
+import { BanknotesIcon, CakeIcon, QueueListIcon, WalletIcon } from "@heroicons/react/24/outline";
 import { useGetCompanyQuery } from "../../../core/features/company.slice";
+import { TransactionChart } from './widget/transaction/transaction_chart';
 const containerStyle = {
   width: "fit",
   height: "100vh",
 };
 
 const center = {
-  lat: 14.7394,
-  lng: -17.506737,
+  lat: 14.757556, 
+  lng:  -17.390524,
 };
 
 const destination = {
@@ -44,33 +45,35 @@ export const GoogleMapComponent: React.FC = () => {
   useEffect(() => {}, []);
 
   return ( 
-    <>
-   
-    <div className="  grid grid-cols-4 h-24  gap-4 pb-5">
+    <div className="flex flex-col gap-4">
+   <div className="grid grid-cols-2 h-[400] gap-4  ">
+    <div className="  grid   grid-cols-2    gap-4 ">
     {  [
-      {number:12005600, label:"Solde",  color:"card0",icon: <UserIcon className="h-full"/>},
+      {number:12005600, label:"Solde",  color:"card0",icon: <BanknotesIcon className="h-full"/>},
 
     {number:16870, label:"Commandes", color:"card1", icon:<WalletIcon  className="h-full"/> },
     {number:150, label:"Produits",  color:"card2",  icon:<CakeIcon  className="h-full"/> },
-      {number:2768, label:"Transactions",  color:"card3",  icon:<BanknotesIcon  className="h-full"/> },
+      {number:2768, label:"Transactions",  color:"card3",  icon:<QueueListIcon  className="h-full"/> },
   
-].map((item)=><div className={` card `}>
-     <div className={`h-12 ${item.color}`}>
+].map((item)=><div className={`   flex-col  px-3 justify-center gap-2 lg:gap-7 flex rounded-md bgInput ring-1 ring-gray-400/30 h-full  `}>
+     
+  <div className="flex gap-2   items-end   ">
+  <div className={`h-12  ${item.color}`}>
      {item.icon!}
      </div>
-    <div className="flex flex-col items-start  grow">
-    <span className="text-lg font-semibold">{item.label}</span>
-      <span className="text-2xl font-bold">{item.number}</span>
-    </div>
+    <span className="text-lg font-semibold ">{item.label}</span>
+  
+  </div>
+  <div className="text-2xl text-left  lg:text-3xl font-bold">{item.number}</div>
     </div>)}
     </div>
 
-    <div className="h-fit max-h-[800px] text-white rounded-md overflow-hidden">
+    <div className=" h-[300px] text-white rounded-md overflow-hidden">
       {loadScript.isLoaded ? (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
-          zoom={13.5}
+          zoom={15.18}
           clickableIcons={true}
           
         >
@@ -78,7 +81,7 @@ export const GoogleMapComponent: React.FC = () => {
           {restos?.data.map((e) => (
             <MarkerF
               key={`key_${e.name}`}
-              position={{ lat: e.location?.latitude!??17, lng: e.location?.longitude!??14 }}
+              position={{ lat: Number(e.location?.latitude!)??17, lng: Number(e.location?.longitude!)??14 }}
               icon={ img}
               label={e.name}
               onClick={() => {
@@ -121,7 +124,11 @@ export const GoogleMapComponent: React.FC = () => {
       ) : (
         <div>Loading</div>
       )}
+        </div>
+      </div>
+      <div>
+        <TransactionChart/>
+      </div>
     </div>
-    </>
   );
 };

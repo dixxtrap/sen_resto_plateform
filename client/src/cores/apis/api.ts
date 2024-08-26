@@ -3,6 +3,7 @@ import { CompanyDto } from "../models/company.dto";
 import { BaseResponse } from "../models/base_response";
 import { CategoryDto } from "../models/category.dto";
 import { errorTrasform } from "./error_transformer";
+import { BannerDto } from "../models/banner.dto";
 
 
 export const baseApi = createApi({
@@ -13,12 +14,20 @@ export const baseApi = createApi({
       query: () =>
         `/ws/company/all`,
     }),
+    getBanner: builder.query<BaseResponse<BannerDto[]>, string>({
+      query: () =>
+        `/ws/banner/all`,
+    }),
     getCategory: builder.query<BaseResponse<CategoryDto[]>, string>({
       query: () =>
         `/ws/category/all`,
       transformErrorResponse:errorTrasform
     }),
-   
+    getCategoryBase: builder.query<BaseResponse<CategoryDto[]>, string>({
+      query: () =>
+        `/ws/category/base`,
+      transformErrorResponse:errorTrasform
+    }),
   }),
 });
-export const { useGetCompanyQuery, useGetCategoryQuery} = baseApi;
+export const { useGetCompanyQuery, useGetCategoryQuery, useGetBannerQuery,useGetCategoryBaseQuery} = baseApi;

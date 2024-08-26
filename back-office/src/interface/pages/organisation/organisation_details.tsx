@@ -47,9 +47,7 @@ export const OrganisationDetails = ({}:{type?:string}) => {
               Addresse
             </dt>
             <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0  text value">
-              {company?.data.address?.streetAddress}-
-              {company?.data.address?.city}-
-              {company?.data.address?.country}
+              {company?.data.address}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

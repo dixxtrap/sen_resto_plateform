@@ -1,4 +1,3 @@
-import * as Yup from "yup";
 import { CategoryDto } from "./category.dto";
 import { CompanyDto } from "./company.dto";
 import { CreationDetailDto } from "./creation_details.dto";
@@ -12,11 +11,11 @@ export interface ProductDto {
   price?: number;
   reduction?: number;
 details?:CreationDetailDto
- 
+ isActive:true;
   cookingTime?: string;
   file?: ProductFile[];
   category?: CategoryDto[];
-
+  categoryIds?: number[];
 
 }
 
@@ -24,18 +23,3 @@ export interface ProductFile {
   id?: number;
  path?:string
 }
-
-export const productSchema = Yup.object({
-  id:Yup.number(),
-  restaurantId: Yup.number(),
-  name: Yup.string(),
-  cookingTime: Yup.string().label("00:00"),
-  description: Yup.string(),
-  price: Yup.number(),
-  reduction: Yup.number(),
-
- 
-});
-
-
-export type PlateFormDataCreate = Yup.InferType<typeof productSchema>;

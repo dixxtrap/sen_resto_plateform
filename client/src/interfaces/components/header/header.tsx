@@ -1,4 +1,3 @@
-import { Disclosure } from "@headlessui/react";
 import logo from "/assets/react.svg";
 import { constant, links } from "../../../utils/constant";
 import { Link, NavLink } from "react-router-dom";
@@ -7,8 +6,7 @@ import { UserDetailIcon } from "./widget/user_detail_icon";
 
 export const Header = () => {
   return (
-    <Disclosure as="nav" className=" shadow sticky top-0 backdrop-blur-md z-50">
-
+  
           <div className=" px-2 sm:px-4 lg:px-4 bg-gradient-to-b from-white to-white/40 ">
             <div className="flex h-16 justify-between">
               <div className="flex px-2 lg:px-0">
@@ -38,6 +36,5 @@ export const Header = () => {
             </div>
           </div>
     
-    </Disclosure>
   );
 };

@@ -1,77 +1,60 @@
 import { CustomForm } from "../../components/custom_form";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import {  ProductDto, productSchema } from "../../../core/models/product";
+import { useForm } from "@mantine/form";
+import { ProductDto } from '../../../core/models/product';
 import { useCreateProductMutation } from "../../../core/features/product.slice";
-import { Input } from "../../components/input";
-import { Alert } from "../../components/alert_success";
 import { useGetCategoryQuery } from "../../../core/features/category.slice";
-import { CategoryDto } from "../../../core/models/category.dto";
-import { useState } from "react";
-import { ShowCategorySelect } from "./show_category_select";
+import { ComboboxData, MultiSelect, NumberInput, TextInput } from "@mantine/core";
+import { TextConstant } from "../../../core/data/textConstant";
+import { AppTextarea } from "../../components/form/app_textarea";
+import { TimeInput } from "@mantine/dates";
+import { multiSelectStyle } from "../../components/form/custom_styles";
 
 
 export const PlateCreate = () => {
   const { data: categories, isLoading: isTagLoading } =
     useGetCategoryQuery("");
-  const [categoryList, setCategoryList] = useState<CategoryDto[]>([]);
   const [createPlate, { isError, isSuccess, isLoading, error, data, reset }] =
     useCreateProductMutation();
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(productSchema),
+  const form = useForm({
   });
-  const _onSubmit = (body: ProductDto) => {
+  const _onSubmit = form.onSubmit((body) => {
     console.log(body);
-    createPlate({ ...body, category: categoryList });
-  };
+    createPlate({ ...body as ProductDto });
+  });
   
   return (
-    <>
-      <Alert isOpen={isTagLoading} type="loading" />
+  
       <CustomForm
         title="Produit"
         subTitle="Création d un nouveau Produit"
         isError={isError}
         isSuccess={isSuccess}
-        isLoading={isLoading}
+        isLoading={isLoading||isTagLoading}
         error={error}
         successMessage={data?.message ?? ""}
-        onSubmit={handleSubmit(_onSubmit)}
+        onSubmit={_onSubmit}
         onFinish={reset}
       >
-        <Input label="Nom" error={errors.name?.message}>
-          <input type="text" className="input" {...register("name")} />
-        </Input>
-        <Input label="Description" error={errors.description?.message}>
-          <textarea className="input" {...register("description")} />
-        </Input>
-        <Input label="Prix" error={errors.price?.message}>
-          <input type="text" className="input" {...register("price")} />
-        </Input>
-        <Input label="Reduction" error={errors.reduction?.message}>
-          <input type="text" className="input" {...register("reduction")} />
-        </Input>
-        <Input label="Temps de Preparation" error={errors.reduction?.message}>
-          <input type="text" className="input" {...register("cookingTime")} />
-        </Input>
-        <Input
-          label="Liste des tags #"
-          name="123456"
-          // error={errors.ca?.message}
-        >
-          <div className="input">
-            <div className="   grid grid-cols-2 md:grid-cols-4  gap-3 ">
-              {categories?.data[0]?.children?.map((e) =>
-                <ShowCategorySelect categoryList={categoryList} setCategoryList={setCategoryList} category={e} isChild={false}/>
-              )}
-            </div>
-          </div>
-        </Input>
+       
+      <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+
+        
+      <AppTextarea  form={form} />
+
+      
+      <NumberInput label={TextConstant.price} {...form.getInputProps("price")} error={form.errors["price"]} key={form.key("price")} />
+
+       
+      <NumberInput label={TextConstant.reduction} suffix="%" {...form.getInputProps("reduction")} error={form.errors["reduction"]} key={form.key("reduction")} />
+
+      
+      <TimeInput label={TextConstant.cookingTime} {...form.getInputProps("cookingTime")} error={form.errors["cookingTime"]} key={form.key("cookingTime")} />
+      <MultiSelect searchable {...form.getInputProps('categoryIds')} label="Liste des tags #" classNames={{ pill: 'bg-opacity-5' }}
+          styles={multiSelectStyle}
+          data={categories?.data[0]?.children?.map(e => ({ group: e.name, items: e.children?.map(c => ({ label: c.name!, value: `${c.id}` })), })) as ComboboxData} />
+    
+        
       </CustomForm>
-    </>
+
   );
 };

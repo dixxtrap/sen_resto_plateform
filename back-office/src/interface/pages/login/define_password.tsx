@@ -1,28 +1,21 @@
-import { Input } from "../../components/input";
 import { Logo } from "../../components/logo";
-import { useForm } from "react-hook-form";
+import { useForm } from "@mantine/form";
 import { CustomForm } from "../../components/custom_form";
 import { SignInDto } from "../../../core/models/login.dto";
-import { yupResolver } from "@hookform/resolvers/yup";
+
 import { useDefinePasswordMutation } from "../../../core/features/security.slice";
-import * as Yup from "yup";
+
 import { useGetUserRoleQuery } from "../../../core/features/auth.slice";
+import { TextConstant } from "../../../core/data/textConstant";
+import { PasswordInput } from "@mantine/core";
 export const DefinePassword = () => {
   const [login, { isError, isSuccess, isLoading, reset, error }] =
   useDefinePasswordMutation();
   const { refetch } = useGetUserRoleQuery("");
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(Yup.object({
-        password:Yup.string(),
-        confirmPassword:Yup.string(),
-    })),
+  const form = useForm({
   });
 
-  const _onSubmit = async (data: SignInDto) => {
+  const _onSubmit = form.onSubmit(async(data: SignInDto) => {
     console.log(data);
     const currentUrl = window.location.href;
     const url = new URL(currentUrl);
@@ -35,7 +28,7 @@ export const DefinePassword = () => {
     refetch();
 
  
-  };
+  });
 
 
   return (
@@ -56,26 +49,15 @@ export const DefinePassword = () => {
             onFinish={() => reset()}
             isLoading={isLoading}
             error={error}
-            onSubmit={handleSubmit(_onSubmit)}
+            onSubmit={_onSubmit}
             successPath="/"
           >
-            <Input
-              label="Mot de passe"
           
-              error={errors.password?.message}
-              children={<input className="input" {...register("password")}      type="password"/>}
-            />
-            <Input
-              label="Confirmation"
-              error={errors.password?.message}
-              children={
-                <input
-                  type="password"
-                  className="input"
-                  {...register("confirmPassword")}
-                />
-              }
-            />
+        <PasswordInput label={TextConstant.password} {...form.getInputProps("password")} error={form.errors["password"]} key={form.key("password")} />
+
+            
+        <PasswordInput label={TextConstant.confirmation} {...form.getInputProps("confirmPassword")} error={form.errors["confirmPassword"]} key={form.key("confirmPassword")} />
+
           </CustomForm>
 
           <p className="mt-10 text-center text-sm text-gray-500">

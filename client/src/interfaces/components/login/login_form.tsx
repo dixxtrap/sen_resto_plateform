@@ -2,9 +2,9 @@ import  { FC, ReactNode, useEffect, useState } from 'react'
 import { useLoginMutation, useProfileQuery } from '../../../cores/apis/security.slice'
 import {  DialogAlert } from '../dialog'
 import { Input } from '../input'
-import { useForm } from 'react-hook-form'
 import { Logo } from '../logo'
 import { SetProfileForm } from './set_profile'
+import { useForm } from '@mantine/form'
 type ProtectedActionProps={
         action:()=>void,
         children:ReactNode;
@@ -35,8 +35,8 @@ type LoginFormProps={
 }
 export const LoginForm:FC<LoginFormProps> =({action})=>{
   const [login, {isSuccess}]=useLoginMutation();
-  const {register, handleSubmit }=useForm<{username:string, password:string}>({})
-  const _onSubmit=handleSubmit((data)=>{
+  const form=useForm<{username:string, password:string}>({})
+  const _onSubmit=form.onSubmit((data)=>{
   
     login(data).unwrap().then(result=>{
       console.log(result)
@@ -54,7 +54,7 @@ return (<>
     <Logo />
     <span className="font-bold  title text-2xl">Connexion</span>
     <Input label="Telephone">
-      <input {...register("username")} className="input" />
+      <input {...form.getInputProps("username")} className="input" />
       <button className="button primary">Valider</button>
     </Input>
   </form>

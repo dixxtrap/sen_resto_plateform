@@ -5,11 +5,12 @@ import {
   useUpdateCustomerMutation,
 } from "../../../core/features/customer.slice";
 import { useParams } from "react-router-dom";
-import { Input } from "../../components/input";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Customer, customerSchema } from "../../../core/models/customer";
+import { useForm } from "@mantine/form";
+import { Customer } from "../../../core/models/customer";
 import { TextConstant } from "../../../core/data/textConstant";
+import { TextInput } from "@mantine/core";
+import { AddressForm } from "../../components/form/address_form";
+import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
 
 export const CustomerEdit = () => {
   const {id} = useParams();
@@ -17,28 +18,18 @@ export const CustomerEdit = () => {
   useGetCustomerByIdQuery(id!);
   const [update, { isLoading, isSuccess, isError , error}] =
     useUpdateCustomerMutation();
-  const {
-    register,
-    handleSubmit,setValue,
-    formState: { errors },
-  } = useForm({
- resolver:yupResolver(customerSchema)
+  const form= useForm({
+ 
   });
-  const _onSubmit = handleSubmit((body ) => {
+  const _onSubmit = form.onSubmit((body ) => {
     console.log(body);
     update({customer:body as Customer, id:id!})
   });
   useEffect(() => {
    if(oldCustomer){
-    setValue("firstname", oldCustomer.data.firstname),
-    setValue("lastname", oldCustomer.data.firstname),
-  
-
-    setValue("phone", oldCustomer.data.phone);
-    setValue("isPhoneVeirified", oldCustomer.data.isPhoneVeirified??false);
-    setValue("isActive", oldCustomer.data.isActive??true);
+form.setValues(oldCustomer.data)
    }
-  }, [oldCustomer, setValue])
+  }, [oldCustomer])
   
   return (
     <>
@@ -52,21 +43,18 @@ export const CustomerEdit = () => {
         error={error}
         onSubmit={_onSubmit}
       >
-        <Input label={TextConstant.firstname} error={errors.firstname?.message!}>
-          <input className="input"   {...register("firstname")}/>
-        </Input>
-        <Input label={TextConstant.lastname} error={errors.lastname?.message!}>
-          <input className="input"   {...register("lastname")}/>
-        </Input>
-        <Input label={TextConstant.phone} error={errors.phone?.message!}>
-          <input className="input"   {...register("phone")}/>
-        </Input>
-        <Input label="Laltitude">
-          <input className="input" {...register("location.latitude")} />
-        </Input>
-        <Input label="Logitude">
-          <input className="input"  {...register("location.longitude")}/>
-        </Input>
+       
+        <TextInput label={TextConstant.firstname} {...form.getInputProps("firstname")} error={form.errors["firstname"]} key={form.key("firstname")} />
+
+        
+        <TextInput label={TextConstant.lastname} {...form.getInputProps("lastname")} error={form.errors["lastname"]} key={form.key("lastname")} />
+
+      
+        <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
+<AddressForm form={form} isUpdatable/>
+        
+<LaltitudeLongituide form={form}/>
+        
       </CustomForm>
     </>
   );

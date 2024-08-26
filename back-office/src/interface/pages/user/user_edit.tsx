@@ -1,19 +1,17 @@
-import { useEffect } from "react";
+import {useEffect} from'react'
 import { CustomForm } from "../../components/custom_form";
-import { Input } from "../../components/input";
 import {
   useGetUserByIdQuery,
   useUpdateUserMutation,
 } from "../../../core/features/auth.slice";
 import { useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { User, userSchema } from "../../../core/models/user.dto";
-import { Alert } from "../../components/alert_success";
+import { User } from "../../../core/models/user.dto";
 import { useGetRolesQuery } from "../../../core/features/role.slice";
 import { useGetCompanyChildrenQuery } from "../../../core/features/company.slice";
-import { clsx } from "../../utils/clsx";
-import { RoleDto } from "../../../core/models/role.dto";
+import { useForm } from "@mantine/form";
+import { TextConstant } from '../../../core/data/textConstant';
+import { Select, TextInput } from '@mantine/core';
+import { AddressForm } from '../../components/form/address_form';
 
 export const UserEdit = () => {
   const { data: roles  } = useGetRolesQuery("");
@@ -26,135 +24,53 @@ export const UserEdit = () => {
     // isError: isUserError,
   } = useGetUserByIdQuery(parseInt(id!));
   const [update, { isError, isSuccess, isLoading , reset}] = useUpdateUserMutation();
-  const {
-    register,
-    handleSubmit,
-    setValue,
-  
-    formState: { errors },
-  } = useForm({ resolver: yupResolver(userSchema) });
+  const form= useForm();
   useEffect(() => {
     if (oldUser) {
-      setValue("firstname", oldUser.data.firstname!);
-      setValue("lastname", oldUser.data.lastname!);
-      setValue("birthday", oldUser.data.birthday!);
-      setValue("email", oldUser.data.email!);
-      setValue("roleId", oldUser.data.roleId!);
-      setValue("phone", oldUser.data.phone!);
-      setValue("parentId", oldUser.data.parentId!);
-      setValue("address.streetAddress", oldUser.data.address?.streetAddress!);
-      setValue("address.country", oldUser.data.address?.country!);
-      setValue("address.city", oldUser.data.address?.city!);
-      console.log(oldUser.data.birthday)
-      setValue("birthday", oldUser.data.birthday);
+      form.setValues( oldUser.data);
     }
-  }, [oldUser, setValue]);
-  const _onSubmit = (body: User) => {
+  }, [oldUser]);
+  const _onSubmit = form.onSubmit((body: User) => {
     console.log(body);
     update({ id: parseInt(id!), user: {...body} });
-  };
-  const showRole = (role: RoleDto) => {
-    return role.children?.length! > 0 ? (
-      <optgroup className="dark:bg-black" label={role.name}>
-        <option selected={oldUser?.data.roleId===role.id} value={role.id} className="dark:bg-black">
-          {role.name}
-        </option>
-        {role.children?.map((role2) => (
-          <option selected={oldUser?.data.roleId===role2.id} className="dark:bg-black" value={role2.id}>
-            {role2.name}
-          </option>
-        ))}
-      </optgroup>
-    ) : (
-      <option className="dark:bg-black" value={role.id}>
-        {role.name}
-      </option>
-    );
-  };
+  });
+
   return (
     <>
-      {
-        <Alert
-          isOpen={isUserLoading}
-          title="Recuperation.... "
-          message="PAtientez juste un moment"
-          type="loading"
-        />
-      }
+     
       {isUserSuccess && (
         <CustomForm
           title="Agent"
           subTitle="Modifier l utilisateur"
-          onSubmit={handleSubmit(_onSubmit)}
+          onSubmit={_onSubmit}
           isError={isError}
-          isLoading={isLoading}
+          isLoading={isLoading||isUserLoading}
           isSuccess={isSuccess}
           onFinish={reset}
-          children={
-            <>
-              <Input label="Prénom" error={errors.firstname?.message}>
-                <input
-                  type="text"
-                  className="input"
-                  {...register("firstname")}
-                />
-              </Input>
-              <Input label="Nom" error={errors.lastname?.message}>
-                <input
-                  type="text"
-                  className="input"
-                  {...register("lastname")}
-                />
-              </Input>
-              <Input label="Email" error={errors.email?.message}>
-                <input type="text" className="input" {...register("email")} />
-              </Input>
-              <Input label="Téléphone" error={errors.phone?.message}>
-                <input type="text" className="input" {...register("phone")} />
-              </Input>
-              <Input label="Date de Naissance" error={errors.birthday?.message}>
-                <input
-                  type="date"
-                  className="input"
-                  {...register("birthday")}
-                />
-              </Input>
-              <Input label="Adresse" error={errors.address?.streetAddress?.message}>
-                <input type="text" className="input" {...register("address.streetAddress")} />
-              </Input>
-              <Input label="Region" error={errors.address?.city?.message}>
-                <input type="text" className="input" {...register("address.city")} />
-              </Input>
+         
+        >
+               <TextInput label={TextConstant.firstname} {...form.getInputProps("firstname")} error={form.errors["firstname"]} key={form.key("firstname")} />
 
-              <Input label="Pays" error={errors.address?.country?.message}>
-                <input type="text" className="input" {...register("address.country")} />
-              </Input>
-              <Input label="Organisation">
-                <select
-                  className={clsx("input", "h-9")}
-                  {...register("parentId")}
-                >
-                  {companies?.data.map((e) => (
-                    <option className="input" value={e.id}>
-                      {e.name}
-                    </option>
-                  ))}
-                </select>
-              </Input>
-           
-              <Input label="Role">
-               
-              <select
-            className={clsx("input", "lowercase", "h-9")}
-            {...register("roleId")}
-          >
+     
+<TextInput label={TextConstant.lastname} {...form.getInputProps("lastname")} error={form.errors["lastname"]} key={form.key("lastname")} />
 
-            {roles?.children?.map((e) => showRole(e))}
-          </select>
-              </Input>
-            </>
-          }
-        />
+
+<TextInput label={TextConstant.email} {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
+
+
+<TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
+
+<AddressForm form={form}/>
+
+  <Select  label={"Organisation"} error={form.errors["parentId"]} key={form.key("parentId")}{...form.getInputProps("parentId")} data={companies?.data.map((e) =>({label:e.name!, value:`${e.id}`}))}/>
+
+
+
+
+
+<Select  label={"Role"} error={form.errors["roleId"]} key={form.key("roleId")}{...form.getInputProps("roleId")} data={roles?.children?.map((e) =>({label:e.name!, value:`${e.id}`}))}/>
+
+        </CustomForm>
       )}
     </>
   );

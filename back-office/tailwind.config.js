@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
 export default {
   content: ["./src/**/*.{html,js,tsx,ts}"],
 darkMode:"class",
@@ -8,6 +9,9 @@ darkMode:"class",
   
       colors: {
         kdark:{
+          input:"rgb(23, 27, 34)",
+          background:"rgb(13, 17, 23)",
+          dropdown:"rgb(18, 22, 29)",
           divider:"#414953",
           text:"#cccbca",
           TitleText:"#f0efee",
@@ -17,30 +21,8 @@ darkMode:"class",
           
         },
      
-        primary: {
-          '50': '#fdf2f2',
-          '100': '#f9d4d4',
-          '200': '#f4a5a5',
-          '300': '#ef7070',
-          '400': '#ef3737',
-          '500': '#EF3C56',  // Base Custom Color
-          '600': '#d00e0e',
-          '700': '#a81919',
-          '800': '#8b1f1f',
-          '900': '#731f1f',
-        },
-        secondary: {
-          '50': '#edf9f2',
-          '100': '#c8ebd1',
-          '200': '#9bdcb0',
-          '300': '#67c78d',
-          '400': '#3aa76f',
-          '500': '#29C16E',  // Base Custom Color
-          '600': '#1f985a',
-          '700': '#177d49',
-          '800': '#116539',
-          '900': '#0d5130',
-        },
+        primary:colors.yellow,
+        secondary: colors.amber,
       },
     
     },

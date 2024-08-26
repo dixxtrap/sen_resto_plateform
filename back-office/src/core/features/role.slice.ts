@@ -2,8 +2,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
 import { WsMessage } from "../models/error.dto";
 import { RoleDto } from "../models/role.dto";
-import { PermissionDto } from "../models/permission.dto";
-import { RolePermissionDto } from "../models/permission_role.dto";
 
 export const roleApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
@@ -25,34 +23,9 @@ export const roleApi = createApi({
       }),
       invalidatesTags: ["role","security"],
     }),
-    addPermissions: builder.mutation<
-      WsMessage,
-      { id: number; body: PermissionDto[] }
-    >({
-      query: ({ id, body }) => ({
-        url: `/role/by_id/add_multiple_permission/${id}`,
-        method: "PUT",
-        body: body,
-      }),
-      invalidatesTags: ["role","security"],
-      // providesTags: ["role"],
-
-    }),
-    removePermissions: builder.mutation<
-      WsMessage,
-      { id: number; body: RolePermissionDto[] }
-    >({
-      query: ({ id, body }) => ({
-        url: `/role/by_id/remove_multiple_permission/${id}`,
-        method: "PUT",
-        body: body,
-      }),
-      invalidatesTags: ["role"],
-      // provi: ["role"],
-    }),
-    getNoValidPermission: builder.query<PermissionDto[], number>({
-      query: (id) => `role/noValidPermission/${id}`,
-      providesTags: ["role","security"],
+    updateRole: builder.mutation<WsMessage, {id:number,body:{permissions:string[]}}>({
+      query: ({id,body}) => ({url:`role/update/${id}`, body, method:"PUT"}),
+      invalidatesTags: ["role","security"], 
     }),
     getRolePermissionAndUser: builder.query<RoleDto, number>({
       query: (id) => `role/permission/${id}`,
@@ -72,10 +45,8 @@ export const roleApi = createApi({
 export const {
   useGetRolesQuery,
   useGetRolePermissionAndUserQuery,
-  useAddPermissionsMutation,
-  useRemovePermissionsMutation,
-  useGetNoValidPermissionQuery,
   useGetRoleByIdQuery,
 useGetRolePermissionByIdQuery,
-useCreateRoleMutation
+  useCreateRoleMutation,
+useUpdateRoleMutation
 } = roleApi;

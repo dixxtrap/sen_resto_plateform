@@ -6,6 +6,12 @@
 *{
         font-family: 'roboto', "sans-serif";
 }
+@layer base{
+  :root{    --color-dark-input:23 27 34;
+    --color-dark-background:13 17 23;
+    --color-dark-dropdown:18 22 29;
+  }
+  }
 
 
 .button{

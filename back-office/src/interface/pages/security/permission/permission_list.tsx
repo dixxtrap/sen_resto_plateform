@@ -1,7 +1,7 @@
-import { TablePagination } from '../../../components/table_pagination'
 import { useGetPermissionQuery } from '../../../../core/features/permission.slice'
 import { formatDate } from '../../../utils/date_format'
 import { Status } from '../../../components/status'
+import { TablePagination } from '../../../components/table/table'
 
 export const PermissionList = () => {
 const {data:permissions }=useGetPermissionQuery("")

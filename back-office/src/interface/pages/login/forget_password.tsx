@@ -1,34 +1,25 @@
-import { Input } from "../../components/input";
 import { Logo } from "../../components/logo";
-import { useForm } from "react-hook-form";
+import { useForm } from "@mantine/form";
 import { CustomForm } from "../../components/custom_form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import {  useResetPasswordByEmailMutation } from "../../../core/features/security.slice";
-import * as Yup from "yup";
 import { useGetUserRoleQuery } from "../../../core/features/auth.slice";
 
 import { Link } from "react-router-dom";
+import { TextInput } from "@mantine/core";
+import { TextConstant } from "../../../core/data/textConstant";
 export const ForgetPassword = () => {
   const [login, { isError, isSuccess, isLoading, reset, error }] =
     useResetPasswordByEmailMutation();
   const { refetch } = useGetUserRoleQuery("");
-  const {
-    register, 
-    handleSubmit, 
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(Yup.object(
-    {  email:Yup.string(),
-      }
-    )),
+  const form = useForm({
   });
 
-  const _onSubmit = async ({email}:{email?:string}) => {
+  const _onSubmit = form.onSubmit(async ({email}:{email?:string}) => {
     await login({email:email!});
     refetch();
 
  
-  };
+  })
  
 
   return (
@@ -49,14 +40,11 @@ export const ForgetPassword = () => {
             onFinish={() => reset()}
             isLoading={isLoading}
             error={error}
-            onSubmit={handleSubmit(_onSubmit)}
+            onSubmit={_onSubmit}
             successPath="/dashboard"
           >
-            <Input
-              label="Adresse Email"
-              error={errors.email?.message}
-              children={<input className="input" {...register("email")} />}
-            />
+           
+        <TextInput label={TextConstant.email} {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
            
           </CustomForm>
 

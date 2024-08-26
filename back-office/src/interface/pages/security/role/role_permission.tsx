@@ -1,119 +1,61 @@
 import {  useParams } from "react-router-dom";
 import {
-  useAddPermissionsMutation,
- 
   useGetRolePermissionByIdQuery,
-  useRemovePermissionsMutation,
+  useUpdateRoleMutation,
+  
 } from "../../../../core/features/role.slice";
-import { TablePagination } from "../../../components/table_pagination";
 import { Status } from "../../../components/status";
 import { formatDate } from "../../../utils/date_format";
-import {  useState } from "react";
-import { CheckBadgeIcon, CheckIcon } from "@heroicons/react/20/solid";
-import { PermissionDto } from "../../../../core/models/permission.dto";
-import { RolePermissionDto } from "../../../../core/models/permission_role.dto";
+import {  useEffect } from "react";
+
 import { Title } from "../../../components/title";
-import { Alert, DialogAlert } from "../../../components/alert_success";
 import { useGetPermissionQuery } from "../../../../core/features/permission.slice";
-import { clsx } from "../../../utils/clsx";
+
+import ThemeProvider from "../../../../core/providers/theme.provider";
+import {  Modal, MultiSelect, Space } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
+import { CustomForm } from "../../../components/custom_form";
+import { TablePagination } from "../../../components/table/table";
 
 export const RolePermissionEdit = () => {
+  const form = useForm<{permissions:string[]}>({
+    initialValues: {
+    permissions:[]
+  }})
   const { data: permissions = [],isLoading:isLoadingPermission } = useGetPermissionQuery("");
-  const [showDialog, setShowDialog] = useState(false);
+  const [showDialog, {open, close}] = useDisclosure(false);
   const id = parseInt(useParams().id!);
-  const [listPermission, setListPermission] = useState<PermissionDto[]>([]);
-  const [listRemovePermission, setListRemovePermission] = useState<
-    RolePermissionDto[]
-  >([]);
-  const [addPermission, { isLoading: isAddLoading , }] =
-    useAddPermissionsMutation();
-  const [removePermission,{isLoading:isRemoveLoading, }] = useRemovePermissionsMutation();
 
-  const {
-    data: role,
+  const [addPermission, addPerssionsState] =
+    useUpdateRoleMutation();
+  const role = useGetRolePermissionByIdQuery(id);
+
+
+  const _onsubmit = form.onSubmit(data => {
+    console.log(data)
+    addPermission({ id: id, body: data })
+})
  
-  } = useGetRolePermissionByIdQuery(id);
-
-  const handleListPermission = (body: PermissionDto) => {
-    console.log(listPermission);
-    console.log(body);
-    console.log(listPermission.indexOf(body));
-    if (!listPermission.some(item=>item.id===body.id)) { 
-      setListPermission([...listPermission!, body]);
-    } else {
-      setListPermission([...listPermission.filter((e) => e.id !== body.id)]);
-    }
-  };
-  const handleListRemovePermission = (body: RolePermissionDto) => {
-    if (!listRemovePermission.some(e=>e.permissionId===body.permissionId)) {
-      setListRemovePermission([...listRemovePermission!, body]);
-    } else {
-      setListRemovePermission([
-        ...listRemovePermission.filter((e) => e.permissionId !== body.permissionId),
-      ]);
-    }
-  };
-  const addPremissionSubmit = () => {
-    const listP2=listPermission;
-    setListPermission([]);
-    setShowDialog(false);
-    console.log(listP2)
-     addPermission({ id, body: listPermission })
-  
+useEffect(() => {
+  form.setValues({permissions:role?.data?.rolePermission?.map(p=>`${p.permissionId!}`)})
+}, [role.isSuccess])
 
 
-
-  };
-
-
-  const removePremissionSubmit = () => {
-    removePermission({ id, body: listRemovePermission });
-    setListRemovePermission([])
-  };
- const showDialogWidget= (!isLoadingPermission&& <DialogAlert isOpen={showDialog} onClose={() => setShowDialog(false)}>
- <div className="h-[75vh] relative flex flex-col">
-   <div className="sticky top-0 w-full">
-     <div>
-       <Title title="Liste des permission" />
-     </div>
-   </div>
-   <div className="fgrow h-fit  w-full overflow-y-auto flex flex-wrap gap-2  textSubtileValue">
-   <div className={clsx(" flex flex-wrap gap-2   ")}>
-     {permissions
-       .map((item) => (
-         role?.rolePermission?.some((rp) => rp.permissionId === item.id)?null:
-         <button key={`role_permission_add_${item.id}`} onClick={()=>handleListPermission(item)} className={clsx(" flex justify-between rounded-sm  ring-inset ring-gray-200 ring-1   p-2 ", listPermission.some(p=>p.id===item.id)?'bg-secondary-400/30 ':'')}>
-          
-             <span className="font-normal">{item.name}</span>
-          
-          
-             
-         
-          
-           {listPermission.some(p=>p.id===item.id)&&  <CheckBadgeIcon  className="text-secondary-500 h-5  w-5 m-auto  rounded-md ml-2" />}
-         
-         </button>
-       ))}
-       <div className="sticky bottom-0 bg-white  pt-0.5 dark:bg-black  ">
+ const showDialogWidget= (!isLoadingPermission&& <Modal title="Ajouter de nouveaux Permissions" opened={showDialog} onClose={ close}>
+   <ThemeProvider>
+     <CustomForm  onSubmit={_onsubmit} {...addPerssionsState} >
        
-        
-       </div>
-    
-   </div>
-  <div className="grow"></div>
-     </div>
-     {listPermission.length > 0 && (<button className="button primary " onClick={() =>{ addPremissionSubmit()}}>
-   
-   Ajouter les permission
- </button>
-)}
- </div>
-</DialogAlert>)
+       <MultiSelect  hidePickedOptions {...form.getInputProps('permissions')} dropdownOpened height={100} comboboxProps={{position: 'bottom-start'}}  maxDropdownHeight={250}  styles={{input:{height:250, overflow:'auto'}}} searchable data={permissions.map(e => ({ label: e.name!, value: `${e.id}` }))} w={'100%'} />
+       <Space  h={{base:260}} ></Space>
+
+
+     </CustomForm>
+  
+ </ThemeProvider>
+</Modal>)
   return (
     <div>
-     
-    {isRemoveLoading&&<Alert isOpen={true} type="loading"/>}
-    {isAddLoading&&<Alert isOpen={ true} type="loading"/>}
     {showDialogWidget}
   
    
@@ -122,10 +64,10 @@ export const RolePermissionEdit = () => {
      
         <Title
           title="Liste des droits"
-          subTitle={`privilèges accordés au ${role?.name}`}
+          subTitle={`privilèges accordés au ${role?.data?.name}`}
         />
        
-        <button className="button primary " onClick={() => setShowDialog(true)}>
+        <button className="button primary " onClick={open}>
           {" "}
           Ajouter des permission
         </button>
@@ -144,7 +86,7 @@ export const RolePermissionEdit = () => {
         ]}
         trs={
           <>
-            {role?.rolePermission!.map((p) => (
+            {role?.data?.rolePermission!.map((p) => (
               <tr key={`${p.permissionId}_permission`} className="">
                 <td>{p.permission?.name}</td>
                 <td className="lowercase">{p.permission?.code}</td>
@@ -161,14 +103,6 @@ export const RolePermissionEdit = () => {
                 </td>
                 <td className="last_td_container">
                  
-                    <button
-                      onClick={() => handleListRemovePermission(p)}
-                      className="  ring-2 ring-gray-500/60 ring-inset rounded-md h-5 w-5"
-                    >
-                    
-                {listRemovePermission.some(item=>p.permissionId===item.permissionId)&&  <CheckIcon className="text-teal-50 h-5 p-0.5 w-5 m-auto bg-secondary-500 rounded-md" />}
-              
-                    </button>
                  
                 </td>
               </tr>
@@ -177,64 +111,8 @@ export const RolePermissionEdit = () => {
         }
       />
      
-      {listRemovePermission.length > 0 && (
-        <button
-          onClick={() => removePremissionSubmit()}
-          className="button primary ml-auto  "
-        >
-          Supprimer les permissions selectionner
-        </button>
-      )}
       <div className="h-10"></div>
-      {/* <TablePagination
-        th={["label", "Scope","Type", "Creation", "Modification", "Status", ""]}
-        isPaginated={false}
-        title="Permissions disponibles"
-        subtitle={`liste des permissions non assignées au role ${role?.name}`}
-        trs={
-          <>
-            {permissions.map((e) => (
-              <tr>
-                <td>{e.label}</td>
-                <td className="lowercase">{e.code}</td>
-                <td>{e.type}</td>
-                <td>{formatDate(e.createdAt)}</td>
-                <td>{formatDate(e.updatedAt)}</td>
-                <td>
-                  <Status
-                    activeText="active"
-                    inactiveText="inactive"
-                    status={e.isActive}
-                  />
-                </td>
-                <td className="last_td_container">
-                  {listPermission?.findIndex((f) => e.id == f.id) === -1 ? (
-                    <button
-                      onClick={() => handleListPermission(e)}
-                      className="last_td flex ml-auto rounded-sm items-center h-5 w-5 ring-inset ring-2 ring-slate-500"
-                    ></button>
-                  ) : (
-                    <button
-                      onClick={() => handleListPermission(e)}
-                      className="  ml-auto bg-secondary-500   rounded-sm    flex"
-                    >
-                      <CheckIcon className="text-teal-50 h-5 p-0.5 w-5 m-auto" />
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </>
-        }
-      /> */}
-      {/* {listPermission.length > 0 && (
-        <button
-          onClick={() => addPremissionSubmit()}
-          className="button primary ml-auto  "
-        >
-          AJouter les permissions selectionner
-        </button>
-      )} */}
+     
     </div>
     </div>
   );

@@ -1,18 +1,21 @@
 import  { useEffect, useState } from "react";
 import { Title } from "../../components/title";
 import { CustomForm } from "../../components/custom_form";
-import { Input } from "../../components/input";
 import {
   useGetCompanyByIdQuery,
   useUpdateCompanyByIdMutation,
 } from "../../../core/features/company.slice";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { CompanyDto, companySchema } from "../../../core/models/company.dto";
+import { useForm } from "@mantine/form";
+import { CompanyDto } from "../../../core/models/company.dto";
 import { useParams } from "react-router-dom";
 import { Alert } from "../../components/alert_success";
 import { CameraIcon } from "@heroicons/react/24/outline";
 import { handlePreview } from "../../utils/handle_preview";
+import {  TextInput } from "@mantine/core";
+import { TextConstant } from "../../../core/data/textConstant";
+import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
+import { AddressForm } from "../../components/form/address_form";
+import { CustomSwitchInput } from "../../components/switch";
 
 export const OrganisationEdit = () => {
   const id = useParams().id!;
@@ -26,35 +29,24 @@ console.log(changed)
     isLoading: isOldLoading,
     isSuccess: isOldSuccess,
   } = useGetCompanyByIdQuery(id);
-  const [update, { isError, isSuccess, isLoading, reset }] =
+  const [update, { isError, isSuccess, isLoading, error,reset }] =
     useUpdateCompanyByIdMutation();
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(companySchema),
+  const form = useForm<CompanyDto>({
   });
   useEffect(() => {
-    if (old) {setPreview(old.data.imagePath)
-      setValue("name", old?.data.name!);
-      setValue("shortname", old?.data.shortname!);
-      setValue("email", old?.data.email!);
-      setValue("phone", old?.data.phone!);
-      setValue("address.streetAddress", old?.data.address!.streetAddress);
-      setValue("address.city", old?.data.address?.city!);
-      setValue("address.country", old?.data.address?.country!);
-      setValue("description", old?.data.description!);
-      setValue("address.country", old?.data.address?.country!);
-      setValue("location.latitude", old?.data.location?.latitude!);
-      setValue("location.longitude", old?.data.location?.longitude!);
+    if (old) {
+      setPreview(old.data.imagePath)
+      console.log(old)
+      form.setValues(
+old.data
+      )
     }
-  }, [old, setValue]);
+  }, [isOldSuccess]);
 
-  const _onSubmit = handleSubmit(async (data: CompanyDto) => {
+  const _onSubmit = form.onSubmit(async (data: CompanyDto) => {
     console.log(data);
-    update({ id: parseInt(id), company: data, file:file! });
+   const {regionId, departementId, municipalityId, ...rest}=data
+    update({ id: parseInt(id), company: rest as CompanyDto , file:file! });
   });
   return !isOldSuccess ? (
     <Alert isOpen={isOldLoading} type="loading" title="Recuperation" />
@@ -70,90 +62,27 @@ console.log(changed)
         </label>
      </div>
 
-        <CustomForm
-          isLoading={isLoading}
-          isError={isError}
-          isSuccess={isSuccess}
-          subTitle="Creer une nouvelle compagnie"
-          onFinish={reset}
-          onSubmit={_onSubmit}
-        >
-          <Input
-            label="Nom"
-            error={errors.name?.message!}
-            children={<input className="input" {...register("name")} />}
-          />
-          <Input
-            label="Abbréviation"
-            error={errors.shortname?.message!}
-            children={<input className="input" {...register("shortname")} />}
-          />
-          <Input
-            label="Email"
-            error={errors.email?.message!}
-            children={<input className="input" {...register("email")} />}
-          />
-          <Input
-            label="Téléphone"
-            error={errors.phone?.message!}
-            children={<input className="input" {...register("phone")} />}
-          />
-          <Input
-            label="Description"
-            error={errors.phone?.message!}
-            children={<textarea className="input" {...register("description")} />}
-          />
-          
-             <div className="flex gap-8  w-full flex-wrap">
-            <Input
-              label="Adresse"
-              className=" max-w-lg"
-              error={errors.address?.streetAddress?.message!}
-              children={<input className="input " {...register("address.streetAddress")} />}
-            />
-            
-            <Input
-              label="Code Postal"
-              className=" max-w-lg"
-              error={errors.address?.postalCode?.message!}
-              children={<input className="input " {...register("address.postalCode")} />}
-            />
-          </div>
-          <div className="flex gap-8  w-full flex-wrap">
-            <Input
-              label="Region"
-              className=" max-w-lg"
-              error={errors.address?.city?.message!}
-              children={<input className="input " {...register("address.city")} />}
-            />
-            
-            <Input
-              label="Pays"
-              className=" max-w-lg"
-              error={errors.address?.country?.message!}
-              children={<input className="input " {...register("address.country")} />}
-            />
-          </div>
-          <div className="flex gap-8 w-full flex-wrap">
-            
-            <Input
-              label="Laltitude"
-              error={errors.location?.latitude?.message!}
-              className=" max-w-lg"
-              children={
-                <input className="input grow " {...register("location.latitude")} />
-              }
-            />
-            <Input
-              label="Longitude"
-              error={errors.location?.longitude?.message!}
-              className=" max-w-lg"
-              children={
-                <input className="input grow " {...register("location.longitude")} />
-              }
-            />   
-          </div>
-        </CustomForm>
+     <CustomForm  isLoading={isLoading && isOldLoading} isError={isError} isSuccess={isSuccess} error={error}  subTitle="Creer une nouvelle compagnie" onSubmit={_onSubmit} onFinish={reset} >
+
+<TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+
+
+<TextInput label={TextConstant.shortname} {...form.getInputProps("shortname")} error={form.errors["shortname"]} key={form.key("shortname")} />
+
+
+<TextInput label={TextConstant.email} {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
+
+
+<TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
+
+
+<TextInput label={TextConstant.description} {...form.getInputProps("description")} error={form.errors["description"]} key={form.key("description")} />
+
+
+{    old&&  isOldSuccess&&  <>   <AddressForm form={form}  isUpdatable />
+           <LaltitudeLongituide form={form} /></> }
+           <CustomSwitchInput label="Status" itemKey="isActive" form={form}/>
+</CustomForm>
       </div>
     </div>
   );

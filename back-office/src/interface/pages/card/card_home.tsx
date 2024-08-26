@@ -1,36 +1,36 @@
-import { Tab } from '@headlessui/react'
 
 import { CardList } from './card_list'
 import { CardCreate } from './card_create'
 import { CardAllocationList } from '../card_allocation/card_allocation_list'
+import { Tabs } from '@mantine/core'
 
 export const CardHome = () => {
   return (
-    <Tab.Group as='div' className='  divide-y darkDivider'>
-    <Tab.List className={'max-w-4xl  self-center flex justify-start pb-5 gap-5'}>
-    {['Gestions des Cartes','Gestions des Allocations','Emettre de nouveaux cartes'].map(e=>  <Tab>
-      {({ selected }) => (
-            /* Use the `selected` state to conditionally style the selected tab. */
-            <button
-              className={
-                selected ? ' button primary' : ''
-              }
-            >
-              {e}
-            </button>
-          )}
-        </Tab>)}
-    
-    
-     
-    </Tab.List>
-    
-    <Tab.Panels>
-      <Tab.Panel><CardList/></Tab.Panel>
-      <Tab.Panel><CardAllocationList/></Tab.Panel>
-      <Tab.Panel><CardCreate/></Tab.Panel>
-    </Tab.Panels>
-  </Tab.Group>
+    <Tabs defaultValue="card">
+    <Tabs.List>
+      <Tabs.Tab value="card" >
+        Gallery
+      </Tabs.Tab>
+      <Tabs.Tab value="allocation" >
+        Messages
+      </Tabs.Tab>
+      <Tabs.Tab value="emission" >
+        Settings
+      </Tabs.Tab>
+    </Tabs.List>
+
+    <Tabs.Panel value="card">
+    <CardList/>
+    </Tabs.Panel>
+
+    <Tabs.Panel value="allocation">
+    <CardAllocationList/>
+    </Tabs.Panel>
+
+    <Tabs.Panel value="emission">
+    <CardCreate/>
+    </Tabs.Panel>
+  </Tabs>
 
   )
 }

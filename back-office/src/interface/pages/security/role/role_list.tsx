@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Title } from "../../../components/title";
 import { RoleDto } from "../../../../core/models/role.dto";
 import { clsx } from "../../../utils/clsx";
+import { Button } from "@mantine/core";
 
 export const RoleList = () => {
   const { data: roles  } = useGetRolesQuery("");
@@ -18,10 +19,10 @@ export const RoleList = () => {
        
      <div className="grow"></div>
       <div className=" flex gap-2 justify-between  ">
-      <Link to={`/security/role/permission/${role.id}`} className="last_td accept">Permissions</Link>
+      <Button component={Link}  color="secondary"  to={`/security/role/permission/${role.id}`} className="">Permissions</Button>
 
-      <Link to={`/security/role/details/${role.id}`} className="last_td reject">Details</Link>
-      <Link to={`/security/role/create/${role.id}`} className="last_td default">Ajouter Sous Role</Link>
+      <Button component={Link}  color="secondary"  to={`/security/role/details/${role.id}`} className=" ">Details</Button>
+      <Button component={Link} color="secondary"  to={`/security/role/create/${role.id}`} className="  ">Ajouter Sous Role</Button>
       </div>
     </div>
      </div>
@@ -34,10 +35,10 @@ export const RoleList = () => {
     <div className="flex justify-between items-center">
     <Title title={`Roles : ${roles?.name}`} subTitle="liste des roles et de leurs sous roles"/>
 
-      <div className="flex gap-2">      <Link to={`/security/role/permission/${roles?.id}`} className="last_td accept">Permissions</Link>
+      <div className="flex gap-2">      <Button color="secondary" component={Link} to={`/security/role/permission/${roles?.id}`} className="">Permissions</Button>
 
-<Link to={`/security/role/details/${roles?.id}`} className="last_td reject">Details</Link>
-<Link to={`/security/role/create/${roles?.id}`} className="last_td default">Ajouter  Sous Role</Link></div>
+<Button color="secondary" component={Link} to={`/security/role/details/${roles?.id}`} className="">Details</Button>
+<Button color="secondary" component={Link} to={`/security/role/create/${roles?.id}`} className="">Ajouter  Sous Role</Button></div>
     </div>
 
      <div className="dark:bg-gray-500/5 bg-gray-100/5 ">

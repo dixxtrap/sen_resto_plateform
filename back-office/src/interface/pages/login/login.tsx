@@ -1,36 +1,29 @@
-import { Input } from "../../components/input";
 import { Logo } from "../../components/logo";
-import { useForm } from "react-hook-form";
+import { useForm } from "@mantine/form";
 import { CustomForm } from "../../components/custom_form";
 import { SignInDto } from "../../../core/models/login.dto";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useLoginMutation } from "../../../core/features/security.slice";
-import * as Yup from "yup";
 import { useGetUserRoleQuery } from "../../../core/features/auth.slice";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { TextConstant } from "../../../core/data/textConstant";
+import { PasswordInput, TextInput } from "@mantine/core";
+import { multiSelectStyle } from "../../components/form/custom_styles";
 export const Login = () => {
   const [login, { isError, isSuccess, isLoading, reset, data , error}] =
     useLoginMutation();
   const { refetch } = useGetUserRoleQuery("");
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(Yup.object(
-    {  username:Yup.string(),
-      password:Yup.string(),}
-    )),
+  const form = useForm({
+
   });
 
-  const _onSubmit = async (data: SignInDto) => {
+  const _onSubmit = form.onSubmit(async (data: SignInDto) => {
     console.log(data);
     await login(data);
     refetch();
 
  
-  };
+  });
   useEffect(() => {
     return () => {
       document.cookie = "access_token=Bearer " + data?.token!;
@@ -55,25 +48,13 @@ export const Login = () => {
             onFinish={() => reset()}
             isLoading={isLoading}
             error={error}
-            onSubmit={handleSubmit(_onSubmit)}
+            onSubmit={_onSubmit}
             successPath="/dashboard"
           >
-            <Input
-              label="Adresse Email"
-              error={errors.username?.message}
-              children={<input className="input" {...register("username")} />}
-            />
-            <Input
-              label="Mot de Passe"
-              error={errors.password?.message}
-              children={
-                <input
-                  type="password"
-                  className="input"
-                  {...register("password")}
-                />
-              }
-            />
+          
+        <TextInput label={TextConstant.email} {...form.getInputProps("username")} error={form.errors["username"]} key={form.key("username")} />
+        <PasswordInput styles={multiSelectStyle} label={TextConstant.password} {...form.getInputProps("password")} error={form.errors["password"]} key={form.key("password")} />
+
           </CustomForm>
 
           <p className="mt-10 text-center text-sm text-gray-500">

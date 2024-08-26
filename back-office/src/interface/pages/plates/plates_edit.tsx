@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
 import { Title } from "../../components/title";
 import { CustomForm } from "../../components/custom_form";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { ProductDto, productSchema } from "../../../core/models/product";
+import { useForm } from "@mantine/form";
+import { ProductDto } from "../../../core/models/product";
 import {
   useGetProductByIdQuery,
   useUpdateProductMutation,
 } from "../../../core/features/product.slice";
 import { useParams } from "react-router-dom";
-import { Input } from "../../components/input";
 
 import { Alert } from "../../components/alert_success";
 import { useGetCategoryQuery } from "../../../core/features/category.slice";
-import { ShowCategorySelect } from "./show_category_select";
 import { CategoryDto } from "../../../core/models/category.dto";
 import { WsMessage } from "../../../core/models/error.dto";
 import { ProductCreateFile } from "./product_file_create";
 import { ProductFileUpdate } from "./product_file_update";
+import { ComboboxData, MultiSelect, TextInput } from "@mantine/core";
+import { TextConstant } from "../../../core/data/textConstant";
+import { AppTextarea } from "../../components/form/app_textarea";
+import { multiSelectStyle } from "../../components/form/custom_styles";
+import { CustomSwitchInput } from "../../components/switch";
 export const PlatesEdit = () => {
-  const [categoryList, setCategoryList] = useState<CategoryDto[]>([]);
+  const [_, setCategoryList] = useState<CategoryDto[]>([]);
   const id = parseInt(useParams().id!);
   const { data: categories, isLoading: isTagLoading } = useGetCategoryQuery("");
   const [update, { isLoading, isSuccess, isError, reset, error }] = useUpdateProductMutation();
@@ -29,39 +31,31 @@ export const PlatesEdit = () => {
     isLoading: isOldLoading,
   } = useGetProductByIdQuery(id);
   console.log(old)
-  const {
-    handleSubmit,
-    register,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(productSchema),
-  });
-  const _onSubmit = (body: ProductDto) => {
+  const form= useForm({mode:'uncontrolled'});
+  const _onSubmit = form.onSubmit((body) => {
     console.log(body);
-    update({ id: id!, product: {...body, category:categoryList},  });
-  };
+    update({ id: id, product:body as ProductDto,  });
+  });
   useEffect(() => {
     if (old) {
-      setValue("name", old.data.name);
-      setValue("description", old.data.description);
-      setValue("price", old.data.price);
-      setValue("reduction", old.data.reduction);
+      const {category,file, ...rest}=old.data;
+      form.setValues(rest)
+      form.setFieldValue('categoryIds', old.data.category?.map(e=>`${e.id}`))
  setCategoryList(old.data.category!??[])
      
     }
   }, [old]);
-
+console.log("dat------old",old)
   return (
     <>
-    {(isOldLoading || isTagLoading)&&  <Alert isOpen={true} type="loading"  title="Recuperation"/>}
+    {(isOldLoading &&isTagLoading)&&  <Alert isOpen={true} type="loading"  title="Recuperation"/>}
     {  isError&&<Alert isOpen={true} type="faillure"  title="Error" message={(error as WsMessage).message! }/>}:
       {old&&categories&&
         <div className="flex flex-col divide-y darkDivider">
           <Title title={old.data.name} subTitle="Modifier le plat" />
           <div className="flex flex-wrap gap-2 py-2">
             {old?.data.file?.map((e) => (
-             <ProductFileUpdate path={e.path!}  id={e.id!} productId={old?.data.id!} />
+             <ProductFileUpdate key={`img_${e.id}`} path={e.path!}  id={e.id!} productId={old?.data.id!} />
             ))}
             <ProductCreateFile productId={old.data.id!}/>
             {/* <ImgPreview
@@ -82,37 +76,25 @@ export const PlatesEdit = () => {
             isError={isError}
             isSuccess={isSuccess}
             isLoading={isLoading}
-            onSubmit={handleSubmit(_onSubmit)}
+            onSubmit={_onSubmit}
             onFinish={reset}
           >
-            <Input label="Nom du plat" error={errors.name?.message}>
-              <input className="input" {...register("name")} />
-            </Input>
-            <Input label="Prix" error={errors.price?.message}>
-              <input className="input" {...register("price")} />
-            </Input>
-            <Input label="Reduction" error={errors.reduction?.message}>
-              <input className="input" {...register("reduction")} />
-            </Input>
-            <Input label="description" error={errors.description?.message}>
-              <textarea className="input" {...register("description")} />
-            
-            </Input>
-            <Input
-              label="Liste des tags #"
-              name="123456"
-            
-            >
-              <div className="input">
-                <div className="   items-start  flex-wrap flex  ">
-                <div className="   grid grid-cols-5  gap-3 ">
-              {categories?.data[0].children?.map((e) =>
-                <ShowCategorySelect key={`key_${e.id}`} categoryList={categoryList} setCategoryList={setCategoryList} category={e} isChild={false}/>
-              )}
-            </div>
-                </div>
-              </div>
-            </Input>
+           
+      <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+
+          
+      <TextInput label={TextConstant.price} {...form.getInputProps("price")} error={form.errors["price"]} key={form.key("price")} />
+
+           
+      <TextInput label={TextConstant.reduction} {...form.getInputProps("reduction")} error={form.errors["reduction"]} key={form.key("reduction")} />
+
+           
+      <AppTextarea form={form} />
+
+      <MultiSelect searchable error={form.errors['categoryIds']} {...form.getInputProps('categoryIds')} key={form.key("categoryIds")} label="Liste des tags #" classNames={{ pill: 'bg-opacity-5' }}
+          styles={multiSelectStyle}
+          data={categories?.data[0]?.children?.map(e => ({ group: e.name, items: e.children?.map(c => ({ label: c.name!, value: `${c.id}` })), })) as ComboboxData} />
+    <CustomSwitchInput itemKey={"isActive"}  form={form} />
           </CustomForm>
         </div>
       }

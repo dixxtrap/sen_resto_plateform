@@ -15,13 +15,13 @@ export const RestaurantDetails = () => {
   } = useGetRestaurantByIdQuery(parseInt(id!));
   return (
     <div>
-      {<Alert type="loading" isOpen={isLoading} />}
-      {isSuccess && restaurant && !isLoading && (
+      {isLoading&&<Alert type="loading" isOpen={isLoading} />}
+      {isSuccess && restaurant  && (
         <>
           <div className="flex gap-x-3 shrink-0 items-center">
           <Img
           className="h-8  md:h-20"
-          hasImg={restaurant!.data.imagePath!==null}
+          hasImg={restaurant.data.imagePath!==null}
           imgPath={restaurant?.data.imagePath}
         />
             {/* <Img
@@ -51,7 +51,7 @@ export const RestaurantDetails = () => {
                   Addresse
                 </dt>
                 <dd className="mt-1 text-sm leading-6 ttextSubtileValue sm:col-span-2 sm:mt-0">
-                  {restaurant?.data.address?.streetAddress}
+                  {restaurant?.data.address}
                 </dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

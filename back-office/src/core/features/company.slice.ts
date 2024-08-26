@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
-import { CompanyDto } from "../models/company.dto";
+import { CompanyDto } from '../models/company.dto';
 import { WsMessage } from "../models/error.dto";
 import { BaseResponse } from "./base_response";
 import { axiosBaseQuery } from "./axios_base_query";
@@ -14,7 +14,7 @@ export const companyApi = createApi({
       query: (company: CompanyDto) => ({
         url: "/company_restaurant/create",
         method: "POST",
-        data: company,
+        data: company as CompanyDto,
       }),
       invalidatesTags: ["company"],
     }),

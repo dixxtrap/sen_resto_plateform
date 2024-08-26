@@ -6,13 +6,14 @@ import { Services } from './widget/service';
 import { ProductDiscountedWidget } from './widget/product_discounted';
 import { FastDeliver } from './widget/fast_deliver';
 import { SafePaid } from './widget/safe-paid';
+import { Banners } from './widget/banners';
 
 const Home = () => {
   console.log("------------------------ coordonner -----------------",navigator.geolocation.getCurrentPosition((position)=>{console.log(position.coords)}));
   return (
     <div className="relative">
-      <AfterHeader />
-      <Services />
+      {/* <AfterHeader /> */}
+      <Banners/>
 
       <FastDeliver />
 

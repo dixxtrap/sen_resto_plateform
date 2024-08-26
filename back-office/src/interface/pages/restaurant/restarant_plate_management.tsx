@@ -7,17 +7,19 @@ import {
 } from "../../../core/features/product.slice";
 
 import { useParams } from "react-router-dom";
-import { TablePagination } from "../../components/table_pagination";
 import { Title } from "../../components/title";
 import { useGetRestaurantByIdQuery } from "../../../core/features/restaurant.slice";
 import { RestaurantAddProduct } from "./restaurant_add_product";
+import { TablePagination } from "../../components/table/table";
+import { Table, Text } from "@mantine/core";
+import { Status } from "../../components/status";
 
 export const RestaurantPlatManagement = () => {
   const { id } = useParams();
   const {data:restaurant}=useGetRestaurantByIdQuery(parseInt(id!))
   const {
     data: productManagements ,
-    isLoading,isSuccess
+    ...state
   } = useGetRestaurantProductByIdQuery(parseInt(id!));
   const {data : allProduct}=useGetRestaurantProductQuery("")
 
@@ -41,22 +43,32 @@ console.log("",productManagements)
        <RestaurantAddProduct productManagement={allProduct?.data.filter(item=>!productManagements?.data.some(item2=>item.productId===item2.productId))!}/>
        
         </div>
-      <TablePagination th={["nom", "description",""]} trs={<>
-      { !isLoading&& isSuccess &&productManagements.data.map(productManagement=><tr>
-        <td>
+      <TablePagination{ ... state} th={["nom","Price", "description","status", ""]} trs={<>
+      { productManagements?.data.map(productManagement=><Table.Tr>
+        <Table.Td>
           <div className="flex items-center gap-2 font-bold">
             <img src={`${productManagement?.product?.file![0].path}`} className="h-10 rounded-md" alt="" />
        <span>   {productManagement?.product?.name }</span>
           </div>
          
-        </td>
-        <td>
-        <span className="w- overflow-hidden   text- ">
+        </Table.Td>
+        <Table.Td
+        >
+          {productManagement?.product?.price } F CFA
+        </Table.Td>
+       
+        <Table.Td>
+        <Text className="w- overflow-hidden   text- ">
           
         {productManagement?.product?.description?.slice(0,20)}
-        </span>
-        </td>
-      </tr>)}
+        </Text>
+        </Table.Td>
+        <Table.Td
+        >
+         <Status status={ productManagement?.isActive!}/> 
+        </Table.Td>
+        <Table.Td></Table.Td>
+      </Table.Tr>)}
       </>} />
         
         

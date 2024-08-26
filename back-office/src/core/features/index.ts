@@ -18,6 +18,9 @@ import { coorporateApi } from "./coorporate.slice";
 import { cardApi } from "./card.slice";
 import { cardAllocationApi } from "./card_allocation.slice";
 import { bannerApi } from "./banner.slice";
+import { cityApi } from "./city.slice";
+import { orderApi } from "./order.slice";
+import { deliverApi } from "./deliver.slice";
 const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
@@ -37,7 +40,11 @@ const store = configureStore({
     [coorporateApi.reducerPath ]: coorporateApi.reducer,
     [cardApi.reducerPath]:cardApi.reducer,
     [cardAllocationApi.reducerPath]:cardAllocationApi.reducer,
-    [bannerApi.reducerPath]:bannerApi.reducer,
+    [bannerApi.reducerPath]: bannerApi.reducer,
+    [cityApi.reducerPath]: cityApi.reducer,
+    [orderApi.reducerPath]: orderApi.reducer,
+    [deliverApi.reducerPath]: deliverApi.reducer,
+    
     theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -59,7 +66,11 @@ customerApi.middleware,
       categoryApi.middleware, 
       cardApi.middleware,
       cardAllocationApi.middleware,
-      bannerApi.middleware
+      bannerApi.middleware,
+      cityApi.middleware,
+      orderApi.middleware,
+      deliverApi.middleware,
+
     ),
 });
 

@@ -5,15 +5,20 @@ import {
   useGetRestaurantByIdQuery,
   useUpdateRestaurantByIdMutation,
 } from "../../../core/features/restaurant.slice";
-import { Alert } from "../../components/alert_success";
-import { Input } from "../../components/input";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { CompanyDto, companySchema } from "../../../core/models/company.dto";
+
+import { useForm } from "@mantine/form";
+import { CompanyDto,  } from "../../../core/models/company.dto";
 import { Title } from "../../components/title";
 import { handlePreview } from "../../utils/handle_preview";
 import { CameraIcon } from "@heroicons/react/24/solid";
 import { ProtecterPage } from "../../components/protecter_page";
+import { TextConstant } from "../../../core/data/textConstant";
+import { TimeInput } from "@mantine/dates";
+import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
+import { AddressForm } from "../../components/form/address_form";
+import { AppTextarea } from "../../components/form/app_textarea";
+import { CustomSwitchInput } from "../../components/switch";
+import { TextInput } from "@mantine/core";
 
 export const RestaurantEdit = () => {
   const { id } = useParams();
@@ -21,47 +26,30 @@ export const RestaurantEdit = () => {
   const [file, setFile]=useState<File>();
   const [changed, setChanged]=useState< boolean>(false);
   const handleImage=handlePreview({previewImage:preview!, setPreviewImage:setPreview, setFile:setFile, setChanged:setChanged})
-  const {
-    handleSubmit,
-    setValue,
-    register,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(companySchema),
+  const form = useForm({
+  
   });
   const [updateCompany, { isLoading, isSuccess, isError, reset }] =
     useUpdateRestaurantByIdMutation();
-  const { data: oldRestaurant, isLoading: isRestaurantLoading } =
+  const old =
     useGetRestaurantByIdQuery(parseInt(id!));
-  const _onSubmit =handleSubmit(async  (body: CompanyDto) => {
+  const _onSubmit =form.onSubmit(async  (body: CompanyDto) => {
     console.log(body)
     console.log(file)
     updateCompany({ id: parseInt(id!), restos: body!, file:file! });
   });
   useEffect(() => {
-    if (oldRestaurant) {
-      setPreview(oldRestaurant.data.imagePath!);
-      setValue("name", oldRestaurant.data.name!);
-      setValue("phone", oldRestaurant.data.phone!);
-      setValue("shortname", oldRestaurant.data.shortname!);
-      setValue("email", oldRestaurant.data.email!);
-      setValue("description", oldRestaurant.data.description!);
-      setValue("address.country", oldRestaurant.data.address?.country!);
-      setValue("address.city", oldRestaurant.data.address?.city!);
-      setValue("address.streetAddress", oldRestaurant.data.address?.streetAddress!);
-      setValue("location.latitude", oldRestaurant.data.location?.latitude!);
-      setValue("location.longitude", oldRestaurant.data.location?.longitude!);
-      setValue("openingTime", oldRestaurant.data.openingTime!);
-      setValue("closingTime", oldRestaurant.data.closingTime!);
+    if (old.data) {
+      setPreview(old.data.data.imagePath!);
+     form.setValues(old.data.data)
     }
-  }, [oldRestaurant, setValue]);
+  }, [old.data]);
 
   return (
     <div className="flex flex-col justify-start">
-      <Alert type="loading" title="Recuperation" isOpen={isRestaurantLoading} />
       <Title
         title="Restaurant"
-        subTitle={"Modifier le restaurant" + " " + oldRestaurant?.data?.name}
+        subTitle={"Modifier le restaurant" + " " + old.data?.data?.name}
       />
       {changed&& <></>}
     <div>
@@ -72,85 +60,43 @@ export const RestaurantEdit = () => {
         </label>
        </ProtecterPage>
      </div>
-     daxx
-      <CustomForm
-        isError={isError}
-        onFinish={() => reset()}
-        isLoading={isLoading}
-        isSuccess={isSuccess}
-        onSubmit={_onSubmit}
+     
+     <CustomForm
       
-      >
-       <Input label="Nom du Restaurant" error={errors.name?.message!}>
-        <input {...register("name")} className="input" />
-      </Input>
-      <Input label="Abbreviation" error={errors.shortname?.message!}>
-        <input {...register("shortname")} className="input" />
-      </Input>
-      <Input label="Email" error={errors.email?.message!}>
-        <input {...register("email")} className="input" />
-      </Input>
-      <Input label="Téléphone" error={errors.phone?.message!}>
-        <input {...register("phone")} className="input" />
-      </Input>
-      <Input label="Adresse" error={errors.address?.streetAddress?.message!}>
-        <input {...register("address.streetAddress")} className="input" />
-      </Input>
-      <Input label="Ville" error={errors.address?.city?.message!}>
-        <input {...register("address.city")} className="input" />
-      </Input>
-      <Input label="Pays" error={errors.address?.country?.message!}>
-        <input {...register("address.country")} className="input" />
-      </Input>
-      <Input label="Description" error={errors.description?.message!}>
-        <textarea {...register("description")} className="input" />
-      </Input>
+      isError={isError}
+      isLoading={isLoading ||old.isLoading}
+      isSuccess={isSuccess}
+    
+      onSubmit={_onSubmit}
+     onFinish={reset}
+    >
+      
+    
+      <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+
+     
+      <TextInput label={TextConstant.shortname} {...form.getInputProps("shortname")} error={form.errors["shortname"]} key={form.key("shortname")} />
+
+      
+      <TextInput label={TextConstant.email} {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
+
+     
+      <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
+
+     
+
+      <AppTextarea form={form}/>
+        <AddressForm form={ form} isUpdatable />
+        <LaltitudeLongituide form={ form } />
+        <CustomSwitchInput itemKey="isActive" form={form}/>
       <div className="flex gap-8 w-full flex-wrap">
-        <Input
-          label="Laltitude"
-          error={errors.location?.latitude?.message!}
-          className=" max-w-lg"
-          children={
-            <input className="input grow " {...register("location.latitude")} />
-          }
-        />
-        <Input
-          label="Longitude"
-          error={errors.location?.latitude?.message!}
-          className=" max-w-lg"
-          children={
-            <input className="input grow " {...register("location.longitude")} />
-          }
-        />
+        
+      <TimeInput label={"Ouverture"} {...form.getInputProps("openingTime")} error={form.errors["openingTime"]} key={form.key("openingTime")} />
+      <TimeInput label={"Fermuture"} {...form.getInputProps("closingTime")} error={form.errors["closingTime"]} key={form.key("closingTime")} />
+
+  
       </div>
-      <div className="flex gap-8 w-full flex-wrap">
-        <Input
-          label="Ouverture"
-          error={errors.openingTime?.message!}
-          className=" max-w-lg"
-          children={
-            <input
-              className="input grow "
-              placeholder="00:00:00"
-              {...register("openingTime")}
-            />
-          }
-        />
-        <Input
-          label="Fermuture"
-          error={errors.closingTime?.message!}
-          className=" max-w-lg"
-          children={
-            <input
-              className="input grow "
-              placeholder="00:00:00"
-              {...register("closingTime")}
-            />
-          }
-        />
-      </div>
-        {/* {Object.values(errors).map(e=><span>{e.message}</span>)} */}
-      </CustomForm>
+    </CustomForm >
     </div>
   );
 };

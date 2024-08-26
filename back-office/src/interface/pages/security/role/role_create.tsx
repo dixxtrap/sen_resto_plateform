@@ -1,20 +1,15 @@
+import { Textarea, TextInput } from "@mantine/core";
 import { useCreateRoleMutation } from "../../../../core/features/role.slice";
 import { CustomForm } from "../../../components/custom_form";
-import { Input } from "../../../components/input";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { roleSchema } from "../../../../core/models/role.dto";
+import { useForm } from "@mantine/form";
 import { useParams } from "react-router-dom";
+import { TextConstant } from "../../../../core/data/textConstant";
 
 export const RoleCreate = () => {
   const id = parseInt(useParams().id!);
   const [create, { isLoading, isSuccess, isError }] = useCreateRoleMutation();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: yupResolver(roleSchema) });
-  const _onsubmit = handleSubmit((data) => {
+  const form = useForm({  });
+  const _onsubmit = form.onSubmit((data) => {
     console.log(data);
     create({ ...data, parent: { id } });
   });
@@ -25,15 +20,13 @@ export const RoleCreate = () => {
       isSuccess={isSuccess}
       isLoading={isLoading}
     >
-      <Input label="Code" error={errors.code?.message!}>
-        <input className="input" {...register("code")} />
-      </Input>
-      <Input label="name" error={errors.name?.message!}>
-        <input className="input" {...register("name")} />
-      </Input>
-      <Input label="Description" error={errors.description?.message!}>
-        <textarea className="input" {...register("description")} />
-      </Input>
+     
+      <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+      <TextInput label={"Code"} {...form.getInputProps("code")} error={form.errors["code"]} key={form.key("code")} />
+
+      
+      <Textarea classNames={{input:'bgInput'}} label={TextConstant.description} {...form.getInputProps("description")} error={form.errors["description"]} key={form.key("description")} />
+
     </CustomForm>
   );
 };

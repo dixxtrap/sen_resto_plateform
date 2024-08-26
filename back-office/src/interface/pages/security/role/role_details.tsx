@@ -1,9 +1,9 @@
 import { useGetRoleByIdQuery } from "../../../../core/features/role.slice";
 import { useParams } from "react-router-dom";
-import { TablePagination } from "../../../components/table_pagination";
 import { Status } from "../../../components/status";
 import { formatDate } from "../../../utils/date_format";
 import { Alert } from "../../../components/alert_success";
+import { TablePagination } from "../../../components/table/table";
 
 export const RoleDetails = () => {
   const id = parseInt(useParams().id!);

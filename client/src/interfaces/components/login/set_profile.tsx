@@ -1,11 +1,11 @@
 import { Logo } from '../logo'
-import { useForm } from 'react-hook-form'
 import { Input } from '../input'
 import { TextConstant } from '../../../cores/constant/textConstant'
 import { FC, useEffect, useState } from 'react'
 import { useProfileQuery, useUpdateProfileMutation } from '../../../cores/apis/security.slice'
 import { Customer } from '../../../cores/models/customer'
 import { AddressDto } from '../../../cores/models/address.dto'
+import { useForm } from '@mantine/form'
 type SetProfileFormProps={
   action:()=>void
 }
@@ -13,7 +13,7 @@ export const SetProfileForm:FC<SetProfileFormProps> = ({action}) => {
   const {data:profile, isSuccess}=useProfileQuery('')
   const [update,]=useUpdateProfileMutation()
 const [position, setPosition]=useState<{latitude:number,longitude:number}>()
-    const {register, handleSubmit, setValue }=useForm<{firstname:string, lastname:string, address:AddressDto}>({defaultValues:{address:{country:'Senegal'}}})
+    const form=useForm<{firstname?:string, lastname?:string, address:AddressDto}>({initialValues:{address:{country:'Senegal'}}})
     const handleGetLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -33,7 +33,7 @@ const [position, setPosition]=useState<{latitude:number,longitude:number}>()
     };
 
 
-const _onSubmit=handleSubmit(async (data)=>{
+const _onSubmit=form.onSubmit(async (data)=>{
  await  handleGetLocation();
  update({...data,coordonates:{latitude:position?.latitude, longitude:position?.longitude}} as Customer).unwrap().then(result=>{
   console.log(result)
@@ -43,26 +43,26 @@ const _onSubmit=handleSubmit(async (data)=>{
 })
     useEffect(() => {
      if(isSuccess&& profile){
-setValue('firstname', profile.data.firstname!)
-setValue('lastname', profile.data.lastname!)
+form.setFieldValue('firstname', profile.data.firstname!)
+form.setFieldValue('lastname', profile.data.lastname!)
      }
-    }, [isSuccess, profile, setValue])
+    }, [isSuccess, profile])
     
   return (
     <form onSubmit={_onSubmit} className="flex items-center flex-col md:px-10">
     <Logo />
     <span className="font-bold  title text-2xl">{profile?.data.firstname?`${profile.data.firstname} ${profile.data.lastname}`:profile?.data?.phone}</span>
     <Input label={TextConstant.firstname}>
-      <input {...register("firstname")} className="input" />
+      <input {...form.getInputProps("firstname")} className="input" />
     </Input>
     <Input label={TextConstant.lastname}>
-      <input {...register("lastname")} className="input" />
+      <input {...form.getInputProps("lastname")} className="input" />
     </Input>
     <Input label={TextConstant.address}>
-      <input {...register("address.streetAddress")} className="input" />
+      <input {...form.getInputProps("address.streetAddress")} className="input" />
     </Input>
     <Input label={TextConstant.city}>
-      <input {...register("address.city")} className="input" />
+      <input {...form.getInputProps("address.city")} className="input" />
     </Input>
     <button className="button primary">Valider</button>
   </form>

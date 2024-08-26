@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Title } from "../../components/title";
 import { CustomForm } from "../../components/custom_form";
-import { useForm } from "react-hook-form";
+import { useForm } from "@mantine/form";
 import {
 
   useGetProductManagementByIdQuery,
@@ -10,11 +10,10 @@ import {
 } from "../../../core/features/product.slice";
 import { useParams } from "react-router-dom";
 import { CustomSwitch } from "../../components/switch";
-import { Alert } from "../../components/alert_success";
 import { ProductManagementDayDto } from "../../../core/models/product_management_day";
 export const PlateEditManagement = () => {
   const id = parseInt(useParams().id!);
-  const {handleSubmit}=useForm()
+  const form = useForm();
   const [update, { isLoading, isSuccess, isError }] = useUpdateProductManagementDayMutation();
 const [listProductManagement, setListProductManagement]= useState<ProductManagementDayDto[]>([])
   const {
@@ -41,14 +40,13 @@ const handleManagement=(item:ProductManagementDayDto)=>{
   setListProductManagement(prev=>{return [...prev.map((man)=>item.dayId===man.dayId?{...item, isActive:!item.isActive}:man)]})
 }
 
-const onsubmit=handleSubmit(()=>{
+const onsubmit=form.onSubmit(()=>{
 
   update(listProductManagement)
 })
   return (
     <>
-      <Alert isOpen={isOldLoading } type="loading"  title="Recuperation"/>
-      <Alert isOpen={isError} type="loading"  title="Recuperation"/>
+     
       {old?.data&&
         <div className="flex flex-col divide-y darkDivider">
           <Title title="Plat" subTitle="Modifier le plat" />
@@ -67,7 +65,7 @@ const onsubmit=handleSubmit(()=>{
           <CustomForm
             isError={isError}
             isSuccess={isSuccess}
-            isLoading={isLoading}
+            isLoading={isLoading||isOldLoading}
             onSubmit={onsubmit}
           >
             <div className="flex justify-between">
