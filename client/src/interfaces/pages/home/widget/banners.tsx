@@ -20,7 +20,7 @@ export const Banners = () => {
       slideSize={{base:'400'}}
       slideGap="lg"
       
-      withControls={false}
+     
       align="start"
       slidesToScroll={1}
       
