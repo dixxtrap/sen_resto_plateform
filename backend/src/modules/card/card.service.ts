@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { logInfo } from 'src/app_log';
 import { Card, CardDto, CardStatusEnum } from 'src/typeorm/card.entity';
@@ -12,11 +12,12 @@ import {
 } from 'src/typeorm/card_allocation.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { CardAllocationService } from '../card_allocation/card_allocation.service';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 
 @Injectable()
 export class CardService {
   constructor(
-    @InjectRepository(Card) private repos: Repository<Card>,
+    @Inject(EntityProviderEnum.CARD) private repos: Repository<Card>,
     private excel: ExcelService,
     private cardAllocationService: CardAllocationService,
   ) {}

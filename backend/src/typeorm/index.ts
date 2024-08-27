@@ -241,4 +241,19 @@ export const entityProviders = [
     useFactory: (dataSource: DataSource) => dataSource.getRepository(OrderProduct ),
     inject: ['DATA_SOURCE'],
   },
+  {
+    provide: EntityProviderEnum.CARD,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Card ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.CARD_ALLOCATION,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(CardAllocation ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.CARD_ALLOCATION_DETAILS,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(CardAllocationDetails ),
+    inject: ['DATA_SOURCE'],
+  },
   ];

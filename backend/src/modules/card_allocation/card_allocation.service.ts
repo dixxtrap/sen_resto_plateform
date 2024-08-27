@@ -12,13 +12,15 @@ import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository, In } from 'typeorm';
 import { cardAllocDetailsSelect } from './queries/select';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
 
 export class CardAllocationService {
   constructor(
-    @InjectRepository(CardAllocation) private repos: Repository<CardAllocation>,
-    @InjectRepository(CardAllocationDetails)
+    @Inject(EntityProviderEnum.CARD_ALLOCATION) private repos: Repository<CardAllocation>,
+    @Inject(EntityProviderEnum.CARD_ALLOCATION_DETAILS)
     private reposCardDetail: Repository<CardAllocationDetails>,
-    @InjectRepository(Card)
+    @Inject(EntityProviderEnum.CARD)
     private reposCard: Repository<Card>,
   ) {}
   cardEmission({

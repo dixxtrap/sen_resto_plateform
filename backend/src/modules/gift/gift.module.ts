@@ -6,7 +6,7 @@ import { GiftService } from "./gift.service";
 import { GiftHistory } from "src/typeorm/gift_history.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Gift, GiftHistory])],
+  imports: [],
   controllers: [GiftController],
   providers: [GiftService],
   exports: [],

@@ -26,6 +26,7 @@ import { ProductRaitingModule } from './modules/product_rating/product_rating.mo
 import { CityModule } from './modules/city/city.module';
 import { OrderModule } from './modules/order/order.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { GiftModule } from './modules/gift/gift.module';
 @Module({
   imports: [
     DatabaseModule,
@@ -49,12 +50,13 @@ import { DatabaseModule } from './modules/database/database.module';
     ExcelModule,
     OtpModule,
     EmailerModule,
-    // CardModule,
+    CardModule,
     S3Module,
     BannerModule,
     OtpConfigModule,
     ProductRaitingModule,
-    CityModule
+    CityModule,
+    GiftModule
   ],
   controllers: [AppController],
   providers: [AppService],

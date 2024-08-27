@@ -8,7 +8,7 @@ import { CardAllocationModule } from '../card_allocation/card_allocation.module'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Card]),
+    
     ExcelModule,
     CardAllocationModule,
   ],
