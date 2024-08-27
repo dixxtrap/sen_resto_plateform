@@ -1,5 +1,6 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { OtpConfig, OtpConfigDto } from 'src/typeorm/otp_config';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { UserDto } from 'src/typeorm/user.entity';
@@ -9,7 +10,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class OtpConfigService implements OnModuleInit {
   constructor(
-    @InjectRepository(OtpConfig) private repos: Repository<OtpConfig>,
+    @Inject(EntityProviderEnum.OTP_CONFIG) private repos: Repository<OtpConfig>,
   ) {}
   onModuleInit() {
     this.init();

@@ -2,14 +2,23 @@ import { Entity } from "typeorm/decorator/entity/Entity";
 import { CreationDetails } from "./details.entity";
 import { PrimaryGeneratedColumn } from "typeorm/decorator/columns/PrimaryGeneratedColumn";
 import { Column } from "typeorm/decorator/columns/Column";
+import { ManyToOne } from "typeorm";
+import { Gift } from "./gift.entity";
+import { Partner } from "./partner.entity";
 @Entity()
 export class GiftHistory extends CreationDetails{
     @PrimaryGeneratedColumn()
-    id:number
+    id:number;
     @Column('double')
-    amount:number
+    amount:number;
     @Column('double')
-    discount:number
-    @Column('double')
-    isActive:number
+    discount:number;
+    @ManyToOne(() => Partner)
+    partner:Partner
+    @Column()
+    partnerId:number;
+    @Column('bool')
+    isActive:boolean;
+    @ManyToOne(()=>Gift)
+    gift:Gift;
 }

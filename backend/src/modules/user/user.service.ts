@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
+
 import { logInfo } from 'src/app_log';
 import { User } from 'src/typeorm';
 import { UserDto } from 'src/typeorm/user.entity';
@@ -10,10 +10,13 @@ import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 import { EmailerService } from '../mailer/mailer.service';
 import { BaseResponse } from 'src/typeorm/response_base';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private repos: Repository<User>,
+    @Inject(EntityProviderEnum.USER) private repos: Repository<User>,
     private jwt: JwtService,
     private mailer: EmailerService,
   ) {}
@@ -24,7 +27,7 @@ export class UserService {
     // SUPER_ADMIN_FIRSTNAME=SUPER
     // SUPER_ADMIN_LASTNAME=ADMIN
     // SUPER_ADMIN_PASSWORD=110596
-    const exist = await this.repos.exist({
+    const exist = await this.repos.exists({
       where: {
         email: process.env.SUPER_ADMIN_EMAIL,
         firstname: process.env.SUPER_ADMIN_FIRSTNAME,
@@ -89,7 +92,7 @@ export class UserService {
           lastname: true,
           email: true,
           phone: true,
-        city:{name:true, id:true, parent:{name:true, id:true, parent:{name:true, id:true, parent:{name:true, id:true}}}},
+
           parent: { name: true, shortname: true, imagePath: true, id: true },
         },
       })

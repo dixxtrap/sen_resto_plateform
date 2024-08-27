@@ -7,7 +7,7 @@ import { EmailerModule } from '../mailer/mailer.module';
 
 @Module({
   controllers: [UserController],
-  imports: [TypeOrmModule.forFeature([User]), EmailerModule],
+  imports: [ EmailerModule],
   providers: [UserService],
   exports: [UserService],
 })

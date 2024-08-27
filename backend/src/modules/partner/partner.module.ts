@@ -31,16 +31,7 @@ import { S3Module } from '../s3/s3.module';
 @Module({
   imports: [
     MulterConfig,
-    TypeOrmModule.forFeature([
-      Partner,
-      Deliver,
-      Customer,
-      Restaurant,
-      CompanyRestaurant,
-      CompanyRestaurantBase,
-      PaymentType,
-      Coorporate,
-    ]),
+  
     WalletStatusModule,
     S3Module,
   ],

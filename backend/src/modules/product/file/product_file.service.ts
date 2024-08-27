@@ -1,14 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { unlink } from 'fs';
 import { ProductFile, ProductFileDto } from 'src/typeorm/product_file.entity';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository } from 'typeorm';
 import { S3Service } from '../../s3/s3.service';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 @Injectable()
 export class ProductFileService {
   constructor(
-    @InjectRepository(ProductFile) private repos: Repository<ProductFile>,
+    @Inject(EntityProviderEnum.PRODUCT_FILE) private repos: Repository<ProductFile>,
     private s3Service: S3Service,
   ) {}
   getUpdate() {

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   ProductManagement,
@@ -12,12 +12,13 @@ import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { UserDto } from 'src/typeorm/user.entity';
 import { ProductDto } from 'src/typeorm/product.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 @Injectable()
 export class ProductManagementService {
   constructor(
-    @InjectRepository(ProductManagement)
+    @Inject(EntityProviderEnum.PRODUCT_MANAGEMENT)
     private repos: Repository<ProductManagement>,
-    @InjectRepository(ProductManagementDay)
+    @Inject(EntityProviderEnum.PRODUCT_MANAGEMENT_DAY)
     private reposDayManagement: Repository<ProductManagementDay>,
     private weekdayService: WeekdayService,
   ) {}

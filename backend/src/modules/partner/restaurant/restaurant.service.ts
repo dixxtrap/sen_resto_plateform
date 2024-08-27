@@ -1,9 +1,11 @@
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
 import { InjectRepository } from '@nestjs/typeorm';
 import { S3Service } from 'src/modules/s3/s3.service';
 import {
   CompanyRestaurantBaseDto,
   Restaurant,
 } from 'src/typeorm/company_restaurant.entity';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { UserDto } from 'src/typeorm/user.entity';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
@@ -11,7 +13,7 @@ import { Equal, Repository } from 'typeorm';
 
 export class RestaurantService {
   constructor(
-    @InjectRepository(Restaurant) private repos: Repository<Restaurant>,
+    @Inject(EntityProviderEnum.RESTAURANT) private repos: Repository<Restaurant>,
     private s3Service: S3Service,
   ) {}
 

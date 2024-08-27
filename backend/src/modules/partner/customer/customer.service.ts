@@ -1,12 +1,17 @@
-import { InjectRepository } from '@nestjs/typeorm';
+
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
 import { Customer, CustomerDto } from 'src/typeorm/customer.entity';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
+
+@Injectable()
 export class CustomerService {
   constructor(
-    @InjectRepository(Customer) private repos: Repository<Customer>,
+    @Inject(EntityProviderEnum.CUSTOMER) private repos: Repository<Customer>,
   ) {}
   create({ body }: { body: CustomerDto }) {
     return this.repos

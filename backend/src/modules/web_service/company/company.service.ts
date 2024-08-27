@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompanyRestaurantBase } from 'src/typeorm';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { IsNull, Repository, In, Like } from 'typeorm';
@@ -8,7 +9,7 @@ import { IsNull, Repository, In, Like } from 'typeorm';
 @Injectable()
 export class WsCompanyService {
   constructor(
-    @InjectRepository(CompanyRestaurantBase)
+    @Inject(EntityProviderEnum.COMPANY_RESTAURANT_BASE)
     private repos: Repository<CompanyRestaurantBase>,
   ) {}
   getAll() {

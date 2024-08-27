@@ -5,7 +5,7 @@ import { OtpService } from './otp.service';
 import { OtpController } from './otp.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Otp])],
+  imports: [],
   providers: [OtpService],
   controllers: [OtpController],
   exports: [OtpService],

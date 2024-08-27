@@ -35,7 +35,7 @@ background-color: light-dark(#f3f4f6, rgb(107 114 128 / 0.1))!important;
   background-color: light-dark(#f3f4f6, rgb(107 114 128 / 0.1))!important;
   }
   .bg_table{
-    background-color: light-dark(#fff, rgb(107 114 128 / 0.1))!important;
+    background-color: light-dark(#fff, rgb(1  2  2 / .1))!important;
   }
 .darkDivider{
   @apply divide-kdark-divider/10 dark:border-kdark-divider/25  dark:divide-kdark-divider/50

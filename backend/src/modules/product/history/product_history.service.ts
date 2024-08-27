@@ -10,11 +10,14 @@ import { ProductManagement } from 'src/typeorm/product_management.entity';
 import { CompanyRestaurantBase } from 'src/typeorm/company_restaurant.entity';
 import { CoordonatesDto } from 'src/typeorm/coordonates.entity';
 import { calcDistance } from 'src/utils/calc_distance';
-
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
+@Injectable()
 export class ProductHistoryService {
   constructor(
-    @InjectRepository(ProductHistory) private repos: Repository<ProductHistory>,
-    @InjectRepository(ProductManagement)
+    @Inject(EntityProviderEnum.PRODUCT_HISTORY) private repos: Repository<ProductHistory>,
+    @Inject(EntityProviderEnum.PRODUCT_MANAGEMENT)
     private reposManagement: Repository<ProductManagement>,
   ) {}
   create({ by, body }: { by: UserDto; body: ProductHistoryDto }) {

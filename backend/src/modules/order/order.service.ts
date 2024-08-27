@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { Order, OrderStatus } from 'src/typeorm/order.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { UserDto } from 'src/typeorm/user.entity';
@@ -7,7 +8,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class OrderService {
-  constructor(@InjectRepository(Order) private repos: Repository<Order>) {}
+  constructor(@Inject(EntityProviderEnum.ORDER) private repos: Repository<Order>) {}
 
   getAll() {
     return this.repos

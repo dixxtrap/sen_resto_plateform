@@ -7,7 +7,7 @@ import { MulterConfig } from 'src/utils/multer.config';
 import { S3Module } from '../s3/s3.module';
 
 @Module({
-  imports: [MulterConfig, S3Module, TypeOrmModule.forFeature([Banner])],
+  imports: [MulterConfig, S3Module],
   providers: [BannerService],
   controllers: [BannerController],
 })

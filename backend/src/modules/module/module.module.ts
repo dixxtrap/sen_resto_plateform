@@ -5,7 +5,7 @@ import { ModuleController } from './module.controller';
 import { ModuleService } from './module.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ModuleEntity])],
+  imports: [],
   controllers: [ModuleController],
   providers: [ModuleService],
   exports: [ModuleService],

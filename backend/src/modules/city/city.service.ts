@@ -9,11 +9,12 @@ import { PaginationDto } from '../../utils/pagination';
 import { InjectRepository } from '@nestjs/typeorm';
 import { City, CityEnum } from 'src/typeorm/city.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 
 @Injectable()
 export class CityService {
   constructor(
-    @InjectRepository(City) private repos: Repository<City>,
+    @Inject(EntityProviderEnum.CITY) private repos: Repository<City>,
     private excel: ExcelService,
   ) {}
 

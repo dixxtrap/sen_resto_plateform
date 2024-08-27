@@ -1,15 +1,18 @@
-import { HttpException, Injectable, OnModuleInit } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
+import { OnModuleInit } from '@nestjs/common/interfaces/hooks/on-init.interface';
 import { bdName } from 'src/mysql.config';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { ModuleEntity, ModuleEntityDto } from 'src/typeorm/module.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
-import { HttpExceptionCode } from 'src/utils/http_exception_code';
+import { WsCatch } from 'src/utils/catch';
+import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
 @Injectable()
 export class ModuleService implements OnModuleInit {
   constructor(
-    @InjectRepository(ModuleEntity) private repos: Repository<ModuleEntity>,
+    @Inject(EntityProviderEnum.MODULE_ENTITY) private repos: Repository<ModuleEntity>,
   ) {}
   onModuleInit() {
     this.initialTable();
@@ -52,19 +55,13 @@ export class ModuleService implements OnModuleInit {
     return this.repos
       .save(this.repos.create(body))
       .then((value) => value)
-      .catch((error) => {
-        console.log(error);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 400);
-      });
+      .catch(WsCatch);
   }
   update({ id, body }: { id: number; body: ModuleEntityDto }) {
     return this.repos
       .update({ id: Equal(id) }, { ...body })
       .then((value) => value)
-      .catch((error) => {
-        console.log(error);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 400);
-      });
+      .catch(WsCatch);
   }
   getAll() {
     return this.repos
@@ -79,9 +76,6 @@ export class ModuleService implements OnModuleInit {
       .getTreeRepository(ModuleEntity)
       .findTrees()
       .then((value) => value)
-      .catch((error) => {
-        console.log(error);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 400);
-      });
+      .catch(WsCatch);
   }
 }

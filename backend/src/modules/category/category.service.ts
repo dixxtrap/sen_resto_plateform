@@ -1,7 +1,8 @@
-import { HttpException, Injectable, OnModuleInit } from '@nestjs/common';
+import { HttpException, Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryData } from 'src/data/category';
 import { Category, CategoryDto } from 'src/typeorm/category.entity';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode } from 'src/utils/http_exception_code';
@@ -9,7 +10,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class CategoryService implements OnModuleInit {
   constructor(
-    @InjectRepository(Category) private repos: Repository<Category>,
+    @Inject(EntityProviderEnum.CATEGORY) private repos: Repository<Category>,
   ) {}
   onModuleInit() {
     // throw new Error('Method not implemented.');

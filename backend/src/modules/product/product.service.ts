@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product, ProductDto } from 'src/typeorm/product.entity';
 import { UserDto } from 'src/typeorm/user.entity';
@@ -12,14 +12,15 @@ import { BaseResponse } from 'src/typeorm/response_base';
 import { ProductHistory } from 'src/typeorm/product_history.entity';
 import { ProductHistoryService } from './history/product_history.service';
 import { plainToClass } from 'class-transformer';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 
 @Injectable()
 export class ProductService {
   constructor(
-    @InjectRepository(Product) private repos: Repository<Product>,
-    @InjectRepository(ProductHistory)
+    @Inject(EntityProviderEnum.PRODUCT) private repos: Repository<Product>,
+    @Inject(EntityProviderEnum.PRODUCT_HISTORY)
     private reposHistory: Repository<ProductHistory>,
-    @InjectRepository(ProductCategory)
+    @Inject(EntityProviderEnum.PRODUCT_CATEGORY)
     private reposCategory: Repository<ProductCategory>,
     private productManagementService: ProductManagementService,
     private weekdayService: WeekdayService,

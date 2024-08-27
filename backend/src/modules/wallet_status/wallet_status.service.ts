@@ -1,5 +1,5 @@
 import { DataSource, Equal, Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { WalletStatus } from './../../typeorm/wallet_status.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -8,12 +8,13 @@ import {
   WalletStatusTransactDto,
 } from './wallet_status.dto';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 
 @Injectable()
 export class WalletStatusService {
   constructor(
-    @InjectRepository(WalletStatus) private repos: Repository<WalletStatus>,
-    private dataSource: DataSource,
+    @Inject(EntityProviderEnum.WALLET_STATUS) private repos: Repository<WalletStatus>,
+    @Inject(EntityProviderEnum.DATA_SOURCE) private dataSource: DataSource,
   ) {}
   async create({ body }: { body: WalletStatusTransactDto }) {
     let insertId: number;

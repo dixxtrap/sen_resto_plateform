@@ -29,17 +29,6 @@ import { PaymentType } from 'src/typeorm/payment_type.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      Product,
-      Customer,
-      CompanyRestaurantBase,
-      Partner,
-      Banner,
-      Category,
-      Order,
-      OrderProduct,
-      PaymentType
-    ]),
     SecurityModule,
     EmailerModule,
     OtpModule,

@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity, ManyToOne } from 'typeorm';
 import { CreationDetails } from './details.entity';
+import { Partner } from './partner.entity';
 
 export enum StoryEnum {
   expired,
@@ -8,7 +9,7 @@ export enum StoryEnum {
 }
 
 @Entity()
-export class Story {
+export class Story  extends CreationDetails{
   @PrimaryGeneratedColumn()
   id: number;
   @Column({
@@ -18,8 +19,11 @@ export class Story {
     default: null,
   })
   imagePath: string;
-  @Column(() => CreationDetails)
-  details: CreationDetails;
+  @ManyToOne(()=>Partner)
+  partner:Partner;
+  @Column({nullable:true, default:null})
+  partnerId:number;
+
   @Column({
     type: 'enum',
     enum: StoryEnum,
@@ -27,3 +31,5 @@ export class Story {
   })
   status: StoryEnum;
 }
+
+

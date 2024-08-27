@@ -8,7 +8,7 @@ import { ExcelModule } from "../excel/excel.module";
 import { TypeOrmModule } from "@nestjs/typeorm/dist/typeorm.module";
 
 @Module({
-    imports:[MulterConfig, ExcelModule, TypeOrmModule.forFeature([City])],
+    imports:[MulterConfig, ExcelModule],
     providers:[CityService],
     controllers:[CityController],
     exports:[]
