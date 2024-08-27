@@ -21,6 +21,7 @@ import { coorporateRouter } from "./coorporate";
 import { giftRouter } from "./gift.router";
 import { cardAllocationRouter } from "./card_allocation.router";
 import { bannerRouter } from "./banner.router";
+import { storeRouter } from "./story.router";
 
 export const router = createBrowserRouter([
   {
@@ -60,7 +61,8 @@ export const router = createBrowserRouter([
       deliverRouter,
       cardRouter,
       cardAllocationRouter,
-      bannerRouter
+      bannerRouter,
+      storeRouter
     ],
   },
 ]);

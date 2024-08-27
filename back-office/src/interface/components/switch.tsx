@@ -11,7 +11,9 @@ export const CustomSwitch = ({  onClick, isActive }: { isLoading: boolean, onCli
                         type="button"
                         onClick={(event) => onClick!(event.currentTarget.checked)}
                 
-                
+                        radius={6}
+                        size="md"
+                        color="primary.4"
                 >
                 </Switch>);
 }
@@ -22,6 +24,7 @@ export const CustomSwitchInput=({label,itemKey ,form}:{label?:string,itemKey:str
                         {label??"Status"}
                 </span>   
                 <CustomSwitch
+               
 isLoading={false}
 isActive={form.getValues()[itemKey]}
 onClick={(val) =>form.setFieldValue(itemKey, val)}

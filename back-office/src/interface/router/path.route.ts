@@ -9,5 +9,6 @@ export class PathRouter{
     static list:string='list';
     static default:string='';
     static details:string='details/:id';
-    static delete:string='delete';
+    static delete: string = 'delete';
+    static story:string='story'
 }

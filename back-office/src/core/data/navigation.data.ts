@@ -21,7 +21,8 @@ import {
   WalletIcon,
   HomeModernIcon,
   GiftIcon,
-  MegaphoneIcon
+  MegaphoneIcon,
+  RocketLaunchIcon
 } from "@heroicons/react/24/solid";
 import {
   ForwardRefExoticComponent,
@@ -73,6 +74,12 @@ export const navigationData: INavigation[] = [
     href: "/customer",
     icon: IdentificationIcon,
     permissions: [{ code: "customer", type: "*" }],
+  },
+  {
+    name: "Publications",
+    href: "/story",
+    icon: RocketLaunchIcon,
+    permissions: [{ code: "story", type: "*" }],
   },
    {
     name: "notification",
