@@ -19,7 +19,7 @@ export class GiftController{
     }
     @Post('create')
     @UseGuards(AuthenticatedGuard)
-    create(@Body('by') by:UserDto, body:GiftDto){
+    create(@Body('by') by:UserDto, @Body()body:GiftDto){
         return this.service.create({by, body})
     }
 }
