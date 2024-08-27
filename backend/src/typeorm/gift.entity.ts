@@ -33,5 +33,5 @@ export class GiftDto{
     isActive:boolean;
    
     @ApiProperty()
-    discount:number;
+    discount:number; 
 }

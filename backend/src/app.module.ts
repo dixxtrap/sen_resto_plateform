@@ -27,6 +27,7 @@ import { CityModule } from './modules/city/city.module';
 import { OrderModule } from './modules/order/order.module';
 import { DatabaseModule } from './modules/database/database.module';
 import { GiftModule } from './modules/gift/gift.module';
+import { StoryModule } from './modules/story/story.module';
 @Module({
   imports: [
     DatabaseModule,
@@ -56,7 +57,8 @@ import { GiftModule } from './modules/gift/gift.module';
     OtpConfigModule,
     ProductRaitingModule,
     CityModule,
-    GiftModule
+    GiftModule,
+    StoryModule
   ],
   controllers: [AppController],
   providers: [AppService],
