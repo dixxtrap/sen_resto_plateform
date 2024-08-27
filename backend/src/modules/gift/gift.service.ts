@@ -31,8 +31,7 @@ export class GiftService {
             .then((result) => {
               if (result) {
                 if (
-                  body.amount !== old.amount ||
-                  body.discount !== old.amount
+                  body.discount !== old.discount
                 ) {
                   return this.reposHistory
                     .save(this.repos.create({ ...body,  partnerId: by.parentId , byId:by.id }))
