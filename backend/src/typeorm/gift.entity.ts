@@ -21,8 +21,6 @@ export class Gift extends CreationDetails{
     @Column()
     isActive:boolean
     @Column("double")
-    amount:number
-    @Column("double")
     discount:number
     @OneToMany(()=>GiftHistory, (item)=>item.gift )
     history:GiftHistory
@@ -33,8 +31,7 @@ export class GiftDto{
     description:string;
     @ApiProperty()
     isActive:boolean;
-    @ApiProperty()
-    amount:number;
+   
     @ApiProperty()
     discount:number;
 }
