@@ -7,6 +7,6 @@ type StatusProps = {
 }
 export const Status: FC<StatusProps> = ({ status, activeText="Activer", inactiveText="Inactiver" }) => {
   return (
-    <Badge variant="light" color={status?'secondary':"primary"} radius={'xs'} className={`font-semibold  rounded-md     my-1   ${status ? " bg-secondary-500/20 text-secondary-500 " : "bg-primary-500/20 text-primary-500"}`}>{status ? activeText : inactiveText}</Badge>
+    <Badge variant="light" color={status?'green':"red"} radius={'xs'} className={`font-semibold  rounded-md     my-1   ${status ? "  " : ""}`}>{status ? activeText : inactiveText}</Badge>
   )
 }
