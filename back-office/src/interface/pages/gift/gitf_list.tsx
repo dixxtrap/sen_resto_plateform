@@ -1,38 +1,34 @@
 import { Table } from "@mantine/core";
 import { TablePagination } from "../../components/table/table";
+import { useGetGiftQuery } from "../../../core/features/gift.slice";
+import { Status } from "../../components/status";
+import { formatDate } from "../../utils/date_format";
 export const GiftList = () => {
+  const { data: gifts, ...state } = useGetGiftQuery("");
+  console.log(gifts);
   return (
     <div>
+      
       <TablePagination
+        {...state}
         title="Gifts"
         createPath="/gift/create"
-        subtitle="Liste des Gifts"
-        th={[
-          "Nom",
-
-          "Adresse",
-          "Téléphone",
-
-          "Ouv/Ferm",
-          "Date de création",
-          "Status",
-          "",
-        ]}
+        subtitle="Liste des Remises"
+        th={["Description", "Remise","Date", "Status", ""]}
         trs={
           <>
-            <Table.Tr className="">
-              <Table.Td className="">
-                
-              <div className="flex items-center">
-                        <div className=" pl-2 flex-shrink-0  w-16 mr-2 content-center flex  justify-start ">
+            {gifts?.data?.history?.map((gift:any) => (
+              <Table.Tr key={gift.id} className="">
+                <Table.Td className="">{gift.description}</Table.Td>
+                <Table.Td className="">{gift.discount} %</Table.Td>
+                <Table.Td>{formatDate(gift.createdAt!)}</Table.Td>
+                <Table.Td className="">
+                  <Status status={gift.isActive!} />
+                </Table.Td>
 
-                        </div>
-                       
-                          <div className="font-medium "></div>
-                      
-                      </div>  
-              </Table.Td>
-            </Table.Tr>
+                <Table.Td className="last_td_container"></Table.Td>
+              </Table.Tr>
+            ))}
           </>
         }
       />

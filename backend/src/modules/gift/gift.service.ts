@@ -34,7 +34,7 @@ export class GiftService {
                   body.discount !== old.discount
                 ) {
                   return this.reposHistory
-                    .save(this.repos.create({ ...body,  partnerId: by.parentId , byId:by.id }))
+                    .save(this.reposHistory.create({ ...body, gift:old,  partnerId: by.parentId , byId:by.id }))
                     .then(() => {
                       throw new WsMessage(HttpExceptionCode.SUCCEEDED);
                     });
@@ -48,7 +48,7 @@ export class GiftService {
               if (result) {
                 return this.reposHistory
                   .save(
-                    this.reposHistory.create({ ...body, partnerId: by.parentId}),
+                    this.reposHistory.create({ ...body,gift:old, byId:by.id, partnerId: by.parentId}),
                   )
                   .then(() => {
                     throw new WsMessage(HttpExceptionCode.SUCCEEDED);

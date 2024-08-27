@@ -10,8 +10,6 @@ export class GiftHistory extends CreationDetails{
     @PrimaryGeneratedColumn()
     id:number;
     @Column('double')
-    amount:number;
-    @Column('double')
     discount:number;
     @ManyToOne(() => Partner)
     partner:Partner
@@ -20,5 +18,7 @@ export class GiftHistory extends CreationDetails{
     @Column('bool')
     isActive:boolean;
     @ManyToOne(()=>Gift)
-    gift:Gift;
+    gift: Gift;
+    @Column("text")
+    description:string
 }
