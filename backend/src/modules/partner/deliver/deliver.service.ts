@@ -1,13 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
 import { Deliver, DeliverDto } from 'src/typeorm/deliver.entity';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
 @Injectable()
 export class DeliverService {
-  constructor(@InjectRepository(Deliver) private repos: Repository<Deliver>) {}
+  constructor(  @Inject(EntityProviderEnum.DELIVER) private repos: Repository<Deliver>) {}
   create({ body }: { body: DeliverDto }) {
     return this.repos
       .save(this.repos.create(body))

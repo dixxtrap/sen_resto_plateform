@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { unlink } from 'fs';
+
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
 import { S3Service } from 'src/modules/s3/s3.service';
 import { WalletStatusEnum } from 'src/modules/wallet_status/wallet_status.dto';
 import { WalletStatusService } from 'src/modules/wallet_status/wallet_status.service';
 import { CompanyRestaurantBaseDto } from 'src/typeorm/company_restaurant.entity';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { PaymentType, PaymentTypeDto } from 'src/typeorm/payment_type.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { UserDto } from 'src/typeorm/user.entity';
@@ -14,7 +15,7 @@ import { Equal, Repository } from 'typeorm';
 @Injectable()
 export class PaymentTypeService {
   constructor(
-    @InjectRepository(PaymentType) private repos: Repository<PaymentType>,
+    @Inject(EntityProviderEnum.PAYMENT_TYPE) private repos: Repository<PaymentType>,
     private walletStatusService: WalletStatusService,
     private s3Service: S3Service,
   ) {}

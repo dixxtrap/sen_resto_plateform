@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompanyRestaurantBase } from 'src/typeorm';
 import { UserDto } from 'src/typeorm/user.entity';
@@ -6,11 +6,12 @@ import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 import { WalletStatusService } from '../wallet_status/wallet_status.service';
 import { BaseResponse } from 'src/typeorm/response_base';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 
 @Injectable()
 export class PartnerService {
   constructor(
-    @InjectRepository(CompanyRestaurantBase)
+    @Inject(EntityProviderEnum.COMPANY_RESTAURANT_BASE)
     private reposCompany: Repository<CompanyRestaurantBase>,
     private walletStatausService: WalletStatusService,
   ) {}

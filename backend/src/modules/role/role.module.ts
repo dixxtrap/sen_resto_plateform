@@ -6,7 +6,7 @@ import { RoleService } from './role.service';
 import { RolePermissionModule } from '../role_permsion/role_permission.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Role]), RolePermissionModule],
+  imports: [ RolePermissionModule],
   controllers: [RoleController],
   providers: [RoleService],
   exports: [RoleService],

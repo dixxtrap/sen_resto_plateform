@@ -1,6 +1,4 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { PermissionDto } from 'src/typeorm/permission.entity';
+
 import {
   RolePermission,
   RolePermissionDto,
@@ -9,10 +7,13 @@ import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, In, Repository } from 'typeorm';
 import { PermissionService } from '../permission/permission.service';
 import { WsCatch } from 'src/utils/catch';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 @Injectable()
 export class RolePermissionService {
   constructor(
-    @InjectRepository(RolePermission) private repos: Repository<RolePermission>,
+    @Inject(EntityProviderEnum.ROLE_PERMISSION) private repos: Repository<RolePermission>,
     private permission: PermissionService,
   ) {}
   initroleAdmin() {

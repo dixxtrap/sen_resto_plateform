@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Response } from 'express';
 import { EmailerService } from 'src/modules/mailer/mailer.service';
@@ -12,11 +12,12 @@ import { SetProfileDto } from 'src/typeorm/customer.entity';
 import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository } from 'src/typeorm/repository';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 @Injectable()
 export class WsCustomerService {
   constructor(
     private securityService: SecurityService,
-    @InjectRepository(Customer) private repos: Repository<Customer>,
+    @Inject(EntityProviderEnum.CUSTOMER) private repos: Repository<Customer>,
     private otpService: OtpService,
     private mailService: EmailerService,
   ) {}

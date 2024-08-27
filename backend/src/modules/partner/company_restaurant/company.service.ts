@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PartyType } from 'aws-sdk/clients/customerprofiles';
 import { unlink } from 'fs';
@@ -8,6 +8,7 @@ import { CompanyRestaurant } from 'src/typeorm';
 import { AddressDto } from 'src/typeorm/address.entity';
 import { CompanyRestaurantBaseDto } from 'src/typeorm/company_restaurant.entity';
 import { CoordonatesDto } from 'src/typeorm/coordonates.entity';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { UserDto } from 'src/typeorm/user.entity';
 import { WsCatch } from 'src/utils/catch';
@@ -17,7 +18,7 @@ import { Equal, Repository } from 'typeorm';
 @Injectable()
 export class CompanyRestaurantService {
   constructor(
-    @InjectRepository(CompanyRestaurant)
+    @Inject(EntityProviderEnum.COMPANY)
     private repos: Repository<CompanyRestaurant>,
     private walletStatusService: WalletStatusService,
     private s3Service: S3Service,

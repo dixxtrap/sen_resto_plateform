@@ -1,12 +1,13 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { weekDayData } from 'src/data/weekdata.data';
 import { Weekday } from 'src/typeorm';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository } from 'typeorm';
 @Injectable()
 export class WeekdayService implements OnModuleInit {
-  constructor(@InjectRepository(Weekday) private repos: Repository<Weekday>) {}
+  constructor(@Inject(EntityProviderEnum.WEEKDAY) private repos: Repository<Weekday>) {}
   onModuleInit() {
     //     throw new Error('Method not implemented.');
     this.initDay();

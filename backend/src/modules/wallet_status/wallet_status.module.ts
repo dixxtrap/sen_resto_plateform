@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { WalletStatus } from 'src/typeorm/wallet_status.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([WalletStatus])],
+  imports:[],
   providers: [WalletStatusService],
   exports: [WalletStatusService],
 })

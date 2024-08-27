@@ -22,15 +22,7 @@ import { ProductHistoryController } from './history/product_history.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      Product,
-      ProductFile,
-      ProductHistory,
-      ProductCategory,
-      ProductManagement,
-      ProductManagementDay,
-      Weekday,
-    ]),
+  
     MulterConfig,
     S3Module,
   ],

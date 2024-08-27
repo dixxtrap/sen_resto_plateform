@@ -1,11 +1,15 @@
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { Otp, OtpVerificationDto } from 'src/typeorm/otp.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository } from 'typeorm';
+@Injectable()
 export class OtpService {
-  constructor(@InjectRepository(Otp) private repos: Repository<Otp>) {}
+  constructor(@Inject(EntityProviderEnum.OTP) private repos: Repository<Otp>) {}
   generateCode(length: number): string {
     const chars = '0123456789';
     let otp = '';

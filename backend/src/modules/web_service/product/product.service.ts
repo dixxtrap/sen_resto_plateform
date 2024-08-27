@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 
 import { Product } from 'src/typeorm/product.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
@@ -8,7 +9,7 @@ import { Repository, Not, Equal, Like, In } from 'typeorm';
 
 @Injectable()
 export class WsProductService {
-  constructor(@InjectRepository(Product) private repos: Repository<Product>) {}
+  constructor(@Inject(EntityProviderEnum.PRODUCT) private repos: Repository<Product>) {}
   getAll() {
     return this.repos
       .find({

@@ -3,9 +3,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Gift } from "src/typeorm/gift.entity";
 import { GiftController } from "./gift.controller";
 import { GiftService } from "./gift.service";
+import { GiftHistory } from "src/typeorm/gift_history.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Gift])],
+  imports: [TypeOrmModule.forFeature([Gift, GiftHistory])],
   controllers: [GiftController],
   providers: [GiftService],
   exports: [],

@@ -25,14 +25,16 @@ import { OtpModule } from './modules/otp/otp.module';
 import { ProductRaitingModule } from './modules/product_rating/product_rating.module';
 import { CityModule } from './modules/city/city.module';
 import { OrderModule } from './modules/order/order.module';
+import { DatabaseModule } from './modules/database/database.module';
 @Module({
   imports: [
+    DatabaseModule,
+
     SecurityModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
-    TypeOrmModule.forRoot(config),
     ModuleModule,
     CategoryModule,
     RoleModule,
@@ -47,7 +49,7 @@ import { OrderModule } from './modules/order/order.module';
     ExcelModule,
     OtpModule,
     EmailerModule,
-    CardModule,
+    // CardModule,
     S3Module,
     BannerModule,
     OtpConfigModule,

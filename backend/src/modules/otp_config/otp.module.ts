@@ -6,9 +6,8 @@ import { OtpConfigService } from './otp.service';
 import { OtpConfigController } from './otp.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Otp, OtpConfig])],
+  imports: [],
   controllers: [OtpConfigController],
   providers: [OtpConfigService],
-  exports: [OtpConfigService],
 })
 export class OtpConfigModule {}

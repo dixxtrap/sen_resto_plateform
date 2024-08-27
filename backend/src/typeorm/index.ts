@@ -10,7 +10,6 @@ import { PaymentType } from './payment_type.entity';
 import { Permission } from './permission.entity';
 import { Role } from './role.entity';
 import { RolePermission } from './role_permissison.entity';
-import { User } from './user.entity';
 import { Weekday } from './weekday.entity';
 import { Category } from './category.entity';
 import { Customer } from './customer.entity';
@@ -39,6 +38,10 @@ import { Assignment } from './assignment.entity';
 import { Banner } from './banner.entity';
 import { ProductRaiting } from './product_rating.entity';
 import { Gift } from './gift.entity';
+import { GiftHistory } from './gift_history.entity';
+import { EntityProviderEnum } from './entity_provider_enum';
+import { DataSource } from 'typeorm/data-source/DataSource';
+import { User } from './user.entity';
 
 // export
 export {
@@ -87,5 +90,155 @@ export const entities = [
   City,
   Banner,
   ProductRaiting,
-  Gift
+  Gift,
+  GiftHistory
 ];
+
+
+export const entityProviders = [
+  {
+    provide: EntityProviderEnum.USER,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(User),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.COMPANY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(CompanyRestaurant ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.RESTAURANT,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Restaurant ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.DELIVER,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Deliver ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.COMPANY_RESTAURANT_BASE,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(CompanyRestaurantBase ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.CUSTOMER,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Customer ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.GIFT,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Gift ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.COORPORATE,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Coorporate ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.GIFT_HISTORY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(GiftHistory ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.CATEGORY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Category ),
+    inject: ['DATA_SOURCE'],
+  },
+    {
+    provide: EntityProviderEnum.MODULE_ENTITY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(ModuleEntity ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.PERMISSION,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Permission ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.ROLE,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Role ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.ROLE_PERMISSION,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(RolePermission ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.CITY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(City ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.OTP_CONFIG,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(OtpConfig ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.BANNER,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Banner ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.OTP,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Otp ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.WALLET_STATUS,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(WalletStatus ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.PAYMENT_TYPE,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(PaymentType ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.PRODUCT,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Product),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.PRODUCT_FILE,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(ProductFile ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.PRODUCT_MANAGEMENT,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(ProductManagement ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.PRODUCT_MANAGEMENT_DAY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(ProductManagementDay ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.PRODUCT_HISTORY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(ProductHistory ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.PRODUCT_CATEGORY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(ProductCategory ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.WEEKDAY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Weekday ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.ORDER,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Order ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.ORDER_PRODUCT,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(OrderProduct ),
+    inject: ['DATA_SOURCE'],
+  },
+  ];

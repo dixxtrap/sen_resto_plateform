@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductHistoryService } from 'src/modules/product/history/product_history.service';
 import { CustomerDto } from 'src/typeorm/customer.entity';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { AddOrderDto, Order, OrderStatus } from 'src/typeorm/order.entity';
 import { OrderProduct } from 'src/typeorm/order_product.entity';
 import { Repository } from 'src/typeorm/repository';
@@ -13,8 +14,8 @@ import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 @Injectable()
 export class WsOrderService {
   constructor(
-    @InjectRepository(Order) private repos: Repository<Order>,
-    @InjectRepository(OrderProduct)
+    @Inject(EntityProviderEnum.ORDER) private repos: Repository<Order>,
+    @Inject(EntityProviderEnum.ORDER_PRODUCT)
     private orderProductRepos: Repository<OrderProduct>,
     private productHistoryService: ProductHistoryService,
   ) {}

@@ -1,5 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+
 import { Role } from 'src/typeorm';
 import { RoleDto } from 'src/typeorm/role.entity';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
@@ -9,16 +8,19 @@ import { RolePermissionDto } from 'src/typeorm/role_permissison.entity';
 import { PermissionDto } from 'src/typeorm/permission.entity';
 import { UserDto } from 'src/typeorm/user.entity';
 import { WsCatch } from 'src/utils/catch';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
 
 @Injectable()
 export class RoleService {
   constructor(
-    @InjectRepository(Role) private repos: Repository<Role>,
+    @Inject(EntityProviderEnum.ROLE) private repos: Repository<Role>,
     private rolePermissionService: RolePermissionService,
   ) {}
   initRole() {
     return this.repos
-      .exist({ where: { code: Like('super_admin') } })
+      .exists({ where: { code: Like('super_admin') } })
       .then((exist) => {
         console.log(exist);
         return exist
@@ -42,10 +44,7 @@ export class RoleService {
           .then((result) => result);
       })
 
-      .catch((e) => {
-        console.log(e);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 500);
-      });
+      .catch(WsCatch);
   }
   getById({ id }: { id: number }) {
     console.log('----------------get by id-----------------');
@@ -54,11 +53,7 @@ export class RoleService {
         where: { id: Equal(id) },
         // relations: { rolePermission: { permission: true } },
       })
-      .then((result) => result)
-      .catch((e) => {
-        console.log(e);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 500);
-      });
+      .then(WsCatch);
   }
   getPermissionById({ id }: { id: number }) {
     return this.repos
@@ -67,10 +62,7 @@ export class RoleService {
         relations: { rolePermission: { permission: true } },
       })
       .then((result) => result)
-      .catch((e) => {
-        console.log(e);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 500);
-      });
+      .catch(WsCatch);
   }
   create({ body }: { body: RoleDto }) {
     console.log(body);
@@ -88,10 +80,7 @@ export class RoleService {
         console.log(result);
         if (result) return HttpExceptionCode.SUCCEEDED;
       })
-      .catch((e) => {
-        console.log(e);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 500);
-      });
+      .catch(WsCatch);
   }
   update({
     id,

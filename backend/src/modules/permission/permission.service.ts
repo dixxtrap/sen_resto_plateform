@@ -1,5 +1,5 @@
-import { HttpException, Injectable, OnModuleInit } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+
+
 import { Permission } from 'src/typeorm';
 import {
   PermissionActionEnum,
@@ -8,11 +8,16 @@ import {
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 import { ModuleService } from '../module/module.service';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
+import { OnModuleInit } from '@nestjs/common/interfaces/hooks/on-init.interface';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
+import { WsCatch } from 'src/utils/catch';
 
 @Injectable()
 export class PermissionService implements OnModuleInit {
   constructor(
-    @InjectRepository(Permission) private repos: Repository<Permission>,
+    @Inject(EntityProviderEnum.PERMISSION) private repos: Repository<Permission>,
     private module: ModuleService,
   ) {}
   onModuleInit() {
@@ -55,10 +60,7 @@ export class PermissionService implements OnModuleInit {
     return this.repos
       .save(this.repos.create(body))
       .then((result) => result)
-      .catch((e) => {
-        console.log(e);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 500);
-      });
+      .catch(WsCatch);
   }
   update({ id, body }: { id: number; body: PermissionDto }) {
     return this.repos
@@ -67,11 +69,7 @@ export class PermissionService implements OnModuleInit {
         if (result.affected > 0) return HttpExceptionCode.SUCCEEDED;
         throw new WsMessage({ ...HttpExceptionCode.NOT_FOUND });
       })
-      .catch((e) => {
-        console.log(e);
-        if (e instanceof WsMessage) throw e;
-        throw new HttpException(HttpExceptionCode.FAILLURE, 500);
-      });
+      .catch(WsCatch);
   }
   getAll() {
     return this.repos
@@ -79,9 +77,6 @@ export class PermissionService implements OnModuleInit {
       .then((result) => {
         return result;
       })
-      .catch((e) => {
-        console.log(e);
-        throw new HttpException(HttpExceptionCode.FAILLURE, 500);
-      });
+      .catch(WsCatch);
   }
 }
