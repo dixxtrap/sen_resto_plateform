@@ -42,6 +42,7 @@ import { GiftHistory } from './gift_history.entity';
 import { EntityProviderEnum } from './entity_provider_enum';
 import { DataSource } from 'typeorm/data-source/DataSource';
 import { User } from './user.entity';
+import { Story } from './story.entity';
 
 // export
 export {
@@ -91,7 +92,8 @@ export const entities = [
   Banner,
   ProductRaiting,
   Gift,
-  GiftHistory
+  GiftHistory,
+  Story
 ];
 
 
@@ -254,6 +256,11 @@ export const entityProviders = [
   {
     provide: EntityProviderEnum.CARD_ALLOCATION_DETAILS,
     useFactory: (dataSource: DataSource) => dataSource.getRepository(CardAllocationDetails ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.STORY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Story ),
     inject: ['DATA_SOURCE'],
   },
   ];

@@ -13,8 +13,6 @@ export class Story  extends CreationDetails{
   @PrimaryGeneratedColumn()
   id: number;
   @Column({
-    type: 'nvarchar2',
-    length: length,
     nullable: true,
     default: null,
   })
