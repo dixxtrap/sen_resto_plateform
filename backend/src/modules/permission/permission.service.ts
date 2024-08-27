@@ -37,7 +37,7 @@ export class PermissionService implements OnModuleInit {
           ].map((action) => {
             console.log(`${action}_${e.name}`);
             return this.repos
-              .exist({
+              .exists({
                 where: {
                   code: `${action}_${e.name}`,
                 },
