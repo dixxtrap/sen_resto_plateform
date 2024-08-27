@@ -7,11 +7,13 @@ import { UserDto } from 'src/typeorm/user.entity';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { WsCatch } from 'src/utils/catch';
 import { BaseResponse } from 'src/typeorm/response_base';
+import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
+import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 
 export class GiftService {
   constructor(
-    @InjectRepository(Gift) private repos: Repository<Gift>,
-    @InjectRepository(GiftHistory)
+    @Inject(EntityProviderEnum.GIFT) private repos: Repository<Gift>,
+    @Inject(EntityProviderEnum.GIFT_HISTORY)
     private reposHistory: Repository<GiftHistory>,
   ) {}
   create({ by, body }: { by: UserDto; body: GiftDto }) {

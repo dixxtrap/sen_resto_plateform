@@ -8,7 +8,6 @@ import { Card } from 'src/typeorm/card.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([CardAllocation, CardAllocationDetails, Card]),
   ],
   controllers: [CardAllocationController],
   providers: [CardAllocationService],
