@@ -22,14 +22,14 @@ export class S3Service {
   async deleteFileToS3({ path }: { path: string }) {
     const regexPattern = /[^/]+$/;
     const name = path.match(regexPattern)[0];
+    console.log(path)
     console.log(`=========== attemp delecting ${name}==============`);
     return this.s3
       .deleteObject(
         {
           Bucket: this.config.getOrThrow('S3_BUCKET_NAME'),
-          Key: ` ${this.config.getOrThrow(
-            'S3_PUBLIC',
-          )}/${this.config.getOrThrow('S3_BUCKET_DIR')}/${name}`,
+        
+          Key: `${this.config.getOrThrow('S3_PUBLIC')}/${this.config.getOrThrow('S3_BUCKET_DIR')}/${name}`,
         },
         () => {},
       )

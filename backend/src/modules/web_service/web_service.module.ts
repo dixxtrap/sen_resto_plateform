@@ -26,6 +26,8 @@ import { ProductModule } from '../product/product.module';
 import { WsPaymentTypeController } from './payment_type/payment_type.controller';
 import { WsPaymentTypeService } from './payment_type/payment_type.service';
 import { PaymentType } from 'src/typeorm/payment_type.entity';
+import { WsStoryController } from './story/story.controller';
+import { WsStoryService } from './story/story.service';
 
 @Module({
   imports: [
@@ -33,6 +35,7 @@ import { PaymentType } from 'src/typeorm/payment_type.entity';
     EmailerModule,
     OtpModule,
     ProductModule,
+  
   ],
   controllers: [
     WsCompanyController,
@@ -41,7 +44,8 @@ import { PaymentType } from 'src/typeorm/payment_type.entity';
     WsBannerController,
     WsCategoryController,
     WsOrderController,
-    WsPaymentTypeController
+    WsPaymentTypeController,
+    WsStoryController
   ],
   providers: [
     WsProductService,
@@ -50,7 +54,8 @@ import { PaymentType } from 'src/typeorm/payment_type.entity';
     WsBannerService,
     WsCategoryService,
     WsOrderService,
-    WsPaymentTypeService
+    WsPaymentTypeService,
+    WsStoryService
   ],
 })
 export class WebServiceModule {}
