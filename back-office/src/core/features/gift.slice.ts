@@ -13,6 +13,7 @@ export const giftApi = createApi({
         getGift: builder.query<BaseResponse<GiftDto>, string>({
             query: () => ({ url: "/gift/all" }),
             providesTags: ["gift", "security"],
+            transformErrorResponse: errorTrasform,
         }),
         createGift: builder.mutation<WsMessage, GiftDto>({
             query: (gift) => ({

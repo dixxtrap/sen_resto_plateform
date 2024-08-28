@@ -1,8 +1,8 @@
 import { RouteObject } from "react-router-dom";
 import { PathRouter } from "./path.route";
-import { StoreCreate } from "../pages/story/story_create";
-import { StoreList } from "../pages/story/story_list";
-import { StoreHistory } from "../pages/story/story.history";
+import { StoryCreate } from "../pages/story/story_create";
+import { StoryList } from "../pages/story/story_list";
+import { StoryHistory } from "../pages/story/story.history";
 
 export const storeRouter:RouteObject={
     path:PathRouter.story,
@@ -10,15 +10,15 @@ export const storeRouter:RouteObject={
         {
             path:PathRouter.default,
             index:true,
-            element:<StoreList/>
+            element:<StoryList/>
         },
         {
         path:PathRouter.create,
-        element:<StoreCreate/>
+        element:<StoryCreate/>
     },
     {
         path:PathRouter.list,
-        element:<StoreHistory/>
+        element:<StoryHistory/>
     },
    
 ]

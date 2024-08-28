@@ -3,6 +3,7 @@ import { BaseResponse } from "./base_response";
 import { BannerDto } from "../models/banner.dto";
 import { axiosBaseQuery } from "./axios_base_query";
 import { WsMessage } from "../models/error.dto";
+import { errorTrasform } from "./error_transformer";
 
 export const bannerApi = createApi({
   baseQuery: axiosBaseQuery({ baseUrl: "/v1" }),
@@ -44,12 +45,14 @@ export const bannerApi = createApi({
       query: () => ({
         url: "/banner/all",
       }),
+      transformErrorResponse: errorTrasform,
       providesTags: ["banner", "security"],
     }),
     getBannerById: builder.query<BaseResponse<BannerDto>, string>({
       query: (id) => ({
         url: `/banner/by_id/${id}`,
       }),
+      transformErrorResponse: errorTrasform,
       providesTags: ["banner", "security"],
     }),
   }),

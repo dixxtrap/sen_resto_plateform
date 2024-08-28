@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { CardDto } from "../models/card.dto";
 import { BaseResponse } from "./base_response";
+import { errorTrasform } from "./error_transformer";
 
 export const cardApi=createApi({
     baseQuery:fetchBaseQuery({baseUrl:'/v1'}),
@@ -9,9 +10,10 @@ export const cardApi=createApi({
     endpoints: (builder)=>({
         getCard:builder.query<BaseResponse<CardDto[]>,string>({
             query:()=>'card/all',
-            providesTags:['cardApi','cardAllocationApi',"security"]
-        })
-        
+            providesTags:['cardApi','cardAllocationApi',"security"],
+            transformErrorResponse: errorTrasform,
+        }),
+       
     })
 })
 export const {useGetCardQuery}=cardApi;

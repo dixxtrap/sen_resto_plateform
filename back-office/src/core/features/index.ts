@@ -22,6 +22,7 @@ import { cityApi } from "./city.slice";
 import { orderApi } from "./order.slice";
 import { deliverApi } from "./deliver.slice";
 import { giftApi } from "./gift.slice";
+import { storyApi } from "./story.slice";
 const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
@@ -46,6 +47,7 @@ const store = configureStore({
     [orderApi.reducerPath]: orderApi.reducer,
     [deliverApi.reducerPath]: deliverApi.reducer,
     [giftApi.reducerPath]:giftApi.reducer,
+    [storyApi.reducerPath]:storyApi.reducer,
     
     theme: themeReducer,
   },
@@ -72,7 +74,8 @@ customerApi.middleware,
       cityApi.middleware,
       orderApi.middleware,
       deliverApi.middleware,
-      giftApi.middleware
+      giftApi.middleware,
+      storyApi.middleware,
     ),
 });
 

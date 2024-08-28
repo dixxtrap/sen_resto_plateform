@@ -1,25 +1,17 @@
 import { Badge, Button, Card, Group, Modal,Text} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { StoryCreate } from "./story_create";
+import { storyApi } from "../../../core/features/story.slice";
+import { StoryCardItem } from "./widget/story_card_item";
 
-export const StoreList = () => {
-  const [opened, { close, open }] = useDisclosure();
+export const StoryList = () => {
+const stories=storyApi.useGetAllQuery("")
   return (
     <div>
-      <Modal opened={opened} onClose={close}>Bonjour </Modal>
-          <Button onClick={open}>Ajouter</Button>
-          
-          <Card shadow="sm" padding="lg" radius="md" withBorder>
-    
-
-      <Text size="sm" c="dimmed">
-        With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-        activities on and around the fjords of Norway
-      </Text>
-
-      <Button color="blue" fullWidth mt="md" radius="md">
-        Book classic tour now
-      </Button>
-    </Card>
+     <StoryCreate/>
+       <div className="grid grid-cols-4 gap-3 ">
+        {stories.data?.data.map(s=><StoryCardItem story={s}/>)}
+       </div>
     </div>
   );
 };

@@ -21,8 +21,8 @@ darkMode:"class",
           
         },
      
-        primary:colors.yellow,
-        secondary: colors.amber,
+        primary:colors.green,
+        secondary: colors.red,
       },
     
     },

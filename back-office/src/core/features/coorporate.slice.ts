@@ -3,6 +3,7 @@ import { CompanyDto } from "../models/company.dto";
 import { WsMessage } from "../models/error.dto";
 import { BaseResponse } from "./base_response";
 import { axiosBaseQuery } from "./axios_base_query";
+import { errorTrasform } from "./error_transformer";
 
 export const coorporateApi = createApi({
   reducerPath: "coorporate",
@@ -16,16 +17,19 @@ export const coorporateApi = createApi({
         method: "POST",
         data: coorporate,
       }),
+      transformErrorResponse: errorTrasform,
       invalidatesTags: ["coorporate", 'security'],
     }),
     getCoorporate:builder.query<BaseResponse<CompanyDto[]>,string>({
         query:()=>({url:"/coorporate/all"}),
-        providesTags:["coorporate",'security']
+        providesTags:["coorporate",'security'],
+        transformErrorResponse: errorTrasform,
 }),
 
 getCoorporateById: builder.query<BaseResponse<Partial<CompanyDto>> ,string>({
         query: (id)=>({url:`/coorporate/byId/${id}`}),
-        providesTags:["coorporate",'security']
+        providesTags:["coorporate",'security'],
+        transformErrorResponse: errorTrasform,
 }),
 updateCoorporateById: builder.mutation<BaseResponse<CompanyDto>, { id: number, coorporate: CompanyDto, file:File }>({
         query: ({id,coorporate, file}) => ({
@@ -36,6 +40,7 @@ updateCoorporateById: builder.mutation<BaseResponse<CompanyDto>, { id: number, c
             "Content-Type": "multipart/form-data",
           },
         }),
+        transformErrorResponse: errorTrasform,
         invalidatesTags: ["coorporate",'security'],
       }),
   }),
