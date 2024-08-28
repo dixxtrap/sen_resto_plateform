@@ -1,5 +1,3 @@
-import { Badge, Button, Card, Group, Modal,Text} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { StoryCreate } from "./story_create";
 import { storyApi } from "../../../core/features/story.slice";
 import { StoryCardItem } from "./widget/story_card_item";
