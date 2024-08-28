@@ -14,9 +14,9 @@ export class StoryService {
     create ({by,files}:{by:UserDto,files:Array<Express.Multer.File>}){
         return  Promise.all(files.map(file=>this.s3Service.createFileToS3AndDeleteLocal({file}))).then(paths=>{
             return this.repos.save(paths.map(path=>this.repos.create({imagePath:path, partnerId:by.parentId, byId:by.id}))).then(result=>result)
-        }).then(result=>{
+        }).then(()=>{
             throw new WsMessage(HttpExceptionCode.SUCCEEDED)
-        }).catch
+        }).catch(WsCatch)
     }
 
     getAll({by}:{by:UserDto}){
@@ -24,7 +24,7 @@ return this.repos.find({where:{partnerId:by.parentId}}).then(result=>BaseRespons
     }
     delete({by, id}:{by:UserDto, id:number}){
         return this.repos.findOne({where:{id}}).then(old=>{
-            if(old) return this.s3Service.deleteFileToS3({path:old.imagePath}).then(res=>{throw new WsMessage(HttpExceptionCode.SUCCEEDED)})
+            if(old) return this.s3Service.deleteFileToS3({path:old.imagePath}).then(res=>{return this.repos.delete({id}).then(res=>{if (res.affected>0)throw new WsMessage(HttpExceptionCode.SUCCEEDED)})})
                 throw new WsMessage(HttpExceptionCode.FAILLURE)
         }).catch(WsCatch)
     }
