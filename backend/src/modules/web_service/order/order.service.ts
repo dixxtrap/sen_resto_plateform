@@ -24,9 +24,9 @@ export class WsOrderService {
       .find({
         where: { customerId: by.id },
         relations: {
-          partner: true,
+          partner: {parent:true},
           products: {
-            
+           
             productHistory: { product: { file: true } },
           },
         },
@@ -40,9 +40,14 @@ export class WsOrderService {
           partner: {
             name: true,
             type: true,
+            imagePath:true,
+            shortname:true,
             parent: {
               id:true,
               name: true,
+              shortname:true,
+              type:true,
+              imagePath:true
             },
           },
           products: {
@@ -69,7 +74,7 @@ export class WsOrderService {
         return BaseResponse.success(result);
       });
   }
-  getByStatus = ({
+  getByStatus = ({ 
     by,
     status,
   }: {
@@ -86,7 +91,7 @@ export class WsOrderService {
       },
       select: {
         id: true,
-        partnerId: true,
+       
         details: {
           createdAt: true,
           updatedAt: true,
@@ -94,6 +99,7 @@ export class WsOrderService {
         partner: {
           name: true,
           type: true,
+          imagePath:true,
           parent: {
             name: true,
           },
@@ -144,7 +150,7 @@ export class WsOrderService {
       (await this.repos.findOne({
         where: {
           customerId: customerId,
-          partnerId: partnerId,
+          partner: [{id:partnerId}],
           status: OrderStatus.OnBag,
         },
       })) ??

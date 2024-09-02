@@ -55,7 +55,7 @@ background-color: light-dark(#f3f4f6, rgb(107 114 128 / 0.1))!important;
   @apply  font-bold py-1 px-2 ring-0 rounded-md   text-white;
 }
 .last_td.default, tr>td:last-child>.default{
-@apply bg-secondary-700 
+@apply bg-secondary-500 
 }
 .last_td.default2 , tr>td:last-child>.default2{
   @apply bg-indigo-500

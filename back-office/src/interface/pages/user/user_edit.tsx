@@ -27,7 +27,16 @@ export const UserEdit = () => {
   const form= useForm();
   useEffect(() => {
     if (oldUser) {
-      form.setValues( oldUser.data);
+      console.log(oldUser)
+ 
+      form.setFieldValue('parentId',`${oldUser.data.parent?.id}`)
+      form.setFieldValue('firstname',`${oldUser.data.firstname}`)
+      form.setFieldValue('lastname',`${oldUser.data.lastname}`)
+      form.setFieldValue('email',`${oldUser.data.email}`)
+      form.setFieldValue('phone',`${oldUser.data.phone}`)
+      form.setFieldValue('address',`${oldUser.data.address}`)
+      // form.setFieldValue('cityId',`${oldUser.data.cityId!}`)
+      form.setFieldValue('roleId',`${oldUser.data.role?.id}`)
     }
   }, [oldUser]);
   const _onSubmit = form.onSubmit((body: User) => {
@@ -60,7 +69,7 @@ export const UserEdit = () => {
 
 <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
 
-<AddressForm form={form}/>
+<AddressForm isUpdatable form={form}/>
 
   <Select  label={"Organisation"} error={form.errors["parentId"]} key={form.key("parentId")}{...form.getInputProps("parentId")} data={companies?.data.map((e) =>({label:e.name!, value:`${e.id}`}))}/>
 

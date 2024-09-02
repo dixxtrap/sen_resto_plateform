@@ -1,6 +1,6 @@
 import { ActionIcon, useMantineColorScheme, useComputedColorScheme, Button } from '@mantine/core';
 import classes from './theme_toggler.module.css';
-import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
+import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { clsx } from 'clsx';
 
 export const  ThemeToggler=()=> {
@@ -9,12 +9,12 @@ export const  ThemeToggler=()=> {
 
   return (
     <Button
-    variant="white"
+    variant="filled"
     radius={10}
-    color='secondary.4'
+    color='black'
     size="md"
       onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
-      className="px-3 bg_card"
+      className="px-3  bg-slate-900"
 
      
     >

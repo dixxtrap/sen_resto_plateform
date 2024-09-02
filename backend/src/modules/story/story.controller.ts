@@ -15,13 +15,13 @@ export class StoryController {
   constructor(private service: StoryService) {}
 @Get('all')
 @UseGuards(AuthenticatedGuard)
-getAll(@Body('by') by:UserDto){
-  console.log("==============user==========",by)
-return this.service.getAll({by})
+getAll(@Req() req:Express.Request){
+ 
+return this.service.getAll({by:req.user as UserDto})
 }
 @Delete("delete/:id")
-delete(@Body('by') by:UserDto,@Param('id')id:number){
-  return this.service.delete({id, by})
+delete(@Req() req:Express.Request,@Param('id')id:number){
+  return this.service.delete({id, by:req.user as UserDto})
 }
 @Post('create')
 

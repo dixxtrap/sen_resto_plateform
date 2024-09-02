@@ -16,7 +16,7 @@ export interface OrderDto {
 export interface OrderProduct {
     productHistoryId: number
     partnerId:number
-   
+   id:number;
     description: string
     quantity: number
     productHistory: ProductHistory

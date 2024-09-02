@@ -8,7 +8,7 @@ import { clsx } from "../../utils/clsx";
 import { Link } from "react-router-dom";
 import { Alert } from "../../components/alert_success";
 import { Status } from "../../components/status";
-import { Table } from "@mantine/core";
+import { Button, Table } from "@mantine/core";
 import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item";
 
 
@@ -17,9 +17,9 @@ export const PlateList = () => {
   const products = useGetRestaurantProductQuery(``);
   console.log(products);
   return (
-    <>
-  
+
       <TablePagination
+      isPaginated
         title="Prduits"
         {...products}
         createPath="/product/create"
@@ -41,8 +41,8 @@ createTitle="Creer un nouveau Produit"
                 <Table.Tr key={`plate_${productManagement.product?.id}`}>
                   <Table.Td className="">
                     <div className="flex items-center gap-x-0">
-                      <div className=" flex-shrink-0 w-10">
-                       {productManagement.product?.file && productManagement.product?.file.length!>0?<img title='image' src={`${productManagement.product?.file![0].path}`} className="h-7 rounded-md"/>:<BuildingStorefrontIcon className="h-7" />}
+                      <div className=" flex-shrink-0 w-10 mr-2">
+                       {productManagement.product?.file && productManagement.product?.file.length>0?<img alt="img" title='image' src={`${productManagement.product?.file![0].path}`} className="h-7 rounded-md"/>:<BuildingStorefrontIcon className="h-7" />}
                           {/* <Img
                             hasImg={true}
                             icon={<BuildingStorefrontIcon className="h-7" />}
@@ -65,13 +65,13 @@ createTitle="Creer un nouveau Produit"
                   { productManagement?.productManagementDay?.map(managementDay=><Table.Td className=" " key={`day_${managementDay.dayId}`}>
                       <div
                         className={clsx(
-                          managementDay.isActive ? "bg-secondary-400/20 " : "bg-slate-400/20",
+                          managementDay.isActive ? "bg-green-400/20 " : "bg-red-400/20",
                           " h-4 w-4 rounded-full p-1"
                         )}
                       >
                         <div
                           className={clsx(
-                            managementDay.isActive ? "bg-teal-500  " : "bg-rose-400",
+                            managementDay.isActive ? "bg-green-500  " : "bg-rose-400",
                             "rounded-full h-full w-full"
                           )}
                         ></div>
@@ -88,11 +88,11 @@ createTitle="Creer un nouveau Produit"
                     <Link to={`/product/edit/${productManagement.productId}`} className="last_td accept">
                       Modifier le Produit
                     </Link> */}
-                      <Link to={`/product/management/${productManagement.productId}`} className="last_td default">
+                      <Button size="compact-md" fw={400}  component={Link} to={`/product/management/${productManagement.productId}`} className="">
                       Modifier le menu
-                    </Link>
-                    <TableActionItemDetails label='voir details' path={`/payment_type/details/${productManagement.productId}`}/>
-            <TableActionItemEdit label='Modifier le Produit' path={`/payment_type/edit/${productManagement.productId}`}/>
+                    </Button>
+                    <TableActionItemDetails label='voir details' path={`/product/details/${productManagement.productId}`}/>
+            <TableActionItemEdit label='Modifier le Produit' path={`/product/edit/${productManagement.productId}`}/>
             
                   
                   </Table.Td>
@@ -103,6 +103,6 @@ createTitle="Creer un nouveau Produit"
         }
         subtitle="Liste des Produits"
       />
-    </>
+
   );
 };

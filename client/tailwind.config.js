@@ -15,8 +15,8 @@ export default {
           kdarkbg:"#23272f"
         },
      
-        primary: colors.pink,
-        secondary: colors.purple
+        primary: colors.red,
+        secondary: colors.green
       },
     
  

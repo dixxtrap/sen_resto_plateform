@@ -5,7 +5,7 @@ import { formatDate } from "../../utils/date_format";
 import { ProtecterPage } from "../../components/protecter_page";
 import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
 import { TablePagination } from "../../components/table/table";
-import { Table } from "@mantine/core";
+import { Button, Table } from "@mantine/core";
 import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item";
 import { PermissionCode } from "../../utils/per;ission_code";
 
@@ -42,7 +42,7 @@ export const RestaurantList = () => {
                     <div className="flex items-center">
                         <div className=" pl-2 flex-shrink-0  w-16 mr-2 content-center flex  justify-start ">
                           {/* <ImgPreview name={`Prile_${company?.profile?.id}`} className='bg-blue-400 h-11' img={company.profile!}/> */}
-                          {  restaurant.imagePath? <img src={`${restaurant.imagePath!}`} className='h-8 rounded-md' alt=""  />:<BuildingStorefrontIcon className='h-8 p-1 text-primary-500 bg-secondary-500/20 ring-2  ring-secondary-500/80 rounded-md'/>}
+                          {  restaurant.imagePath? <img src={`${restaurant.imagePath!}`} className='h-8 rounded-md' alt=""  />:<BuildingStorefrontIcon className='h-8 p-1 text-primary-500 bg-primary-500/20 ring-1  ring-primary-500/80 rounded-md'/>}
                         </div>
                        
                           <div className="font-medium ">{restaurant.name}</div>
@@ -71,12 +71,15 @@ export const RestaurantList = () => {
                 <Table.Td className="last_td_container">
                   
                 <ProtecterPage isPage={false} permissions={[{code:PermissionCode.PRODUCT_MANAGEMENT, type:"CREATE"}]}>
-                <Link
+                <Button component={Link}
                     to={`/restaurant/plats/${restaurant.id}`}
-                    className="last_td reject"
+                    className="ring-1  ring-secondary-400 "
+                    size="compact-sm"
+                   
+                    fw={400}
                   >
                     Product<span className="sr-only">, {restaurant.phone}</span>
-                  </Link>
+                  </Button>
                 </ProtecterPage>
                 <TableActionItemDetails label='voir details' path={`/restaurant/details/${restaurant.id}`}/>
             <TableActionItemEdit label='Modifier le Produit' path={`/restaurant/edit/${restaurant.id}`}/>

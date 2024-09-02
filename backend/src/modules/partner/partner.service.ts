@@ -8,7 +8,7 @@ import { WalletStatusService } from '../wallet_status/wallet_status.service';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 
-@Injectable()
+@Injectable() 
 export class PartnerService {
   constructor(
     @Inject(EntityProviderEnum.COMPANY_RESTAURANT_BASE)

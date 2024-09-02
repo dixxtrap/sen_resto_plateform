@@ -9,7 +9,7 @@ export const Banners = () => {
     const banners=useGetBannerQuery('')
   return (
    <Fetchingdata {...banners}>
-<div style={{background:`url(${headerBgImg})`, backgroundSize:'100%'}} className='bg-white/30'>
+{banners.data?.data?.length!>0&&<div style={{background:`url(${headerBgImg})`, backgroundSize:'100%'}} className='bg-white/30'>
 <div className='bg-white/20 backdrop-blur-md py-10'>
 <Carousel
       withIndicators
@@ -30,7 +30,7 @@ export const Banners = () => {
     )}
     </Carousel>
     </div>
-</div>
+</div>}
    </Fetchingdata>
   )
 }

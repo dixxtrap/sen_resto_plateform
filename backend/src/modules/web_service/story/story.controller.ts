@@ -7,7 +7,7 @@ import { Get } from "@nestjs/common/decorators/http/request-mapping.decorator";
 @ApiTags('ws/story')
 export class WsStoryController{
     constructor(private service:WsStoryService){}
-    @Get()
+    @Get("all")
     getAll(){
         return this.service.getAll()
     }

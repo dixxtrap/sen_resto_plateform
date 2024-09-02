@@ -12,7 +12,7 @@ export default function Public() {
         <Navigation  close={close} opened={opened} />
         {/* Static sidebar for desktop */}
 
-        <ShortNav />
+        <ShortNav open={open} />
         <Header open={open} close={close}   />
         <main className="lg:pl-20 min-h-screen dark:dark:bg-transparent  ">
           <div className="px-4 py-10 sm:px-6   lg:px-8 text-center lg:py-6">

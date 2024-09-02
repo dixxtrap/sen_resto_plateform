@@ -1,7 +1,7 @@
 import { createTheme, virtualColor } from "@mantine/core";
 
 export const APP_THEME = createTheme({
-  primaryColor:'yellow',
+  primaryColor:'red',
     colors:
     {
       // primary:   virtualColor({
@@ -10,7 +10,7 @@ export const APP_THEME = createTheme({
       //   light: 'blue',
         
       // }),
-      secondary: [
+      primary: [
         '#e6fcf5',
          '#c3fae8',
          '#96f2d7',
@@ -22,7 +22,7 @@ export const APP_THEME = createTheme({
          '#099268',
          '#087f5b',
       ],
-      primary:[   '#fdf2f2',
+      secondary:[   '#fdf2f2',
         '#f9d4d4',
          '#f4a5a5',
          '#ef7070',

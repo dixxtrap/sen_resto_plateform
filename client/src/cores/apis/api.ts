@@ -4,6 +4,7 @@ import { BaseResponse } from "../models/base_response";
 import { CategoryDto } from "../models/category.dto";
 import { errorTrasform } from "./error_transformer";
 import { BannerDto } from "../models/banner.dto";
+import { StoryGroup } from "../models/story.dto";
 
 
 export const baseApi = createApi({
@@ -17,6 +18,10 @@ export const baseApi = createApi({
     getBanner: builder.query<BaseResponse<BannerDto[]>, string>({
       query: () =>
         `/ws/banner/all`,
+    }),
+    story: builder.query<BaseResponse<StoryGroup[]>, string>({
+      query: () =>
+        `/ws/story/all`,
     }),
     getCategory: builder.query<BaseResponse<CategoryDto[]>, string>({
       query: () =>

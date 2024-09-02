@@ -44,20 +44,35 @@ export const Header: FC<{
       <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b  shadow-sm sm:gap-x-2  darkBg bg-white  darkDivider  px-3">
         {isSuccess && (
           <>
-            <ActionIcon
+
+          <div className="flex items-center lg:ml-20 ">
+          <ActionIcon
               size={40}
               color="primary.5"
-              className="lg:ml-20 "
+              className="  lg:hidden"
               onClick={open}
             >
               <Bars3Icon className="h-6 w-6 " aria-hidden="true" />
             </ActionIcon>
+          <div className="flex h-16 shrink-0  p-2  items-center sticky top-0 justify-center">
+      {user?.parent && user.parent.imagePath && (
+                <img
+                alt=""
+                className=" h-8 md:h-10  rounded-md backdrop-blur-lg"
+                 src={`${user.parent.imagePath}`}
+                />
+              
+              )}
+              
+        {/* <Logo className="bg-gradient-to-tr to-teal-500/20 backdrop-blur-sm from-indigo-500/20 h-14 w-14 p-1 rounded-md" /> */}
+      </div>
+
+          </div>
+           
             {/* Separator */}
             <span className=" text-xl  text-left font-bold">
-              {user?.parent?.parent?.id === 1
+              {user?.parent?.parent?.id === 1|| user?.parent?.id === 1
                 ? user.parent?.name
-                : user?.parent?.id === 1
-                ? user?.parent?.name
                 : user?.parent?.parent?.name}
             </span>
             <div className="grow flex items-center gap-x-1"></div>
@@ -72,11 +87,11 @@ export const Header: FC<{
                 className="px-2"
               >
                 <ChatBubbleBottomCenterIcon
-                  className="size-6 bg-secondary-600 text-white p-0.5 rounded-full"
+                  className="size-6 bg-primary-600 text-white p-0.5 rounded-full"
                   aria-hidden="true"
                 />{" "}
                 <span className="sr-only">View notifications</span>
-                <Text className="font-bold ml-3 font-sans  leading-4">
+                <Text className="font-bold ml-3 font-sans text-primary-600  leading-4">
                   0
                 </Text>
               </Button>
@@ -85,14 +100,14 @@ export const Header: FC<{
                 type="button"
                 variant="transparent"
                 className="px-2"
-                color="secondary.5"
+                color="primary.5"
               >
                 <BellIcon
-                  className="size-6 bg-secondary-600 text-white p-0.5 rounded-full"
+                  className="size-6 bg-primary-600 text-white p-0.5 rounded-full"
                   aria-hidden="true"
                 />{" "}
                 <span className="sr-only">View notifications</span>
-                <Text className="font-bold ml-3 font-sans  leading-4">
+                <Text className="font-bold ml-3 font-sans text-primary-600  leading-4">
                   0
                 </Text>
               </Button>
@@ -106,7 +121,7 @@ export const Header: FC<{
               >
                 <Menu.Target>
                   <Button radius={10} variant="transparent" className="px-1">
-                    <UserIcon className="size-6 p-1 rounded-full text-white bg-secondary-600" />
+                    <UserIcon className="size-6 p-1 rounded-full text-white bg-primary-600" />
                   </Button>
                 </Menu.Target>
 
@@ -128,7 +143,7 @@ export const Header: FC<{
                   <Menu.Item
                   
                     leftSection={
-                      <ArrowRightStartOnRectangleIcon className="size-6 p-1 rounded-full" />
+                      <ArrowRightStartOnRectangleIcon className="size-4 rounded-full" />
                     }
                     onClick={()=>signout("")}
                     >

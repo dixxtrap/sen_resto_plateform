@@ -1,4 +1,3 @@
-import { useGetPlateQuery } from "../../core/features/plate.slice";
 
 
 

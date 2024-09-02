@@ -100,6 +100,8 @@ export class UserService {
       .catch(WsCatch);
   }
   update({ id, by, body }: { id: number; by: UserDto; body: UserDto }) {
+    console.log(body)
+    
     logInfo({ by, action: `update user idenfier by Id= ${id}` });
     return this.repos
       .update({ id: Equal(id) }, { ...body })

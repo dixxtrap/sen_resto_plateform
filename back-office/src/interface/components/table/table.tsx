@@ -37,9 +37,9 @@ export const  TablePagination:FC<TablePaginationProps>=({trs, title,th, createPa
       <Title  className='leading-3' order={1}>{title}</Title>
       
      {createPath&& <Link to={createPath!}>
-          <Button   color='primary.4' >
+          <Button fw={400}  className='bg-secondary-500 hover:bg-secondary-600' color='secondary.4' >
             Ajouter
-        <PlusIcon className='text-white'/>
+        <PlusIcon className='text-white bg-primary-500'/>
       </Button>
       </Link>}
       </div >

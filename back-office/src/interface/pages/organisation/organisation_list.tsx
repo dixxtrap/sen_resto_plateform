@@ -41,8 +41,8 @@ export const OrganisationList = () => {
                      
                     </Table.Td>
                     <Table.Td className="last_td_container">
-                    <TableActionItemDetails label='voir details' path={`/company/details/${company.id}`}/>
-                    <TableActionItemEdit label='voir details' path={`/company/edit/${company.id}`}/>
+                    <TableActionItemDetails label='voir details' path={`/organisation/details/${company.id}`}/>
+                    <TableActionItemEdit label='voir details' path={`/organisation/edit/${company.id}`}/>
                     </Table.Td>
                   </Table.Tr>
                 ))}

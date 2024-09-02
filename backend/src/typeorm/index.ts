@@ -43,6 +43,7 @@ import { EntityProviderEnum } from './entity_provider_enum';
 import { DataSource } from 'typeorm/data-source/DataSource';
 import { User } from './user.entity';
 import { Story } from './story.entity';
+import { StoryGroup } from './story_group.entity';
 
 // export
 export {
@@ -93,7 +94,8 @@ export const entities = [
   ProductRaiting,
   Gift,
   GiftHistory,
-  Story
+  Story,
+  StoryGroup,
 ];
 
 
@@ -189,6 +191,7 @@ export const entityProviders = [
     inject: ['DATA_SOURCE'],
   },
   {
+  
     provide: EntityProviderEnum.WALLET_STATUS,
     useFactory: (dataSource: DataSource) => dataSource.getRepository(WalletStatus ),
     inject: ['DATA_SOURCE'],
@@ -261,6 +264,11 @@ export const entityProviders = [
   {
     provide: EntityProviderEnum.STORY,
     useFactory: (dataSource: DataSource) => dataSource.getRepository(Story ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.STORY_GROUP,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(StoryGroup ),
     inject: ['DATA_SOURCE'],
   },
   ];

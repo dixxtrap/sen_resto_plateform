@@ -1,28 +1,25 @@
 import {  useGetProductQuery } from "../../../cores/apis/product.slice";
 import { initPagination } from "../../../cores/models/pagination.model";
-import { PlateItem, ProductItem } from "./widget/product_item";
-import { AutoCompletionCompanies } from "./widget/auto_completion";
-import { Input } from "../../components/input";
+import {  ProductItem } from "./widget/product_item";
 import { useProfileQuery } from "../../../cores/apis/security.slice";
 import { useState } from "react";
 import { DialogAlert } from "../../components/dialog";
 import { LoginForm } from "../../components/login/login_form";
 import { CategoryPageniationWidget } from "./widget/category_pagination_widget";
-import { Select, TextInput } from "@mantine/core";
-import { useGetCategoryBaseQuery, useGetCategoryQuery } from "../../../cores/apis/api";
+// import { useGetCategoryBaseQuery } from "../../../cores/apis/api";
 
 export const PlateList = () => {
   const { isSuccess:isLogin}=useProfileQuery("")
-  const coategories=useGetCategoryBaseQuery("")
+  // const _coategories=useGetCategoryBaseQuery("")
   const [category, setCategory]=useState<number>(0)
-  const [company, setCompany]=useState<number>(0)
+  const [_company, _setCompany]=useState<number>(0)
   const[showLogin, setShowLogin]=useState(false)
 const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
   return (
     <>
       {isLoading && <div>loding....</div>}
       {showLogin && <DialogAlert   onClose={()=> setShowLogin(false)} isOpen={showLogin}>
-        <LoginForm action={()=>setShowLogin(false)}/></DialogAlert>}
+        <LoginForm close={close} action={()=>setShowLogin(false)}/></DialogAlert>}
       {products && isSuccess && (
         <div className="bg-white ">
           <div className="mx-auto  px-2  max-w-7xl    ">
@@ -42,7 +39,7 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
               ))}
             </div> */}
             <CategoryPageniationWidget current={category} onclick={(id)=>setCategory(id)} ></CategoryPageniationWidget>
-            <div  className="grid grid-cols-2   gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4  ">
+            <div  className="grid grid-cols-1 max-sm:grid-cols-2   gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4  ">
               {products!.data.map((product) => (
                 <div onClick={()=>!isLogin&&setShowLogin(true)}>
                 <ProductItem product={product}  />

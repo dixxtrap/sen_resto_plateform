@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
 import { MailerService } from '@nestjs-modules/mailer';
 import { basedire } from 'src/mysql.config';
-import { join, resolve } from 'path';
+import { join, resolve } from 'path'; 
 import * as Mustache from 'mustache';
 import { readFileSync } from 'fs';
 @Injectable()

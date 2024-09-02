@@ -1,6 +1,6 @@
 import {FC, ReactNode} from 'react'
-import { getWsMessage } from '../../cores/apis/error_transformer'
-import { Alert } from './dialog'
+import { Alert } from './alert_success'
+import { getWsMessage } from '../../core/features/error_transformer'
 type FetchingdataProps={
 isLoading?:boolean,
 isError?:boolean,

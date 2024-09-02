@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import ThemeProvider from "./cores/theme/theme.provider";
 import { MantineProvider } from "@mantine/core";
 import { APP_THEME } from "./theme";
+import { useFavicon } from "@mantine/hooks";
 
 function App() {
   return (

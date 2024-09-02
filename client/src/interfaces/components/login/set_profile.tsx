@@ -7,7 +7,8 @@ import { Customer } from '../../../cores/models/customer'
 import { AddressDto } from '../../../cores/models/address.dto'
 import { useForm } from '@mantine/form'
 type SetProfileFormProps={
-  action:()=>void
+  action:()=>void,
+  onclose:()=>void,
 }
 export const SetProfileForm:FC<SetProfileFormProps> = ({action}) => {
   const {data:profile, isSuccess}=useProfileQuery('')

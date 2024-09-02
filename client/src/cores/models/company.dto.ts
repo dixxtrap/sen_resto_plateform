@@ -5,6 +5,7 @@ export enum CompanyEnum {
   RESTO = 'restaurant',
   MASTER = 'master',
   DELIVER = 'deliver',
+  COMPANY = 'CompanyRestaurant',
 }
 export class CompanyDto {
   id?: number;
@@ -24,6 +25,7 @@ export class CompanyDto {
   closingTime?: string;
   imagePath?: string;
   parentId?:number;
+  parent?:CompanyDto;
   details?:CreationDetailDto
 }
 // export const companySchema = yup.object({

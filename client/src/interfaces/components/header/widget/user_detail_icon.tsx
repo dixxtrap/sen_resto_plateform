@@ -1,43 +1,43 @@
+import {
+  UserIcon,
+} from "@heroicons/react/24/solid";
+import { useProfileQuery } from "../../../../cores/apis/security.slice";
+import { BagIcon } from "./bag_icon";
+import { NotificationIcon } from "./notification_icon";
+import { DialogAlert } from "../../dialog";
+import { LoginForm } from "../../login/login_form";
+import { useDisclosure } from "@mantine/hooks";
+import { ActionIcon, Button } from "@mantine/core";
 
-import {  CakeIcon, GiftIcon, HomeModernIcon, StarIcon } from '@heroicons/react/24/solid'
-import { HeaderIcon } from './header_icon';
-import { useProfileQuery } from '../../../../cores/apis/security.slice';
-import { BagIcon } from './bag_icon';
-import { NotificationIcon } from './notification_icon';
-import {  useState } from 'react';
-import { DialogAlert } from '../../dialog';
-import { LoginForm } from '../../login/login_form';
-const unlockListMenu=[
- 
-
- {name:'Produits',icon:<HeaderIcon icon={<CakeIcon className='h-8'/>}/>, route:'product'}, 
- { icon:<HeaderIcon icon={<HomeModernIcon className='h-8'/>}/>,name:'Restaurant', route:'notification',},
-//  {name:'Favoris', route:'favoris',}
-];
-const listMenu=[
-    {name:'Commandes',icon:<BagIcon></BagIcon>, route:'order'},
-{ icon:<NotificationIcon/>,name:'Notification', route:'notification',},
-{name:'Favoris', icon:<HeaderIcon icon={<StarIcon className='h-8'/>}/>,route:'favoris',},
-{name:'Caddeaux', icon:<HeaderIcon icon={<GiftIcon className='h-8'/>}/>,route:'favoris',},
-
-...unlockListMenu
-//  {name:'Favoris', route:'favoris',}
-];
 
 export const UserDetailIcon = () => {
-    const {data:profile,isSuccess, isError }=useProfileQuery('')
-    const [showLogin,setShowLogin]= useState<boolean>(false)
-    const _onclick=()=>{
-isError&&setShowLogin(true);
-    }  
-     return (
-    <div className=" lg:ml-4 lg:flex lg:items-center">
-   
-    {isSuccess&& <div className='hidden lg:block'><BagIcon/> <NotificationIcon/></div>}
-   { isError && <DialogAlert   onClose={()=> setShowLogin(false)} isOpen={showLogin}>
-        <LoginForm action={()=>setShowLogin(false)}/></DialogAlert>}
-     
-        {/* <Popover className="relative">
+  const {  isSuccess, isError } = useProfileQuery("");
+  const [opened, { close, open }] = useDisclosure(false);
+ 
+  return (
+    <div className=" lg:ml-4 lg:flex   lg:items-center">
+      {isSuccess && (
+        <div className="hidden lg:flex gap-3 bg-slate-200 p-2 rounded-lg py-1  ">
+          <BagIcon /> <NotificationIcon />
+          <Button onClick={open}   p={0}   variant="transparent" >
+            <UserIcon  className='size-7 text-white bg-primary-500 p-0.5 rounded-full' />
+          </Button>{" "}
+        </div>
+      )}
+      {isError && (
+        <>
+          {" "}
+          <ActionIcon onClick={open}    variant="outline"
+    size={"lg"}>
+            <UserIcon />
+          </ActionIcon>{" "}
+          <DialogAlert onClose={() => close()} isOpen={opened}>
+            <LoginForm close={close} action={() => close()} />
+          </DialogAlert>
+        </>
+      )}
+
+      {/* <Popover className="relative">
       <PopoverButton className="inline-flex items-center gap-x-1  mt-2 md:mt-0 text-sm font-semibold leading-6 text-gray-900">
 <HeaderIcon onclick={_onclick} icon={<UserIcon className="h-8" />}/>
        
@@ -64,8 +64,7 @@ isError&&setShowLogin(true);
         </PopoverPanel>
       </Transition>
     </Popover> */}
-    {/* Profile dropdown */}
-  </div>
-     
-  )
-}
+      {/* Profile dropdown */}
+    </div>
+  );
+};

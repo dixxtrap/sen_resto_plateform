@@ -36,9 +36,13 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
   @ManyToOne(() => CompanyRestaurantBase)
+  restaurant: CompanyRestaurantBase;
+  @ManyToOne(() => CompanyRestaurantBase)
   partner: CompanyRestaurantBase;
   @Column({ nullable: true, default: null })
   partnerId: number;
+  @Column({ nullable: true, default: null })
+  restaurantId: number;
   @ManyToOne(() => Customer)
   customer: Customer;
   @Column({ nullable: true, default: null })

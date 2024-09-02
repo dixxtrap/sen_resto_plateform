@@ -6,7 +6,7 @@ export const TableActionItemEdit = ({label, path}:{label:string,path:string}) =>
   return (
     <Tooltip  withArrow label={label} >
     <Link to={path} >
-      <ActionIcon variant="light" color="primary.5" size={"md"} p={3}>
+      <ActionIcon variant="light" className='text-secondary-500' color="secondary.5" size={"md"} p={3}>
 <PencilIcon/>
         </ActionIcon>
       </Link>
@@ -18,7 +18,7 @@ export const TableActionItemDetails = ({label, path}:{label:string,path:string})
     return (
       <Tooltip  withArrow label={label} >
       <Link to={path} >
-        <ActionIcon variant="light" color="primary.5" size={"md"} p={3}>
+        <ActionIcon variant="light"  className='text-secondary-500' color="secondary.5" size={"md"} p={3}>
   <EyeIcon/>
           </ActionIcon>
         </Link>

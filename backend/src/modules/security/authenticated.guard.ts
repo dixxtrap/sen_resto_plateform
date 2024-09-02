@@ -7,7 +7,7 @@ export class AuthenticatedGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request: Request = context.switchToHttp().getRequest();
-    request.body.by=request.user;
+    // request.body.by=request.user;
     return request.isAuthenticated();
   }
 }
