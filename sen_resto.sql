@@ -42,8 +42,10 @@ CREATE TABLE `banner` (
   PRIMARY KEY (`id`),
   KEY `FK_06c3ad287ea5fba13cc015df9ec` (`detailsByid`),
   CONSTRAINT `FK_06c3ad287ea5fba13cc015df9ec` FOREIGN KEY (`detailsByid`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `banner` (`id`, `title`, `audioUrl`, `imageUrl`, `type`, `start`, `end`, `isActive`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`, `description`) VALUES
+(5,	'🎉 Profitez de -10% avec Wave ! 🎉',	NULL,	'https://senrestodev.s3.amazonaws.com/public/dev/75610281042089de55ca3748f3bce84e96.jpg',	'web',	'2024-08-01 00:00:00',	'2024-08-31 00:00:00',	1,	'2024-08-31 13:28:36.893862',	'2024-08-31 13:28:36.893862',	NULL,	'🎉 Profitez de -10% sur tous vos achats avec Wave ! 🎉\r\n\r\nPayer avec l\'application Wave et bénéficiez d\'une réduction immédiate de 10% sur tous vos achats ! Simple, rapide et sécurisé, Wave facilite vos transactions et vous permet de faire des économies. Ne manquez pas cette offre exclusive, disponible pour une durée limitée !');
 
 DROP TABLE IF EXISTS `card`;
 CREATE TABLE `card` (
@@ -120,7 +122,7 @@ CREATE TABLE `category` (
   PRIMARY KEY (`id`),
   KEY `FK_d5456fd7e4c4866fec8ada1fa10` (`parentId`),
   CONSTRAINT `FK_d5456fd7e4c4866fec8ada1fa10` FOREIGN KEY (`parentId`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `category` (`id`, `name`, `parentId`, `nsleft`, `nsright`) VALUES
 (3,	'root',	NULL,	1,	140),
@@ -205,7 +207,7 @@ CREATE TABLE `city` (
   PRIMARY KEY (`id`),
   KEY `FK_502f28f00e93f40de5873a2ec11` (`parentId`),
   CONSTRAINT `FK_502f28f00e93f40de5873a2ec11` FOREIGN KEY (`parentId`) REFERENCES `city` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=96424 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `city` (`id`, `name`, `type`, `parentId`, `createdAt`, `updatedAt`) VALUES
 (2,	'DAKAR',	'REGION',	NULL,	'2024-07-30 16:35:39.450329',	'2024-07-30 16:35:39.458044'),
@@ -831,8 +833,8 @@ CREATE TABLE `gift_history` (
   `description` text NOT NULL,
   `giftId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_9d609ee482253e8cc865563821c` (`byId`),
   KEY `FK_6554c711b7eeef9a7e85ef9caab` (`partnerId`),
+  KEY `FK_9d609ee482253e8cc865563821c` (`byId`),
   KEY `FK_23403a482e14a91be7b034ce640` (`giftId`),
   CONSTRAINT `FK_23403a482e14a91be7b034ce640` FOREIGN KEY (`giftId`) REFERENCES `gift` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_6554c711b7eeef9a7e85ef9caab` FOREIGN KEY (`partnerId`) REFERENCES `partner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -851,7 +853,7 @@ CREATE TABLE `module` (
   UNIQUE KEY `IDX_620a549dbcb1fff62ea85695ca` (`name`),
   KEY `FK_3477e0c46c6a35a23b16792f002` (`parentId`),
   CONSTRAINT `FK_3477e0c46c6a35a23b16792f002` FOREIGN KEY (`parentId`) REFERENCES `module` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `module` (`id`, `name`, `parentId`, `nsleft`, `nsright`) VALUES
 (1,	'root',	NULL,	1,	84),
@@ -908,7 +910,9 @@ CREATE TABLE `order` (
   `detailsCreatedat` datetime(6) NOT NULL DEFAULT current_timestamp(6),
   `detailsUpdatedat` datetime(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
   `detailsByid` int(11) DEFAULT NULL,
+  `restaurantId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `FK_c93f22720c77241d2476c07cabf` (`restaurantId`),
   KEY `FK_55483230f99205b81d503cf00f8` (`partnerId`),
   KEY `FK_124456e637cca7a415897dce659` (`customerId`),
   KEY `FK_8f90304df228238c2dd634459d0` (`deliverId`),
@@ -916,12 +920,16 @@ CREATE TABLE `order` (
   CONSTRAINT `FK_124456e637cca7a415897dce659` FOREIGN KEY (`customerId`) REFERENCES `partner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_55483230f99205b81d503cf00f8` FOREIGN KEY (`partnerId`) REFERENCES `partner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_8f90304df228238c2dd634459d0` FOREIGN KEY (`deliverId`) REFERENCES `partner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_af97fe4e38dcef1eb2f446cd7c8` FOREIGN KEY (`detailsByid`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CONSTRAINT `FK_af97fe4e38dcef1eb2f446cd7c8` FOREIGN KEY (`detailsByid`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_c93f22720c77241d2476c07cabf` FOREIGN KEY (`restaurantId`) REFERENCES `partner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `order` (`id`, `partnerId`, `customerId`, `deliverId`, `deliveryDate`, `status`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`) VALUES
-(1,	1,	9,	NULL,	NULL,	'onbag',	'2024-08-22 22:50:36.636061',	'2024-08-22 22:50:36.636061',	NULL),
-(2,	3,	9,	NULL,	NULL,	'onbag',	'2024-08-22 22:51:11.747630',	'2024-08-22 22:51:11.747630',	NULL);
+INSERT INTO `order` (`id`, `partnerId`, `customerId`, `deliverId`, `deliveryDate`, `status`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`, `restaurantId`) VALUES
+(1,	1,	9,	NULL,	NULL,	'onbag',	'2024-08-22 22:50:36.636061',	'2024-08-22 22:50:36.636061',	NULL,	NULL),
+(2,	3,	9,	NULL,	NULL,	'onbag',	'2024-08-22 22:51:11.747630',	'2024-08-22 22:51:11.747630',	NULL,	NULL),
+(3,	8,	9,	NULL,	NULL,	'onbag',	'2024-08-31 17:47:33.129307',	'2024-08-31 17:47:33.129307',	NULL,	NULL),
+(4,	7,	9,	NULL,	NULL,	'onbag',	'2024-08-31 18:13:28.228329',	'2024-08-31 18:13:28.228329',	NULL,	NULL),
+(5,	2,	9,	NULL,	NULL,	'onbag',	'2024-09-02 13:43:49.176483',	'2024-09-02 13:43:49.176483',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `order_product`;
 CREATE TABLE `order_product` (
@@ -937,8 +945,13 @@ CREATE TABLE `order_product` (
 
 INSERT INTO `order_product` (`productHistoryId`, `orderId`, `description`, `quantity`) VALUES
 (4,	2,	'avec les accompagner',	1),
+(4,	3,	'',	3),
+(5,	3,	'',	2),
 (6,	2,	'goods',	3),
-(7,	1,	'salle',	1);
+(6,	3,	'',	3),
+(7,	1,	'salle',	1),
+(7,	5,	'',	1),
+(9,	4,	'no getter',	3);
 
 DROP TABLE IF EXISTS `otp`;
 CREATE TABLE `otp` (
@@ -970,7 +983,7 @@ CREATE TABLE `otp_config` (
   PRIMARY KEY (`id`),
   KEY `FK_e9388fa784c72acfb2316cd4b7f` (`detailsByid`),
   CONSTRAINT `FK_e9388fa784c72acfb2316cd4b7f` FOREIGN KEY (`detailsByid`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `otp_config` (`id`, `label`, `maxAttemp`, `lenght`, `duration`, `isHash`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`) VALUES
 (3,	'default',	3,	4,	15,	0,	'2024-08-12 16:00:33.663793',	'2024-08-12 16:00:33.663793',	1);
@@ -1018,7 +1031,7 @@ CREATE TABLE `partner` (
   CONSTRAINT `FK_aa5fba59efbd487da6a660b12ba` FOREIGN KEY (`parentId`) REFERENCES `partner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_bf7b32ee9f5fbacbfcb38aee16a` FOREIGN KEY (`contratId`) REFERENCES `contrat` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_d42769dc52f139171b6b584c473` FOREIGN KEY (`detailsByid`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `partner` (`id`, `phone`, `isActive`, `isBloqued`, `email`, `imagePath`, `parentId`, `type`, `shortname`, `description`, `name`, `closingTime`, `openingTime`, `fees`, `invertFees`, `firstname`, `lastname`, `isPhoneVeirified`, `externalId`, `contratId`, `locationLatitude`, `locationLongitude`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`, `coordonatesLatitude`, `coordonatesLongitude`, `cityId`, `address`) VALUES
 (1,	'2211000000',	1,	0,	'senResto@gmail.com',	'https://senrestodev.s3.amazonaws.com/public/dev/3fc3e0b3095a24c13721b3a711a7345a.png',	NULL,	'CompanyRestaurant',	'Sen Resto',	'',	'Sen Resto',	'23:00:00',	'08:00:00',	NULL,	NULL,	NULL,	NULL,	0,	NULL,	NULL,	14,	17,	'2024-08-12 16:00:15.773000',	'2024-08-22 17:54:13.000000',	1,	0,	0,	61498,	'Rond point Almahdi '),
@@ -1031,10 +1044,11 @@ INSERT INTO `partner` (`id`, `phone`, `isActive`, `isBloqued`, `email`, `imagePa
 (8,	'772371668',	0,	0,	'kfc0@gmail.com',	NULL,	3,	'Restaurant',	'kfc',	'no description',	'Kfc Almahdi',	'23:00:00',	'08:00:00',	NULL,	NULL,	NULL,	NULL,	0,	NULL,	NULL,	0,	0,	'2024-08-22 20:51:32.542698',	'2024-08-22 20:51:32.542698',	7,	0,	0,	61498,	'almahdi'),
 (9,	'221772371668',	0,	0,	NULL,	NULL,	NULL,	'Customer',	NULL,	NULL,	NULL,	'23:00:00',	'08:00:00',	NULL,	NULL,	'Djiga',	'Salane',	0,	NULL,	NULL,	0,	0,	'2024-08-22 21:44:46.665000',	'2024-08-25 00:37:21.000000',	NULL,	0,	0,	NULL,	'pikine'),
 (10,	'22177456789',	1,	0,	'kathia@yupmail.com',	'https://senrestodev.s3.amazonaws.com/public/dev/e3e5335a83beb0bf73913f95a5edd453.png',	1,	'Restaurant',	'kathia',	'no description',	'Chez Kathia',	'23:00:00',	'08:00:00',	NULL,	NULL,	NULL,	NULL,	0,	NULL,	NULL,	0,	0,	'2024-08-23 17:52:45.588000',	'2024-08-23 17:52:45.588000',	1,	0,	0,	61504,	'pikine icotaf'),
-(11,	'22177756567',	0,	0,	'total@yopmail.com',	'https://senrestodev.s3.amazonaws.com/public/dev/78b63cf93663efb61aadfd91c7c6b359.png',	1,	'Coorporate',	'total',	'no description',	'Total',	'23:00:00',	'08:00:00',	NULL,	NULL,	NULL,	NULL,	0,	NULL,	NULL,	0,	0,	'2024-08-23 21:02:16.028000',	'2024-08-23 21:02:16.028000',	1,	0,	0,	61498,	'Ngor'),
+(11,	'22177756567',	0,	0,	'ddd@yopmail.com',	'https://senrestodev.s3.amazonaws.com/public/dev/bd87ffc810479bccfb7f321859dbffe103.png',	1,	'Coorporate',	'DDD',	'no description',	'Dakar Dem Dik',	'23:00:00',	'08:00:00',	NULL,	NULL,	NULL,	NULL,	0,	NULL,	NULL,	0,	0,	'2024-08-23 21:02:16.028000',	'2024-08-23 21:02:16.028000',	1,	0,	0,	61498,	'Ngor'),
 (12,	'221772376678',	0,	0,	NULL,	NULL,	NULL,	'Deliver',	NULL,	NULL,	NULL,	'23:00:00',	'08:00:00',	NULL,	NULL,	'Mamadou',	'diop',	0,	NULL,	NULL,	0,	0,	'2024-08-23 23:29:45.453396',	'2024-08-23 23:29:45.453396',	NULL,	0,	0,	88982,	'pikine'),
 (14,	'22177000001234',	0,	0,	NULL,	NULL,	NULL,	'Deliver',	NULL,	NULL,	NULL,	'23:00:00',	'08:00:00',	NULL,	NULL,	'Mamadou',	'diop',	0,	NULL,	NULL,	0,	0,	'2024-08-23 23:30:01.202082',	'2024-08-23 23:30:01.202082',	NULL,	0,	0,	88982,	'pikine'),
-(16,	'22177677898',	0,	0,	'AA123545D',	NULL,	NULL,	'Deliver',	NULL,	NULL,	NULL,	'23:00:00',	'08:00:00',	NULL,	NULL,	'Baye Talla ',	'Salane',	0,	NULL,	NULL,	0,	0,	'2024-08-25 16:04:56.939193',	'2024-08-25 16:04:56.939193',	NULL,	0,	0,	88944,	'pikine');
+(16,	'22177677898',	0,	0,	'AA123545D',	NULL,	NULL,	'Deliver',	NULL,	NULL,	NULL,	'23:00:00',	'08:00:00',	NULL,	NULL,	'Baye Talla ',	'Salane',	0,	NULL,	NULL,	0,	0,	'2024-08-25 16:04:56.939193',	'2024-08-25 16:04:56.939193',	NULL,	0,	0,	88944,	'pikine'),
+(17,	'221772345678',	1,	0,	'ChezKecthup@yopmail.com',	'https://senrestodev.s3.amazonaws.com/public/dev/ad275306d636a7b318f225fba7b3d869.jpg',	1,	'Restaurant',	'Chez Kecthup',	'no description',	'Chez Kecthup',	'23:00:00',	'08:00:00',	NULL,	NULL,	NULL,	NULL,	0,	NULL,	NULL,	0,	0,	'2024-09-02 01:49:06.353000',	'2024-09-02 01:49:06.353000',	1,	0,	0,	61490,	'yoff');
 
 DROP TABLE IF EXISTS `permission`;
 CREATE TABLE `permission` (
@@ -1054,7 +1068,7 @@ CREATE TABLE `permission` (
   KEY `FK_93295cefac53a3d6944d300a965` (`detailsByid`),
   CONSTRAINT `FK_18f3ac6d3f1e3e6b5e3f8123289` FOREIGN KEY (`moduleId`) REFERENCES `module` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_93295cefac53a3d6944d300a965` FOREIGN KEY (`detailsByid`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `permission` (`id`, `isActive`, `name`, `code`, `description`, `moduleId`, `action`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`) VALUES
 (1,	1,	'read_root',	'read_root',	NULL,	1,	'read',	'2024-08-12 16:00:15.298370',	'2024-08-12 16:00:15.298370',	NULL),
@@ -1330,7 +1344,7 @@ CREATE TABLE `product` (
   KEY `FK_05a5cb3c4a72b8182a186b6f3b1` (`detailsByid`),
   CONSTRAINT `FK_05a5cb3c4a72b8182a186b6f3b1` FOREIGN KEY (`detailsByid`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_77e467b32f0a8b7a1e5503eecac` FOREIGN KEY (`parentId`) REFERENCES `partner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `product` (`id`, `name`, `description`, `price`, `reduction`, `parentId`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`, `cookingTime`, `isActive`) VALUES
 (2,	'Maffe',	'plat senegalais',	2500,	20,	1,	'2024-08-18 14:40:38.952000',	'2024-08-18 14:40:38.952000',	1,	'01:30',	1),
@@ -1398,7 +1412,7 @@ CREATE TABLE `product_file` (
   PRIMARY KEY (`id`),
   KEY `FK_8908c9d576061144b562635769f` (`productId`),
   CONSTRAINT `FK_8908c9d576061144b562635769f` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `product_file` (`id`, `path`, `idActive`, `productId`) VALUES
 (1,	'https://senrestodev.s3.amazonaws.com/public/dev/f6c1780103964bcdb96d7f37b6540c7e3.jpg',	1,	2),
@@ -1426,7 +1440,7 @@ CREATE TABLE `product_history` (
   KEY `FK_e2d68be8543be4ff969cf08f4b4` (`detailsByid`),
   CONSTRAINT `FK_ab858ab4b8711724b4cfafda6f1` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_e2d68be8543be4ff969cf08f4b4` FOREIGN KEY (`detailsByid`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `product_history` (`id`, `name`, `price`, `reduction`, `productId`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`, `cookingTime`) VALUES
 (2,	'Maffe',	2500,	20,	2,	'2024-08-18 14:40:38.997446',	'2024-08-18 14:40:38.997446',	1,	'01:30'),
@@ -1454,7 +1468,7 @@ CREATE TABLE `product_management` (
   CONSTRAINT `FK_b3051926739ecd869a5c3a8bfb1` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_bf9c699b389665f56cb33f4f5d5` FOREIGN KEY (`detailsByid`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_c3c8226b8c5b3332a5b4ae80003` FOREIGN KEY (`partnerId`) REFERENCES `partner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `product_management` (`id`, `productId`, `partnerId`, `isActive`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`) VALUES
 (2,	2,	1,	1,	'2024-08-18 14:40:38.972722',	'2024-08-18 14:40:38.972722',	NULL),
@@ -1508,7 +1522,7 @@ INSERT INTO `product_management_day` (`productManagementId`, `dayId`, `isActive`
 (5,	29,	1),
 (5,	30,	1),
 (5,	31,	1),
-(5,	32,	1),
+(5,	32,	0),
 (5,	33,	1),
 (5,	34,	1),
 (5,	35,	1),
@@ -1624,7 +1638,7 @@ CREATE TABLE `role` (
   KEY `FK_be3591dab144b8837d10bbfd78d` (`detailsByid`),
   CONSTRAINT `FK_be3591dab144b8837d10bbfd78d` FOREIGN KEY (`detailsByid`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_e69cd3e2721eaa1e70958498a85` FOREIGN KEY (`parentId`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `role` (`id`, `code`, `name`, `description`, `isActive`, `parentId`, `nsleft`, `nsright`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`) VALUES
 (1,	'super_admin',	'Super Admin',	'controller toute la plateform',	1,	NULL,	1,	8,	'2024-08-12 16:00:15.303290',	'2024-08-23 01:22:06.929489',	NULL),
@@ -1837,7 +1851,7 @@ CREATE TABLE `story` (
   KEY `FK_e54887351e6220c43cf79475405` (`groupId`),
   CONSTRAINT `FK_d64028ed37f8e7eba5f7f698a29` FOREIGN KEY (`byId`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_e54887351e6220c43cf79475405` FOREIGN KEY (`groupId`) REFERENCES `story_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `story` (`createdAt`, `updatedAt`, `byId`, `id`, `imagePath`, `groupId`) VALUES
 ('2024-08-28 17:01:25.436562',	'2024-08-28 17:01:25.436562',	7,	4,	'https://senrestodev.s3.amazonaws.com/public/dev/880b422645da4e36ab3fecd9cdb6c952.webp',	2),
@@ -1861,7 +1875,7 @@ CREATE TABLE `story_group` (
   KEY `FK_78e2ffe571151dc8c9b3f1d66ba` (`partnerId`),
   CONSTRAINT `FK_25c2b2783b079e5eeed10a4caa2` FOREIGN KEY (`byId`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_78e2ffe571151dc8c9b3f1d66ba` FOREIGN KEY (`partnerId`) REFERENCES `partner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `story_group` (`createdAt`, `updatedAt`, `byId`, `id`, `partnerId`) VALUES
 ('2024-08-28 16:57:28.767423',	'2024-08-28 16:57:28.767423',	7,	2,	3),
@@ -1921,7 +1935,7 @@ CREATE TABLE `user` (
   CONSTRAINT `FK_beb5846554bec348f6baf449e83` FOREIGN KEY (`cityId`) REFERENCES `city` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_c28e52f758e7bbc53828db92194` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_c86f56da7bb30c073e3cbed4e50` FOREIGN KEY (`parentId`) REFERENCES `partner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `password`, `phone`, `passwordCrypt`, `roleId`, `birthday`, `isActive`, `isBloqued`, `parentId`, `isMfa`, `coordonatesLatitude`, `coordonatesLongitude`, `detailsCreatedat`, `detailsUpdatedat`, `detailsByid`, `address`, `cityId`) VALUES
 (1,	'SUPER',	'ADMIN',	'Kalanji2023@gmail.com',	'102dc34578d5f31d5d7083413e4f965af242e76a3d0276d94a18e97d8c8f6481',	'2213000000',	'U2FsdGVkX1/nRTlZf7x7AHgEVgtmkYPEgYwwTTt77ek=',	1,	NULL,	1,	1,	1,	1,	0,	0,	'2024-08-12 16:00:15.654317',	'2024-08-17 13:27:24.796325',	NULL,	NULL,	NULL),
@@ -1940,7 +1954,7 @@ CREATE TABLE `wallet_status` (
   PRIMARY KEY (`id`),
   KEY `FK_270eda1a12bddca3706d923d0e5` (`transactionId`),
   CONSTRAINT `FK_270eda1a12bddca3706d923d0e5` FOREIGN KEY (`transactionId`) REFERENCES `transaction` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `wallet_status` (`id`, `entityId`, `totalCredit`, `totalDebit`, `transactionId`, `createdAt`, `updatedAt`) VALUES
 (1,	1,	0,	0,	NULL,	'2024-08-12 16:01:13.591724',	'2024-08-12 16:01:13.591724'),
@@ -1959,7 +1973,7 @@ CREATE TABLE `weekday` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `IDX_e96a29a9d21112c5873af036e9` (`name`),
   UNIQUE KEY `IDX_9927b17f929e69fbe5a26bb0a9` (`dayNumber`)
-) ENGINE=InnoDB AUTO_INCREMENT=3169 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `weekday` (`id`, `name`, `dayNumber`) VALUES
 (29,	'Sunday',	0),
@@ -1970,4 +1984,4 @@ INSERT INTO `weekday` (`id`, `name`, `dayNumber`) VALUES
 (34,	'Friday',	5),
 (35,	'Saturday',	6);
 
--- 2024-08-31 12:47:36
+-- 2024-09-02 15:04:21
