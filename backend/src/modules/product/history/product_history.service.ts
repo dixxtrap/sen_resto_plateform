@@ -41,7 +41,7 @@ export class ProductHistoryService {
     return this.repos
       .findOne({
         where: { productId: id },
-        relations: { details: { by: true } },
+        relations: { details: { by: true }, product:true },
         order: { details: { createdAt: -1 } },
       })
       .then(

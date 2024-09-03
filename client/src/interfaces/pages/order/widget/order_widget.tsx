@@ -13,16 +13,21 @@ import {
 } from "@mantine/core";
 import { EyeIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { CompanyEnum } from "../../../../cores/models/company.dto";
+import { orderApi } from "../../../../cores/apis/order.slice";
+import { OrderDetailWidget } from "./oreder_detail_widget";
 
 type OrderWidgetProps = {
   order: OrderDto;
 };
 export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
-
+const [del, deleteStatus]=orderApi.useDeleteMutation();
+const ondelete=()=>{
+del(`${order.id}`)
+}
   return (
     <div key={`order_${order.id}`} className="ring-1 hover:shadow-xl h-min  p-3 flex flex-col duration-150 ring-gray-300 overflow-hidden  rounded-md ">
      {/* {order.partner.type} */}
-     <div>   <Image className="h-20 w-auto mx-auto my-10" src={order.partner.type===CompanyEnum.COMPANY? order.partner.imagePath:order.partner.parent?.imagePath} />
+     <div>   <Image className="h-28 w-auto mx-auto my-5" src={order.partner.type===CompanyEnum.RESTO && order.partner.parentId==1? order.partner.parent?.imagePath:order.partner.imagePath} />
      </div>
       <div className=" flex flex-col  gap-3">
         <div className="flex  ">
@@ -62,12 +67,10 @@ export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
        {order&&   <span className="text-2xl font-bold">{order.products.map((_e, j)=>j).map((i)=>(Number((order.products[i]?.productHistory.price* (100-(order.products[i]?.productHistory.reduction!??0)))))/100* order.products[i].quantity).reduce((p1,p2)=>p1+p2)} FCFA</span>}
         </div>
         <ButtonGroup className="grow w-fit min-w-full ">
-          <Button leftSection={<TrashIcon className="size-5"/>} color="primary" className="grow">
+          <Button onClick={ondelete} leftSection={<TrashIcon className="size-5"/>} color="primary" className="grow">
             Annuler
           </Button>
-          <Button leftSection={<EyeIcon className="size-5"/>} className="grow">
-            Confirmer
-          </Button>
+        <OrderDetailWidget order={order}/>
         </ButtonGroup>
       </div>
     </div>

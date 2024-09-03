@@ -37,11 +37,11 @@ export const Story = () => {
         p={0}
      
         plugins={[autoplay.current]}
-        className='h-[75vh] rounded-lg  bg-slate-600'
+        className='h-[75vh] rounded-lg overflow-hidden  bg-slate-600'
         // onMouseEnter={autoplay.current.stop}
         // onMouseLeave={autoplay.current.reset}
       >
-        {storyGroup.data?.data[current!]?.story?.map(s=> <Carousel.Slide  className=' rounded-lg overflow-hidden bg-green-600' h={'100%'}><StoryItem company={storyGroup.data?.data[current!]!.partner!} story={s}/></Carousel.Slide>)}
+        {storyGroup.data?.data[current!]?.story?.map(s=> <Carousel.Slide  className='  overflow-hidden bg-green-600' h={'100%'}><StoryItem company={storyGroup.data?.data[current!]!.partner!} story={s}/></Carousel.Slide>)}
 
         {/* ...other slides */}
       </Carousel>

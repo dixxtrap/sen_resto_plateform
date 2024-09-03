@@ -2,6 +2,7 @@ import { CustomerDto } from './../../../typeorm/customer.entity';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -30,6 +31,12 @@ export class WsOrderController {
   changeStatus(@Param('id') id: number, @Req() req :Request) {
     const by= req.user as CustomerDto;
     return this.service.confirmOrder({ id, by});
+  }
+  @Delete('delete/:id')
+  @UseGuards(LocalAuthGuardCustomer)
+  deleteOrder(@Param('id') id: number, @Req() req :Request) {
+    const by= req.user as CustomerDto;
+    return this.service.delete({ id});
   }
   @Post('product/add')
   @UseGuards(LocalAuthGuardCustomer)

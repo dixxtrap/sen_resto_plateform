@@ -24,15 +24,15 @@ export class WsOrderService {
       .find({
         where: { customerId: by.id },
         relations: {
-          partner: {parent:true},
+          partner: { parent: true },
           products: {
-           
-            productHistory: { product: { file: true } },
+            productHistory: { product: { file: true, category:true } },
           },
         },
         select: {
           id: true,
           partnerId: true,
+        
           details: {
             createdAt: true,
             updatedAt: true,
@@ -40,20 +40,19 @@ export class WsOrderService {
           partner: {
             name: true,
             type: true,
-            imagePath:true,
-            shortname:true,
+            imagePath: true,
+            shortname: true,
             parent: {
-              id:true,
+              id: true,
               name: true,
-              shortname:true,
-              type:true,
-              imagePath:true
+              shortname: true,
+              type: true,
+              imagePath: true,
             },
           },
           products: {
             quantity: true,
             description: true,
-
             productHistoryId: true,
             productHistory: {
               productId: true,
@@ -65,6 +64,7 @@ export class WsOrderService {
                 cookingTime: true,
                 description: true,
                 file: { path: true },
+                category:{id:true, name:true}
               },
             },
           },
@@ -74,7 +74,7 @@ export class WsOrderService {
         return BaseResponse.success(result);
       });
   }
-  getByStatus = ({ 
+  getByStatus = ({
     by,
     status,
   }: {
@@ -91,7 +91,7 @@ export class WsOrderService {
       },
       select: {
         id: true,
-       
+
         details: {
           createdAt: true,
           updatedAt: true,
@@ -99,7 +99,7 @@ export class WsOrderService {
         partner: {
           name: true,
           type: true,
-          imagePath:true,
+          imagePath: true,
           parent: {
             name: true,
           },
@@ -150,7 +150,7 @@ export class WsOrderService {
       (await this.repos.findOne({
         where: {
           customerId: customerId,
-          partner: [{id:partnerId}],
+          partner: [{ id: partnerId }],
           status: OrderStatus.OnBag,
         },
       })) ??
@@ -164,11 +164,18 @@ export class WsOrderService {
     return order;
   };
 
-  async confirmOrder({id}:{id:number,by:CustomerDto }){
-    return this.repos.update({id:id, status:OrderStatus.OnBag}, {status:OrderStatus.Active}).then((result)=>{
-      if(result.affected>0) throw new WsMessage(HttpExceptionCode.SUCCEEDED);
-      throw new WsMessage(HttpExceptionCode.NOT_FOUND)
-    }).catch(WsCatch)
+  async confirmOrder({ id }: { id: number; by: CustomerDto }) {
+    return this.repos
+      .update(
+        { id: id, status: OrderStatus.OnBag },
+        { status: OrderStatus.Active },
+      )
+      .then((result) => {
+        if (result.affected > 0)
+          throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+        throw new WsMessage(HttpExceptionCode.NOT_FOUND);
+      })
+      .catch(WsCatch);
   }
   async addProductToOrder({
     body,
@@ -179,34 +186,45 @@ export class WsOrderService {
   }) {
     console.log('customer', by);
     return this.productHistoryService
-      .getNearestPartner({ id: body.productId, from: by.location })
-      .then((partner) => {
+      .last({ id: body.productId })
+      .then((productHistory) => {
         return this.getOrderOrCreate({
           customerId: by.id,
-          partnerId: partner.id,
+          partnerId: productHistory.data.product.parentId,
         }).then((order) => {
-          return this.productHistoryService
-            .last({ id: body.productId })
-            .then((productHistory) => {
-              if (productHistory) {
-                return this.orderProductRepos
-                  .save(
-                    this.orderProductRepos.create({
-                      productHistoryId: productHistory.data.id,
-                      description: body.description,
-                      quantity: body.quantity,
-                      orderId: order.id,
-                    }),
-                  )
-                  .then((result) => {
-                    if (result)
-                      throw new WsMessage(HttpExceptionCode.SUCCEEDED);
-                    else throw new WsMessage(HttpExceptionCode.FAILLURE);
-                  });
-              }
-            });
+          return this.orderProductRepos
+          .save(
+            this.orderProductRepos.create({
+              productHistoryId: productHistory.data.id,
+              description: body.description,
+              quantity: body.quantity,
+              orderId: order.id,
+            }),
+          )
+          .then((result) => {
+            if (result)
+              throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+            else throw new WsMessage(HttpExceptionCode.FAILLURE);
+          });
         });
       })
       .catch(WsCatch);
+  }
+
+  delete({ id }: { id: number }) {
+    return this.repos
+      .findOne({ where: { id }, relations: { products: true } })
+      .then((old) => {
+        if (!old) throw new WsMessage(HttpExceptionCode.FAILLURE);
+        return this.orderProductRepos
+          .delete({ orderId: old.id })
+          .then((del) => {
+            if (del)
+              return this.repos.delete({ id: id }).then(() => {
+                throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+              });
+            throw new WsMessage(HttpExceptionCode.NOT_FOUND);
+          });
+      });
   }
 }
