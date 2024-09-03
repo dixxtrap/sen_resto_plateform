@@ -11,10 +11,6 @@ export class GiftHistory extends CreationDetails{
     id:number;
     @Column('double')
     discount:number;
-    @ManyToOne(() => Partner)
-    partner:Partner
-    @Column()
-    partnerId:number;
     @Column('bool')
     isActive:boolean;
     @ManyToOne(()=>Gift)

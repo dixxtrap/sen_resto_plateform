@@ -82,6 +82,9 @@ export class UserDto {
 
   @ApiProperty({ type: () => CreationDetailsDto })
   details: CreationDetailsDto;
+  constructor(partial: Partial<UserDto>) {
+    Object.assign(this, partial);
+  }
 }
 
 export class CreateUserDto extends UserDto {

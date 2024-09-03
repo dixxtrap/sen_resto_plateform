@@ -11,6 +11,8 @@ import {
   rem,
   Pill,
   Modal,
+  Space,
+  Badge,
 } from "@mantine/core";
 
 import classes from "../style/product_item.module.css";
@@ -26,6 +28,7 @@ import {
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { useDisclosure } from "@mantine/hooks";
+import { securityApi } from "../../../../cores/apis/security.slice";
 
 export const PlateItem = ({
   product,
@@ -94,6 +97,7 @@ export const PlateItem = ({
 export const ProductItem = ({ product }: { product: ProductDto }) => {
   const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure();
+  const profile=securityApi.useProfileQuery("");
   console.log(import.meta.env.CURRENCY);
   return (
     <>
@@ -117,9 +121,10 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
         <PlateItemPoppup open={opened} setOpen={toggle} product={product} />
       </Modal>}
 
-      <Card withBorder radius="md" className={clsx(classes.card, "bg-table duration-500  hover:shadow-lg")}>
-        <Group>
-          <div className="h-12 w-12">
+      <Card withBorder radius="md"  className={clsx("bg-table flex bg-[#f5f8fc58]  flex-col duration-500  hover:shadow-lg")}>
+       <Card.Section p={4}>
+       <Group p={2} className="">
+          <div className="h-12  w-12">
             <Avatar
               src={product.parent?.imagePath}
               radius="sm"
@@ -133,28 +138,37 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
             </Text>
           </div>
         </Group>
-        <Card.Section mb="sm" className="p-2">
-          <Image
+     
+        <Group flex={2}  gap={1}>
+          <div className="flex flex-col">
+        <Text fw={700} className={classes.title} mt="xs">
+          {product.name}
+        </Text>
+        <div className="flex gap-3">
+        {product.category?.slice(0, 3)?.map((c) => (
+            <Pill radius={6}>{c.name}</Pill>
+          ))}
+        </div>
+          
+          </div>
+        </Group>
+       </Card.Section>
+       <div className="grow bg-red-500 " />
+        <Card.Section mb="sm" className="pt-2 px-2">
+        <Image
             className="rounded-md"
             src={product.file![0].path}
             alt={product.description}
             h={180}
           />
         </Card.Section>
-        <Group gap={1}>
-          {product.category?.slice(0, 2)?.map((c) => (
-            <Pill radius={6}>{c.name}</Pill>
-          ))}
-        </Group>
-        <Text fw={700} className={classes.title} mt="xs">
-          {product.name}
-        </Text>
-
-        <Card.Section className={classes.footer}>
+        <Card.Section className={classes.footer+' px-2 py-1'}>
           <Group justify="space-between">
-            <Text fz="lg" fw={900} c="primary" lineClamp={1}>
+            <Badge size="lg" radius={6} className="bg-gray-500/20 text-black" variant="light">
+            <Text  fw={900}  lineClamp={1}>
               {product.price} {import.meta.env.VITE_REACT_CURRENCY}
             </Text>
+            </Badge>
             <Group gap={0}>
               <ActionIcon variant="subtle" color="gray">
                 <HeartIcon
@@ -168,7 +182,7 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
                   color={theme.colors.yellow[6]}
                 />
               </ActionIcon>
-              <ActionIcon variant="subtle" onClick={toggle} color="gray">
+              <ActionIcon variant="subtle" onClick={ ()=>profile.isSuccess?toggle():null} color="gray">
                 <ShoppingBagIcon style={{ width: rem(20), height: rem(20) }} />
               </ActionIcon>
             </Group>
