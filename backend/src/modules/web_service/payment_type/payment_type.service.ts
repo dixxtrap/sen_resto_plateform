@@ -11,7 +11,7 @@ export class WsPaymentTypeService{
  constructor(@Inject(EntityProviderEnum.PAYMENT_TYPE) private repos:Repository<PaymentType>){}
 
  getAll(){
-    return this.repos.find({select:{id:true, imagePath:true, invertFees:true, fees:true }}).then(result=>BaseResponse.success(result))
+    return this.repos.find({select:{id:true,isActive:true, imagePath:true, invertFees:true, fees:true , name:true, shortname:true}}).then(result=>BaseResponse.success(result))
  }
  getById({id}:{id: number}){
     return this.repos.findOne({where:{id}}).then(result=>BaseResponse.success(result))

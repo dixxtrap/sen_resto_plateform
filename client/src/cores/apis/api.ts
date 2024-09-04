@@ -5,6 +5,7 @@ import { CategoryDto } from "../models/category.dto";
 import { errorTrasform } from "./error_transformer";
 import { BannerDto } from "../models/banner.dto";
 import { StoryGroup } from "../models/story.dto";
+import { PaymentType } from "../models/payment_type";
 
 
 export const baseApi = createApi({
@@ -26,6 +27,11 @@ export const baseApi = createApi({
     getCategory: builder.query<BaseResponse<CategoryDto[]>, string>({
       query: () =>
         `/ws/category/all`,
+      transformErrorResponse:errorTrasform
+    }),
+    paymentType: builder.query<BaseResponse<PaymentType[]>, string>({
+      query: () =>
+        `/ws/payment_type/all`,
       transformErrorResponse:errorTrasform
     }),
     getCategoryBase: builder.query<BaseResponse<CategoryDto[]>, string>({

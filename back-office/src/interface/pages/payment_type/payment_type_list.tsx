@@ -8,10 +8,11 @@ import { Table } from "@mantine/core";
 import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item";
 
 export const PaymentTypeList = () => {
-  const { data: paymentType  } = useGetPaymentTypeQuery("");
+  const { data: paymentType , ...state } = useGetPaymentTypeQuery("");
   return (
-    <>
+
       <TablePagination
+      {...state}
         title="Methode de Paiement"
         th={[
           "Nom",
@@ -26,7 +27,7 @@ export const PaymentTypeList = () => {
         createPath="/payment_type/create"
         isPaginated={false}
         trs={paymentType?.data.map((e) => (
-          <Table.Tr className="whitespace-nowrap  max-w-xs text-sm text-gray-500 py-2">
+          <Table.Tr key={e.id} className="whitespace-nowrap  max-w-xs text-sm text-gray-500 py-2">
             <Table.Td>
               <div className="flex gap-x-3 items-center " >
                 <Img
@@ -58,6 +59,6 @@ export const PaymentTypeList = () => {
           </Table.Tr>
         ))}
       />
-    </>
+
   );
 };

@@ -5,6 +5,7 @@ import { Button, Modal,Text, ScrollArea, Pill, Avatar, Tooltip, HoverCard } from
 import { useDisclosure } from "@mantine/hooks";
 import { EyeIcon } from "@heroicons/react/24/solid";
 import { TextConstant } from "../../../../cores/constant/textConstant";
+import { OrderPaymentType } from "./order_payment_type";
 type OrderWidgetProps = {
   order: OrderDto;
 };
@@ -41,10 +42,10 @@ export const OrderDetailWidget: FC<OrderWidgetProps> = ({ order }) => {
    <Modal opened={opened} title={<div>{order.partner.name}</div>} onClose={close }>
 <ScrollArea className="h-[75vh] relative">
   <div className="flex flex-col gap-5 divide-y">
-  {order.products.map(p=>(<div><Text  className="font-bold">{p.productHistory.product.name}</Text>
+  {order.products.map(p=>(<div key={p.productHistoryId}><Text  className="font-bold">{p.productHistory.product.name}</Text>
     <Text>{p.description}</Text>
     <div className="my-3 flex">
-{p.productHistory.product.file?.map(f=><HoverCard>
+{p.productHistory.product.file?.map(f=><HoverCard key={f.path}>
   <HoverCard.Target>
     <div>
     <Avatar className="h-20 w-auto" radius={8} src={f.path}/>
@@ -60,13 +61,16 @@ export const OrderDetailWidget: FC<OrderWidgetProps> = ({ order }) => {
       <div className="flex flex-nowrap w-full overflow-x-scroll gap-2 snap-mandatory">
     {p.productHistory.product.category?.slice(0,3).map(c=><Pill>{c.name}</Pill>)}
     </div>
+<div>
 
+</div>
     <div>
       {OrderDetailsItem({label:'price', value:`${p.productHistory?.price!} ${import.meta.env.VITE_REACT_CURRENCY}`})}
       {OrderDetailsItem({label:'Pieces', value:`${p.quantity} `})}
       {OrderDetailsItem({label:'Total', value:`${p.productHistory?.price!*p.quantity* (100-p.productHistory?.reduction)/100} ${import.meta.env.VITE_REACT_CURRENCY}`, magnify:true})}
     </div>
     </div>))}
+    <OrderPaymentType/>
   <Button className="absolute bottom-0 w-full h-12 bg-primary-500">Valider</Button>
   </div>
 </ScrollArea>

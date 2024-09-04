@@ -29,6 +29,7 @@ import {
 import clsx from "clsx";
 import { useDisclosure } from "@mantine/hooks";
 import { securityApi } from "../../../../cores/apis/security.slice";
+import { OrderPaymentType } from "../../order/widget/order_payment_type";
 
 export const PlateItem = ({
   product,
@@ -122,7 +123,7 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
       </Modal>}
 
       <Card withBorder radius="md"  className={clsx("bg-table flex bg-[#f5f8fc58]  flex-col duration-500  hover:shadow-lg")}>
-       <Card.Section p={4}>
+       <Card.Section p={10}>
        <Group p={2} className="">
           <div className="h-12  w-12">
             <Avatar
@@ -164,11 +165,11 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
         </Card.Section>
         <Card.Section className={classes.footer+' px-2 py-1'}>
           <Group justify="space-between">
-            <Badge size="lg" radius={6} className="bg-gray-500/20 text-black" variant="light">
-            <Text  fw={900}  lineClamp={1}>
+            <Pill size="lg" radius={6} className="bg-gray-500/20 text-black" variant="light">
+            <Text  fw={900} p={2} lineClamp={1}>
               {product.price} {import.meta.env.VITE_REACT_CURRENCY}
             </Text>
-            </Badge>
+            </Pill>
             <Group gap={0}>
               <ActionIcon variant="subtle" color="gray">
                 <HeartIcon
@@ -188,6 +189,7 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
             </Group>
           </Group>
         </Card.Section>
+       
       </Card>
     </>
   );
