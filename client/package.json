@@ -19,7 +19,6 @@
     "@mantine/modals": "^7.12.1",
     "@mantine/notifications": "^7.12.1",
     "@reduxjs/toolkit": "^1.9.7",
-    "@tabler/icons-react": "^3.14.0",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.13",
     "embla-carousel-autoplay": "^8.2.0",

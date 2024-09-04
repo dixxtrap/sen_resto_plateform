@@ -19,7 +19,7 @@ import { CompanyEnum } from "../../../../cores/models/company.dto";
 import { orderApi } from "../../../../cores/apis/order.slice";
 import { OrderDetailWidget } from "./oreder_detail_widget";
 import { useDisclosure } from "@mantine/hooks";
-import { IconInfoCircle } from "@tabler/icons-react";
+
 type OrderWidgetProps = {
   order: OrderDto;
 };
