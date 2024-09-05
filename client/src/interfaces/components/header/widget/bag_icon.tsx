@@ -12,10 +12,10 @@ export const BagIcon = () => {
   return (
    <Button component={Link} to={"/order"} variant="transparent" p={0} radius={2}>
     
-        <ShoppingBagIcon  className='size-7 text-white bg-primary-500 p-0.5 rounded-full' />
+        <ShoppingBagIcon  className='size-7 text-white bg-secondary-500 p-0.5 rounded-full' />
       
      
-      <Text className='text-lg text-primary-500  font-bold ml-1 mr-3' >{data?.data.length}</Text>
+      <Text className='text-lg text-secondary-500  font-bold ml-1 mr-3' >{data?.data.length}</Text>
       </Button>
   )
 }

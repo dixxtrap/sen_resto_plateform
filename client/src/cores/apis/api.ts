@@ -6,6 +6,7 @@ import { errorTrasform } from "./error_transformer";
 import { BannerDto } from "../models/banner.dto";
 import { StoryGroup } from "../models/story.dto";
 import { PaymentType } from "../models/payment_type";
+import { City } from "../models/city.dto";
 
 
 export const baseApi = createApi({
@@ -39,6 +40,18 @@ export const baseApi = createApi({
         `/ws/category/base`,
       transformErrorResponse:errorTrasform
     }),
+    getRegion:builder.query<BaseResponse<[City]>,"">({
+      query:()=>({url:`city/region`})
+      ,
+      transformErrorResponse: errorTrasform,
+     
+  }),
+  getChildren:builder.query<BaseResponse<[City]>,string>({
+      query:(id)=>({url:`city/children/${id}`})
+      ,
+      transformErrorResponse: errorTrasform,
+     
+  }),
   }),
 });
 export const { useGetCompanyQuery, useGetCategoryQuery, useGetBannerQuery,useGetCategoryBaseQuery} = baseApi;

@@ -6,11 +6,12 @@ export const OrderPaymentType = () => {
   const payemntType = baseApi.usePaymentTypeQuery("");
   return (
     <div className="flex flex-col justify-between ">
-      <Text size="sm" fw={500} mb={3}>
+      {/* <Text size="sm" fw={500} mb={3}>
         Disabled option
-      </Text>
+      </Text> */}
       
      {payemntType.data&& <SegmentedControl
+     color="primary"
         data={payemntType.data.data.map((e) => ({
           value: `${e.id!}`,
           disabled:!e.isActive,
@@ -23,8 +24,8 @@ export const OrderPaymentType = () => {
                   src={e.imagePath}
                 />
               </div>
-
-              {e.name}
+<Text className="font-bold">{e.name}</Text>
+              
             </div>
           ),
         }))}

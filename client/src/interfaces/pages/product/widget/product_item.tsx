@@ -156,12 +156,16 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
        </Card.Section>
        <div className="grow bg-red-500 " />
         <Card.Section mb="sm" className="pt-2 px-2">
+          <Group style={{backgroundImage:`url(${product.file![0].path})`, backgroundSize:'180%'}} className="w-full  rounded-md overflow-hidden">
+            <div  className="h-[180px] content-center backdrop-blur-xl bg-black/10 w-full">
         <Image
-            className="rounded-md"
+            className=" bg-black/50 max-h-full w-auto mx-auto"
             src={product.file![0].path}
             alt={product.description}
-            h={180}
+          
           />
+          </div>
+          </Group>
         </Card.Section>
         <Card.Section className={classes.footer+' px-2 py-1'}>
           <Group justify="space-between">

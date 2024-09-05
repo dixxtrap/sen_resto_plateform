@@ -6,6 +6,8 @@ import { useDisclosure } from "@mantine/hooks";
 import { EyeIcon } from "@heroicons/react/24/solid";
 import { TextConstant } from "../../../../cores/constant/textConstant";
 import { OrderPaymentType } from "./order_payment_type";
+import { AddressForm } from "../../../components/form/address_form";
+import { useForm } from "@mantine/form";
 type OrderWidgetProps = {
   order: OrderDto;
 };
@@ -37,7 +39,9 @@ export const OrderDetailsItem = ({
 
 export const OrderDetailWidget: FC<OrderWidgetProps> = ({ order }) => {
   const [opened,{open, close}]=useDisclosure()
+  const form=useForm();
   return (
+
    <>
    <Modal opened={opened} title={<div>{order.partner.name}</div>} onClose={close }>
 <ScrollArea className="h-[75vh] relative">
@@ -67,11 +71,13 @@ export const OrderDetailWidget: FC<OrderWidgetProps> = ({ order }) => {
     <div>
       {OrderDetailsItem({label:'price', value:`${p.productHistory?.price!} ${import.meta.env.VITE_REACT_CURRENCY}`})}
       {OrderDetailsItem({label:'Pieces', value:`${p.quantity} `})}
-      {OrderDetailsItem({label:'Total', value:`${p.productHistory?.price!*p.quantity* (100-p.productHistory?.reduction)/100} ${import.meta.env.VITE_REACT_CURRENCY}`, magnify:true})}
+      {OrderDetailsItem({label:'Total', value:`${p.productHistory?.price*p.quantity* (100-p.productHistory?.reduction)/100} ${import.meta.env.VITE_REACT_CURRENCY}`, magnify:true})}
     </div>
     </div>))}
+    <AddressForm form={form}/>
     <OrderPaymentType/>
-  <Button className="absolute bottom-0 w-full h-12 bg-primary-500">Valider</Button>
+    <div className="h-20"></div>
+  <Button className="absolute z-50  bottom-0 w-full h-12 bg-primary-500">Valider</Button>
   </div>
 </ScrollArea>
    </Modal>

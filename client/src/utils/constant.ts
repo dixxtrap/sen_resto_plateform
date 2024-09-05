@@ -6,7 +6,8 @@ export const constant = {
 };
 
 export const links: Ilink[] = [
-  { name: "comapny", route: "" },
+  { name: "Home", route: "" },
+  { name: "Comapny", route: "company" },
  
-  { name: "produit", route: "product" },
+  { name: "Produit", route: "product" },
 ];

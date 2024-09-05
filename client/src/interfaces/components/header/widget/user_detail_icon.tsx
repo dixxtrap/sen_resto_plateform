@@ -20,7 +20,7 @@ export const UserDetailIcon = () => {
         <div className="hidden lg:flex gap-3 bg-slate-200 p-2 rounded-lg py-1  ">
           <BagIcon /> <NotificationIcon />
           <Button onClick={open}   p={0}   variant="transparent" >
-            <UserIcon  className='size-7 text-white bg-primary-500 p-0.5 rounded-full' />
+            <UserIcon  className='size-7 text-white bg-secondary-500 p-0.5 rounded-full' />
           </Button>{" "}
         </div>
       )}

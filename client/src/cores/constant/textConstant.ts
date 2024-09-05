@@ -31,4 +31,7 @@ export class TextConstant {
   static Currency: string = "F CFA ";
   static Minute: string = "min ";
   static internalServerError: string = "Une erreur interne s est produite";
+  static region:  string ="Region";
+  static municipality: string = "Commune";
+  static district: string = "Arrondissement";
 }

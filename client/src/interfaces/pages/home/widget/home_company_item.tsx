@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
 import { CompanyDto } from "../../../../cores/models/company.dto"
-import { Card, Image, Text, Badge, Button, Group, Space, Spoiler } from '@mantine/core';
+import { Card, Image, Text, Badge, Button, Group, Space, Spoiler, UnstyledButton } from '@mantine/core';
 
 
 export const HomeCompanyItem = ({company}:{company:CompanyDto}) => {
 
   return (
-    <Card className='ring-1 ring-gray-300 hover:shadow-lg duration-500'  padding="lg" radius="md" >
+    
+    <Card component={Link} to="." className='ring-1 ring-gray-300 hover:shadow-lg duration-500'  padding="lg" radius="md" >
       <Card.Section component="div" className="flex h-[200px]" >
         <Image
           src={company.imagePath}
@@ -16,7 +18,7 @@ export const HomeCompanyItem = ({company}:{company:CompanyDto}) => {
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text className="text-2xl" fw={600}>{company.name}</Text>
-        <Badge color="pink">On Sale</Badge>
+        <Badge >{company.openingTime?.slice(0,5)}/{company.closingTime?.slice(0,5)}</Badge>
       </Group>
       <Spoiler maxHeight={38} showLabel="Voir plus" hideLabel="Voir moins">
       <Text size="sm" c="dimmed">
@@ -25,9 +27,8 @@ export const HomeCompanyItem = ({company}:{company:CompanyDto}) => {
     </Spoiler>
      
 <Space flex={3}/>
-      <Button color="secondary" fullWidth mt="md" radius="md">
-        Book classic tour now
-      </Button>
+    
     </Card>
+  
   );
 }

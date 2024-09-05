@@ -113,9 +113,9 @@ export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
             </span>
           )}
         </div>
-        <Modal classNames={{ content: "bg-red-100", header: "bg-red-100" }} title={<div> 
+        <Modal p={0} size={"xs"} classNames={{ content: " p-0",body:"p-0", header: " p-0 px-2" }} title={<div className="flex text-red-500 items-center"> 
           <ExclamationCircleIcon className="size-8"/> 
-          <span>Annulation</span>
+          <span className="text-2xl font-bold">Annulation</span>
         </div>} opened={opened} onClose={close}>
           <LoadingOverlay
             visible={deleteStatus.isLoading}
@@ -125,21 +125,27 @@ export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
           />
          
 
-          <Group justify="center" gap="md" className="flex flex-col" style={{ marginTop: "20px" }}>
-            <div>
+          <Group  gap="md" className="flex flex-col" style={{ marginTop: "5px" }}>
+            <Text className="text-left w-full px-5">
             Voulez-Vous Annuler la Commande {order.id} ?
-            </div>
+            </Text>
             <div className="flex justify-around w-full">
+              <ButtonGroup className="grow">
+           
+            <Button 
+           className="grow rounded-none"
+             color="red" onClick={close}>
+              Annuler
+            </Button>
             <Button
               onClick={ondelete}
               color="green"
+              className="grow rounded-none"
               disabled={deleteStatus.isLoading}
             >
               Valider
             </Button>
-            <Button color="red" onClick={close}>
-              Annuler
-            </Button>
+            </ButtonGroup>
          </div>
            
           </Group>

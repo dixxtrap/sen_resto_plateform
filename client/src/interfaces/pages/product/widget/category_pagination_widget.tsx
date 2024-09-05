@@ -48,7 +48,7 @@ const form=useForm({initialValues:{
     >
      {category.data?.data.map(c=>{
       const isActive=form.getValues().categoryIds.some(e=>e===`${c.id}`)
-      return <Carousel.Slide> <Pill color={"teal"}   className={clsx({'bg-amber-600 text-white':isActive})}  onRemove={()=>{form.insertListItem('categoryIds',`${c.id}`)}} size='lg'  onClick={()=>{isActive?form.removeListItem('categoryIds',form.getValues().categoryIds.findIndex(e=>e===`${c.id}`)):form.insertListItem('categoryIds',`${c.id}`)}}>{c.name}</Pill></Carousel.Slide>
+      return <Carousel.Slide> <Pill color={"teal"} fw={400}  className={clsx({'bg-primary-500  text-white':isActive})}  onRemove={()=>{form.insertListItem('categoryIds',`${c.id}`)}} size='lg'  onClick={()=>{isActive?form.removeListItem('categoryIds',form.getValues().categoryIds.findIndex(e=>e===`${c.id}`)):form.insertListItem('categoryIds',`${c.id}`)}}>{c.name}</Pill></Carousel.Slide>
      })}
 
       {/* ...other slides */}
