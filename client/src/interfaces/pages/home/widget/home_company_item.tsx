@@ -17,7 +17,10 @@ export const HomeCompanyItem = ({company}:{company:CompanyDto}) => {
       </Card.Section>
 
       <Group justify="space-between" mt="md" mb="xs">
-        <Text className="text-2xl" fw={600}>{company.name}</Text>
+        <div>
+        <Text className="text-xl" fw={600}>{company.shortname}</Text>
+        <Text className="text-sm" >{company.name}</Text>
+        </div>
         <Badge >{company.openingTime?.slice(0,5)}/{company.closingTime?.slice(0,5)}</Badge>
       </Group>
       <Spoiler maxHeight={38} showLabel="Voir plus" hideLabel="Voir moins">

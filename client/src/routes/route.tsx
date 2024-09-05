@@ -4,6 +4,7 @@ import Home from "../interfaces/pages/home/home";
 import { PlateList } from "../interfaces/pages/product/product";
 import { Restaurant } from "../interfaces/pages/restaurant_list";
 import { orderRoute } from "./order.route";
+import { Company } from '../interfaces/pages/company/company';
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: "restaurant",
         element: <Restaurant />,
+      },
+      {
+        path: "company",
+        element: <Company />,
       },
       orderRoute
     ],
