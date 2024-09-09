@@ -27,6 +27,6 @@ export const CustomSwitchInput=({label,itemKey ,form}:{label?:string,itemKey:str
                
                         isLoading={false}
                         isActive={form.getValues()[itemKey]}
-                        onClick={(val) => form.setFieldValue(itemKey, val)} children={undefined}/>
+                        onClick={(val) => form.setFieldValue(itemKey, val)}/>
 </div>)
 }
