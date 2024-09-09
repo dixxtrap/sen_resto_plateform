@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Text, Image, SimpleGrid, Button } from '@mantine/core';
-import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from '@mantine/dropzone';
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { storyApi } from '../../../../core/features/story.slice';
 
 export const StoryDropzone= ()=> {
@@ -15,7 +15,7 @@ const _onSubmit=()=>{
     const formData = new FormData();
 
     // Append files to FormData
-    files.forEach((file, i) => {
+    files.forEach((file) => {
       formData.append(`file`, file);
     });
     console.log(formData)

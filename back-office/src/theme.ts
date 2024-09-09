@@ -1,4 +1,4 @@
-import { createTheme, virtualColor } from "@mantine/core";
+import { createTheme } from "@mantine/core";
 
 export const APP_THEME = createTheme({
   primaryColor:'red',

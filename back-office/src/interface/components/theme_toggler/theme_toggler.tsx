@@ -1,4 +1,4 @@
-import { ActionIcon, useMantineColorScheme, useComputedColorScheme, Button } from '@mantine/core';
+import { useMantineColorScheme, useComputedColorScheme, Button } from '@mantine/core';
 import classes from './theme_toggler.module.css';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 import { clsx } from 'clsx';

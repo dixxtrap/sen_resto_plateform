@@ -4,13 +4,10 @@ import {
   Text,
   Group,
   Center,
-  rem,
-  useMantineTheme,
   ActionIcon,
   Modal,
   Button,
   Alert,
-  Box,
   LoadingOverlay,
 } from "@mantine/core";
 import classes from "../styles/story_card_item.module.css";
@@ -20,7 +17,6 @@ import { useDisclosure } from "@mantine/hooks";
 import { ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 export const StoryCardItem = ({ story }: { story: StoryDto }) => {
-  const theme = useMantineTheme();
   const [del, delStatsu] = storyApi.useDeleteMutation();
   const [opened, { close, open }] = useDisclosure();
   const onDelete = async () => {

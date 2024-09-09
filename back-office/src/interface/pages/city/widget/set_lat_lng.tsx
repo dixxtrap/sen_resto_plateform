@@ -1,7 +1,6 @@
 
-import { NumberInput, TextInput } from '@mantine/core'
+import { NumberInput } from '@mantine/core'
 import { City } from '../../../../core/models/city.dto'
-import { CoordonatesDto } from '../../../../core/models/coordonates.dto'
 import { TextConstant } from '../../../../core/data/textConstant'
 import { useForm } from '@mantine/form'
 import { cityApi } from '../../../../core/features/city.slice'

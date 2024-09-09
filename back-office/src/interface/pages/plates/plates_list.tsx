@@ -6,7 +6,6 @@ import {
 import { BuildingStorefrontIcon } from "@heroicons/react/24/outline";
 import { clsx } from "../../utils/clsx";
 import { Link } from "react-router-dom";
-import { Alert } from "../../components/alert_success";
 import { Status } from "../../components/status";
 import { Button, Table } from "@mantine/core";
 import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item";
