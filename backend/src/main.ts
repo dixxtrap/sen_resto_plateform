@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import "reflect-metadata"
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import {  ValidationPipe, VersioningType } from '@nestjs/common';
 import * as passport from 'passport';

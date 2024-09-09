@@ -1,10 +1,4 @@
-import {
-  IconEye,
-  IconInfoCircle,
-  IconInfoCircleFilled,
-  IconMessageCircle,
-  IconTrash,
-} from "@tabler/icons-react";
+
 import {
   Card,
   Text,
@@ -23,6 +17,7 @@ import classes from "../styles/story_card_item.module.css";
 import { StoryDto } from "../../../../core/models/story.dto";
 import { storyApi } from "../../../../core/features/story.slice";
 import { useDisclosure } from "@mantine/hooks";
+import { ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 export const StoryCardItem = ({ story }: { story: StoryDto }) => {
   const theme = useMantineTheme();
@@ -75,7 +70,7 @@ export const StoryCardItem = ({ story }: { story: StoryDto }) => {
                 variant="light"
                 color="blue"
                 title="Suppression"
-                icon={<IconInfoCircleFilled />}
+                icon={<ExclamationCircleIcon />}
               >
                 Voulez-Vous supprimer le storie {story.id} ?
               </Alert>
@@ -94,7 +89,7 @@ export const StoryCardItem = ({ story }: { story: StoryDto }) => {
             <Group gap="lg">
               <Center>
                 <ActionIcon onClick={open} size={"md"} color="red">
-                  <IconTrash />
+                  <TrashIcon />
                 </ActionIcon>
               </Center>
             </Group>

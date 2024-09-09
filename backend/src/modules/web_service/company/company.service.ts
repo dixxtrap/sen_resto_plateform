@@ -28,6 +28,9 @@ export class WsCompanyService {
         throw new WsMessage(HttpExceptionCode.FAILLURE);
       });
   }
+  getById({id}:{id:number}){
+    return this.repos.findOne({where:{id}, relations:{parent:true, productManagement:{product:{file:true,  category:true}}}}).then(result=>BaseResponse.success(result))
+  }
   search({ name }: { name: string }) {
     return this.repos
       .find({

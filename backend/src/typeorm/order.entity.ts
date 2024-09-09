@@ -7,9 +7,10 @@ import {
 } from 'typeorm';
 import { CompanyRestaurantBase } from './company_restaurant.entity';
 import { CreationDetails } from './details.entity';
-import { Customer } from './customer.entity';
+
 import { Deliver } from './deliver.entity';
 import { OrderProduct } from './order_product.entity';
+import { Customer } from './partner.entity';
 export class AddOrderDto {
   productId: number;
   partnerId: number;

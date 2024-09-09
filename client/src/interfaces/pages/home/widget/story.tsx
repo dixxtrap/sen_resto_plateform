@@ -51,11 +51,12 @@ export const Story = () => {
     <Fetchingdata {...storyGroup}>
         <Carousel
       withIndicators
-      height={90}
+      height={400}
       p={10}
       pt={20}
      className='bg-transparent'
-      slideSize={{base:rem(80)}}
+      slideSize={{base:rem(250)}}
+      // classNames={{slide:"size-[200px]"}}
       slideGap="lg"
       
      

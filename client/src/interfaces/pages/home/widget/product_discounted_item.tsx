@@ -5,10 +5,10 @@ export const ProductDiscountedItem = ({product}:{product:ProductDto}) => {
   return (
     <Card   padding="lg" radius="md" className='ring-1 ring-gray-300 hover:shadow-lg duration-500'>
       <Card.Section component="div" style={{backgroundImage:`url(${product.file![0].path})`}} className="flex h-[200px] " >
-        <div className='flex bg-black/5 backdrop-blur-lg w-full p-2'>
+        <div className='flex bg-black/5 backdrop-blur-lg w-full '>
         <Image
           src={product.file![0].path}
-          className="h-[180px]  rounded-lg w-auto m-auto "
+          className="h-full  w-auto m-auto "
           alt="Norway"
         />
         </div>

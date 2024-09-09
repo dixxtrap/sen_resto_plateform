@@ -1,6 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+
 import { ApiTags } from '@nestjs/swagger';
 import { WsCompanyService } from './company.service';
+import { Controller } from '@nestjs/common/decorators/core/controller.decorator';
+import { Get } from '@nestjs/common/decorators/http/request-mapping.decorator';
+import { Param } from '@nestjs/common/decorators/http/route-params.decorator';
 
 @Controller('ws/company')
 @ApiTags('ws/company')
@@ -9,5 +12,9 @@ export class WsCompanyController {
   @Get('all')
   getAll() {
     return this.service.getAll();
+  }
+  @Get('details/:id')
+  getById(@Param("id") id:number) {
+    return this.service.getById({id});
   }
 }

@@ -184,10 +184,11 @@ export class WsOrderService {
     body: AddOrderDto;
     by: CustomerDto;
   }) {
-    console.log('customer', by);
+    console.log('==========customer=========', by);
     return this.productHistoryService
       .last({ id: body.productId })
       .then((productHistory) => {
+        console.log(productHistory)
         return this.getOrderOrCreate({
           customerId: by.id,
           partnerId: productHistory.data.product.parentId,

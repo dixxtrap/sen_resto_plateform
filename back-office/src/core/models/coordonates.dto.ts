@@ -1,5 +1,5 @@
 
-export class CoordonatesDto{
-        latitude?:number;
-        longitude?:number;
+export interface CoordonatesDto{
+        latitude:number;
+        longitude:number;
 }

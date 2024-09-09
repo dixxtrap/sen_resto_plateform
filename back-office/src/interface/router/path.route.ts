@@ -11,4 +11,5 @@ export class PathRouter{
     static details:string='details/:id';
     static delete: string = 'delete';
     static story:string='story'
+    static city:string='city'
 }

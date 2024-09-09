@@ -1,32 +1,19 @@
-import { ChildEntity, Column, Index } from 'typeorm';
-import { Partner, PartnerDto } from './partner.entity';
+import { ChildEntity, Column, Index, BeforeInsert, AfterInsert , TableInheritance, Entity, PrimaryGeneratedColumn} from 'typeorm';
+import {  Customer,PartnerDto } from './partner.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Coordonates, CoordonatesDto } from './coordonates.entity';
 import { AddressBaseDto, AddressDto } from './address.entity';
-@ChildEntity()
-@Index(['phone', 'parentId'], { unique: true })
-export class Customer extends Partner {
-  @Column({ nullable: true, default: null })
-  firstname: string;
-  @Column({ nullable: true, default: null })
-  lastname: string;
-  @Column({ nullable: true, default: false })
-  isPhoneVeirified: boolean;
-  @Column({ nullable: true, default: null })
-  externalId: string;
-  @Column({ unique: true, nullable: true, default: null })
-  phone: string;
-  @Column(() => Coordonates)
-  coordonates: Coordonates;
-}
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
+import { CreationDetails } from './details.entity';
+import { CompanyRestaurant } from './company_restaurant.entity';
+/// <reference path="./partner.entity" export="Customer" />
+
 
 export class CustomerDto extends PartnerDto {
   @ApiProperty()
   firstname: string;
   @ApiProperty()
   lastname: string;
-  @ApiProperty()
-  phone: string;
 }
 
 export class SetProfileDto {
@@ -39,3 +26,6 @@ export class SetProfileDto {
   @ApiProperty()
   coordonates: CoordonatesDto;
 }
+
+
+export {Customer};

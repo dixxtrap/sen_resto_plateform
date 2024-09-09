@@ -19,6 +19,7 @@ import { AddressForm } from "../../components/form/address_form";
 import { AppTextarea } from "../../components/form/app_textarea";
 import { CustomSwitchInput } from "../../components/switch";
 import { TextInput } from "@mantine/core";
+import { Fetchingdata } from "../../components/fetching_data";
 
 export const RestaurantEdit = () => {
   const { id } = useParams();
@@ -26,9 +27,7 @@ export const RestaurantEdit = () => {
   const [file, setFile]=useState<File>();
   const [changed, setChanged]=useState< boolean>(false);
   const handleImage=handlePreview({previewImage:preview!, setPreviewImage:setPreview, setFile:setFile, setChanged:setChanged})
-  const form = useForm({
-  
-  });
+  const form = useForm<CompanyDto>({});
   const [updateCompany, { isLoading, isSuccess, isError, reset }] =
     useUpdateRestaurantByIdMutation();
   const old =
@@ -39,9 +38,23 @@ export const RestaurantEdit = () => {
     updateCompany({ id: parseInt(id!), restos: body!, file:file! });
   });
   useEffect(() => {
-    if (old.data) {
+    if (old.data?.data&& old.isSuccess) {
       setPreview(old.data.data.imagePath!);
-     form.setValues(old.data.data)
+    //  form.setValues(old.data.data)
+    const oldaData= old.data.data
+    form.setValues({
+      name:oldaData.name,
+      shortname:oldaData.shortname,
+      phone:oldaData.phone,
+      email:oldaData.email,
+      description:oldaData.description,
+      isActive:oldaData.isActive,
+      closingTime:oldaData.closingTime,
+      openingTime:oldaData.openingTime,
+    location:oldaData.location
+    })
+  
+    // form.setFieldValue("address.streetAddress", old.data.data.description)
     }
   }, [old.data]);
 
@@ -60,7 +73,7 @@ export const RestaurantEdit = () => {
         </label>
        </ProtecterPage>
      </div>
-     
+     <Fetchingdata {...old}>
      <CustomForm
       
       isError={isError}
@@ -97,6 +110,7 @@ export const RestaurantEdit = () => {
   
       </div>
     </CustomForm >
+    </Fetchingdata>
     </div>
   );
 };

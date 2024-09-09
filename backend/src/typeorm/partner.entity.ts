@@ -1,8 +1,11 @@
 import {
+  BaseEntity,
   BeforeInsert,
   BeforeUpdate,
+  ChildEntity,
   Column,
   Entity,
+  Index,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -15,11 +18,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { CompanyRestaurant, Restaurant } from './company_restaurant.entity';
 import { Contrat } from './contrat.entity';
 import { City } from './city.entity';
+import { ProductManagement } from './product_management.entity';
+import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
 // import { IsBoolean } from 'class-validator';
 
 @Entity({})
+@Injectable()
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
-export abstract class Partner {
+export  class Partner  {
   @PrimaryGeneratedColumn()
   id: number;
   @Column(() => Coordonates)
@@ -40,7 +46,8 @@ export abstract class Partner {
   city: City;
   @Column({ nullable: true, default: null })
   cityId: number;
-
+@OneToMany(()=>ProductManagement, (alias)=>alias.partner)
+productManagement:ProductManagement
   @ManyToOne(() => Partner)
   parent: Partner | Restaurant | CompanyRestaurant;
   @OneToMany(() => Partner, (item) => item.parent)
@@ -60,7 +67,7 @@ export abstract class Partner {
     this.isActive=`${this.isActive}`=='true'
     this.isBloqued=`${this.isBloqued}`=='true'
   }
-  
+ 
 }
 
 export class PartnerDto {
@@ -85,4 +92,21 @@ export class PartnerDto {
   @ApiProperty()
   partnerId: number;
   partner: { id: number };
+}
+
+@ChildEntity()
+@Injectable()
+@Index(['phone', 'parentId'], { unique: true })
+export  class Customer extends Partner {
+  @Column({ nullable: true, default: null })
+  firstname: string;
+  @Column({ nullable: true, default: null })
+  lastname: string;
+  @Column({ nullable: true, default: false })
+  isPhoneVeirified: boolean;
+  @Column({ nullable: true, default: null })
+  externalId: string;
+  @Column(() => Coordonates)
+  coordonates: Coordonates;
+ 
 }

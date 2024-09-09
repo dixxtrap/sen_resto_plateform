@@ -7,11 +7,11 @@ export const HomeCompanyItem = ({company}:{company:CompanyDto}) => {
 
   return (
     
-    <Card component={Link} to="." className='ring-1 ring-gray-300 hover:shadow-lg duration-500'  padding="lg" radius="md" >
-      <Card.Section component="div" className="flex h-[200px]" >
+    <Card component={Link} to={`/company/details/${company.id}`} className='ring-1 ring-gray-300 hover:shadow-lg duration-500'  padding="lg" radius="md" >
+      <Card.Section component="div" className="flex  p-5  h-[200px]" >
         <Image
           src={company.imagePath}
-          className="h-[200px] rounded-md w-auto mx-auto pt-10"
+          className="h-full rounded-md w-auto mx-auto"
           alt="Norway"
         />
       </Card.Section>

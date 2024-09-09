@@ -4,6 +4,7 @@ import { errorTrasform } from "./error_transformer";
 import { BaseResponse } from "./base_response";
 import { PaginationDto } from "./pagination";
 import { City } from "../models/city.dto";
+import { WsMessage } from "../models/error.dto";
 
 
 export const cityApi =createApi({
@@ -22,6 +23,11 @@ export const cityApi =createApi({
             ,
             transformErrorResponse: errorTrasform,
             providesTags: ["city"],
+        }),
+        update:builder.mutation<WsMessage,{id:number,city:City}>({
+            query:({id,city})=>({url:`city/update/${id}`, method:"PUT", body:city}),
+            transformErrorResponse: errorTrasform,
+            invalidatesTags: ["city"],
         }),
         getDepartement:builder.query<BaseResponse<[City]>,string>({
             query:(id)=>({url:`city/children/${id}`})

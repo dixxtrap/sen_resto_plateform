@@ -1,6 +1,6 @@
 import { Textarea } from '@mantine/core'
 import { UseFormReturnType } from '@mantine/form'
-import { TextConstant } from '../../../core/data/textConstant'
+import { TextConstant } from '../../../cores/constant/textConstant'
 
 
 export const AppTextarea = ({form}:{form :UseFormReturnType<any,any>}) => {

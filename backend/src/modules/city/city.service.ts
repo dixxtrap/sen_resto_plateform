@@ -10,6 +10,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { City, CityEnum } from 'src/typeorm/city.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
+import { CityDto } from '../../typeorm/city.entity';
+import { WsCatch } from 'src/utils/catch';
 
 @Injectable()
 export class CityService {
@@ -18,6 +20,13 @@ export class CityService {
     private excel: ExcelService,
   ) {}
 
+
+  update({id, body}:{id:number, body:CityDto}){
+    return this.repos.update({id},body).then(result=>{
+      if(result.affected>0) throw new WsMessage(HttpExceptionCode.SUCCEEDED)
+        throw new WsMessage(HttpExceptionCode.FAILLURE)
+    }).catch(WsCatch)
+  }
   async findAll({ pagination }: { pagination: PaginationDto }) {
     const count = await this.repos.count({ where: { type: CityEnum.COMMUNE } });
   

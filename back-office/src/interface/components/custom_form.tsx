@@ -4,6 +4,7 @@ import { Alert, DialogAlert } from "./alert_success";
 import { Navigate } from "react-router-dom";
 import { getWsMessage } from "../../core/features/error_transformer";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import { LoadingOverlay } from "@mantine/core";
 type CustomeFormProps = {
   children?: ReactNode;
   title?: string;
@@ -103,7 +104,13 @@ confirmationMessage,
     </div>
      { isSuccess&& <Alert isOpen={isSuccess} type="succeedded" title="Félicitation" message={successMessage} onClose={onFinish}/>}
      {isError&& <Alert isOpen={isError} type="faillure" title="Ooops!" message={ getWsMessage(error)}  onClose={onFinish} />}
-    { isLoading&&<Alert isOpen={isLoading} type="loading" title="Traitement..."   onClose={onFinish} message="Patientez un moment "/>}
+    {/* { isLoading&&<Alert isOpen={isLoading} type="loading" title="Traitement..."   onClose={onFinish} message="Patientez un moment "/>} */}
+    {<LoadingOverlay  visible ={isLoading}
+  
+              overlayProps={{ radius: 'sm', blur:1,className :"backdrop-blur-lg bg-white/5"}}
+              loaderProps={{ color: 'primary', type: 'bars' }}
+    
+      />}
  
     </>
   );

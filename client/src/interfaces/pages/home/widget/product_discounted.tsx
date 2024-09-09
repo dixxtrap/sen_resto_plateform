@@ -6,7 +6,7 @@ import { ProductDiscountedItem } from './product_discounted_item'
 export const ProductDiscountedWidget = () => {
     const {data:product, isLoading, isSuccess, isError}=useGetProductDistcountedQuery(initPagination)
   return (
-    <div className='flex flex-col py-4'>
+    <div className='flex flex-col py-4 lg:px-10'>
      
       <span className='title1  pl-3'>{Str.discounTitle}</span>
       <div className='h-10'></div>

@@ -14,6 +14,7 @@ import { getWsMessage } from '../../../core/features/error_transformer';
 type TablePaginationProps = {
   th?: string[];
   trs?: ReactNode;
+  header?: ReactNode;
   title?: string;
   totalPage?: number ;
   subtitle?: string;
@@ -27,7 +28,7 @@ type TablePaginationProps = {
   pagination?:[PaginationDto, React.Dispatch<React.SetStateAction<PaginationDto>>]
 
 };
-export const  TablePagination:FC<TablePaginationProps>=({trs, title,th, createPath, totalPage, pagination,isError,error, isSuccess, isLoading, isPaginated})=> {
+export const  TablePagination:FC<TablePaginationProps>=({trs,header, title,th, createPath, totalPage, pagination,isError,error, isSuccess, isLoading, isPaginated})=> {
   const [scrolled, setScrolled] = useState(false);
 
 
@@ -43,10 +44,10 @@ export const  TablePagination:FC<TablePaginationProps>=({trs, title,th, createPa
       </Button>
       </Link>}
       </div >
-      <div className='flex  text-left justify-between my-3'>
+   {  header?? <div className='flex  text-left justify-between my-3'>
         <TextInput placeholder="Rechercher" leftSection={ <MagnifyingGlassIcon className='size-6'/>} />
         <DateInput  popoverProps={poppoverStyle} classNames={{calendarHeaderLevel:'bg-primary-500 hover:bg-primary-700'}}  styles={{section:{backgroundColor:'red'},calendarHeaderLevel:{color:'white',"&:hover":{backgroundColor:'green'}}}} placeholder="A partire de"/>
-      </div>
+      </div>}
 {  isSuccess&&  <ScrollArea h={{sm:400, lg:'70vh'}}  className={clsx(' bg_table  ring-1 ring-slate-400/30  rounded-md',classes.body)}  onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
       <Table miw={600}  className='table border-none' >
         <Table.Thead className={cx(classes.header,' bg-primary-500  z-50 ', { [classes.scrolled]: scrolled })}>

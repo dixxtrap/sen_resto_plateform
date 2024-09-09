@@ -4,6 +4,8 @@ import { Entity } from "typeorm/decorator/entity/Entity";
 import { ManyToOne } from "typeorm/decorator/relations/ManyToOne";
 import { OneToMany } from "typeorm/decorator/relations/OneToMany";
 import { CreationDetailsWithoutBy } from "./details.entity";
+import { Coordonates } from "./coordonates.entity";
+import { ApiProperty } from "@nestjs/swagger/dist/decorators/api-property.decorator";
 
 
 
@@ -14,7 +16,7 @@ export enum CityEnum{
      COMMUNE='COMMUNE' ,
 }
 @Entity()
-export class City{
+export class City extends Coordonates{
     @PrimaryGeneratedColumn()
     id:number;
     @Column()
@@ -29,4 +31,17 @@ export class City{
     parentId:number
     @Column(type => CreationDetailsWithoutBy, { prefix: false })
     details: CreationDetailsWithoutBy; 
+   
+}
+
+export class CityDto{
+    @ApiProperty()
+    name:string;
+    @ApiProperty()
+    latitude:number;
+    @ApiProperty()
+    longitude:number;
+    constructor(partial: Partial<CityDto>) {
+        Object.assign(this, partial);
+      }
 }

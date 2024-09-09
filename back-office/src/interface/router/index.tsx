@@ -22,6 +22,7 @@ import { giftRouter } from "./gift.router";
 import { cardAllocationRouter } from "./card_allocation.router";
 import { bannerRouter } from "./banner.router";
 import { storeRouter } from "./story.router";
+import { cityRouter } from "./city.router";
 
 export const router = createBrowserRouter([
   {
@@ -62,7 +63,8 @@ export const router = createBrowserRouter([
       cardRouter,
       cardAllocationRouter,
       bannerRouter,
-      storeRouter
+      storeRouter,
+      cityRouter
     ],
   },
 ]);

@@ -17,6 +17,10 @@ export const baseApi = createApi({
       query: () =>
         `/ws/company/all`,
     }),
+    getCompanyDetails: builder.query<BaseResponse<CompanyDto>, string>({
+      query: (id) =>
+        `/ws/company/details/${id}`,
+    }),
     getBanner: builder.query<BaseResponse<BannerDto[]>, string>({
       query: () =>
         `/ws/banner/all`,

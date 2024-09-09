@@ -1,6 +1,7 @@
 import { CreationDetailDto } from "./creation_details.dto";
 import { CoordonatesDto } from "./coordonates.dto";
 import { AddressDto } from "./address.dto";
+import { ProductManagement } from "./product_management.dto";
 export enum CompanyEnum {
   RESTO = 'restaurant',
   MASTER = 'master',
@@ -18,6 +19,7 @@ export class CompanyDto {
   city?: string;
   country?: string;
   phone?: string;
+  productManagement?:ProductManagement[]
   location?:CoordonatesDto;
   isActive?: boolean;
   canPublish?: boolean;
