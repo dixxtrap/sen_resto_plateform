@@ -6,7 +6,6 @@ import {
   BellIcon,
   UserIcon,
   ChatBubbleBottomCenterIcon,
-  ArrowRightStartOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import { Navigate } from "react-router-dom";
 import { FC, useEffect } from "react";
@@ -18,6 +17,7 @@ import { Alert } from "./alert_success";
 import { ActionIcon, Text, Button, Menu, rem, Group } from "@mantine/core";
 import { ThemeToggler } from "./theme_toggler/theme_toggler";
 import { multiSelectStyle } from "./form/custom_styles";
+import ArrowRightStartOnRectangleIcon from "@heroicons/react/20/solid/ArrowRightStartOnRectangleIcon";
 export const Header: FC<{
   open: () => void;
   close: () => void;
