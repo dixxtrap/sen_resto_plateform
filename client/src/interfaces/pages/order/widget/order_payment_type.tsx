@@ -1,4 +1,3 @@
-import React from "react";
 import { baseApi } from "../../../../cores/apis/api";
 import { Avatar, Text, SegmentedControl } from "@mantine/core";
 

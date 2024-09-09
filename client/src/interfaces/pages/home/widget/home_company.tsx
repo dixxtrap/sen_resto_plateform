@@ -1,6 +1,5 @@
 
 import {  useGetCompanyQuery } from "../../../../cores/apis/api";
-import clsx from "clsx";
 import { Str } from "../../../../cores/constantes/str";
 import { HomeCompanyItem } from "./home_company_item";
 export const HomeCompany = () => {

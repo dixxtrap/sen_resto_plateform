@@ -1,5 +1,5 @@
 import { ProductDto } from '../../../../cores/models/product'
-import { Card, Image, Group, Text , Badge, Button, Space } from '@mantine/core'
+import { Card, Image, Group, Text , Badge, Space } from '@mantine/core'
 
 export const ProductDiscountedItem = ({product}:{product:ProductDto}) => {
   return (

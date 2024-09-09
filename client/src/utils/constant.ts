@@ -7,7 +7,7 @@ export const constant = {
 
 export const links: Ilink[] = [
   { name: "Home", route: "" },
-  { name: "Comapny", route: "company" },
+  { name: "Restaurants", route: "company" },
  
-  { name: "Produit", route: "product" },
+  { name: "Produitss", route: "product" },
 ];

@@ -1,8 +1,8 @@
-import { Paper ,Title, Text, Button, Overlay, Avatar} from "@mantine/core"
+import { Paper , Avatar} from "@mantine/core"
 import classes from '../styles/story_item.module.css'
 import { Story } from "../../../../cores/models/story.dto"
 import { CompanyDto } from '../../../../cores/models/company.dto';
-export const  StoryItem=({story, company}:{story:Story,company:CompanyDto}) =>{
+export const  StoryItem=({story}:{story:Story,company:CompanyDto}) =>{
   return (
     <Paper  h={'100%'} style={{backgroundImage:`url(${story.imagePath})`}} className={classes.card+ " relative "}>
      

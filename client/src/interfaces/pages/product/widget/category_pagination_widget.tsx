@@ -3,8 +3,8 @@ import  { FC } from 'react'
 import { useGetCategoryBaseQuery, useGetCategoryQuery, useGetCompanyQuery } from '../../../../cores/apis/api'
 import { Fetchingdata } from '../../../components/fetching_data'
 import { Carousel } from '@mantine/carousel';
-import { Badge, Button, Pill, Select, TextInput } from '@mantine/core'
-import { CheckBadgeIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { Pill, Select, TextInput } from '@mantine/core'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { useForm } from '@mantine/form';
 import clsx from 'clsx';
 type CategoryPageniationWidgetProps={

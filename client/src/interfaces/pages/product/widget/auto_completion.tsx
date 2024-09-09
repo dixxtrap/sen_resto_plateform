@@ -1,21 +1,17 @@
 
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import { FC, useEffect, useState } from "react";
 import { useGetCompanyQuery } from "../../../../cores/apis/api";
-import clsx from "clsx";
 import { CompanyDto } from "../../../../cores/models/company.dto";
-import { Combobox } from "@mantine/core";
 type AutoCompletionCompaniesProps={
   current:number,
   onclick:(id:number)=>void
 }
-export const AutoCompletionCompanies:FC<AutoCompletionCompaniesProps> = ({current, onclick}) => {
-  const [query, setQuery] = useState("");
+export const AutoCompletionCompanies:FC<AutoCompletionCompaniesProps> = ({ onclick}) => {
+  const [query, _] = useState("");
   console.log(onclick);
-  const [selectedCompany, setSelectedCompany] = useState(current);
   const { data: companies, isSuccess } = useGetCompanyQuery("");
   console.log(companies);
-  const [filteredPeople, setFilteredPeople] = useState<CompanyDto[]>([]);
+  const [__, setFilteredPeople] = useState<CompanyDto[]>([]);
   useEffect(() => {
     if (isSuccess && companies) {
       setFilteredPeople(

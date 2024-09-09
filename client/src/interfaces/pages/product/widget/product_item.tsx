@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ProductDto } from "../../../../cores/models/product";
 import {
   Card,
@@ -11,7 +10,6 @@ import {
   rem,
   Pill,
   Modal,
-  Space,
   Badge,
 } from "@mantine/core";
 
@@ -19,12 +17,10 @@ import classes from "../style/product_item.module.css";
 
 import { PlateItemPoppup } from "./order_poppup";
 
-import { Str } from "../../../../cores/constantes/str";
 import {
   ShoppingBagIcon,
   BookmarkIcon,
   HeartIcon,
-  ShareIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { useDisclosure } from "@mantine/hooks";

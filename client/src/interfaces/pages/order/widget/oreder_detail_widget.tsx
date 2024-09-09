@@ -1,10 +1,9 @@
 import { FC } from "react";
 import { OrderDto } from "../../../../cores/models/order.dto";
 import clsx from "clsx";
-import { Button, Modal,Text, ScrollArea, Pill, Avatar, Tooltip, HoverCard } from "@mantine/core";
+import { Button, Modal,Text, ScrollArea, Pill, Avatar, HoverCard } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { EyeIcon } from "@heroicons/react/24/solid";
-import { TextConstant } from "../../../../cores/constant/textConstant";
 import { OrderPaymentType } from "./order_payment_type";
 import { AddressForm } from "../../../components/form/address_form";
 import { useForm } from "@mantine/form";

@@ -1,5 +1,3 @@
-import React from 'react'
-
 const CompanyProductItem = () => {
   return (
     <div>CompanyProductItem</div>

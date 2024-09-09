@@ -1,24 +1,20 @@
 import { useState } from "react";
 import { ProductDto } from "../../../../cores/models/product";
 
-import { Input } from "../../../components/input";
 import { MinusSmallIcon , PlusSmallIcon} from "@heroicons/react/24/solid";
 import {useForm}from '@mantine/form'
-import XMarkIcon from "@heroicons/react/24/solid/esm/XMarkIcon";
 import { CustomForm } from "../../../components/custom_form";
 import { useAddProductMutation } from "../../../../cores/apis/order.slice";
-import { Button, ButtonGroup, Dialog, Image, Textarea } from "@mantine/core";
+import { Button, ButtonGroup, Image, Textarea } from "@mantine/core";
 
 export const PlateItemPoppup = ({
-  open,
-  setOpen,
   product,
 }: {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   product: ProductDto;
 }) => {
-  const [selectedSize, setSelectedSize] = useState<string>(
+  const [selectedSize, _] = useState<string>(
     product?.file![0]?.path ?? ""
   );
   const [addProduct,{isLoading, isSuccess, isError, reset}]=useAddProductMutation();

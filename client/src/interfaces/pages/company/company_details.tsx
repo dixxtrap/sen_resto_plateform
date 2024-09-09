@@ -1,4 +1,3 @@
-import React from 'react'
 import { useParams } from 'react-router-dom'
 import { baseApi } from '../../../cores/apis/api';
 import { Fetchingdata } from '../../components/fetching_data';
