@@ -14,8 +14,8 @@ export const CustomSwitch = ({  onClick, isActive }: { isLoading: boolean, onCli
                         radius={6}
                         size="md"
                         color="primary.4"
-                >
-                </Switch>);
+               />
+        )
 }
 
 export const CustomSwitchInput=({label,itemKey ,form}:{label?:string,itemKey:string,form:  UseFormReturnType<any, any>,})=>{
@@ -25,9 +25,8 @@ export const CustomSwitchInput=({label,itemKey ,form}:{label?:string,itemKey:str
                 </span>   
                 <CustomSwitch
                
-isLoading={false}
-isActive={form.getValues()[itemKey]}
-onClick={(val) =>form.setFieldValue(itemKey, val)}
-/>
+                        isLoading={false}
+                        isActive={form.getValues()[itemKey]}
+                        onClick={(val) => form.setFieldValue(itemKey, val)} children={undefined}/>
 </div>)
 }
