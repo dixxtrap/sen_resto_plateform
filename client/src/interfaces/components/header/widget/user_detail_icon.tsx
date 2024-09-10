@@ -7,7 +7,7 @@ import { NotificationIcon } from "./notification_icon";
 import { DialogAlert } from "../../dialog";
 import { LoginForm } from "../../login/login_form";
 import { useDisclosure } from "@mantine/hooks";
-import { ActionIcon, Box, Burger, Button, Drawer, List, ListItem, UnstyledButton } from "@mantine/core";
+import { ActionIcon, Box, Burger, Button, Drawer, UnstyledButton } from "@mantine/core";
 import { links } from '../../../../utils/constant';
 import {Link } from "react-router-dom";
 
