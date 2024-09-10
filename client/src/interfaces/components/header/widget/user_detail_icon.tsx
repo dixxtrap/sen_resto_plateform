@@ -7,22 +7,38 @@ import { NotificationIcon } from "./notification_icon";
 import { DialogAlert } from "../../dialog";
 import { LoginForm } from "../../login/login_form";
 import { useDisclosure } from "@mantine/hooks";
-import { ActionIcon, Button } from "@mantine/core";
+import { ActionIcon, Box, Burger, Button, Drawer, List, ListItem, UnstyledButton } from "@mantine/core";
+import { links } from '../../../../utils/constant';
+import {Link } from "react-router-dom";
 
+export const UserDetailsMobile=()=>{
+  const [opened, { close, open }] = useDisclosure(false);
+  return (
+    <> <Drawer offset={8} radius="md" position="top" opened={opened} onClose={close} title="Authentication">
+    {/* Drawer content */}
+    <Box className="flex  flex-col">
+      {links.map(e=><UnstyledButton className="h-10"   component={Link} to={e.route}>{e.name}</UnstyledButton>)}
+    </Box>
+  </Drawer>
 
+  <Burger opened={opened} onClick={open}></Burger>
+  </>)
+}
 export const UserDetailIcon = () => {
   const {  isSuccess, isError } = useProfileQuery("");
   const [opened, { close, open }] = useDisclosure(false);
  
   return (
-    <div className=" lg:ml-4 lg:flex   lg:items-center">
-      {isSuccess && (
+    <div className=" lg:ml-4 flex   items-center">
+      {isSuccess && (<>
+        <UserDetailsMobile/>
         <div className="hidden lg:flex gap-3 bg-slate-200 p-2 rounded-lg py-1  ">
           <BagIcon /> <NotificationIcon />
           <Button onClick={open}   p={0}   variant="transparent" >
             <UserIcon  className='size-7 text-white bg-secondary-500 p-0.5 rounded-full' />
           </Button>{" "}
         </div>
+         </>
       )}
       {isError && (
         <>

@@ -50,20 +50,17 @@ export const Story = () => {
 
     <Fetchingdata {...storyGroup}>
         <Carousel
-      withIndicators
-      height={400}
+      
+      h={{base:rem(120), sm:rem(400)}}
       p={10}
-      pt={20}
+      pt={10}
      className='bg-transparent'
-      slideSize={{base:rem(250)}}
+      slideSize={{base:rem(90),sm:rem(250)}}
       // classNames={{slide:"size-[200px]"}}
       slideGap="lg"
-      
-     
+      classNames={{indicator:"bg-secondary-500 mt-10 bottom-0", }}
       align="start"
       slidesToScroll={1}
-      
-      
     >
          {storyGroup.data?.data.map((g, i)=><Carousel.Slide p={4} mx={8} onClick={()=>{open();setCurrent(i)}}><StoryGroupItem storyGroup={g}/></Carousel.Slide>)}
     </Carousel>

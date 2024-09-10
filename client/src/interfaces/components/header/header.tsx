@@ -16,7 +16,7 @@ export const Header = () => {
                     {constant.app_name}
                   </span>
                 </Link>
-                <div className="hidden lg:ml-6  lg:flex lg:space-x-8 md:flex items-center justify-center">
+                <div className="hidden lg:ml-6  space-x-2 lg:flex md:space-x-8 md:flex items-center justify-center">
                   {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
                   {links.map((item) => <NavLink key={`route_header_${item.name}`}
                       className={({ isActive, isPending }) =>

@@ -25,12 +25,12 @@ export const CompanyDetails = () => {
             </div>
        
             </Group>
-            <div className='absolute -bottom-[100px] right-10'>
-            <Avatar radius={2}  className='w-auto  size-[200px] rounded-md'  src={company.data?.data.imagePath}/>
+            <div className='absolute md:-bottom-[100px] right-10'>
+            <Avatar radius={2}  className='w-auto  size-[100px]  md:size-[200px] rounded-md'  src={company.data?.data.imagePath}/>
             </div>
             </Container>
-            <div className='h-[100px]'></div>
-            <Group display={'grid'} className=' grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 my-10  sm:mx-10'>
+            <div className='md:h-[100px]'></div>
+            <Group display={'grid'} className=' grid-cols-2 gap-1 px-1  sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 my-10  sm:mx-10'>
                 {company.data?.data.productManagement?.map(e=>{
                    
                    return ( <ProductItem product={{...e.product!, id:e.productId, parentId:company.data?.data.id,parent:{id: company.data?.data.id, imagePath:company.data?.data.imagePath!, shortname:company.data?.data.shortname!}}}/>)})}
