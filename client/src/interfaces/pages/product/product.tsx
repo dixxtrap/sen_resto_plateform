@@ -42,7 +42,7 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
             <CategoryPageniationWidget current={category} onclick={(id)=>setCategory(id)} ></CategoryPageniationWidget>
             <Grid    className="w-full  ">
               {products!.data.map((product) => (
-                <GridCol span={{base:12, xs:6,sm:6, md:4, lg:3}} className="grow" onClick={()=>!isLogin&&setShowLogin(true)}>
+                <GridCol span={{base:6, xs:6,sm:6, md:4, lg:3}} className="grow" onClick={()=>!isLogin&&setShowLogin(true)}>
                 <ProductItem  product={product}  />
                 </GridCol>
               ))}
