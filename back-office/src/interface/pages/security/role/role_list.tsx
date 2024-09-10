@@ -19,10 +19,10 @@ export const RoleList = () => {
        
      <div className="grow"></div>
       <div className=" flex gap-2 justify-between  ">
-      <Button component={Link}  color="secondary"  to={`/security/role/permission/${role.id}`} className="">Permissions</Button>
+      <Button component={Link} size="compact-sm"  color="secondary.4" fw={400}  to={`/security/role/permission/${role.id}`} className="">Permissions</Button>
 
-      <Button component={Link}  color="secondary"  to={`/security/role/details/${role.id}`} className=" ">Details</Button>
-      <Button component={Link} color="secondary"  to={`/security/role/create/${role.id}`} className="  ">Ajouter Sous Role</Button>
+      <Button component={Link} size="compact-sm" color="secondary.4" fw={400}  to={`/security/role/details/${role.id}`} className=" ">Details</Button>
+      <Button component={Link} size="compact-sm" color="secondary.4" fw={400}   to={`/security/role/create/${role.id}`} className="  ">Ajouter Sous Role</Button>
       </div>
     </div>
      </div>
@@ -35,10 +35,10 @@ export const RoleList = () => {
     <div className="flex justify-between items-center">
     <Title title={`Roles : ${roles?.name}`} subTitle="liste des roles et de leurs sous roles"/>
 
-      <div className="flex gap-2">      <Button color="secondary" component={Link} to={`/security/role/permission/${roles?.id}`} className="">Permissions</Button>
+      <div className="flex gap-2">      <Button size="compact-sm" color="secondary.4" fw={400}  component={Link} to={`/security/role/permission/${roles?.id}`} className="">Permissions</Button>
 
-<Button color="secondary" component={Link} to={`/security/role/details/${roles?.id}`} className="">Details</Button>
-<Button color="secondary" component={Link} to={`/security/role/create/${roles?.id}`} className="">Ajouter  Sous Role</Button></div>
+<Button color="secondary.4"size="compact-sm" fw={400}  component={Link} to={`/security/role/details/${roles?.id}`} className="">Details</Button>
+<Button color="secondary.4"size="compact-sm" fw={400}  component={Link} to={`/security/role/create/${roles?.id}`}  className="">Ajouter  Sous Role</Button></div>
     </div>
 
      <div className="dark:bg-gray-500/5 bg-gray-100/5 ">

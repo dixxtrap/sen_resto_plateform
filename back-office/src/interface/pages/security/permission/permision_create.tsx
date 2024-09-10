@@ -28,7 +28,7 @@ create({...data});
         isSuccess={isSuccess}
       >
   
-      <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+      <TextInput label={TextConstant.names} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
 
         
         <NativeSelect   classNames={{input:'bgInput'}}   label="Module" data={module[0]?.children?.map(e => { return (e.children && e.children?.length > 0 ? { group: e.name!, items: e.children.map(m => ({ value: `${m.id}`, label: m.name! })) } : { label: e.name!, value: `${e.id}` }) })} />

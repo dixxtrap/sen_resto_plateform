@@ -71,7 +71,7 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
           </div>
           <div className="grow"></div>
          { product.reduction!=0&&<div>
-            <Badge className="ring-1 ring-secondary-500" variant="light">-{product.reduction!}%</Badge>
+            <Badge className="ring-1 hidden sm:visible ring-secondary-500" variant="light">-{product.reduction!}%</Badge>
           </div>}
         </Group>
      

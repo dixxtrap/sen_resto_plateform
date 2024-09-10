@@ -6,6 +6,7 @@ import { useState } from "react";
 import { DialogAlert } from "../../components/dialog";
 import { LoginForm } from "../../components/login/login_form";
 import { CategoryPageniationWidget } from "./widget/category_pagination_widget";
+import { Grid, GridCol } from "@mantine/core";
 // import { useGetCategoryBaseQuery } from "../../../cores/apis/api";
 
 export const PlateList = () => {
@@ -39,13 +40,13 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
               ))}
             </div> */}
             <CategoryPageniationWidget current={category} onclick={(id)=>setCategory(id)} ></CategoryPageniationWidget>
-            <div  className="grid grid-cols-1 max-sm:grid-cols-2   gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4  ">
+            <Grid    className="w-full  ">
               {products!.data.map((product) => (
-                <div onClick={()=>!isLogin&&setShowLogin(true)}>
-                <ProductItem product={product}  />
-                </div>
+                <GridCol span={{base:12, xs:6,sm:6, md:4, lg:3}} className="grow" onClick={()=>!isLogin&&setShowLogin(true)}>
+                <ProductItem  product={product}  />
+                </GridCol>
               ))}
-            </div>
+            </Grid>
           </div>
         </div>
       )}

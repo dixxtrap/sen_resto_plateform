@@ -1,26 +1,21 @@
-import { Paper, Text, Title, Overlay } from '@mantine/core';
+import { Paper, Image, Title, Box } from '@mantine/core';
 import classes from '../styles/banner_item.module.css'
 import { BannerDto } from '../../../../cores/models/banner.dto';
 import clsx from 'clsx';
 
 export const BannerItem=({banner}:{banner:BannerDto})=> {
   return (
-    <Paper shadow="md" p="0" h={{base:400}}   radius="lg"   style={{backgroundImage:`url(${banner.imageUrl})`}} className={clsx(classes.card,'relative overflow-hidden')}>
-        <Overlay color="#0000"  zIndex={1} className='w-auto' backgroundOpacity={0.05} >
-          <div className='flex h-[400px] backdrop-blur-lg'>
-        <img className='w-[400px] h-auto m-auto' src={banner.imageUrl}/>
+    <Paper shadow="md" p="0" h={{base:200}}   radius="lg"  className={clsx(classes.card,'relative overflow-hidden')}>
+      <div className='flex w-full h-full'>
+        <Box  w={{base:100, sm:120, lg:180}} className='h-full w-[200px] px-4 content-center'>
+        <Image src={banner.imageUrl} w={{base:80, sm:100, lg:150}} className='w-[200px] m-auto rounded-md  h-auto' />
+        </Box>
+        <div className='flex flex-col'>
+          <Title className='text-lg'>{banner.title}</Title>
+          <span className='min-w-min max-w-lg'>{banner.description}</span>
         </div>
-        </Overlay>
-      <div className='z-[1000] w-full bg-gradient-to-b  p-2 from-slate-900/70 to-transparent via-slate-900/40'>
+      </div>
        
-        <Title order={3} className={classes.title}>
-         {banner.title}
-        </Title>
-      </div>
-      <div className='z-[1000]  w-full bg-gradient-to-t  p-2 from-slate-900/70 to-transparent via-slate-900/40 '>
-      {/* <Avatar size={"lg"}/> */}
-      <Text  className='text-white line-clamp-2'>{banner.description } </Text>
-      </div>
     
     </Paper>
   );
