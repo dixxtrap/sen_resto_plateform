@@ -25,7 +25,7 @@ export const UserDetailsMobile=()=>{
     </Link>}>
     {/* Drawer content */}
     <Box className="flex  flex-col gap-5">
-      {links.map(e=><NavLink to={e.route} >
+      {links.map(e=><NavLink to={e.route}  onClick={close}>
         {({isActive})=><UnstyledButton  variant={isActive?"filled":"light"} >
                         <Flex className={clsx("font-bold gap-3", {"text-primary-500":isActive})}>
                         <e.icon  className="size-6"/>
