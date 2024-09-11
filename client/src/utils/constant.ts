@@ -1,4 +1,4 @@
-import { HomeIcon } from "@heroicons/react/24/outline";
+import { BuildingStorefrontIcon, HomeIcon, CakeIcon } from "@heroicons/react/24/outline";
 import { Ilink } from "./constant.interface";
 
 export const constant = {
@@ -8,7 +8,7 @@ export const constant = {
 
 export const links: Ilink[] = [
   { name: "Home", route: "" , icon:HomeIcon},
-  { name: "Restaurants", route: "company", icon:HomeIcon },
+  { name: "Restaurants", route: "company", icon:BuildingStorefrontIcon },
  
-  { name: "Produits", route: "product", icon:HomeIcon },
+  { name: "Produits", route: "product", icon:CakeIcon },
 ];

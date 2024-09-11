@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { baseApi } from "../../../cores/apis/api";
 import { Fetchingdata } from "../../components/fetching_data";
-import { Avatar, Text, Container, Group, Title, Alert } from "@mantine/core";
+import { Avatar, Text, Container, Group, Title, Alert, Box } from "@mantine/core";
 import { ProductItem } from "../product/widget/product_item";
 
 export const CompanyDetails = () => {
@@ -43,18 +43,25 @@ export const CompanyDetails = () => {
               </Text>
             </div>
           </Group>
-          <div className="absolute -bottom-[100px] right-10">
+          <Box bottom={{  base:-30,
+              sm:-50,
+md:-100}} className="absolute   right-10">
             <Avatar
-              radius={2}
-              className="w-auto  size-[200px] rounded-md"
+            h={{
+              base:60,
+              sm:100,
+md:200
+            }}
+             
+              className="w-auto  rounded-md"
               src={company.data?.data.imagePath}
             />
-          </div>
+          </Box>
         </Container>
         <div className="h-[100px]"></div>
         <Group
           display={"grid"}
-          className=" grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 my-10  sm:mx-10"
+          className=" p-1 gap-1 md:gap-4  grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 my-10  sm:mx-10"
         >
           {company.data?.data.productManagement?.map((e) => {
             return (
