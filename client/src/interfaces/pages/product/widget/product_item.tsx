@@ -34,9 +34,9 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
         title={
           <div className="flex gap-2">
             <Avatar src={product.parent?.imagePath} />
-            <div className="flex  flex-col gap-2">
+            <div className="flex  flex-col gap-1 md:gap-2">
               {" "}
-              <span>{product.name}</span>
+              <span  className="text-base md:text-lg">{product.name}</span>
               <span>{product.parent?.shortname}</span>
             </div>
           </div>
@@ -60,7 +60,7 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
             />
           </div>
           <div>
-            <Text fw={500}>{product.parent?.shortname}</Text>
+            <Text className="text-nowrap text-ellipsis " fw={500}>{product.parent?.shortname}</Text>
             <Text fz="xs" c="dimmed">
               preparation {product.cookingTime}
             </Text>
@@ -73,10 +73,10 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
      
         <Group flex={2}  gap={1}>
           <div className="flex flex-col">
-        <Text fw={700} className={classes.title} mt="xs">
+        <Text fw={700} className={clsx(classes.title, "text-base md:text-lg md:my-3 text-nowrap text-ellipsis")}>
           {product.name}
         </Text>
-        <div className="flex gap-3">
+        <div className="md:flex hidden  gap-3">
         {product.category?.slice(0, 3)?.map((c) => (
             <Pill radius={6}>{c.name}</Pill>
           ))}

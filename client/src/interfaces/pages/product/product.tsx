@@ -40,9 +40,9 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
               ))}
             </div> */}
             <CategoryPageniationWidget current={category} onclick={(id)=>setCategory(id)} ></CategoryPageniationWidget>
-            <Grid    className="w-full  ">
+            <Grid    className="w-full mt-4 gap-1 ">
               {products!.data.map((product) => (
-                <GridCol span={{base:6, xs:6,sm:6, md:4, lg:3}} className="grow" onClick={()=>!isLogin&&setShowLogin(true)}>
+                <GridCol p={{base:3,md:8}} span={{base:6,  md:4, lg:3}} className="grow" onClick={()=>!isLogin&&setShowLogin(true)}>
                 <ProductItem  product={product}  />
                 </GridCol>
               ))}
