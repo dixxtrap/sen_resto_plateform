@@ -26,7 +26,7 @@ export const CompanyDetails = () => {
        
             </Group>
             <div className='absolute md:-bottom-[100px] right-10'>
-            <Avatar radius={2}  className='w-auto  size-[100px]  md:size-[200px] rounded-md'  src={company.data?.data.imagePath}/>
+            <Avatar radius={2}  className='w-auto  h-[100px]  md:h-[200px] rounded-md'  src={company.data?.data.imagePath}/>
             </div>
             </Container>
             <div className='md:h-[100px]'></div>

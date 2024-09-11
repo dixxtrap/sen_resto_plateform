@@ -18,7 +18,7 @@ export const Banners = () => {
       pt={20}
       classNames={{indicator:"bg-secondary-400 mt-10 bottom-0", }}
      className='bg-transparent '
-      slideSize={{base:'100%', sm:200, lg:600}}
+      slideSize={{base:'100%', sm:"50%", lg:600}}
       slideGap="lg"
       
      

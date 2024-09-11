@@ -8,11 +8,13 @@ import { handlePreviewV2 } from "../../utils/handle_preview";
 import { BannerDto } from "../../../core/models/banner.dto";
 import { TextConstant } from "../../../core/data/textConstant";
 import { useForm } from "@mantine/form";
-import { Textarea, TextInput } from "@mantine/core";
-import {  DateTimePicker } from '@mantine/dates';
+import { TextInput } from "@mantine/core";
+import {  DateInput } from '@mantine/dates';
+import { Fetchingdata } from "../../components/fetching_data";
+import { AppTextarea } from "../../components/form/app_textarea";
 export const BannerEdit = () => {
   const {id}=useParams()
-  const {data, isSuccess:isOldSuccess,}=useGetBannerByIdQuery(id!);
+  const old=useGetBannerByIdQuery(id!);
   const [update,{isSuccess, isLoading, isError, error}]=useUpdateBannerMutation();
   const {handlerFile, preview, setPreview, file}=handlePreviewV2({previewImage:undefined})
   const form=useForm();
@@ -21,21 +23,22 @@ export const BannerEdit = () => {
     update({file:file!,id:id!, body:data as BannerDto});
   });
   useEffect(() => {
-    if(data){
-      setPreview(data.data.imageUrl)
+    if(old && old.data){
+      setPreview(old.data.data.imageUrl)
       form.setValues({
-        title:data.data.title,
-        description:data.data.description,
-        type: data.data.type,
-        start: data.data.start,
-        end: data.data.end,
+        title:old.data.data.title,
+        description:old.data.data.description,
+        type: old.data.data.type,
+        start: new Date(old.data.data.start!),
+        end: new Date(old.data.data.end!),
         
       })
     }
-  }, [isSuccess,data])
+  }, [isSuccess,old.data])
 
   return (
-   <CustomForm onSubmit={_onsubmit} isError={isError} isLoading={isLoading||isOldSuccess} error={error} isSuccess={isSuccess} >
+    <Fetchingdata {...old}>
+   <CustomForm onSubmit={_onsubmit} isError={isError} isLoading={isLoading} error={error} isSuccess={isSuccess} >
     <Input label="Image" >
         <input
           type="file"
@@ -48,16 +51,17 @@ export const BannerEdit = () => {
         <PreviewerImg preview={preview!} />
       </Input>
    
-    <TextInput label={TextConstant.label} {...form.getInputProps('title')} className="input"/>
+    <TextInput label={TextConstant.label} {...form.getInputProps('title')} />
   
    
-    <Textarea  label={TextConstant.description} {...form.getInputProps('description')} className="input"/>
+    <AppTextarea  form={form}/>
  
     
-    <DateTimePicker   {...form.getInputProps('start')} className="input"/>
+    <DateInput   {...form.getInputProps('start')} />
     
-    <DateTimePicker   {...form.getInputProps('end')}  className="input"/>
+    <DateInput   {...form.getInputProps('end')}  />
     
    </CustomForm>
+   </Fetchingdata>
   )
 }
