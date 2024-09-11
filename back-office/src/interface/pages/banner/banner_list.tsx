@@ -3,7 +3,7 @@ import { TablePagination } from "../../components/table/table"
 import { PathRouter } from "../../router/path.route"
 import { formatDate } from "../../utils/date_format"
 import { DeleteBanner } from "./widgets/delete_banner"
-import { Table } from "@mantine/core"
+import { Table, Text } from '@mantine/core';
 import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item"
 
 export const BannerList = () => {
@@ -18,7 +18,11 @@ export const BannerList = () => {
           <span>  {e.title}</span>
             </div>
           </Table.Td>
-        <Table.Td>{e.description}</Table.Td>
+        <Table.Td >
+          <div className="w-[200px]">
+          <Text truncate="end" className=" w-full   ">{e.description}</Text>
+          </div>
+         </Table.Td>
         <Table.Td>{e.type}</Table.Td>
         <Table.Td>{formatDate(e.start!)}</Table.Td>
         <Table.Td>{formatDate(e.end!)}</Table.Td>

@@ -2,15 +2,13 @@ import { ProductDto } from "../../../../cores/models/product";
 import {
   Card,
   Image,
-  ActionIcon,
   Group,
   Text,
   Avatar,
-  useMantineTheme,
-  rem,
   Pill,
   Modal,
   Badge,
+  Button,
 } from "@mantine/core";
 
 import classes from "../style/product_item.module.css";
@@ -18,16 +16,14 @@ import classes from "../style/product_item.module.css";
 import { PlateItemPoppup } from "./order_poppup";
 
 import {
-  ShoppingBagIcon,
-  BookmarkIcon,
-  HeartIcon,
+  PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { useDisclosure } from "@mantine/hooks";
 import { securityApi } from "../../../../cores/apis/security.slice";
+import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 
 export const ProductItem = ({ product }: { product: ProductDto }) => {
-  const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure();
   const profile=securityApi.useProfileQuery("");
   console.log(import.meta.env.CURRENCY);
@@ -71,7 +67,7 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
           </div>
           <div className="grow"></div>
          { product.reduction!=0&&<div>
-            <Badge className="ring-1 ring-secondary-500" variant="light">-{product.reduction!}%</Badge>
+            <Badge className="ring-1 hidden sm:visible ring-secondary-500" variant="light">-{product.reduction!}%</Badge>
           </div>}
         </Group>
      
@@ -102,15 +98,15 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
           </div>
           </Group>
         </Card.Section>
-        <Card.Section className={classes.footer+' px-2 py-1'}>
+        <Card.Section className={' px-2 py-1'}>
           <Group justify="space-between">
-            <Pill size="lg" radius={6} className="bg-gray-500/20 text-black" variant="light">
-            <Text  fw={900} p={2} lineClamp={1}>
+           
+            <Text  fw={900} className="text-2xl" c={"primary.5"} p={2} lineClamp={1}>
               {product.price} {import.meta.env.VITE_REACT_CURRENCY}
             </Text>
-            </Pill>
+           
             <Group gap={0}>
-              <ActionIcon variant="subtle" color="gray">
+              {/* <ActionIcon variant="subtle" color="gray">
                 <HeartIcon
                   style={{ width: rem(20), height: rem(20) }}
                   color={theme.colors.red[6]}
@@ -121,10 +117,14 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
                   style={{ width: rem(20), height: rem(20) }}
                   color={theme.colors.yellow[6]}
                 />
-              </ActionIcon>
-              <ActionIcon variant="subtle" onClick={ ()=>profile.isSuccess?toggle():null} color="gray">
-                <ShoppingBagIcon style={{ width: rem(20), height: rem(20) }} />
-              </ActionIcon>
+              </ActionIcon> */}
+              <Button p={4} variant="filled" className="text-white" onClick={ ()=>profile.isSuccess?toggle():null} color="primary.5">
+                <div className="flex items-center">
+                <PlusCircleIcon className=" size-4" />
+                <ShoppingCartIcon className="text-white size-8"   />
+
+                </div>
+              </Button>
             </Group>
           </Group>
         </Card.Section>

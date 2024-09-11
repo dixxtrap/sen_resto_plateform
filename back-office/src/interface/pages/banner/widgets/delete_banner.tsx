@@ -10,6 +10,6 @@ export const DeleteBanner = ({id}:{id:number}) => {
         deleteBaneer(id+'')
     })
   return (
-    <CustomForm confirmeBefore={true} nextText='supprimer' validationText='supprimer' btnClassName='last_td reject' onSubmit={_onSubmit}></CustomForm>
+    <CustomForm confirmeBefore={true} nextText='supprimer' validationText='supprimer' btnClassName='last_td bg-secondary-500 font-normal' onSubmit={_onSubmit}></CustomForm>
   )
 }

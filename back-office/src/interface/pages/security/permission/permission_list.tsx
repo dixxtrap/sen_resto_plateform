@@ -4,10 +4,10 @@ import { Status } from '../../../components/status'
 import { TablePagination } from '../../../components/table/table'
 
 export const PermissionList = () => {
-const {data:permissions }=useGetPermissionQuery("")
+const {data:permissions, ...state }=useGetPermissionQuery("")
   return (
     <div>
-      <TablePagination isPaginated={false} createPath='/permission/create' title='Listes Les Permissions' th={["Nom", "Module","Action","Code",  "Date de creation", ""]}  trs={<>
+      <TablePagination {...state}isPaginated={false} createPath='/permission/create' title='Listes Les Permissions' th={["Nom", "Module","Action","Code",  "Date de creation", ""]}  trs={<>
       {permissions?.map((item)=><tr key={item.id}>
         <td className='truncate max-w-[150px] pr-2'>{item.name}</td>
         <td className="lowercase">{item.module?.name}</td>

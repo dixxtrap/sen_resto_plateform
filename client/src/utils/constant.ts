@@ -1,13 +1,14 @@
+import { HomeIcon } from "@heroicons/react/24/outline";
 import { Ilink } from "./constant.interface";
 
 export const constant = {
   app_name: "Sen Resto",
-  filePath:"/v1/"
+  filePath:"/v1/",
 };
 
 export const links: Ilink[] = [
-  { name: "Home", route: "" },
-  { name: "Restaurants", route: "company" },
+  { name: "Home", route: "" , icon:HomeIcon},
+  { name: "Restaurants", route: "company", icon:HomeIcon },
  
-  { name: "Produitss", route: "product" },
+  { name: "Produits", route: "product", icon:HomeIcon },
 ];

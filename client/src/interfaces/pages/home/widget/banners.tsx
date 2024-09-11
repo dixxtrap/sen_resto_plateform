@@ -10,14 +10,15 @@ export const Banners = () => {
   return (
    <Fetchingdata {...banners}>
 {banners.data?.data?.length!>0&&<div style={{background:`url(${headerBgImg})`, backgroundSize:'100%'}} className='bg-white/30'>
-<div className='bg-white/20 backdrop-blur-md py-10'>
+<div className='bg-white/20 backdrop-blur-sm '>
 <Carousel
       withIndicators
-      height={400}
+      height={""}
       p={10}
       pt={20}
-     className='bg-transparent'
-      slideSize={{base:'400'}}
+      classNames={{indicator:"bg-secondary-400 mt-10 bottom-0", }}
+     className='bg-transparent '
+      slideSize={{base:'100%', sm:"50%", lg:600}}
       slideGap="lg"
       
      
