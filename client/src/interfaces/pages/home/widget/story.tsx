@@ -51,7 +51,7 @@ export const Story = () => {
     <Fetchingdata {...storyGroup}>
         <Carousel
       
-      h={{base:rem(120), sm:rem(400)}}
+      h={{base:rem(120), sm:rem(350)}}
       p={10}
       pt={10}
      className='bg-transparent'
