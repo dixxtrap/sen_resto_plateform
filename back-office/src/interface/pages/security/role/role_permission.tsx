@@ -74,6 +74,7 @@ useEffect(() => {
       </div>
       
       <TablePagination
+      {...role}
         isPaginated={false}
         th={[
           "Label",
