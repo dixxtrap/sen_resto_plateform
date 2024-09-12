@@ -14,7 +14,7 @@ import {
   useSignoutMutation,
 } from "../../core/features/security.slice";
 import { Alert } from "./alert_success";
-import { ActionIcon, Text, Button, Menu, rem, Group } from "@mantine/core";
+import { ActionIcon, Text, Button, Menu, rem, Group, Indicator } from "@mantine/core";
 import { ThemeToggler } from "./theme_toggler/theme_toggler";
 import { multiSelectStyle } from "./form/custom_styles";
 import ArrowRightStartOnRectangleIcon from "@heroicons/react/20/solid/ArrowRightStartOnRectangleIcon";
@@ -78,39 +78,39 @@ export const Header: FC<{
             <div className="grow flex items-center gap-x-1"></div>
             <ThemeToggler />
 
-            <Group className="gap-0.5 py-0.5 ring-1 ring-secondary-900/10 dark:ring-secondary-400/10 rounded-lg px-1 bg_card">
-              <Button
+            <Group className="gap-6 py-0.5 ring-1 ring-secondary-900/10 dark:ring-secondary-400/10 rounded-lg px-1 bg_card">
+            
+            <Indicator offset={0} size={16} label={"0"}>  <ActionIcon
                 radius={10}
                 type="button"
                 color="secondary.5"
                 variant="transparent"
-                className="px-2"
+                className=""
               >
+            
                 <ChatBubbleBottomCenterIcon
-                  className="size-6 bg-primary-600 text-white p-0.5 rounded-full"
+                  className="size-6 bg-slate-900 text-white p-0.5 rounded-full"
                   aria-hidden="true"
                 />{" "}
                 <span className="sr-only">View notifications</span>
-                <Text className="font-bold ml-3 font-sans text-primary-600  leading-4">
-                  0
-                </Text>
-              </Button>
-              <Button
+              </ActionIcon>
+              </Indicator>
+              <Indicator offset={0} size={16} label={0}>
+              <ActionIcon
                 radius={10}
                 type="button"
                 variant="transparent"
-                className="px-2"
+                
                 color="primary.5"
               >
                 <BellIcon
-                  className="size-6 bg-primary-600 text-white p-0.5 rounded-full"
-                  aria-hidden="true"
+                  className="size-6 bg-slate-900 text-white p-0.5 rounded-full"
+                  
                 />{" "}
                 <span className="sr-only">View notifications</span>
-                <Text className="font-bold ml-3 font-sans text-primary-600  leading-4">
-                  0
-                </Text>
-              </Button>
+               
+              </ActionIcon>
+              </Indicator>
               {/* Separator */}
 
               <Menu
@@ -120,9 +120,10 @@ export const Header: FC<{
                 withArrow
               >
                 <Menu.Target>
-                  <Button radius={10} variant="transparent" className="px-1">
-                    <UserIcon className="size-6 p-1 rounded-full text-white bg-primary-600" />
-                  </Button>
+                  
+                  <ActionIcon radius={10} variant="transparent" >
+                    <UserIcon className="size-6 p-1 rounded-full text-white bg-slate-900" />
+                  </ActionIcon>
                 </Menu.Target>
 
                 <Menu.Dropdown>

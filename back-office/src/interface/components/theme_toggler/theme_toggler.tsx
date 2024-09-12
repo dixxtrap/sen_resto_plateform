@@ -11,10 +11,10 @@ export const  ThemeToggler=()=> {
     <Button
     variant="filled"
     radius={10}
-    color='black'
+   
     size="md"
       onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
-      className="px-3  bg-slate-900"
+      className="px-3  bg-input"
 
      
     >
