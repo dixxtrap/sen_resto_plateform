@@ -6,7 +6,7 @@ import { useState } from "react";
 import { DialogAlert } from "../../components/dialog";
 import { LoginForm } from "../../components/login/login_form";
 import { CategoryPageniationWidget } from "./widget/category_pagination_widget";
-import { Divider, Grid, GridCol } from "@mantine/core";
+import {  Grid, GridCol } from "@mantine/core";
 // import { useGetCategoryBaseQuery } from "../../../cores/apis/api";
 
 export const PlateList = () => {
