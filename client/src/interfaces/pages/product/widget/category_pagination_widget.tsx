@@ -21,7 +21,7 @@ const form=useForm({initialValues:{
 }})
   return (
     <Fetchingdata {...category}>
-        <div className='sticky bg-white -top-10 z-50'>
+        <div className='sticky bg-white border-b border-gray-500/40   -top-10 z-50'>
         <div className="flex  w-full gap-2 py-3">
             <Select label="Categori" data={categoryBase.data?.data.map(c=>({label:c.name! ,value:`${c.id}`}))}>
 

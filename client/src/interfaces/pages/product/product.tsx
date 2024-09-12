@@ -6,7 +6,7 @@ import { useState } from "react";
 import { DialogAlert } from "../../components/dialog";
 import { LoginForm } from "../../components/login/login_form";
 import { CategoryPageniationWidget } from "./widget/category_pagination_widget";
-import { Grid, GridCol } from "@mantine/core";
+import { Divider, Grid, GridCol } from "@mantine/core";
 // import { useGetCategoryBaseQuery } from "../../../cores/apis/api";
 
 export const PlateList = () => {
@@ -22,25 +22,14 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
       {showLogin && <DialogAlert   onClose={()=> setShowLogin(false)} isOpen={showLogin}>
         <LoginForm close={close} action={()=>setShowLogin(false)}/></DialogAlert>}
       {products && isSuccess && (
-        <div className="bg-white ">
-          <div className="mx-auto  px-2  max-w-7xl    ">
+        <div className="bg-white  ">
+          <div className="mx-auto flex  flex-col  gap-2   px-2  max-w-7xl    ">
             <h2 className="sr-only">Products</h2>
             
-            {/* <div className="grid grid-cols-8 gap-5 gap-x-3 flex-wrap py-2 pb-8">
-              {tags.slice(0, 8).map((tag) => (
-                <div
-                  className={clsx(
-                    "whitespace-nowrap text-center bg-gradient-to-tr  font-bold    ring-inset rounded-2xl py-1 px-6 text-sm",
-                    tag.id! % 5 == 0 ?
-                      "from-red-500 to-red-300 text-white  ring-red-100 ring-2  ":"from-slate-500/20 to-slate-500/5  ring-1 outline-2 text-gray-500 ring-gray-200"
-                  )}
-                >
-                  {tag.name}
-                </div>
-              ))}
-            </div> */}
+          
             <CategoryPageniationWidget current={category} onclick={(id)=>setCategory(id)} ></CategoryPageniationWidget>
-            <Grid    className="w-full mt-4 gap-1 ">
+           
+            <Grid    className="w-full pt-4 gap-1 ">
               {products!.data.map((product) => (
                 <GridCol p={{base:3,md:8}} span={{base:6,  md:4, lg:3}} className="grow" onClick={()=>!isLogin&&setShowLogin(true)}>
                 <ProductItem  product={product}  />
