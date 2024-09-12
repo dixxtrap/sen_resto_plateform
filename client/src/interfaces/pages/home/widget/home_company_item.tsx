@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { CompanyDto } from "../../../../cores/models/company.dto"
-import { Card, Image, Text, Badge, Group, Space, Spoiler, Avatar, BackgroundImage, Box } from '@mantine/core';
+import { Card, Image, Text, Space, BackgroundImage, Box } from '@mantine/core';
 
 
 export const HomeCompanyItem = ({company}:{company:CompanyDto}) => {
