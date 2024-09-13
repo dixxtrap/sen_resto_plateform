@@ -14,7 +14,7 @@ import {
   useSignoutMutation,
 } from "../../core/features/security.slice";
 import { Alert } from "./alert_success";
-import { ActionIcon, Text, Button, Menu, rem, Group, Indicator } from "@mantine/core";
+import { ActionIcon, Menu, rem, Group, Indicator } from "@mantine/core";
 import { ThemeToggler } from "./theme_toggler/theme_toggler";
 import { multiSelectStyle } from "./form/custom_styles";
 import ArrowRightStartOnRectangleIcon from "@heroicons/react/20/solid/ArrowRightStartOnRectangleIcon";

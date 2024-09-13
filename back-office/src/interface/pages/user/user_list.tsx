@@ -11,9 +11,10 @@ export const UserList = () => {
     <TablePagination 
     {...users}
     title='Agents' 
+    isPaginated
     subtitle='Liste des Agents'
     createPath='/user/create'
-    th={["Nom & Prenom", "Role", "Adresse", "Téléphone","status", ""]}
+    th={["Nom & Prenom","Email", "Role", "Adresse", "Téléphone","status", ""]}
     trs={
         <>
                  {users.data?.data.map((user) => (
@@ -32,7 +33,9 @@ export const UserList = () => {
                             
                             </div>
                           </Table.Td>
-                          <Table.Td className="">{user!.role!.name??""}   </Table.Td>
+                          <Table.Td className="">{user.email??""}   </Table.Td>
+
+                          <Table.Td className="">{user.role!.name??""}   </Table.Td>
       
                         
                         
