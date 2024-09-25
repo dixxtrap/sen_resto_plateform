@@ -1,0 +1,1 @@
+export const inputRequirementValidation=(value:string)=>(value.length<=0)? "champ obligatoire" :null;

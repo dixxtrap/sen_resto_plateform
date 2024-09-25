@@ -3,8 +3,8 @@ import { ChildEntity } from 'typeorm/decorator/entity/ChildEntity';
 import { Partner, PartnerDto } from './partner.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Column } from 'typeorm/decorator/columns/Column';
-import { OneToMany } from 'typeorm/decorator/relations/OneToMany';
-import { Story } from './story.entity';
+import { EstablishmentType } from './establishment_type';
+import { ManyToOne } from 'typeorm/decorator/relations/ManyToOne';
 @ChildEntity()
 export class CompanyRestaurantBase extends Partner {
   @Column()
@@ -17,6 +17,10 @@ export class CompanyRestaurantBase extends Partner {
   closingTime: string;
   @Column('time', { default: '08:00:00' })
   openingTime: string;
+  @ManyToOne(()=>EstablishmentType,(alias)=>alias.company)
+  establishmentType:EstablishmentType
+  @Column()
+  establishmentTypeId:number
 }
 
 @ChildEntity()

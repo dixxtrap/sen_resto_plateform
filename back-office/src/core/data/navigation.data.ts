@@ -23,7 +23,8 @@ import {
   HomeModernIcon,
   GiftIcon,
   MegaphoneIcon,
-  RocketLaunchIcon
+  RocketLaunchIcon,
+  AdjustmentsHorizontalIcon
 } from "@heroicons/react/24/solid";
 import {
   ForwardRefExoticComponent,
@@ -51,7 +52,12 @@ export const navigationData: INavigation[] = [
     icon: HomeIcon,
     permissions: [{ code: "*", type: "*" }],
   },
-
+  {
+    name: "Type d'Etablissement",
+    href: "/establishment_type",
+    icon: AdjustmentsHorizontalIcon,
+    permissions: [{ code: "*", type: "*" }],
+  },
   {
     name: "Organisation",
     href: "/organisation",

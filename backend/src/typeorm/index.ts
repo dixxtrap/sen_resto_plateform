@@ -6,6 +6,7 @@ import {
 } from './company_restaurant.entity';
 import { ModuleEntity } from './module.entity';
 import { Partner } from './partner.entity';
+import { Icon } from './icon.entity';
 import { PaymentType } from './payment_type.entity';
 import { Permission } from './permission.entity';
 import { Role } from './role.entity';
@@ -44,6 +45,9 @@ import { DataSource } from 'typeorm/data-source/DataSource';
 import { User } from './user.entity';
 import { Story } from './story.entity';
 import { StoryGroup } from './story_group.entity';
+import { EstablishmentType } from './establishment_type';
+import { CompanyCategory } from './company_category.entity';
+import { Message } from './message.entity';
 
 // export
 export {
@@ -59,6 +63,7 @@ export const entities = [
   Partner,
   CompanyRestaurantBase,
   CompanyRestaurant,
+  CompanyCategory,
   Coorporate,
   Deliver,
   Weekday,
@@ -85,6 +90,7 @@ export const entities = [
   CardAllocationDetails,
   Transac,
   WalletStatus,
+  EstablishmentType,
   OrderProduct,
   Commission,
   OtpConfig,
@@ -96,6 +102,8 @@ export const entities = [
   GiftHistory,
   Story,
   StoryGroup,
+  Icon,
+  Message
 ];
 
 
@@ -106,6 +114,16 @@ export const entityProviders = [
     inject: ['DATA_SOURCE'],
   },
   {
+    provide: EntityProviderEnum.ESTABLISHMENT_TYPE,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(EstablishmentType),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.ICON,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Icon),
+    inject: ['DATA_SOURCE'],
+  },
+  {
     provide: EntityProviderEnum.COMPANY,
     useFactory: (dataSource: DataSource) => dataSource.getRepository(CompanyRestaurant ),
     inject: ['DATA_SOURCE'],
@@ -113,6 +131,11 @@ export const entityProviders = [
   {
     provide: EntityProviderEnum.RESTAURANT,
     useFactory: (dataSource: DataSource) => dataSource.getRepository(Restaurant ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.COMPANY_CATEGORY,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(CompanyCategory),
     inject: ['DATA_SOURCE'],
   },
   {
@@ -158,6 +181,11 @@ export const entityProviders = [
   {
     provide: EntityProviderEnum.PERMISSION,
     useFactory: (dataSource: DataSource) => dataSource.getRepository(Permission ),
+    inject: ['DATA_SOURCE'],
+  },
+  {
+    provide: EntityProviderEnum.MESSAGE,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Message ),
     inject: ['DATA_SOURCE'],
   },
   {

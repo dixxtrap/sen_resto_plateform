@@ -40,9 +40,10 @@ export class CompanyRestaurantService {
         }),
       );
   }
-  create({ body, by }: { body: CompanyRestaurantBaseDto; by: UserDto }) {
+ async  create({ body, by , background, file}: { body: CompanyRestaurantBaseDto; by: UserDto, file:Express.Multer.File, background:Express.Multer.File }) {
 
     console.log(body)
+ 
     return this.repos
       .save(
         this.repos.create({
@@ -53,6 +54,13 @@ export class CompanyRestaurantService {
       )
       .then(async (result) => {
         // if (result) await this.reposClosure.update({childId:result.id,}, {parentId:result.partnerId});
+        if(file){
+          body.imagePath= await this.s3Service.createFileToS3AndDeleteLocal({file:file})
+        }
+        if(background){
+          body.backgroundPath= await this.s3Service.createFileToS3AndDeleteLocal({file:background})
+        }
+       await  this.repos.update({id:result.id},body);
         if (result) return HttpExceptionCode.SUCCEEDED;
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
@@ -66,10 +74,13 @@ export class CompanyRestaurantService {
     id,
     body,
     file,
+    background
   }: {
     id: number;
     body: CompanyRestaurantBaseDto;
     file?: Express.Multer.File;
+    background
+    ?: Express.Multer.File;
   }) {
     console.log(body);
     return this.repos
@@ -79,6 +90,12 @@ export class CompanyRestaurantService {
           body.imagePath = await this.s3Service.uploadFileToS3AndDeleteLocal({
             file,
             oldPath: old.imagePath,
+          });
+        }
+        if (old && background && body.backgroundPath && old.backgroundPath !== body.backgroundPath) {
+          body.backgroundPath = await this.s3Service.uploadFileToS3AndDeleteLocal({
+         file:   background,
+            oldPath: old.backgroundPath,
           });
         }
         return this.repos.update({ id: Equal(id) }, this.repos.create(body)).then((result) => {
@@ -94,7 +111,7 @@ export class CompanyRestaurantService {
   }
   getAll() {
     return this.repos
-      .find()
+      .find({relations:{establishmentType:true}})
       .then((result) => {
         if (result)
           return Promise.all(

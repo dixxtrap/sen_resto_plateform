@@ -18,11 +18,13 @@ import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
 import { AddressForm } from "../../components/form/address_form";
 import { AppTextarea } from "../../components/form/app_textarea";
 import { CustomSwitchInput } from "../../components/switch";
-import { TextInput } from "@mantine/core";
+import { Select, TextInput } from "@mantine/core";
 import { Fetchingdata } from "../../components/fetching_data";
+import { establishmentTypeApi } from "../../../core/features/establishment_type.slice";
 
 export const RestaurantEdit = () => {
   const { id } = useParams();
+  const {data:establishmentType, }=establishmentTypeApi.useGetAllQuery('')
   const [preview, setPreview]=useState<string>();
   const [file, setFile]=useState<File>();
   const [changed, setChanged]=useState< boolean>(false);
@@ -51,7 +53,8 @@ export const RestaurantEdit = () => {
       isActive:oldaData.isActive,
       closingTime:oldaData.closingTime,
       openingTime:oldaData.openingTime,
-    location:oldaData.location
+    location:oldaData.location,
+    establishmentTypeId:oldaData.establishmentTypeId,
     })
   
     // form.setFieldValue("address.streetAddress", old.data.data.description)
@@ -100,6 +103,18 @@ export const RestaurantEdit = () => {
 
       <AppTextarea form={form}/>
         <AddressForm form={ form} isUpdatable />
+        {establishmentType && (
+            <Select
+              {...form.getInputProps("establishmentTypeId")}
+              error={form.errors["establishmentTypeId"]}
+              key={form.key("establishmentTypeId")}
+              label={"Type"}
+              data={establishmentType!.data!.map((e) => ({
+                label: e.name!,
+                value: `${e.id}`,
+              }))}
+            />
+          )}
         <LaltitudeLongituide form={ form } />
         <CustomSwitchInput itemKey="isActive" form={form}/>
       <div className="flex gap-8 w-full flex-wrap">

@@ -42,6 +42,8 @@ export  class Partner  {
   email: string;
   @Column({ nullable: true, default: null })
   imagePath: string;
+  @Column({ nullable: true, default: null })
+  backgroundPath: string;
   @ManyToOne(() => City)
   city: City;
   @Column({ nullable: true, default: null })
@@ -85,6 +87,8 @@ export class PartnerDto {
   email: string;
   @ApiProperty()
   imagePath: string;
+  @ApiProperty()
+  backgroundPath: string;
   @ApiProperty()
   cityId: number;
   @ApiProperty()

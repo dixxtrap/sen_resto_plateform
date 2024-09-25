@@ -11,11 +11,14 @@ export const companyApi = createApi({
   tagTypes: ["company",'security'],
 
   endpoints: (builder) => ({
-    createCompany: builder.mutation<BaseResponse<CompanyDto>| WsMessage, CompanyDto>({
-      query: (company: CompanyDto) => ({
+    createCompany: builder.mutation<BaseResponse<CompanyDto>| WsMessage, {company:CompanyDto, file:File, background:File}>({
+      query: ({file, background, company}) => ({
         url: "/company_restaurant/create",
         method: "POST",
-        data: company as CompanyDto,
+        data: {...company, file, background},
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }),
       transformErrorResponse: errorTrasform,
       invalidatesTags: ["company"],
@@ -35,11 +38,11 @@ getCompanyById: builder.query<BaseResponse<CompanyDto> ,string>({
         transformErrorResponse: errorTrasform,
         providesTags:["company",'security']
 }),
-updateCompanyById: builder.mutation<BaseResponse<CompanyDto>, { id: number, company: CompanyDto, file:File }>({
-        query: ({id,company, file}) => ({
+updateCompanyById: builder.mutation<BaseResponse<CompanyDto>, { id: number, company: CompanyDto, file:File , background:File}>({
+        query: ({id,company, file, background}) => ({
           url: `/company_restaurant/update/${id}`,
           method: "PUT",
-          data: {...company, file},
+          data: {...company, file, background},
           headers: {
             "Content-Type": "multipart/form-data",
           },

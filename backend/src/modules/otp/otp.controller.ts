@@ -10,4 +10,5 @@ export class OtpController {
   getAll() {
     return this.service.getAll();
   }
+  
 }

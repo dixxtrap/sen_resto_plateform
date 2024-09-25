@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
         element: <Restaurant />,
       },
       {
-        path: "company",
+        path: "establishment/:id",
         element: <Company />,
       },
       {

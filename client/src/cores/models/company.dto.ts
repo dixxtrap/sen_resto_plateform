@@ -11,6 +11,7 @@ export enum CompanyEnum {
 export class CompanyDto {
   id?: number;
   name?: string;
+  backgroundPath?: string;
   email?: string;
   shortname?: string;
   description?: string;

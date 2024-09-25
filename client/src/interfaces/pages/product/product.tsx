@@ -19,19 +19,18 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
   return (
     <>
       {isLoading && <div>loding....</div>}
-      {showLogin && <DialogAlert   onClose={()=> setShowLogin(false)} isOpen={showLogin}>
-        <LoginForm close={close} action={()=>setShowLogin(false)}/></DialogAlert>}
+      
       {products && isSuccess && (
         <div className="bg-white  ">
-          <div className="mx-auto flex  flex-col  gap-2   px-2  max-w-7xl    ">
+          <div className="mx-auto flex  flex-col  gap-2      ">
             <h2 className="sr-only">Products</h2>
             
           
             <CategoryPageniationWidget current={category} onclick={(id)=>setCategory(id)} ></CategoryPageniationWidget>
            
-            <Grid    className="w-full pt-4 gap-1 ">
-              {products!.data.map((product) => (
-                <GridCol p={{base:3,md:8}} span={{base:6,  md:4, lg:3}} className="grow" onClick={()=>!isLogin&&setShowLogin(true)}>
+            <Grid     className="w-full pt-4 gap-1  p-3">
+              {products.data.map((product) => (
+                <GridCol key={product.name+" "+ product.id} p={{base:3,md:8}} span={{base:12,sm:6,  md:4, lg:4}} className="grow" onClick={()=>!isLogin&&setShowLogin(true)}>
                 <ProductItem  product={product}  />
                 </GridCol>
               ))}

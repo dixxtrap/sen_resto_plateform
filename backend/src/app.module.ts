@@ -28,6 +28,9 @@ import { OrderModule } from './modules/order/order.module';
 import { DatabaseModule } from './modules/database/database.module';
 import { GiftModule } from './modules/gift/gift.module';
 import { StoryModule } from './modules/story/story.module';
+import { CompanyCategoryModule } from './modules/company_category/company_category.module';
+import { EstablishmentTypeModule } from './modules/establishment_type/establishment_type.module';
+import { IconModule } from './modules/icon/icon.module';
 @Module({
   imports: [
     DatabaseModule,
@@ -58,7 +61,10 @@ import { StoryModule } from './modules/story/story.module';
     ProductRaitingModule,
     CityModule,
     GiftModule,
-    StoryModule
+    StoryModule,
+    CompanyCategoryModule,
+    EstablishmentTypeModule,
+    IconModule
   ],
   controllers: [AppController],
   providers: [AppService],

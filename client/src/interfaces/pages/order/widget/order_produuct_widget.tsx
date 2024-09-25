@@ -22,7 +22,7 @@ export const OrderProductWidget:FC<ProductOrderWidgetProps> = ({orderProduct, ne
      {orderProduct.productHistory?.product?.file![0].path && (
         <img
           src={orderProduct.productHistory?.product?.file![0].path}
-          className="w-[200px] md:w-[300px] rounded-md"
+          className="w-[200px] md:w-[200px] rounded-md"
         />
       )}
       <button onClick={next}>

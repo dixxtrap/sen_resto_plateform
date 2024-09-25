@@ -1,14 +1,28 @@
+import { Box, Image, Text } from "@mantine/core";
+import { baseApi } from "../../../cores/apis/api";
 
-import { headerBgImg } from '../../../cores/constantes/img'
-import { Str } from '../../../cores/constantes/str'
+import { Fetchingdata } from "../fetching_data";
+import { Link } from "react-router-dom";
 
 export const AfterHeader = () => {
+  const { data, ...state } = baseApi.useGetEtsQuery();
   return (
-    <div className=' h-[300px] md:h-[25vw] relative '>
-<div style={{background:`url(${headerBgImg})`, backgroundSize:'100%' }}  className='fixed top-0    h-full w-full -z-10' ></div>
-<div className='bg-slate-900/30 backdrop-blur-md w-full h-full flex items-center z-10  '>
-  <span className='m-auto text-6xl md:text-8xl  text-primary-500 font-serif font-bold '>{Str.appName}</span>
-</div>
-    </div>
-  )
-}
+    <Fetchingdata {...state}>
+      <div className=" flex flex-col -mt-16 items-center pt-16 relative bg-[#ffc244]">
+        <Text className="text-xl md:text-4xl  p-4">Bienvenu sur <span className="font-bold">{import.meta.env.VITE_APP_NAME}</span> </Text>
+        <div className="  pb-20 md:pt-5 flex w-full items-start justify-center gap-2 md:gap-10 ">
+          {data?.data.map((e) => (
+            <Box component={Link} to={`/establishment/${e.id}`} className=" flex w-24  group items-center  daxx  flex-col ring-gray-300  ">
+              <div className="w-auto egg border border-r-8 border-secondary-500/80  bg-white/70 p-3 backdrop-blur-lg">
+                <Image className="size-10 md:size-14  ransform transition-transform duration-500 ease-in-out group-hover:scale-125 m-2" src={e.imagePath!} />
+              </div>
+              <Text className="text-xs line-clamp-2   text-center md:text-base">{e.name}</Text>
+            </Box>
+          ))}
+          
+        </div>
+        <div className="h-5 md:h-20 deco-top deco-bottom bg-white w-full"></div>
+      </div>
+    </Fetchingdata>
+  );
+};

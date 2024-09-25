@@ -23,6 +23,7 @@ import { orderApi } from "./order.slice";
 import { deliverApi } from "./deliver.slice";
 import { giftApi } from "./gift.slice";
 import { storyApi } from "./story.slice";
+import { establishmentTypeApi } from "./establishment_type.slice";
 const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
@@ -48,7 +49,7 @@ const store = configureStore({
     [deliverApi.reducerPath]: deliverApi.reducer,
     [giftApi.reducerPath]:giftApi.reducer,
     [storyApi.reducerPath]:storyApi.reducer,
-    
+    [establishmentTypeApi.reducerPath]:establishmentTypeApi.reducer,
     theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -76,6 +77,7 @@ customerApi.middleware,
       deliverApi.middleware,
       giftApi.middleware,
       storyApi.middleware,
+      establishmentTypeApi.middleware
     ),
 });
 

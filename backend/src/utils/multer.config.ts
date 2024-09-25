@@ -36,29 +36,30 @@ export const fileInterCeptor = (path: string) =>
     }),
   });
   ;
+  export const storageCustom=diskStorage({
+    destination: (req, file, cb) => {
+      console.log('------------------destination file-------------------');
+      console.log(file);
+      console.log(file);
+      cb(null, `upload/img`);
+    }, // Dossier de destination où les fichiers téléchargés seront stockés
+    filename: (req, file, callback) => {
+      console.log(
+        '------------------destination file name-------------------',
+      );
+
+      const randomName = Array(32)
+        .fill(null)
+        .map(() => Math.round(Math.random() * 16).toString(16))
+        .join('');
+
+      return callback(null, `${randomName}${extname(file.originalname)}`);
+    },
+  });
   export const filesInterCeptor = (path: string) =>
     FilesInterceptor('file', 10,{
       dest: 'upload',
-      storage: diskStorage({
-        destination: (req, file, cb) => {
-          console.log('------------------destination file-------------------');
-          console.log(file);
-          console.log(file);
-          cb(null, `upload/${path}`);
-        }, // Dossier de destination où les fichiers téléchargés seront stockés
-        filename: (req, file, callback) => {
-          console.log(
-            '------------------destination file name-------------------',
-          );
-  
-          const randomName = Array(32)
-            .fill(null)
-            .map(() => Math.round(Math.random() * 16).toString(16))
-            .join('');
-  
-          return callback(null, `${randomName}${extname(file.originalname)}`);
-        },
-      }),
+      storage: storageCustom
     });
 export const fileInterCeptorImg = fileInterCeptor('img');
 export const filesInterCeptorImg = filesInterCeptor('img');

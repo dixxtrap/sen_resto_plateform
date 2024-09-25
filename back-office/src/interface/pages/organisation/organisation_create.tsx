@@ -7,21 +7,28 @@ import {  TextInput } from "@mantine/core";
 import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
 import { AddressForm } from "../../components/form/address_form";
 import { AppTextarea } from "../../components/form/app_textarea";
+import { handlePreviewV2 } from "../../utils/handle_preview";
+import { ImgWithHandler } from "../../components/img_with_handler";
 
 export const OrganisationCreate = () => {
 
   const [createCompany, { isError, isSuccess, isLoading, reset, error }] =
     useCreateCompanyMutation();
+    const front=handlePreviewV2({});
+    const back=handlePreviewV2({});
   const form = useForm();
-  const _onsubmit = form.onSubmit((data: CompanyDto | unknown) => {
+  const _onsubmit = form.onSubmit((data) => {
     console.log(data);
-    createCompany(data as CompanyDto);
+    const { regionId, departementId, municipalityId, ...rest } = data;
+    createCompany({company:rest as CompanyDto, file:front.file!, background:back.file!});
   });
   return (
     <div className="flex flex-col divide-y gap-y-2 ">
       
       <CustomForm  title="Compagnie" isLoading={isLoading} isError={isError} isSuccess={isSuccess} error={error}  subTitle="Creer une nouvelle compagnie" onSubmit={_onsubmit} onFinish={reset} >
-
+     <div className="flex gap-3 md:gap-8"> <ImgWithHandler  htmlFor="Profile" {...front}/>
+      <ImgWithHandler htmlFor="Couverture" {...back }/>
+      </div>
         <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
 
        

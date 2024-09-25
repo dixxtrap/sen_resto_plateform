@@ -28,3 +28,40 @@
 .btn.secondary{
   @apply ring-1 ring-secondary-400/60 bg-secondary-400 text-white font-bold text-xl focus:ring-secondary-500  border-none ;
 }
+
+.oval {
+  width: 200px;
+  height: 100px;
+  background: red;
+  border-radius: 100px / 50px;
+ 
+}
+
+.egg {
+  display: block;
+ 
+  background-color: red;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+.egg::after{
+  border:1px solid red
+}
+.deco-top {
+  --top: 
+   linear-gradient(#000 0 0) top/100% calc(100% - 50px) no-repeat,
+   radial-gradient(farthest-side,#000 98%,#0000) bottom/100px 100px no-repeat;
+  -webkit-mask: var(--top);
+          mask: var(--top);
+          border-radius: 100px /50px;
+          border-top:1px solid rgb(128, 128, 128);
+}
+.deco-bottom {
+  --bottom: radial-gradient(calc(1px + 20px) at 50% -10px,#0000 98%,#000);
+  -webkit-mask: var(--bottom);
+          mask: var(--bottom);
+  margin-top: -40px;
+  border-top:2px solid rgb(128 128 128 /0.3);
+  border-radius: 1000px/50px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}

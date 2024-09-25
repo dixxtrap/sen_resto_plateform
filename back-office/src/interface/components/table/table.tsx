@@ -15,6 +15,7 @@ type TablePaginationProps = {
   th?: string[];
   trs?: ReactNode;
   header?: ReactNode;
+  creaBtn?: ReactNode;
   title?: string;
   totalPage?: number ;
   subtitle?: string;
@@ -28,7 +29,7 @@ type TablePaginationProps = {
   pagination?:[PaginationDto, React.Dispatch<React.SetStateAction<PaginationDto>>]
 
 };
-export const  TablePagination:FC<TablePaginationProps>=({trs,header, title,th, createPath, totalPage, pagination,isError,error, isSuccess, isLoading, isPaginated})=> {
+export const  TablePagination:FC<TablePaginationProps>=({trs,header, creaBtn,title,th, createPath, totalPage, pagination,isError,error, isSuccess, isLoading, isPaginated})=> {
   const [scrolled, setScrolled] = useState(false);
 
 
@@ -37,12 +38,12 @@ export const  TablePagination:FC<TablePaginationProps>=({trs,header, title,th, c
       <div className='pb-3 flex  justify-between  items-baseline'>
       <Title  className='leading-3' order={1}>{title}</Title>
       
-     {createPath&& <Link to={createPath!}>
+     {creaBtn??(createPath&& <Link to={createPath!}>
           <Button fw={400}  className='bg-secondary-500 hover:bg-secondary-600' color='secondary.4' >
             Ajouter
         <PlusIcon className='text-white bg-primary-500'/>
       </Button>
-      </Link>}
+      </Link>)}
       </div >
    {  header?? <div className='flex  text-left justify-between my-3'>
         <TextInput placeholder="Rechercher" leftSection={ <MagnifyingGlassIcon className='size-6'/>} />

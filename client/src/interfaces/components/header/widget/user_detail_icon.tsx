@@ -1,82 +1,176 @@
 import {
+  ArrowLongRightIcon,
+  MagnifyingGlassCircleIcon,
+  PhoneIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
-import { useProfileQuery } from "../../../../cores/apis/security.slice";
+import {
+  securityApi,
+  useProfileQuery,
+} from "../../../../cores/apis/security.slice";
 import { BagIcon } from "./bag_icon";
 import { NotificationIcon } from "./notification_icon";
 import { DialogAlert } from "../../dialog";
 import { LoginForm } from "../../login/login_form";
 import { useDisclosure } from "@mantine/hooks";
-import { ActionIcon, Box, Burger, Button, Divider, Drawer, Flex, UnstyledButton } from "@mantine/core";
-import { constant, links } from '../../../../utils/constant';
-import {Link, NavLink } from "react-router-dom";
+import {
+  Text,
+  Box,
+  Burger,
+  Button,
+  Divider,
+  Drawer,
+  Flex,
+  UnstyledButton,
+  Modal,
+  Title,
+  Menu,
+  rem,
+} from "@mantine/core";
+import { constant, links } from "../../../../utils/constant";
+import { Link, Navigate, NavLink } from "react-router-dom";
 import logo from "/assets/react.svg";
 import clsx from "clsx";
-export const UserDetailsMobile=()=>{
+export const UserDetailsMobile = () => {
   const [opened, { close, open }] = useDisclosure(false);
-  const profile=useProfileQuery("")
+  const profile = useProfileQuery("");
   return (
-    <> <Drawer offset={0}  closeButtonProps={{
-      icon: <Burger opened={opened}  onClick={close} />,
-    }} className="top-10"  position={'top'} classNames={{content:"top-10"}} opened={opened} onClose={close} title={  <Link to="/" className="flex  items-end justify-center">
-      <img alt="logo" src={logo} className="h-10" />
-      <span className="text-lg md:text-2xl font-bold font-serif ml-4  text-kprimary-500">
-        {constant.app_name}
-      </span>
-    </Link>}>
-    {/* Drawer content */}
-    <Box className="flex  flex-col gap-5">
-      {links.map(e=><NavLink to={e.route}  onClick={close}>
-        {({isActive})=><UnstyledButton  variant={isActive?"filled":"light"} >
-                        <Flex className={clsx("font-bold gap-3", {"text-primary-500":isActive})}>
-                        <e.icon  className="size-6"/>
-                        <span className="text-2xl">{e.name}</span>
-                        </Flex>
-                      </UnstyledButton>}
-      </NavLink>)}
-      <Divider/>
-      <BagIcon isShort={false}/>
-      <NotificationIcon isShort={false}/>
-      {profile.isSuccess&&<>
-      </>}
-    </Box>
-  </Drawer>
+    <>
+      {" "}
+      <Drawer
+        offset={0}
+        closeButtonProps={{
+          icon: <Burger opened={opened} onClick={close} />,
+        }}
+        className="top-10"
+        position={"top"}
+        classNames={{ content: "top-10" }}
+        opened={opened}
+        onClose={close}
+        title={
+          <Link to="/" className="flex  items-end justify-center">
+            <img alt="logo" src={logo} className="h-10" />
+            <span className="text-lg md:text-2xl font-bold font-serif ml-4  text-kprimary-500">
+              {constant.app_name}
+            </span>
+          </Link>
+        }
+      >
+        {/* Drawer content */}
+        <Box className="flex  flex-col gap-5">
+          {links.map((e) => (
+            <NavLink to={e.route} onClick={close}>
+              {({ isActive }) => (
+                <UnstyledButton variant={isActive ? "filled" : "light"}>
+                  <Flex
+                    className={clsx("font-bold gap-3", {
+                      "text-primary-500": isActive,
+                    })}
+                  >
+                    <e.icon className="size-6" />
+                    <span className="text-2xl">{e.name}</span>
+                  </Flex>
+                </UnstyledButton>
+              )}
+            </NavLink>
+          ))}
+          <Divider />
 
-  <Burger opened={opened} className="lg:hidden" onClick={open}></Burger>
-  </>)
-}
+          {profile.isSuccess && (
+            <>
+              <BagIcon isShort={false} />
+              <NotificationIcon isShort={false} />
+            </>
+          )}
+        </Box>
+      </Drawer>
+      <Burger opened={opened} className="lg:hidden" onClick={open}></Burger>
+    </>
+  );
+};
 export const UserDetailIcon = () => {
-  const {  isSuccess, isError } = useProfileQuery("");
-  const [opened, { close, open }] = useDisclosure(false);
- 
+  const { data: profile, ...profileState } = useProfileQuery("");
+  const [logout, logoutStatus] = securityApi.useLogoutMutation();
+
+
   return (
-    <div className=" lg:ml-4 flex    items-center">
-       <UserDetailsMobile/>
-      {isSuccess && (<>
-       
-        <div className="hidden lg:flex  gap-8 bg-slate-200 p-2 rounded-lg py-1  ">
-          <BagIcon />
-           <NotificationIcon />
-          <Button onClick={open}   p={0}   variant="transparent" >
-            <UserIcon  className='size-7 text-white bg-slate-900 p-1 rounded-full' />
-          </Button>{" "}
-        </div>
-         </>
-      )}
-      {isError && (
+    <div className=" lg:ml-4 flex  relative  items-center">
+      {logoutStatus.isSuccess && <Navigate to="/" />}
+      <UserDetailsMobile />
+      {profileState.isSuccess && (
         <>
-          {" "}
-          <ActionIcon onClick={open}    variant="outline"
-    size={"lg"}>
-            <UserIcon />
-          </ActionIcon>{" "}
-          <DialogAlert onClose={() => close()} isOpen={opened}>
-            <LoginForm close={close} action={() => close()} />
-          </DialogAlert>
+          <div className="hidden lg:flex relative  border-b-2  border-r-2 bg-white/60 backdrop-blur-xl items-strech  gap-8 p-2  rounded-lg py-1  ">
+            <BagIcon />
+            <NotificationIcon />
+            <Menu
+              shadow="md"
+              offset={10}
+              classNames={{
+                label: "p-1 m-0 ",
+                dropdown: " absolute z-[2000] backdrop-blur-sm",
+              }}
+              withArrow
+              position="bottom-end"
+              width={200}
+            >
+              <Menu.Target>
+                <UnstyledButton className="content-center">
+                  <UserIcon className="size-7 text-white bg-slate-900 p-1 rounded-full" />
+                </UnstyledButton>
+              </Menu.Target>
+
+              <Menu.Dropdown onScroll={undefined}>
+                <Menu.Label>Application</Menu.Label>
+                <Menu.Item
+                  leftSection={
+                    <UserIcon style={{ width: rem(14), height: rem(14) }} />
+                  }
+                >
+                  {` ${profile?.data.firstname} ${profile?.data.lastname}`}
+                </Menu.Item>
+
+                <Menu.Item
+                  leftSection={
+                    <PhoneIcon style={{ width: rem(14), height: rem(14) }} />
+                  }
+                >
+                  {profile?.data.phone}
+                </Menu.Item>
+
+                <Menu.Divider />
+
+                <Menu.Label>Danger zone</Menu.Label>
+
+                <Menu.Item
+                  onClick={() => logout()}
+                  color="red"
+                  leftSection={
+                    <ArrowLongRightIcon
+                      style={{ width: rem(14), height: rem(14) }}
+                    />
+                  }
+                >
+                  Deconnexion
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </div>
         </>
       )}
-
-   
+  
+      { (
+    profileState.isSuccess==false&&
+          <LoginForm
+            component={
+              <Button radius={30}>
+                Connexion
+              </Button>
+            }
+            close={close}
+            action={() => close()}
+          />
+       
+      )}
     </div>
   );
 };

@@ -78,10 +78,10 @@
         @apply font-light text-xl text-justify 
       }
       .subtitle1.desc{
-        @apply text-gray-600 text-lg md:text-2xl
+        @apply text-gray-600 md:text-lg text-xs
       }
       .illus{
-        @apply w-full  lg:w-96 md:h-80 
+        @apply w-auto   md:h-80 
       }
       .illus.desc{ 
         @apply bg-gradient-to-tr from-primary-500/30  to-primary-500  rounded-md my-2 

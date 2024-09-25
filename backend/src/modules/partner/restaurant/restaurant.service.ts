@@ -17,8 +17,9 @@ export class RestaurantService {
     private s3Service: S3Service,
   ) {}
 
-  create({ body, by }: { body: CompanyRestaurantBaseDto; by: UserDto }) {
+ async  create({ body, by , file, background}: { body: CompanyRestaurantBaseDto; by: UserDto , file :Express.Multer.File, background:Express.Multer.File,}) {
     console.log(body);
+   
     return this.repos
       .save(
         this.repos.create({
@@ -27,7 +28,14 @@ export class RestaurantService {
           details: { byId: by.id },
         }),
       ) 
-      .then((result) => {
+      .then(async (result) => {
+        if(file){
+          body.imagePath= await this.s3Service.createFileToS3AndDeleteLocal({file:file})
+        }
+        if(background){
+          body.backgroundPath= await this.s3Service.createFileToS3AndDeleteLocal({file:background})
+        }
+       await  this.repos.update({id:result.id},body);
         if (result) return HttpExceptionCode.SUCCEEDED;
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })

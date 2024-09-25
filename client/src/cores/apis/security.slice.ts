@@ -13,17 +13,21 @@ export const securityApi = createApi({
       providesTags: ["security"],
     }),
     sendOtp:builder.mutation<WsMessage, string>({
-        query:(phone)=>`/ws/send_otp/${phone}`,
-        invalidatesTags: ["security"],
+        query:(phone)=>`/ws/customer/send_otp/${phone}?channel=rest`,
+        // invalidatesTags: ["security"],
     }),
     otpVerification:builder.mutation<WsMessage, OtpVerificationDto>({
-        query:(body)=>({url:`/ws/otp_verification`,body:body, method:'POST'}),
+        query:(body)=>({url:`/ws/customer/otp_verification`,body:body, method:'POST'}),
         invalidatesTags: ["security"],
     }),
     updateProfile:builder.mutation<WsMessage, Customer>({
         query:(body)=>({url:`/ws/customer/profile`,body:body, method:'PUT'}),
         invalidatesTags: ["security"],
     }),
+    logout:builder.mutation<WsMessage, void>({
+      query:(body)=>({url:`/ws/customer/logout`,body:body, method:"GET"}),
+      invalidatesTags: ["security"],
+  }),
     login: builder.mutation<WsMessage, { username: string; password: string }>({
       query: (body) => ({
         url: `/ws/customer/login`,

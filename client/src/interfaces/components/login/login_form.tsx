@@ -1,72 +1,109 @@
-import  { FC, ReactNode, useEffect } from 'react'
-import { useLoginMutation, useProfileQuery } from '../../../cores/apis/security.slice'
-import {  DialogAlert } from '../dialog'
-import { Logo } from '../logo'
-import { SetProfileForm } from './set_profile'
-import { useForm } from '@mantine/form'
-import { NumberInput } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-type ProtectedActionProps={
-        action:()=>void,
-        children:ReactNode;
-}
-export const ProtectedAction:FC<ProtectedActionProps> = ({children, action}) => {
-  const { isSuccess:isLogin}=useProfileQuery("");
-  const [showLogin, {open, close}]=useDisclosure(false)
-  useEffect(() => {
-    close()
-  }, [isLogin])
+import { FC, ReactNode, useEffect } from "react";
+import {
+  securityApi,
+  useProfileQuery,
+} from "../../../cores/apis/security.slice";
+import { Logo } from "../logo";
+import { SetProfileForm } from "./set_profile";
+import { useForm } from "@mantine/form";
+import { Button, Modal, NumberInput, UnstyledButton } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { PinVerification } from "./pin_verification";
+import { CustomForm } from "../custom_form";
+type ProtectedActionProps = {
+  action: () => void;
+  children: ReactNode;
+};
+export const ProtectedAction: FC<ProtectedActionProps> = ({
+  children,
+  action,
+}) => {
+
+ 
   return (
-    
     <div>
+      {/* {IsLoginLoading && <Alert isOpen={true} type='loading'/>} */}
+    
+   
       
-    {/* {IsLoginLoading && <Alert isOpen={true} type='loading'/>} */}
-   <button onClick={()=>{isLogin ?action():open()}}>
-   {children}
-   </button>
-   {showLogin && <DialogAlert onClose={()=>{console.log("-------on closee----------");close()}} isOpen={showLogin}>
-    <LoginForm close={close}  action={()=>{action(); close()}}/>
-    </DialogAlert>}
+          <LoginForm
+component={children}
+            close={close}
+            action={() => {
+              action();
+              close();
+            }}
+          />
+
+   
     </div>
-  )
-}
+  );
+};
 
-type LoginFormProps={
-  action:()=>void,
-  close:()=>void,
-}
-export const LoginForm:FC<LoginFormProps> =({action})=>{
-  const [login, {isSuccess}]=useLoginMutation();
-  const [opened, {open, close}]=useDisclosure()
-  const form=useForm<{username:string, password:string}>({})
-  const _onSubmit=form.onSubmit((data)=>{
-  
-    login({...data,username:'221'+data.username}).unwrap().then(result=>{
+type LoginFormProps = {
+  action: () => void;
+  close: () => void;
+component: ReactNode;
+};
+export const LoginForm: FC<LoginFormProps> = ({ action , component}) => {
+  const profile=useProfileQuery('')
+  const [login, loginState] = securityApi.useSendOtpMutation();
+  const [opened, { close, open }] = useDisclosure(false);
+  const form = useForm<{ username: string; password: string }>({});
+  const _onSubmit = form.onSubmit((data) => {
+    login("221" + data.username).unwrap().then(result=>{
       console.log(result)
-   
+    }).catch(err=>{
+      console.log(err)
     })
+  });
 
-  })
-useEffect(() => {
-  
 
- if(isSuccess==true){
-  open()
- }
-}, [isSuccess])
+  return(<>
+  <UnstyledButton onClick={profile.isSuccess?action:open}>
+    {component}
+  </UnstyledButton>
+  <Modal opened={opened} onClose={close} withCloseButton={false}>
+  { loginState.isSuccess ? (
 
-  
-return (<>
- {isSuccess && <DialogAlert onClose={close} isOpen={opened}>
-    <SetProfileForm  onclose={close}  action={action}></SetProfileForm>
-    </DialogAlert>}
-  <form onSubmit={_onSubmit} className="flex items-center flex-col md:px-10">
-    <Logo />
-    <span className="font-bold  title text-2xl">Connexion</span>
-   
-    <NumberInput label="Telephone" {...form.getInputProps("username")} prefix='221 ' className='' w={'100%'} />
-    <button className="button primary">Valider</button>
-  </form>
-  </>
-);
-}
+    <>
+      <PinVerification onSucess={()=>{close();action()}}  phone={form.getValues().username} />
+    </>
+  ) : loginState.isError?(<SetProfileForm phone={form.getValues().username} action={function (): void {
+     
+    } } onclose={close }/> ):(
+    <CustomForm
+    successPath="."
+    {...loginState}
+ btnClassName="hidden"
+      onSubmit={_onSubmit}
+
+    >
+      <div className="flex  flex-col items-center gap-3">
+
+      
+      <div >
+      <Logo  />
+      </div>
+
+      
+      <span className="font-bold  title text-2xl">
+        {import.meta.env.VITE_REACT_APP_NAME}
+      </span>
+
+      <NumberInput
+        placeholder="Telephone"
+        rightSection={<div></div>}
+        {...form.getInputProps("username")}
+        prefix="221 "
+        radius={80}
+        className="rounded-lg"
+        w={"100%"}
+      />
+    </div>
+    <Button w={"100%"} type="submit" radius={100} mt={10} color={"primary.5"}>Se Connecter</Button>
+    </CustomForm>
+  )}
+  </Modal>
+  </>);
+};

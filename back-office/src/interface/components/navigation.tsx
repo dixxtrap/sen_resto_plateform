@@ -120,7 +120,7 @@ export const Navigation: FC<{
 };
 export const ShortNav = ({ open }: { open: () => void }) => {
   return (
-    <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-20 lg:overflow-y-auto  border-r darkDivider  bg-slate-100 dark:bg-black/90 lg:pb-4">
+    <div className="hidden dark lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-20 lg:overflow-y-auto   border-r darkDivider  bg-slate-900 dark:bg-black/90 lg:pb-4">
       <div className="flex h-16 shrink-0  p-2  items-center sticky top-0 justify-center">
         <ActionIcon size={40} color="secondary.5" className=" bg-secondary-500 " onClick={open}>
           <Bars3Icon className="h-6 w-6 " aria-hidden="true" />
@@ -140,7 +140,7 @@ export const ShortNav = ({ open }: { open: () => void }) => {
                   className={({ isActive }) =>
                     clsx(
                       isActive
-                        ? "bg-gradient-to-tr   dark:from-slate-800 ring-1 ring-secondary-500/60  from-slate-400/20 via-secondary-500/20  to-secondary-500/40 dark:text-secondary-500 text-secondary-700"
+                        ? "bg-gradient-to-tr   dark:from-slate-800 ring-1 ring-secondary-400  from-slate-400/20 via-secondary-500/20  to-secondary-500/40 dark:text-secondary-400 text-secondary-400"
                         : "dark:text-white/90 text-black/70 hover:text-white hover:bg-secondary-600",
                       "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                     )

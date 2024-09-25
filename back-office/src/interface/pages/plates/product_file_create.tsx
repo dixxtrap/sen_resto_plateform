@@ -32,7 +32,7 @@ const _onSubmit=()=>{
 }
   return (
     <div>
-        <CameraIcon className='h-20 text-primary-500 bg-secondary-400/30 ring-2 ring-inset ring-secondary-400 rounded-md p-2' onClick={()=>setShowDialog(true)}/>
+        <CameraIcon className='h-20 text-gray-500 bg-gray-400/30 ring-1 ring-inset ring-gray-400 rounded-md p-5' onClick={()=>setShowDialog(true)}/>
        { showDialog&&<DialogAlert onClose={()=>{setShowDialog(false)}} isOpen={true}>
         <label  htmlFor='file'>
        <input type="file" hidden  id="file" name="file" onChange={handleImage}/>

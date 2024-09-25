@@ -13,6 +13,7 @@ import { ProductFile } from './product_file.entity';
 import { Category, CategoryDto } from './category.entity';
 import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decorator';
 import { ProductRaiting } from './product_rating.entity';
+import { CompanyCategory } from './company_category.entity';
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
@@ -21,6 +22,10 @@ export class Product {
   name: string;
   @Column('text')
   description: string;
+  @ManyToOne(()=>CompanyCategory)
+companyCategory:CompanyCategory;
+@Column({nullable:true, default:null})
+companyCategoryId:number;
   @Column('double')
   price: number;
   @Column('double')
@@ -43,10 +48,10 @@ export class Product {
 
   @Column()
   parentId: number;
-  @Column(() => CreationDetails)
-  details: CreationDetails;
+  @Column(() => CreationDetails) 
+  details: CreationDetails;  
   @OneToMany(() => ProductRaiting, (item) => item.product)
-  rating: ProductRaiting[];
+  rating: ProductRaiting[]; 
 }
 
 export class ProductDto {
@@ -59,6 +64,8 @@ export class ProductDto {
   price: number;
   @ApiProperty()
   reduction: number;
+  @ApiProperty()
+  companyCategoryId:number;
   @ApiProperty()
   cookingTime: string;
   @ApiProperty()

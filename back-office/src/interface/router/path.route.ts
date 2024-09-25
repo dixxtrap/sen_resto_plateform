@@ -1,15 +1,16 @@
-export class PathRouter{
-    static coorporate:string='coorporate';
-    static banner:string='banner';
-    static gift:string='gift';
-    static transaction:string='transaction';
-    static cardAllocation:string='card_allocation';
-    static create:string='create';
-    static edit:string='edit/:id';
-    static list:string='list';
-    static default:string='';
-    static details:string='details/:id';
-    static delete: string = 'delete';
-    static story:string='story'
-    static city:string='city'
+export enum PathRouter{
+     coorporate='coorporate',
+     banner='banner',
+      establishmentType="establishment_type",
+     gift='gift',
+     transaction='transaction',
+     cardAllocation='card_allocation',
+     create='create',
+     edit='edit/:id',
+     list='list',
+     default='',
+     details='details/:id',
+     delete= 'delete',
+     story='story',
+     city='city',
 }

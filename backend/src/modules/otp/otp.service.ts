@@ -31,7 +31,7 @@ export class OtpService {
     channel: string;
   }) {
     return this.repos.save(
-      this.repos.create({ code: this.generateCode(4), to, configId }),
+      this.repos.create({ code: this.generateCode(4), to, configId, expiredAt:new Date( new Date().getTime()+1000*60*15) }),
     );
   }
   getAll() {

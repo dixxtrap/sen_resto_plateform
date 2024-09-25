@@ -22,7 +22,7 @@ darkMode:"class",
         },
      
         primary:colors.green,
-        secondary: colors.red,
+        secondary: colors.rose,
       },
     
     },

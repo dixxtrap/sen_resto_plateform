@@ -13,6 +13,10 @@ export class WsCompanyController {
   getAll() {
     return this.service.getAll();
   }
+  @Get('establishment_type/all')
+  getByEstablishmentTypeAll() {
+    return this.service.getByEstablishmentType();
+  }
   @Get('details/:id')
   getById(@Param("id") id:number) {
     return this.service.getById({id});

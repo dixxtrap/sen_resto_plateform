@@ -10,7 +10,7 @@ export const OrganisationList = () => {
   return (
        <TablePagination 
        {...companies}
-       th={["Nom", "Email", "Addresse", "Phone","Solde", "Status", ""]}
+       th={["Nom", "Email", "Addresse", "Phone","Solde","Type", "Status", ""]}
        createPath='/organisation/create'
        title='Organisation' subtitle='List des oraganisations  et status ' trs={
           <>
@@ -35,6 +35,8 @@ export const OrganisationList = () => {
                     <Table.Td className="">{company.address}</Table.Td>
                     <Table.Td className="">{company.phone}</Table.Td>
                     <Table.Td className="font-bold">{company.balance} Fcfa</Table.Td>
+                    <Table.Td >{company.establishmentType?.name}</Table.Td>
+
                     <Table.Td className="">
                     <Status status={ company.isActive!} inactiveText='Inactif' activeText='Actif' />
                       

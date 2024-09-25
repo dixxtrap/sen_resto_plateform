@@ -6,7 +6,7 @@ import { OtpService } from 'src/modules/otp/otp.service';
 import { LoginDto } from 'src/modules/security/security.dto';
 import { SecurityService } from 'src/modules/security/security.service';
 import { Customer, CustomerDto } from 'src/typeorm/customer.entity';
-import { OtpVerificationDto } from 'src/typeorm/otp.entity';
+import { OtpChannel, OtpVerificationDto } from 'src/typeorm/otp.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { SetProfileDto } from 'src/typeorm/customer.entity';
 import { WsCatch } from 'src/utils/catch';
@@ -37,20 +37,29 @@ export class WsCustomerService {
       })
       .catch(WsCatch);
   }
-  async sendOtp({ phone }: { phone: string }) {
-    return this.otpService
-      .generateOtp({ to: phone, configId: 1, channel: 'mobile' })
-      .then((otp) => {
-        return this.mailService
-          .senOtp({
-            to: phone,
-            message: `your  otp code  is ${otp.code}`,
+  async sendOtp({ phone, channel }: { phone: string; channel: OtpChannel }) {
+    console.log(`=========send-otp : ${phone} / ${channel}======`);
+  return   this.repos
+      .findOne({ where: { phone: phone } })
+      .then((user) => {
+        if (!user) throw new WsMessage(HttpExceptionCode.NOT_FOUND);
+        return this.otpService
+          .generateOtp({ to: phone, configId: null, channel: channel })
+          .then((otp) => {
+            return this.mailService
+              .senOtp({
+                to: phone,
+                message: `your  otp code  is ${otp.code}`,
+              })
+              .then((restult) => {
+                console.log('================opt sended==========');
+                return new WsMessage(HttpExceptionCode.SUCCEEDED);
+              })
+            
           })
-          .then((restult) => {
-          
-              throw new WsMessage(HttpExceptionCode.SUCCEEDED);
-          });
-      });
+         
+      })
+      .catch(WsCatch);
   }
   getById(id) {
     return this.repos
@@ -62,6 +71,7 @@ export class WsCustomerService {
       .catch(WsCatch);
   }
   otpVerification(body: OtpVerificationDto, res: Response) {
+    console.log(`============body=============\n`, body)
     return this.otpService
       .verifivcation(body)
       .then(async (result) => {
@@ -83,7 +93,8 @@ export class WsCustomerService {
                   }),
                 )
                 .status(200);
-            });
+            })
+            .catch(WsCatch);
         }
         throw new WsMessage(HttpExceptionCode.LOGIN_FAILLURE);
       })

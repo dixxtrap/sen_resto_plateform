@@ -11,6 +11,7 @@ import {
   Image,
   LoadingOverlay,
   Modal,
+  Pill,
   Text,
 } from "@mantine/core";
 import { ExclamationCircleIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
@@ -37,13 +38,17 @@ export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
   return (
     <div
       key={`order_${order.id}`}
-      className="ring-1 hover:shadow-xl h-min  p-3 flex flex-col duration-150 ring-gray-300 overflow-hidden  rounded-md "
+      className="ring-1 hover:shadow-xl h-min  p-3 flex  duration-150 ring-gray-300 overflow-hidden  rounded-md "
     >
       {/* {order.partner.type} */}
-      <div>
-        {" "}
+       
+      
+  
+     
+      <div className=" flex flex-col w-full  gap-3">
+        <div className="flex  items-start  justify-start ">
         <Image
-          className="h-28 w-auto mx-auto my-5"
+          className="h-10 w-auto"
           src={
             order.partner.type === CompanyEnum.RESTO &&
             order.partner.parentId == 1
@@ -51,28 +56,24 @@ export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
               : order.partner.imagePath
           }
         />
-      </div>
-      <div className=" flex flex-col  gap-3">
-        <div className="flex  ">
           <div>
             <Text className="text-2xl font-bold">
               {order.partner.shortname}
             </Text>
             <Text className="text-sm font-thin">{order.partner.name}</Text>
           </div>
-          <div className="grow"></div>
+          
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 w-full">
           {order.products.slice(0, 2).map((e) => (
-            <Badge
+            <Pill
+            key={e.productHistoryId}
               w={"auto"}
               classNames={{ label: "text-sm" }}
-              variant="light"
-              size="xl"
-              className="h-10 p-0   pr-1 text-lg"
-              leftSection={
-                <Avatar src={e.productHistory?.product?.file![0]?.path} />
-              }
+             
+           
+            
+             
             >
               <div className="flex  gap-2">
                 <span className="text-sm">
@@ -83,7 +84,7 @@ export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
                   {e.quantity}
                 </span>
               </div>
-            </Badge>
+            </Pill>
           ))}
           {order.products.length > 2 && (
             <ActionIcon radius={100} size={"lg"}>
@@ -91,7 +92,7 @@ export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
             </ActionIcon>
           )}
         </div>
-        <div className="flex justify-between">
+        <div className="flex justify-between w-full">
           <span>Total</span>
           {order && (
             <span className="text-2xl font-bold">
@@ -149,17 +150,17 @@ export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
            
           </Group>
         </Modal>
-        <ButtonGroup className="grow w-fit min-w-full ">
+        <div className="grow flex justify-between w-fit min-w-full ">
           <Button
             onClick={open}
             leftSection={<TrashIcon className="size-5" />}
             color="primary"
-            className="grow"
+            className=""
           >
             Annuler
           </Button>
           <OrderDetailWidget order={order} />
-        </ButtonGroup>
+        </div>
       </div>
     </div>
   );

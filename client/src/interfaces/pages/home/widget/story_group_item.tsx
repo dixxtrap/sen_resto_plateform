@@ -8,9 +8,9 @@ export const StoryGroupItem = ({ storyGroup }: { storyGroup: StoryGroup }) => {
         backgroundSize: "200%",
         width: "100%",
         backgroundPosition: "center",
-      backgroundImage:`url(${storyGroup.partner?.imagePath})`}} className=" rounded-full flex h-full backdrop-blur-sm content-center bg-black/10  md:hidden">
-        <div className="h-full w-full content-center backdrop-blur-md rounded-full p-3">
-        <Image               className=" z-30 m-auto rounded-md  w-auto"
+      backgroundImage:`url(${storyGroup.partner?.imagePath})`}} className=" rounded-full ring  flex h-full backdrop-blur-sm content-center bg-black/10  md:hidden">
+        <div className="h-full w-full content-center backdrop-blur-md ring rounded-full p-3">
+        <Image               className=" z-30 m-auto rounded-md  w-auto "
               src={storyGroup.partner?.imagePath}/>
         </div>
    
@@ -25,16 +25,17 @@ export const StoryGroupItem = ({ storyGroup }: { storyGroup: StoryGroup }) => {
           backgroundPosition: "center",
         }}
         display={{base:"none", sm:"block"}}
-        className=" hidden md:block  relative border-green-300 w-full h-[300px] bg-red-300  rounded-md     "
+        className=" hidden md:block ring ring-gray-400 relative border-green-300 w-full h-[300px] bg-red-300  rounded-md     "
       >
         <div className="h-full   rounded-md w-full  content-center flex backdrop-blur-sm bg-black/10 ">
           <div className=" flex   justify-start  p-2 w-full">
-            <div></div>
+            <div className="size-10">
             <Avatar
               radius={3}
-              className=" z-30   w-auto"
+              className=" z-30   h-auto w-full"
               src={storyGroup.partner?.imagePath}
             />
+            </div>
             <div className="flex  flex-col pl-2  ">
               <Text className="leadind-3 font-bold">
                 {storyGroup.partner?.shortname}

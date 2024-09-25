@@ -6,16 +6,29 @@ import { errorTrasform } from "./error_transformer";
 import { BannerDto } from "../models/banner.dto";
 import { StoryGroup } from "../models/story.dto";
 import { PaymentType } from "../models/payment_type";
-import { City } from "../models/city.dto";
+import { City } from '../models/city.dto';
+import { EstablishmentTypeDto } from "../models/establishment_type.dto";
 
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
   reducerPath: "baseApi",
   endpoints: (builder) => ({
-    getCompany: builder.query<BaseResponse<CompanyDto[]>, string>({
+    getCompany: builder.query<BaseResponse<CompanyDto[]>, void>({
       query: () =>
         `/ws/company/all`,
+    }),
+    city: builder.query<BaseResponse<City[]>, void>({
+      query: () =>
+        `/city/all?perPage=1000&page=1`,
+    }),
+    getEts: builder.query<BaseResponse<EstablishmentTypeDto[]>, void>({
+      query: () =>
+        `/establishment_type/all`,
+    }),
+    getEtsCompany: builder.query<BaseResponse<EstablishmentTypeDto[]>, string>({
+      query: () =>
+        `/ws/company/establishment_type/all`,
     }),
     getCompanyDetails: builder.query<BaseResponse<CompanyDto>, string>({
       query: (id) =>

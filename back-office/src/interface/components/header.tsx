@@ -41,7 +41,7 @@ export const Header: FC<{
       <Alert isOpen={isDisconnecteLoading} type="loading" />
       <Alert isOpen={isDisconnecteError} type="faillure" />
       {isDisconnecteSuccess && <Navigate to={"/"} />}
-      <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b  shadow-sm sm:gap-x-2  darkBg bg-white  darkDivider  px-3">
+      <div className="dark sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b  shadow-sm sm:gap-x-2  darkBg bg-white  darkDivider  px-3">
         {isSuccess && (
           <>
 

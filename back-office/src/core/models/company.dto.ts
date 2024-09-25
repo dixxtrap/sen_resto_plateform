@@ -3,6 +3,7 @@ import { CompanyEnum } from "./company_enu";
 import { CoordonatesDto } from "./coordonates.dto";
 import { CreationDetailDto } from "./creation_details.dto";
 import { City } from "./city.dto";
+import { EstablishmentTypeDto } from "./establishment_type.dto";
 type AddressType={
 regionId?:number,
 municipalityId?:number,
@@ -16,6 +17,8 @@ export type CompanyDto  = Partial<AddressType>&{
   balance?: number;
   shortname?: string;
   description?: string;
+  establishmentTypeId?: string;
+  establishmentType?:EstablishmentTypeDto
   address?: string;
   phone?: string;
   city?: City;
@@ -26,6 +29,7 @@ export type CompanyDto  = Partial<AddressType>&{
   openingTime?: string;
   closingTime?: string;
   imagePath?: string;
+  backgroundPath?: string;
   parentId?:number;
   details?:CreationDetailDto,
 } & { type?: CompanyEnum.RESTO; parent?: CompanyDto } & {

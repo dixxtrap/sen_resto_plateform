@@ -18,6 +18,7 @@ import { fileInterCeptorImg } from 'src/utils/multer.config';
 import { AuthenticatedGuard } from '../security/authenticated.guard';
 import { Request } from 'express';
 import { UserDto } from 'src/typeorm/user.entity';
+import { CurrentUser } from 'src/annotations/current_user';
 @Controller('banner')
 @ApiTags('banner')
 export class BannerController {
@@ -38,18 +39,18 @@ export class BannerController {
   @UseInterceptors(fileInterCeptorImg)
   update(
     @Body() body: BannerDto,
-    @Req() req: Request,
+    @CurrentUser() by: UserDto,
     @UploadedFile() file: Express.Multer.File,
     @Param('id') id: number,
   ) {
-    const by = req.user as UserDto;
+   
     console.log(file);
     return this.service.update({ file, by, body, id });
   }
   @Delete('delete/:id')
   @UseGuards(AuthenticatedGuard)
-  delete(@Param('id') id: number, @Req() req: Request) {
-    const by = req.user as UserDto;
+  delete(@Param('id') id: number, @CurrentUser() by:UserDto) {
+    
     return this.service.delete({ id, by });
   }
   @Post('create')
@@ -57,10 +58,10 @@ export class BannerController {
   @UseInterceptors(fileInterCeptorImg)
   create(
     @Body() body: BannerDto,
-    @Req() req: Request,
+    @CurrentUser() by: UserDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    const by = req.user as UserDto;
+    
     console.log(file);
     return this.service.create({ file, by, body });
   }

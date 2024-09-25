@@ -44,7 +44,7 @@ confirmationMessage,
   const firstButtonRef = useRef<HTMLButtonElement>(null);
   return (
     <div className={btnClassName?"":"flex flex-col divide-y darkDivider gap-y-2 "}>
-      {isSuccess && <Navigate to={successPath??".."} />}
+      {isSuccess && successMessage!="." && <Navigate to={successPath??".."} />}
       {title &&<Title title={title} subTitle={subTitle} />}
       <form
         action=""
