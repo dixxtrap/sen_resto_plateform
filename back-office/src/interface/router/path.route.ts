@@ -2,6 +2,7 @@ export enum PathRouter{
      coorporate='coorporate',
      banner='banner',
       establishmentType="establishment_type",
+      company_category="company_category",
      gift='gift',
      transaction='transaction',
      cardAllocation='card_allocation',

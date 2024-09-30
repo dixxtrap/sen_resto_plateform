@@ -11,8 +11,8 @@ import { ProductManagementDayDto } from 'src/typeorm/product_management.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { ProductHistory } from 'src/typeorm/product_history.entity';
 import { ProductHistoryService } from './history/product_history.service';
-import { plainToClass } from 'class-transformer';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
+import { WsCatch } from 'src/utils/catch';
 
 @Injectable()
 export class ProductService {
@@ -56,7 +56,7 @@ export class ProductService {
               },
             });
             if (value)
-              if (categoryIds.length > 0) {
+              if (categoryIds&& categoryIds.length > 0) {
               return this.reposCategory
                 .delete({ productId: value.id })
                 .then(() => {
@@ -79,22 +79,19 @@ export class ProductService {
             throw new WsMessage(HttpExceptionCode.FAILLURE);
           });
       })
-      .catch((err) => {
-        if (err instanceof WsMessage) throw err;
-        throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
+      .catch(WsCatch);
   }
 
   update({ by, body, id }: { by: UserDto; body: ProductDto; id: number }) {
     const { categoryIds,...rest } = body;
     console.log("===========body==========", body)
-  const  b=plainToClass(ProductDto, rest,);
+ 
     return this.repos.findOne({ where: { id } }).then((old) =>
       this.repos
         .update(
           { id }, 
          this.repos.create( {
-          ...b,
+          ...rest,
         }),
         )
         .then(async (value) => {
@@ -111,7 +108,7 @@ export class ProductService {
             });
           if (categoryIds.length > 0) {
             return this.reposCategory
-              .delete({ productId: id })
+              .delete({ productId: id }) 
               .then(() => {
                 return Promise.all(
                   categoryIds.map((cat) => {

@@ -5,12 +5,17 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Column } from 'typeorm/decorator/columns/Column';
 import { EstablishmentType } from './establishment_type';
 import { ManyToOne } from 'typeorm/decorator/relations/ManyToOne';
+import { OneToMany } from 'typeorm/decorator/relations/OneToMany';
+import { CompanyCategory } from './company_category.entity';
+import { AfterLoad } from 'typeorm';
 @ChildEntity()
 export class CompanyRestaurantBase extends Partner {
   @Column()
   shortname: string;
   @Column('text')
   description: string;
+  @OneToMany(()=>CompanyCategory, (alias)=>alias.partner)
+category:CompanyCategory[]
   @Column()
   name: string;
   @Column('time', { default: '23:00:00' })
@@ -21,6 +26,15 @@ export class CompanyRestaurantBase extends Partner {
   establishmentType:EstablishmentType
   @Column()
   establishmentTypeId:number
+  isOpen:boolean
+  @AfterLoad()
+  setOpen(){
+    const now=new Date();
+    console.log(now)
+    const time=`${now.toTimeString()}`
+console.log(time)
+this.isOpen= this.closingTime>time&&this.openingTime<time;
+  }
 }
 
 @ChildEntity()

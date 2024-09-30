@@ -33,17 +33,19 @@ export class WsCompanyService {
       });
   }
   getByEstablishmentType(){
-    return this.establishmentTypeRepos.find().then(ets=>{
+    return this.establishmentTypeRepos.find({where:{isActive:true}}).then(ets=>{
       return Promise.all(ets.map(async (et, i)=>{ets[i].company= await this.repos.createQueryBuilder("partner").where("partner.establishmentTypeId=:id",{id:et.id}).orderBy("RAND()").limit(12).getMany() as CompanyRestaurantBase[]; return null})).then(()=>BaseResponse.success(ets));
     })
   }
   getById({id}:{id:number}){
-    return this.repos.findOne({where:{id}, relations:{parent:true, establishmentType:true,productManagement:{product:{file:true,  category:true}}}}).then(result=>BaseResponse.success(result))
+    return this.repos.findOne({where:{id}, relations:{parent:true, establishmentType:true,category:{product:{file:true,  category:true}}}}).then(result=>{
+      result.category=result.category.sort((a, b) => b.priority - a.priority);
+     return  BaseResponse.success(result)})
   }
   search({ name }: { name: string }) {
     return this.repos
       .find({
-        where: {
+        where: { 
           name: Like(name),
           parent: { parentId: IsNull() },
           type: In(['CompanyRestaurant', 'restaurant']),

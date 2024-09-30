@@ -24,6 +24,7 @@ import { bannerRouter } from "./banner.router";
 import { storeRouter } from "./story.router";
 import { cityRouter } from "./city.router";
 import { establishmentTypeRouter } from "./establishment_type.router";
+import { companyCategoryRouter } from "./company_category.router";
 
 export const router = createBrowserRouter([
   {
@@ -66,7 +67,8 @@ export const router = createBrowserRouter([
       bannerRouter,
       storeRouter,
       cityRouter,
-      establishmentTypeRouter
+      establishmentTypeRouter,
+      companyCategoryRouter
     ],
   },
 ]);

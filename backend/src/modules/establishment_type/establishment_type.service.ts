@@ -11,7 +11,7 @@ import { BaseResponse } from "src/typeorm/response_base";
 export class EstablishmentTypeService{
     constructor(@Inject(EntityProviderEnum.ESTABLISHMENT_TYPE) private repos:Repository<EstablishmentType>,private  s3Service:S3Service){}
 getAll(){
-    return this.repos.find().then(value=>BaseResponse.success(value))
+    return this.repos.find({where:{isActive:true}}).then(value=>BaseResponse.success(value))
 }
     create({file, body}:{file:Express.Multer.File, body:EstablishmentTypeDto}){
         console.log(body)

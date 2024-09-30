@@ -17,7 +17,6 @@ import { UserDto } from 'src/typeorm/user.entity';
 import { fileInterCeptorImg } from 'src/utils/multer.config';
 import { Request } from 'express';
 import { PaymentType, PaymentTypeDto } from 'src/typeorm/payment_type.entity';
-import { plainToClass } from 'class-transformer';
 @Controller('payment_type')
 @ApiTags('payment_type')
 export class PaymentTypeController {
@@ -44,15 +43,15 @@ export class PaymentTypeController {
     return this.service.create({ body, by });
   }
   @Put('by_id/:id')
-  @UseInterceptors(fileInterCeptorImg)
+  @UseInterceptors(fileInterCeptorImg) 
   update(
     @Body() body: any,
     @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    const b=plainToClass(PaymentTypeDto, body)
+    
     console.log(file);
-    if (file) b.imagePath = file?.path ?? null;
-    return this.service.update({ id, body:b, file });
+    if (file) body.imagePath = file?.path ?? null;
+    return this.service.update({ id, body:body, file });
   }
 }

@@ -28,6 +28,10 @@ export class WsCustomerController {
         .status(200);
     });
   }
+  @Post('create')
+  create(@Body() body:CustomerDto){
+return this.service.create({body})
+  }
   @Get('profile')
   @UseGuards(LocalAuthGuardCustomer)
   profile(@Req() req: Request) {

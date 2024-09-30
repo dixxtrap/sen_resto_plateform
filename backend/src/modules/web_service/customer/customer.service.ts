@@ -20,12 +20,17 @@ export class WsCustomerService {
     @Inject(EntityProviderEnum.CUSTOMER) private repos: Repository<Customer>,
     private otpService: OtpService,
     private mailService: EmailerService,
-  ) {}
+  ) { }
   login({ body }: { body: LoginDto }) {
     return this.securityService.userLogin({
       phone: body.username,
       code: body.password,
     });
+  }
+  create({body}:{body:CustomerDto}){
+    return this.repos.save(this.repos.create(body)).then(result=>{
+      return  this.sendOtp({phone:result.phone, channel:OtpChannel.WEB})
+    }).catch(WsCatch)
   }
   async setProfile({ body, by }: { body: SetProfileDto; by: CustomerDto }) {
     return this.repos
@@ -37,9 +42,10 @@ export class WsCustomerService {
       })
       .catch(WsCatch);
   }
+ 
   async sendOtp({ phone, channel }: { phone: string; channel: OtpChannel }) {
     console.log(`=========send-otp : ${phone} / ${channel}======`);
-  return   this.repos
+    return this.repos
       .findOne({ where: { phone: phone } })
       .then((user) => {
         if (!user) throw new WsMessage(HttpExceptionCode.NOT_FOUND);
@@ -55,9 +61,9 @@ export class WsCustomerService {
                 console.log('================opt sended==========');
                 return new WsMessage(HttpExceptionCode.SUCCEEDED);
               })
-            
+
           })
-         
+
       })
       .catch(WsCatch);
   }

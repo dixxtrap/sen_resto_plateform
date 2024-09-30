@@ -10,23 +10,23 @@ import { WsCatch } from "src/utils/catch";
 import { BaseResponse } from "src/typeorm/response_base";
 
 @Injectable()
-export class CompanyCategoryService{
-    constructor(@Inject(EntityProviderEnum.COMPANY_CATEGORY)private repos:Repository<CompanyCategory>){}
+export class CompanyCategoryService {
+    constructor(@Inject(EntityProviderEnum.COMPANY_CATEGORY) private repos: Repository<CompanyCategory>) { }
 
-    create({by, body}:{by:UserDto, body:CompanyCategoryDto}){
-        return this.repos.save(this.repos.create({...body,partnerId:by.parentId, details:{byId:by.id}})).then(result=>{
-            if(result) throw new WsMessage(HttpExceptionCode.SUCCEEDED)
-                throw new Error();
+    create({ by, body }: { by: UserDto, body: CompanyCategoryDto }) {
+        return this.repos.save(this.repos.create({ ...body, partnerId: by.parentId, details: { byId: by.id } })).then(result => {
+            if (result) throw new WsMessage(HttpExceptionCode.SUCCEEDED)
+            throw new Error();
         }).catch(WsCatch)
     }
 
-update({by, id,body}:{by:UserDto, id:number,body:CompanyCategoryDto}){
-        return this.repos.update({id},this.repos.create({...body,partnerId:by.parentId, details:{byId:by.id}})).then(result=>{
-            if(result) throw new WsMessage(HttpExceptionCode.SUCCEEDED)
-                throw new Error();
+    update({ by, id, body }: { by: UserDto, id: number, body: CompanyCategoryDto }) {
+        return this.repos.update({ id }, this.repos.create({ ...body, partnerId: by.parentId })).then(result => {
+            if (result) throw new WsMessage(HttpExceptionCode.SUCCEEDED)
+            throw new Error();
         }).catch(WsCatch)
     }
-getAll({by}:{by:UserDto}){
-    return  this.repos.find({where:{partnerId:by.parentId}}).catch(result=>BaseResponse.success(result))
-}
+    getAll({ by }: { by: UserDto }) {
+        return this.repos.find({ where: { partnerId: by.parentId }, order:{priority:"DESC"} }).then(result => BaseResponse.success(result)).catch(WsCatch)
+    }
 }

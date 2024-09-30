@@ -15,18 +15,19 @@ import { CategoryDto } from "../../../core/models/category.dto";
 import { WsMessage } from "../../../core/models/error.dto";
 import { ProductCreateFile } from "./product_file_create";
 import { ProductFileUpdate } from "./product_file_update";
-import { ComboboxData, MultiSelect, TextInput } from "@mantine/core";
+import { ComboboxData, MultiSelect, Select, TextInput } from "@mantine/core";
 import { TextConstant } from "../../../core/data/textConstant";
 import { AppTextarea } from "../../components/form/app_textarea";
 import { multiSelectStyle } from "../../components/form/custom_styles";
 import { CustomSwitchInput } from "../../components/switch";
+import { companyCategoryApi } from "../../../core/features/company_category.slice";
 export const PlatesEdit = () => {
   const [_, setCategoryList] = useState<CategoryDto[]>([]);
   const id = parseInt(useParams().id!);
   const { data: categories, isLoading: isTagLoading } = useGetCategoryQuery("");
   const [update, { isLoading, isSuccess, isError, reset, error }] =
     useUpdateProductMutation();
-
+    const companyCategory=companyCategoryApi.useGetQuery();
   const { data: old, isLoading: isOldLoading } = useGetProductByIdQuery(id);
   console.log(old);
   const form = useForm({ mode: "uncontrolled" });
@@ -37,7 +38,7 @@ export const PlatesEdit = () => {
   useEffect(() => {
     if (old) {
       const { category, file, ...rest } = old.data;
-      form.setValues(rest);
+      form.setValues({...rest, companyCategoryId:`${rest.companyCategoryId}`});
       form.setFieldValue(
         "categoryIds",
         old.data.category?.map((e) => `${e.id}`)
@@ -135,6 +136,11 @@ export const PlatesEdit = () => {
                 })) as ComboboxData
               }
             />
+              <Select
+               error={form.errors["companyCategoryId"]}
+               {...form.getInputProps("companyCategoryId")}
+               key={form.key("companyCategoryId")}
+               label={TextConstant.category} data={companyCategory.data?.data.map(e=>({label:e.name!, value:`${e.id}`}))}/>
             <CustomSwitchInput itemKey={"isActive"} form={form} />
           </CustomForm>
         </div>

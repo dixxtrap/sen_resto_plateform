@@ -28,7 +28,7 @@ createTitle="Creer un nouveau Produit"
           "Préparation",
           "Prix",
           "Reduction",
-          ...day?.map(e=>e.name?.slice(0,3)!),
+          // ...day?.map(e=>e.name?.slice(0,3)!),
         "Status",
 
           "",
@@ -61,7 +61,7 @@ createTitle="Creer un nouveau Produit"
                   <Table.Td className="">{productManagement.product?.cookingTime} min</Table.Td>
                   <Table.Td className="">{productManagement.product?.price} F CFA</Table.Td>
                   <Table.Td className=""> {productManagement.product?.reduction} %</Table.Td>
-                  { productManagement?.productManagementDay?.map(managementDay=><Table.Td className=" " key={`day_${managementDay.dayId}`}>
+                  {/* { productManagement?.productManagementDay?.map(managementDay=><Table.Td className=" " key={`day_${managementDay.dayId}`}>
                       <div
                         className={clsx(
                           managementDay.isActive ? "bg-green-400/20 " : "bg-red-400/20",
@@ -76,7 +76,7 @@ createTitle="Creer un nouveau Produit"
                         ></div>
                       </div>
                     </Table.Td>
-                  )}
+                  )} */}
                 <Table.Td>
                   <Status status={productManagement.product?.isActive ===true}/>
                 </Table.Td>
@@ -87,9 +87,9 @@ createTitle="Creer un nouveau Produit"
                     <Link to={`/product/edit/${productManagement.productId}`} className="last_td accept">
                       Modifier le Produit
                     </Link> */}
-                      <Button size="compact-md" fw={400}  component={Link} to={`/product/management/${productManagement.productId}`} className="">
+                      {/* <Button size="compact-md" fw={400}  component={Link} to={`/product/management/${productManagement.productId}`} className="">
                       Modifier le menu
-                    </Button>
+                    </Button> */}
                     <TableActionItemDetails label='voir details' path={`/product/details/${productManagement.productId}`}/>
             <TableActionItemEdit label='Modifier le Produit' path={`/product/edit/${productManagement.productId}`}/>
             

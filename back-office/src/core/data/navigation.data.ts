@@ -56,7 +56,13 @@ export const navigationData: INavigation[] = [
     name: "Type d'Etablissement",
     href: "/establishment_type",
     icon: AdjustmentsHorizontalIcon,
-    permissions: [{ code: "*", type: "*" }],
+    permissions: [{ code: "establishment_type", type: "*" }],
+  },
+  {
+    name: "Produit Categories",
+    href: "/company_category",
+    icon: AdjustmentsHorizontalIcon,
+    permissions: [{ code: "company_category", type: "*" }],
   },
   {
     name: "Organisation",
@@ -148,7 +154,7 @@ export const navigationData: INavigation[] = [
     name: "Publicité",
     href: `${PathRouter.banner}`,
     icon:MegaphoneIcon ,
-    permissions: [{ code: "read_banner", type: "*" }],
+    permissions: [{ code: "create_banner", type: "*" }],
   },
   {
     name: "Adresse",

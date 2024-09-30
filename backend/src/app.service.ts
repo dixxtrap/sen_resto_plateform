@@ -8,28 +8,28 @@ import { RoleService } from './modules/role/role.service';
 export class AppService implements OnModuleInit {
   constructor(
     @Inject("DATA_SOURCE") private dataSource: DataSource,
-    // private user: UserService,
-    // private company: CompanyRestaurantService,
-    // private role: RoleService,
+    private user: UserService,
+    private company: CompanyRestaurantService,
+    private role: RoleService,
   ) {}
   onModuleInit() {
-    // this.iniPlateForm();
+    this.iniPlateForm();
+  } 
+  async iniPlateForm() {
+    this.role.initRole().then((role) => {
+      return this.user.createAdmin(role.id).then((_user) => {
+        console.log(_user);
+        return this.company.itinitCompany(_user.id);
+      });
+    });
   }
-  // async iniPlateForm() {
-  //   this.role.initRole().then((role) => {
-  //     return this.user.createAdmin(role.id).then((_user) => {
-  //       console.log(_user);
-  //       return this.company.itinitCompany(_user.id);
-  //     });
-  //   });
-  // }
-  // async getHello() {
-  //   const queryRunner = this.dataSource.createQueryRunner();
-  //   await queryRunner.query('use sen_resto_test ');
-  //   const tables = await queryRunner.query('show tables  ');
-  //   await queryRunner.release();
-  //   return (tables as unknown as { Tables_in_sen_resto_test: string }[]).map(
-  //     (item) => item.Tables_in_sen_resto_test,
-  //   );
-  // }
+  async getHello() {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.query('use sen_resto_test ');
+    const tables = await queryRunner.query('show tables  ');
+    await queryRunner.release();
+    return (tables as unknown as { Tables_in_sen_resto_test: string }[]).map(
+      (item) => item.Tables_in_sen_resto_test,
+    );
+  }
 }

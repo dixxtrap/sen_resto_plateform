@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common/decorators/core/controller.decorator"
 import { CompanyCategoryService } from "./company_category.service";
 import { ApiTags } from "@nestjs/swagger/dist/decorators/api-use-tags.decorator";
 import { AuthenticatedGuard } from "../security/authenticated.guard";
-import { Get, Post } from "@nestjs/common/decorators/http/request-mapping.decorator";
+import { Get, Post ,Put} from "@nestjs/common/decorators/http/request-mapping.decorator";
 import { UseGuards } from "@nestjs/common/decorators/core/use-guards.decorator";
 import { CurrentUser } from "src/annotations/current_user";
 import { UserDto } from "src/typeorm/user.entity";
@@ -22,7 +22,7 @@ export class CompanyCategoryController{
     create(@CurrentUser() by:UserDto, @Body() body:CompanyCategoryDto){
         return this.service.create({by, body})
     }
-    @Post('update/:id')
+    @Put('update/:id')
     @UseGuards(AuthenticatedGuard)
     update(@CurrentUser() by:UserDto,@Param('id') id:number, @Body() body:CompanyCategoryDto){
         return this.service.update({by,id, body})

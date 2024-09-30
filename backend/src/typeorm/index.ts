@@ -13,14 +13,14 @@ import { Role } from './role.entity';
 import { RolePermission } from './role_permissison.entity';
 import { Weekday } from './weekday.entity';
 import { Category } from './category.entity';
-import { Customer } from './customer.entity';
+import { Customer } from './customer.entity'; 
 import { Contrat } from './contrat.entity';
 import {
   ProductManagement,
   ProductManagementDay,
 } from './product_management.entity';
 import { ProductFile } from './product_file.entity';
-import { Product } from './product.entity';
+import { Product } from './product.entity'; 
 import { ProductHistory } from './product_history.entity';
 import { Order } from './order.entity';
 import { Deliver } from './deliver.entity';

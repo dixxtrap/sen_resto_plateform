@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
 import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
 import { OnModuleInit } from '@nestjs/common/interfaces/hooks/on-init.interface';
-import { bdName } from 'src/mysql.config';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { ModuleEntity, ModuleEntityDto } from 'src/typeorm/module.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
@@ -33,13 +32,13 @@ export class ModuleService implements OnModuleInit {
         return Promise.all(
           value.map(async (item) => {
             const exits = await this.repos.exist({
-              where: { name: item[`Tables_in_${bdName}`] },
+              where: { name: item[`Tables_in_${process.env.DB_NAME}`] },
             });
             if (!exits)
               return this.repos
                 .save(
                   this.repos.create({
-                    name: item[`Tables_in_${bdName}`],
+                    name: item[`Tables_in_${process.env.DB_NAME}`],
                     parentId: root.id,
                   }),
                 )

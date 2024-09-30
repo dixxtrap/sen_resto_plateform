@@ -9,6 +9,7 @@ import { AddressForm } from "../../components/form/address_form";
 import { AppTextarea } from "../../components/form/app_textarea";
 import { handlePreviewV2 } from "../../utils/handle_preview";
 import { ImgWithHandler } from "../../components/img_with_handler";
+import { TimeInput } from "@mantine/dates";
 
 export const OrganisationCreate = () => {
 
@@ -46,7 +47,12 @@ export const OrganisationCreate = () => {
         
         <AddressForm form={ form} />
         <LaltitudeLongituide form={form } />
+        <div className="flex gap-4">
+        <TimeInput label={"Ouverture"} {...form.getInputProps("openingTime")} error={form.errors["openingTime"]} key={form.key("openingTime")} />
+      <TimeInput label={"Fermuture"} {...form.getInputProps("closingTime")} error={form.errors["closingTime"]} key={form.key("closingTime")} />
 
+        </div>
+       
       </CustomForm>
     </div>
   );

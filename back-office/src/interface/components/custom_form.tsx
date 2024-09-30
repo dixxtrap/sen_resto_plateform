@@ -4,7 +4,7 @@ import { Alert, DialogAlert } from "./alert_success";
 import { Navigate } from "react-router-dom";
 import { getWsMessage } from "../../core/features/error_transformer";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { LoadingOverlay } from "@mantine/core";
+import { Button, LoadingOverlay } from "@mantine/core";
 type CustomeFormProps = {
   children?: ReactNode;
   title?: string;
@@ -47,6 +47,12 @@ confirmationMessage,
     <div className={btnClassName?"":"flex flex-col text-left divide-y darkDivider gap-y-2 "}>
       {isSuccess && <Navigate to={successPath??".."} />}
       {title &&<Title title={title} subTitle={subTitle} />}
+      <LoadingOverlay  visible ={isLoading}
+  
+              overlayProps={{ radius: 'sm', blur:1,className :"backdrop-blur-lg bg-black/5"}}
+              loaderProps={{ color: 'primary', type: 'bars' }}
+    
+      />
       <form
         action=""
         className={btnClassName?"":"flex flex-col gap-y-4  pt-10 "}
@@ -87,14 +93,14 @@ confirmationMessage,
           className={btnClassName??" min-w-[10rem] w-full bg-primary-500 hover:bg-primary-500/90 text-slate-50 py-2.5 rounded-md text-sm font-bold"}
         >
           {nextText??'Suivant'}
-        </button>:<button
+        </button>:<Button
        
-        
+        color="secondary.4"
           type="submit"
-          className={btnClassName??" min-w-[10rem] w-full bg-primary-500 hover:bg-primary-500/90 text-slate-50 py-2.5 rounded-md text-sm font-bold"}
+          className={btnClassName??" min-w-[10rem] w-full  text-slate-50 py-2.5 rounded-md text-sm font-bold"}
         >
           {validationText??'Valider'}
-        </button>}
+        </Button>}
         <button  hidden={true}  type="submit" ref={firstButtonRef}></button>
       </form>
   
@@ -105,12 +111,7 @@ confirmationMessage,
      { isSuccess&& <Alert isOpen={isSuccess} type="succeedded" title="Félicitation" message={successMessage} onClose={onFinish}/>}
      {isError&& <Alert isOpen={isError} type="faillure" title="Ooops!" message={ getWsMessage(error)}  onClose={onFinish} />}
     {/* { isLoading&&<Alert isOpen={isLoading} type="loading" title="Traitement..."   onClose={onFinish} message="Patientez un moment "/>} */}
-    {<LoadingOverlay  visible ={isLoading}
-  
-              overlayProps={{ radius: 'sm', blur:1,className :"backdrop-blur-lg bg-white/5"}}
-              loaderProps={{ color: 'primary', type: 'bars' }}
-    
-      />}
+   
  
     </>
   );

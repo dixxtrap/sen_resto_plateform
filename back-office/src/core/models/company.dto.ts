@@ -4,6 +4,7 @@ import { CoordonatesDto } from "./coordonates.dto";
 import { CreationDetailDto } from "./creation_details.dto";
 import { City } from "./city.dto";
 import { EstablishmentTypeDto } from "./establishment_type.dto";
+import { CompanyCategoryDto } from "./company_category.dto";
 type AddressType={
 regionId?:number,
 municipalityId?:number,
@@ -25,9 +26,11 @@ export type CompanyDto  = Partial<AddressType>&{
   cityId?: number;
   location?:CoordonatesDto;
   isActive?: boolean;
+  category?:CompanyCategoryDto[]
   canPublish?: boolean;
   openingTime?: string;
   closingTime?: string;
+  isOpen?:boolean;
   imagePath?: string;
   backgroundPath?: string;
   parentId?:number;

@@ -16,6 +16,7 @@ export class TextConstant {
   static  laltitude : string = "laltitude";
   static  longitude : string = "longitude";
   static confirmation: string = "Confirmation";
+  static category: string = "Categorie";
   static cookingTime: string="Temps de Preparation"
     ;  static  password : string = "Mot de passe";
   static  price : string = "Prix";
@@ -34,6 +35,7 @@ export class TextConstant {
   static municipality: string = "Commune";
   static district: string = "Arrondissement";
   static label: string = "Label";
+  static priority: string = "Priorité";
   static  description: string = "Description";
   static  logo: string = "Logo";
   static coorporateStr: string = "Coorporates";

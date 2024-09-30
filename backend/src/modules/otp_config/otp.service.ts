@@ -24,7 +24,7 @@ export class OtpConfigService implements OnModuleInit {
             duration: 15,
             isHash: false,
             maxAttemp: 3,
-            details: { byId: 1 },
+            details: { byId: null },
           }),
         );
       }

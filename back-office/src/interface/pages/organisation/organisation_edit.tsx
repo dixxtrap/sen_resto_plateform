@@ -19,13 +19,14 @@ import { CustomSwitchInput } from "../../components/switch";
 import { establishmentTypeApi } from "../../../core/features/establishment_type.slice";
 import { AppTextarea } from "../../components/form/app_textarea";
 import { ImgWithHandler } from "../../components/img_with_handler";
+import { TimeInput } from "@mantine/dates";
 
 export const OrganisationEdit = () => {
   const id = useParams().id!;
 
   const { data: establishmentType } = establishmentTypeApi.useGetAllQuery("");
 
- 
+
   const {
     data: old,
     isLoading: isOldLoading,
@@ -52,6 +53,8 @@ export const OrganisationEdit = () => {
         phone: old.data.phone,
         description: old.data.description,
         isActive: old.data.isActive,
+        closingTime: old.data.closingTime,
+        openingTime: old.data.openingTime,
         establishmentTypeId: `${old.data.establishmentTypeId}`,
       });
     }
@@ -60,7 +63,7 @@ export const OrganisationEdit = () => {
   const _onSubmit = form.onSubmit(async (data: CompanyDto) => {
     console.log(data);
     const { regionId, departementId, municipalityId, ...rest } = data;
-    update({ id: parseInt(id), company: rest as CompanyDto, file: front.file!, background:back.file!});
+    update({ id: parseInt(id), company: rest as CompanyDto, file: front.file!, background: back.file! });
   });
   return !isOldSuccess ? (
     <Alert isOpen={isOldLoading} type="loading" title="Recuperation" />
@@ -69,9 +72,9 @@ export const OrganisationEdit = () => {
       <div className="flex flex-col justify-start divide-y divide-gray-500/10 gap-y-2 ">
         <Title title="Compagnie" />
         <div className="flex gap-3 md:gap-8 py-3">
-         <ImgWithHandler  htmlFor="Profile" {...front}/>
-         <ImgWithHandler htmlFor="Couverture" {...back }/>
-       
+          <ImgWithHandler htmlFor="Profile" {...front} />
+          <ImgWithHandler htmlFor="Couverture" {...back} />
+
         </div>
 
         <CustomForm
@@ -131,6 +134,11 @@ export const OrganisationEdit = () => {
               <LaltitudeLongituide form={form} />
             </>
           )}
+          <div className="flex gap-4">
+            <TimeInput label={"Ouverture"} {...form.getInputProps("openingTime")} error={form.errors["openingTime"]} key={form.key("openingTime")} />
+            <TimeInput label={"Fermuture"} {...form.getInputProps("closingTime")} error={form.errors["closingTime"]} key={form.key("closingTime")} />
+
+          </div>
           <CustomSwitchInput label="Status" itemKey="isActive" form={form} />
         </CustomForm>
       </div>
