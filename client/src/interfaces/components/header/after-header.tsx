@@ -13,8 +13,8 @@ export const AfterHeader = () => {
         <div className="  pb-20 md:pt-5 flex w-full items-start justify-center gap-2 md:gap-10 ">
           {data?.data.map((e) => (
             <Box component={Link} to={`/establishment/${e.id}`} className=" flex w-24  group items-center  daxx  flex-col ring-gray-300  ">
-              <div className="w-auto egg border border-r-8 border-secondary-500/80  bg-white/70 p-3 backdrop-blur-lg">
-                <Image className="size-10 md:size-14  ransform transition-transform duration-500 ease-in-out group-hover:scale-125 m-2" src={e.imagePath!} />
+              <div className="w-auto egg border border-r-8 border-secondary-500/80  bg-white/90 p-3 backdrop-blur-lg">
+                <Image className="size-10 md:size-14  transform transition-transform duration-500 ease-in-out group-hover:scale-125 m-2" src={e.imagePath!} />
               </div>
               <Text className="text-xs line-clamp-2   text-center md:text-base">{e.name}</Text>
             </Box>

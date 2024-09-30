@@ -24,6 +24,10 @@ export const securityApi = createApi({
         query:(body)=>({url:`/ws/customer/profile`,body:body, method:'PUT'}),
         invalidatesTags: ["security"],
     }),
+    signup:builder.mutation<WsMessage, Customer>({
+      query:(body)=>({url:`/ws/customer/create`,body:body, method:'POST'}),
+      invalidatesTags: ["security"],
+  }),
     logout:builder.mutation<WsMessage, void>({
       query:(body)=>({url:`/ws/customer/logout`,body:body, method:"GET"}),
       invalidatesTags: ["security"],

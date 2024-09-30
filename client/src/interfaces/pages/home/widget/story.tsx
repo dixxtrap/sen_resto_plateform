@@ -49,7 +49,7 @@ export const Story = () => {
 </Modal>
 
     <Fetchingdata {...storyGroup}>
-        <Carousel
+     { storyGroup.data?.data?.length!>0&&   <Carousel
       
       h={{base:rem(120), sm:rem(350)}}
       p={10}
@@ -63,7 +63,7 @@ export const Story = () => {
       slidesToScroll={1}
     >
          {storyGroup.data?.data.map((g, i)=><Carousel.Slide p={4} mx={8} onClick={()=>{open();setCurrent(i)}}><StoryGroupItem storyGroup={g}/></Carousel.Slide>)}
-    </Carousel>
+    </Carousel>}
        
     </Fetchingdata>
     </>

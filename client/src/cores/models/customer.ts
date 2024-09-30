@@ -9,6 +9,7 @@ export class Customer {
         isPhoneVeirified?: boolean
         firstname?: string
         lastname?: string
+        cityId?: number;
        address?:AddressDto
     details?:CreationDetailDto
     coordonates?:CoordonatesDto

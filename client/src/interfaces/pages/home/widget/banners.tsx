@@ -9,7 +9,7 @@ export const Banners = () => {
     const banners=useGetBannerQuery('')
   return (
    <Fetchingdata {...banners}>
-{banners.data?.data?.length!>0&&<div  className='bg-transparent bg-amber-100 py-5'>
+ {banners.data?.data&& banners.data?.data?.length > 0&&<div  className='bg-transparent bg-amber-100 py-5'>
 <div className='bg-white/20 backdrop-blur-sm '>
 <Carousel
       withIndicators
