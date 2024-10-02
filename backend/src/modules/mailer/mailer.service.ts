@@ -26,7 +26,7 @@ export class EmailerService {
       body: JSON.stringify({
         accountid: this.config.getOrThrow<string>('LAM_ACCESS_KEY'),
         password: this.config.getOrThrow<string>('LAM_ACCESS_PASSWORD'),
-        sender: 'SenResto',
+        sender: this.config.getOrThrow<string>('LAM_SENDER_NAME'),
         to: to,
         text: message,
       }),
