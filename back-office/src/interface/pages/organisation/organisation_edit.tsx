@@ -10,7 +10,7 @@ import { CompanyDto } from "../../../core/models/company.dto";
 import { useParams } from "react-router-dom";
 import { Alert } from "../../components/alert_success";
 import {  handlePreviewV2 } from "../../utils/handle_preview";
-import { Select, TextInput } from "@mantine/core";
+import { Select, TextInput } from "@mantine/core"; 
 import { TextConstant } from "../../../core/data/textConstant";
 import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
 import { AddressForm } from "../../components/form/address_form";
