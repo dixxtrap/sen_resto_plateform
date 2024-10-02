@@ -1,4 +1,4 @@
-import { TableTd, TableTr,Text } from "@mantine/core";
+import { TableTd, TableTr, Text } from "@mantine/core";
 import { companyCategoryApi } from "../../../core/features/company_category.slice"
 import { TablePagination } from "../../components/table/table"
 import { CompanyCategoryCreate } from "./company_category_create";
@@ -18,13 +18,9 @@ export const CompanyCategoryList = () => {
                             {e.name}
                         </TableTd>
                         <TableTd>
-                        <div className="w-[200px]">
-          <Text truncate="end" className=" w-full   ">{e.description}</Text>
-          </div>
-
-
-
-
+                            <div className="w-[200px]">
+                                <Text truncate="end" className=" w-full   ">{e.description}</Text>
+                            </div>
                         </TableTd>
                         <TableTd>
                             {e.priority}

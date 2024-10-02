@@ -1,7 +1,7 @@
 import { createTheme } from "@mantine/core";
 
 export const APP_THEME = createTheme({
-    primaryColor:'teal',
+    primaryColor:'red',
 
    primaryShade:{light:6, dark:7},
     colors:

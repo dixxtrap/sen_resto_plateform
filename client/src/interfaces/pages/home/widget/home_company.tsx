@@ -1,5 +1,4 @@
 
-import { Grid } from '@mantine/core';
 import {  baseApi} from "../../../../cores/apis/api";
 
 import { HomeCompanyItem } from "./home_company_item";

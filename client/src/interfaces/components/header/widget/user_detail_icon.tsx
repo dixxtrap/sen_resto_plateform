@@ -1,6 +1,6 @@
 import {
   ArrowLongRightIcon,
-  MagnifyingGlassCircleIcon,
+  
   PhoneIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
@@ -10,11 +10,10 @@ import {
 } from "../../../../cores/apis/security.slice";
 import { BagIcon } from "./bag_icon";
 import { NotificationIcon } from "./notification_icon";
-import { DialogAlert } from "../../dialog";
 import { LoginForm } from "../../login/login_form";
 import { useDisclosure } from "@mantine/hooks";
 import {
-  Text,
+
   Box,
   Burger,
   Button,
@@ -22,8 +21,7 @@ import {
   Drawer,
   Flex,
   UnstyledButton,
-  Modal,
-  Title,
+
   Menu,
   rem,
 } from "@mantine/core";

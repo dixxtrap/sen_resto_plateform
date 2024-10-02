@@ -7,7 +7,7 @@ import clsx from "clsx";
 import {} from "@heroicons/react/24/outline";
 
 export const BagIcon = ({ isShort = true }: { isShort?: boolean }) => {
-  const { data } = useGetBagQuery("");
+  const { data } = useGetBagQuery();
 
   return (
     <Indicator

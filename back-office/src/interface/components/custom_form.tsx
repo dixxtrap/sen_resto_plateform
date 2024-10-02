@@ -1,16 +1,17 @@
-import { FC, FormEventHandler, ReactNode, useRef, useState } from "react";
+import { FC, FormEventHandler, ReactNode, useEffect, useRef, useState } from "react";
 import { Title } from "./title";
 import { Alert, DialogAlert } from "./alert_success";
 import { Navigate } from "react-router-dom";
 import { getWsMessage } from "../../core/features/error_transformer";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { Button, LoadingOverlay } from "@mantine/core";
+import { notifications } from '@mantine/notifications'
 type CustomeFormProps = {
   children?: ReactNode;
   title?: string;
   successMessage?: string;
   error?: unknown;
-confirmeBefore?:boolean;
+confirmeBefore?:boolean; 
   subTitle?: string;
   validationText?: string;
   nextText?: string;
@@ -42,9 +43,26 @@ confirmationMessage,
 }) => {
   const[isOpen ,setIsOpen ]=useState<boolean>(false);
   const firstButtonRef = useRef<HTMLButtonElement>(null);
+
+ useEffect(() => {
+  if(isSuccess)
+    notifications.show({
+      title: <span className="text-xl font-bold">Reussi</span>,
+      message: 'Opération effectuée avec succé 🌟',
+      icon:<CheckCircleIcon className=""/>,
+      color:"primary",
+      classNames:{icon:""},
+      className:"ring-1 ring-primary-300"
+    })
+ }, [isSuccess])
+ 
   return (
     <>
-    <div className={btnClassName?"":"flex flex-col text-left divide-y darkDivider gap-y-2 "}>
+    <Button >
+click Me
+    </Button>
+
+    <div className={btnClassName?"":"flex flex-col relative text-left divide-y darkDivider gap-y-2 "}>
       {isSuccess && <Navigate to={successPath??".."} />}
       {title &&<Title title={title} subTitle={subTitle} />}
       <LoadingOverlay  visible ={isLoading}
@@ -53,6 +71,7 @@ confirmationMessage,
               loaderProps={{ color: 'primary', type: 'bars' }}
     
       />
+
       <form
         action=""
         className={btnClassName?"":"flex flex-col gap-y-4  pt-10 "}

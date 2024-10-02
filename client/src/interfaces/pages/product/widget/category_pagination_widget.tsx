@@ -14,7 +14,7 @@ type CategoryPageniationWidgetProps={
 export const CategoryPageniationWidget:FC<CategoryPageniationWidgetProps>= () => {
 const category=useGetCategoryQuery('')
 const categoryBase=useGetCategoryBaseQuery('')
-const company=useGetCompanyQuery('')
+const company=useGetCompanyQuery()
 const form=useForm({initialValues:{
   baseId:'',
   categoryIds:["1", "4"]

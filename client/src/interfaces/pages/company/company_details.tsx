@@ -2,22 +2,16 @@ import { useParams } from "react-router-dom";
 import { baseApi } from "../../../cores/apis/api";
 import { Fetchingdata } from "../../components/fetching_data";
 import {
-  Avatar,
+ 
   Image,
-  Container,
-  Group,
-  Title,
+
   Alert,
-  Box,
-  TextInput,
+  
   Text,
-  Pill,
+
   Spoiler,
-  SimpleGrid,
+  Badge,
 } from "@mantine/core";
-import { ProductItem } from "../product/widget/product_item";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { useDisclosure } from "@mantine/hooks";
 import clsx from "clsx";
 import CompanyProduct from "./widget/company_product_item";
 
@@ -45,9 +39,9 @@ export const CompanyDetails = () => {
         <div className="flex flex-col mx-2 p-2  md:mx-8 ring-1 rounded-md ring-gray-400">
           <div className="flex w-full justify-between">
             <Text className="font-bold md:text-2xl">{company.data?.data.name}</Text>
-            <Pill variant="default" className={clsx("ring-1  ", company.data?.data.isOpen?"ring-secondary-400 bg-secondary-100":"ring-primary-400 bg-primary-100 ")} c={"primary"}>
+            <Badge  radius={4} color={company.data?.data.isOpen?"secondary.5":"primary.5"}>
               <Text className="">{`${company.data?.data.openingTime?.slice(0, 5)}/${company.data?.data.closingTime?.slice(0, 5)}`}</Text>
-            </Pill>
+            </Badge>
           </div>
           <Spoiler hideLabel={"voir plus"} showLabel={"voir moins"}>
             <Text fw={400} className={clsx(" text-xs overflow-hidden leading-5 text-gray-700  text-ellipsis md:text-base",)}>{company.data?.data.description}</Text>

@@ -1,7 +1,6 @@
 import { CameraIcon } from '@heroicons/react/24/solid';
 import React from 'react'
 import {Text} from '@mantine/core'
-import { useId } from '@mantine/hooks';
 export const ImgWithHandler = (handler:{
     htmlFor:string;
     handlerFile: (event: any) => void;
@@ -9,7 +8,7 @@ export const ImgWithHandler = (handler:{
     preview: string | undefined;
     file: File | undefined;
 }) => {
-    const id= useId()
+   
   return (
     <label htmlFor={handler.htmlFor}>
     <input

@@ -10,7 +10,7 @@ export const orderApi=createApi({
    reducerPath:'order',
     tagTypes:['order'],
     endpoints: (builder)=>({
-        getBag:builder.query<BaseResponse<OrderDto[]>, ''>({
+        getBag:builder.query<BaseResponse<OrderDto[]>, void>({
             query:()=>'ws/order/bag',
             providesTags:['order']
         }),

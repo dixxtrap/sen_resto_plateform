@@ -1,20 +1,16 @@
 import {  useGetProductQuery } from "../../../cores/apis/product.slice";
 import { initPagination } from "../../../cores/models/pagination.model";
 import {  ProductItem } from "./widget/product_item";
-import { useProfileQuery } from "../../../cores/apis/security.slice";
 import { useState } from "react";
-import { DialogAlert } from "../../components/dialog";
-import { LoginForm } from "../../components/login/login_form";
 import { CategoryPageniationWidget } from "./widget/category_pagination_widget";
 import {  Grid, GridCol } from "@mantine/core";
 // import { useGetCategoryBaseQuery } from "../../../cores/apis/api";
 
 export const PlateList = () => {
-  const { isSuccess:isLogin}=useProfileQuery("")
   // const _coategories=useGetCategoryBaseQuery("")
   const [category, setCategory]=useState<number>(0)
   const [_company, _setCompany]=useState<number>(0)
-  const[showLogin, setShowLogin]=useState(false)
+
 const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
   return (
     <>
@@ -30,7 +26,7 @@ const {data:products, isLoading, isSuccess}=useGetProductQuery(initPagination)
            
             <Grid     className="w-full pt-4 gap-1  p-3">
               {products.data.map((product) => (
-                <GridCol key={product.name+" "+ product.id} p={{base:3,md:8}} span={{base:12,sm:6,  md:4, lg:4}} className="grow" onClick={()=>!isLogin&&setShowLogin(true)}>
+                <GridCol key={product.name+" "+ product.id} p={{base:3,md:8}} span={{base:12,sm:6,  md:4, lg:4}} className="grow">
                 <ProductItem  product={product}  />
                 </GridCol>
               ))}

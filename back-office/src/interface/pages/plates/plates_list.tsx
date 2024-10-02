@@ -1,18 +1,16 @@
 import { TablePagination } from "../../components/table/table";
 import {
-  useGetDayQuery,
   useGetRestaurantProductQuery,
 } from "../../../core/features/product.slice";
 import { BuildingStorefrontIcon } from "@heroicons/react/24/outline";
-import { clsx } from "../../utils/clsx";
-import { Link } from "react-router-dom";
+
 import { Status } from "../../components/status";
-import { Button, Table } from "@mantine/core";
+import {  Table } from "@mantine/core";
 import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item";
 
 
 export const PlateList = () => {
-  const { data: day=[] } = useGetDayQuery(null);
+
   const products = useGetRestaurantProductQuery(``);
   console.log(products);
   return (

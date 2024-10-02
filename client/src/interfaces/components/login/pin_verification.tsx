@@ -2,7 +2,7 @@ import { useForm } from '@mantine/form'
 import { Logo } from '../logo'
 import { Button, NumberInput, PasswordInput } from '@mantine/core'
 import { securityApi } from '../../../cores/apis/security.slice'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 export const PinVerification = ({phone, onSucess}:{phone:string, onSucess:()=>void}) => {
   const [verification,verficationState]=securityApi.useOtpVerificationMutation()

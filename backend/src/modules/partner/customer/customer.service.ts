@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator'
 import { Customer, CustomerDto } from 'src/typeorm/customer.entity';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
+import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
@@ -20,11 +21,7 @@ export class CustomerService {
         if (result) return HttpExceptionCode.SUCCEEDED;
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
-      .catch((err) => {
-        console.log(err);
-        if (err instanceof WsMessage) throw err;
-        throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
+      .catch(WsCatch);
   }
   update({ id, body }: { id: number; body: CustomerDto }) {
     return this.repos

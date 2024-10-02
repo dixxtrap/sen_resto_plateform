@@ -53,7 +53,7 @@ export class WsCustomerService {
           .generateOtp({ to: phone, configId: null, channel: channel })
           .then((otp) => {
             return this.mailService
-              .senOtp({
+              .sendMessage({
                 to: phone,
                 message: `your  otp code  is ${otp.code}`,
               })

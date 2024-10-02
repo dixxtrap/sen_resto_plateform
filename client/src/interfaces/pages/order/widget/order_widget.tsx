@@ -3,8 +3,6 @@ import { OrderDto } from "../../../../cores/models/order.dto";
 
 import {
   ActionIcon,
-  Avatar,
-  Badge,
   Button,
   ButtonGroup,
   Group,

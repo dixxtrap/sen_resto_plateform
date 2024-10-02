@@ -7,7 +7,6 @@ import {
   ScrollArea,
   Pill,
   Avatar,
-  HoverCard,
   Stepper,
   ButtonGroup,
   Textarea,

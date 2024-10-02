@@ -1,10 +1,10 @@
 import { Logo } from "../logo";
 import { TextConstant } from "../../../cores/constant/textConstant";
 import { FC, useState } from "react";
-import { securityApi, useUpdateProfileMutation } from "../../../cores/apis/security.slice";
+import { securityApi } from "../../../cores/apis/security.slice";
 import { Customer } from "../../../cores/models/customer";
 import { useForm } from "@mantine/form";
-import { Button, NumberInput, Select, Text, TextInput } from "@mantine/core";
+import {  NumberInput, Select, Text, TextInput } from "@mantine/core";
 import { PhoneIcon } from "@heroicons/react/24/outline";
 import { baseApi } from "../../../cores/apis/api";
 import { CustomForm } from "../custom_form";
@@ -39,7 +39,7 @@ export const Signup: FC<SetProfileFormProps> = ({ phone, action }) => {
       console.log("Geolocation is not supported by this browser.");
     }
   };
-
+handleGetLocation();
   const _onSubmit = form.onSubmit(async (data) => {
     signup({
       ...data,

@@ -1,7 +1,6 @@
 import { Group6Svg } from "../../../../cores/constantes/illus"
 import { safePaidImg } from "../../../../cores/constantes/img"
 import { Str } from "../../../../cores/constantes/str"
-import { GlobMask } from "../../../components/masked-img/glob_mask"
 
 
 export const SafePaid = () => {

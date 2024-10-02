@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { CompanyDto } from "../../../../cores/models/company.dto";
-import { Pill, Image, Text, Space, BackgroundImage, Box } from "@mantine/core";
+import { Pill, Image, Text } from "@mantine/core";
 import clsx from "clsx";
 
 export const HomeCompanyItem = ({ company }: { company: CompanyDto }) => {

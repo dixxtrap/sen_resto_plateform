@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Title } from "../../components/title";
 import { CustomForm } from "../../components/custom_form";
 import {
@@ -9,9 +9,8 @@ import { useForm } from "@mantine/form";
 import { CompanyDto } from "../../../core/models/company.dto";
 import { useParams } from "react-router-dom";
 import { Alert } from "../../components/alert_success";
-import { CameraIcon } from "@heroicons/react/24/outline";
-import { handlePreview, handlePreviewV2 } from "../../utils/handle_preview";
-import { Select, Text, TextInput } from "@mantine/core";
+import {  handlePreviewV2 } from "../../utils/handle_preview";
+import { Select, TextInput } from "@mantine/core";
 import { TextConstant } from "../../../core/data/textConstant";
 import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
 import { AddressForm } from "../../components/form/address_form";

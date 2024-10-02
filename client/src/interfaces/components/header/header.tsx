@@ -1,5 +1,5 @@
 import logo from "/assets/react.svg";
-import { AppName, constant, links } from "../../../utils/constant";
+import { AppName, links } from "../../../utils/constant";
 import { Link, NavLink } from "react-router-dom";
 import clsx from "clsx";
 import { UserDetailIcon } from "./widget/user_detail_icon";

@@ -1,6 +1,5 @@
 
 import { useGetBannerQuery } from '../../../../cores/apis/api'
-import { headerBgImg } from '../../../../cores/constantes/img'
 import { Fetchingdata } from '../../../components/fetching_data'
 import { BannerItem } from './banner_item'
 import { Carousel } from '@mantine/carousel'

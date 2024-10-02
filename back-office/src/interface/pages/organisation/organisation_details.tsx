@@ -3,11 +3,9 @@ import { useParams } from "react-router-dom";
 import { Img } from "../../components/image_updatable";
 import { Title } from "../../components/title";
 import { Alert } from "../../components/alert_success";
-import { handlePreviewV2 } from "../../utils/handle_preview";
 
 export const OrganisationDetails = ({}:{type?:string}) => {
-  const front=handlePreviewV2({});
-  const back=handlePreviewV2({});
+  
   const { id } = useParams();
   const {
     data: company,

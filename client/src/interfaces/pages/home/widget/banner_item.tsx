@@ -1,4 +1,4 @@
-import { Paper, Image, Title,Text, Box, Flex, Center, Avatar } from '@mantine/core';
+import {  Image, Title,Text, Box, Flex } from '@mantine/core';
 import classes from '../styles/banner_item.module.css'
 import { BannerDto } from '../../../../cores/models/banner.dto';
 import clsx from 'clsx';

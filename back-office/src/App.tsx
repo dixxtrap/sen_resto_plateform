@@ -1,5 +1,6 @@
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
+import '@mantine/notifications/styles.css';
 import ThemeProvider from "./core/providers/theme.provider";
 import { Provider } from "react-redux";
 import store from "./core/features";
@@ -9,11 +10,13 @@ import { router } from "./interface/router";
 import {  MantineProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { APP_THEME } from './theme';
+import { Notifications } from '@mantine/notifications';
 
 export  const App = () => {
 
   return (
     <MantineProvider theme={APP_THEME}>
+       <Notifications />
       <DatesProvider   settings={{ consistentWeeks: true }}>
     <Provider store={store}>
       <ThemeProvider>

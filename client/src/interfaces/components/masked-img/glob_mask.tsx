@@ -1,4 +1,3 @@
-import classes from  "./mask.module.css"
 import    "./mask.module.css"
 
 export const GlobMask = ({url}:{url:string}) => {

@@ -9,7 +9,7 @@ type AutoCompletionCompaniesProps={
 export const AutoCompletionCompanies:FC<AutoCompletionCompaniesProps> = ({ onclick}) => {
   const [query, _] = useState("");
   console.log(onclick);
-  const { data: companies, isSuccess } = useGetCompanyQuery("");
+  const { data: companies, isSuccess } = useGetCompanyQuery();
   console.log(companies);
   const [__, setFilteredPeople] = useState<CompanyDto[]>([]);
   useEffect(() => {

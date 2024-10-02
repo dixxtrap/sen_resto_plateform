@@ -1,4 +1,4 @@
-import { Button, Image, TableTd, TableTr } from "@mantine/core"
+import {  Image, TableTd, TableTr } from "@mantine/core"
 import { TablePagination } from "../../components/table/table"
 import { EstablishmentTypeCreate } from "./establishment_type_create"
 import { establishmentTypeApi } from '../../../core/features/establishment_type.slice';

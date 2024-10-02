@@ -3,7 +3,7 @@ import { Fetchingdata } from '../../components/fetching_data'
 import { OrderWidget } from './widget/order_widget';
 
 export const OrderList = () => {
-  const order=useGetBagQuery('')
+  const order=useGetBagQuery()
   return (
     <Fetchingdata {...order}>
       

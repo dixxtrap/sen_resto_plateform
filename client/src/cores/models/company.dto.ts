@@ -2,6 +2,7 @@ import { CreationDetailDto } from "./creation_details.dto";
 import { CoordonatesDto } from "./coordonates.dto";
 import { AddressDto } from "./address.dto";
 import { ProductManagement } from "./product_management.dto";
+import { CompanyCategoryDto } from "./company_category.dto";
 export enum CompanyEnum {
   RESTO = 'restaurant',
   MASTER = 'master',
@@ -29,7 +30,9 @@ export class CompanyDto {
   imagePath?: string;
   parentId?:number;
   parent?:CompanyDto;
-  details?:CreationDetailDto
+  details?:CreationDetailDto;
+  isOpen?:boolean;
+  category?:CompanyCategoryDto[]
 }
 // export const companySchema = yup.object({
 //   name: yup.string().max(30).required(),
