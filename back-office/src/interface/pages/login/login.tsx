@@ -66,6 +66,7 @@ export const Login = () => {
               >
                 Mot de passe oublié ?
               </Link>
+              {import.meta.env.VITE_HOST}
             </div>
           </p>
         </div>

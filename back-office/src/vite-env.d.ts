@@ -1,2 +1,11 @@
 /// <reference types="vite/client" />
-GOOGLE_KEY:AIzaSyAkkKGmA3OpeRzTdTzy_o48pp1MlK2hiZ4
+
+
+interface ImportMetaEnv {
+    readonly VITE_APP_TITLE: string
+    readonly VITE_HOST: string
+    // more env variables...
+  }
+interface ImportMeta {
+    readonly env: ImportMetaEnv
+  }

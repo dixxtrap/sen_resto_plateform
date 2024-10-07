@@ -14,7 +14,7 @@ import { Notifications } from '@mantine/notifications';
 import { initializeSocket } from './core/features/get_socket';
 
 export  const App = () => {
-  initializeSocket("http://localhost:3000/v1");
+  initializeSocket(import.meta.env.VITE_HOST);
   return (
     <MantineProvider theme={APP_THEME}>
        <Notifications />
@@ -25,7 +25,7 @@ export  const App = () => {
           <div className="App   bg-white dark:text-slate-100 darkBg  ">
           <RouterProvider router={router} />
           </div>
-
+         
       </ThemeProvider>
 
     </Provider>
