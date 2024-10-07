@@ -7,6 +7,7 @@ import {
   Modal,
   ActionIcon,
   Space,
+  Pill,
 } from "@mantine/core";
 
 import { PlateItemPoppup } from "./order_poppup";
@@ -16,8 +17,9 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { reductionPrice } from "../../../../utils/calcul";
 import { ProtectedAction } from "../../../components/login/login_form";
 import { useDisclosure } from "@mantine/hooks";
+import { OrderProduct } from "../../../../cores/models/order.dto";
 
-export const ProductItem = ({ product }: { product: ProductDto }) => {
+export const ProductItem = ({ product, orderProduct }: { product: ProductDto, orderProduct?:OrderProduct }) => {
   const [opened, { toggle, close }] = useDisclosure();
   console.log(import.meta.env.CURRENCY);
   return (
@@ -25,13 +27,13 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
       {opened && (
         <Modal
           opened={opened}
-        
+        title={product.name}
           onClose={() => toggle()}
           size={"md"}
-         
+         classNames={{close:"bg-slate-800 text-white rounded-full"}}
         >
           {" "}
-          <PlateItemPoppup open={opened} close={close} product={product} />
+          <PlateItemPoppup orderProduct={orderProduct} open={opened} close={close} product={product} />
         </Modal>
       )}
 
@@ -54,14 +56,17 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
             />
           </div>
           <div className="h-full flex grow flex-col md:col-span-8   col-span-8 ">
-            <Text lineClamp={1} className="font-bold break-words  md:text-xl capitalize">{product.name}</Text>
+          <div className="flex justify-between">
+          <Text lineClamp={1} className="font-bold break-words  md:text-xl capitalize">{product.name} </Text>
+{orderProduct&&<Pill  color="primary" className="ring-1 ring-primary-400" radius={8}>x{orderProduct?.quantity}</Pill>}
+          </div>
             <div className=" text-gray-600 ">
               <Text lineClamp={3} className="text-xs  md:text-base">{product.description}</Text>
             </div>
             <Space flex={3}/>
             <Group gap={0} justify="space-between grow bg-red-500 w-full">
             <Text
-              className="text-lg  md:mr-3"
+              className="text-lg  font-serif  md:mr-3"
               c={"primary.5"}
               p={2}
               lineClamp={1}
@@ -75,7 +80,7 @@ export const ProductItem = ({ product }: { product: ProductDto }) => {
               {product.reduction! > 0 && (
                 <Text
                   fw={900}
-                  className="text-xs md:text-base  mr-3 line-through decoration-slice text-gray-600"
+                  className="text-xs md:text-base font-serif  mr-3 line-through decoration-slice text-gray-600"
                 >
                   {product.price}
                   {import.meta.env.VITE_REACT_CURRENCY}

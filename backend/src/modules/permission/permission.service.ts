@@ -35,7 +35,7 @@ export class PermissionService implements OnModuleInit {
             PermissionActionEnum.details,
             PermissionActionEnum.all,
           ].map((action) => {
-            console.log(`${action}_${e.name}`);
+           
             return this.repos
               .exists({
                 where: {

@@ -11,9 +11,10 @@ import {  MantineProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { APP_THEME } from './theme';
 import { Notifications } from '@mantine/notifications';
+import { initializeSocket } from './core/features/get_socket';
 
 export  const App = () => {
-
+  initializeSocket("http://localhost:3000/v1");
   return (
     <MantineProvider theme={APP_THEME}>
        <Notifications />

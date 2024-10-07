@@ -31,6 +31,8 @@ import { StoryModule } from './modules/story/story.module';
 import { CompanyCategoryModule } from './modules/company_category/company_category.module';
 import { EstablishmentTypeModule } from './modules/establishment_type/establishment_type.module';
 import { IconModule } from './modules/icon/icon.module';
+import { ChatGateway } from './chat/chat.gateway';
+import { ChatModuleGateway } from './chat/chat.module.gateway';
 @Module({
   imports: [
     DatabaseModule,
@@ -64,7 +66,8 @@ import { IconModule } from './modules/icon/icon.module';
     StoryModule,
     CompanyCategoryModule,
     EstablishmentTypeModule,
-    IconModule
+    IconModule,
+    ChatModuleGateway
   ],
   controllers: [AppController],
   providers: [AppService],

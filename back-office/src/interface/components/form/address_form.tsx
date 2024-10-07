@@ -1,5 +1,5 @@
 import { Checkbox, Select, TextInput } from '@mantine/core'
-import { UseFormReturnType } from '@mantine/form'
+import { useForm, UseFormReturnType } from '@mantine/form'
 import  {  useState } from 'react'
 import { TextConstant } from '../../../core/data/textConstant'
 import { cityApi } from '../../../core/features/city.slice'
@@ -10,10 +10,11 @@ export const AddressForm = ({form,isUpdatable,className}:{
  isUpdatable?:boolean,
  className?:string
 }) => {
+  const f2= useForm()
   const region=cityApi.useGetRegionQuery('')
-  const city=cityApi.useGetDepartementQuery(form.getValues().regionId)
-  const arrondissment=cityApi.useGetDepartementQuery(form.getValues().departementId)
-  const commune = cityApi.useGetDepartementQuery(form.getValues().municipalityId )
+  const city=cityApi.useGetDepartementQuery(f2.getValues().regionId)
+  const arrondissment=cityApi.useGetDepartementQuery(f2.getValues().departementId)
+  const commune = cityApi.useGetDepartementQuery(f2.getValues().municipalityId )
 const [update, setUpdate]=useState(false)
   return (
     <>
@@ -26,9 +27,9 @@ const [update, setUpdate]=useState(false)
       onChange={(event) => setUpdate(event.currentTarget.checked)}
     />}
     {(!isUpdatable|| update)&&  <div className={className??'grid grid-cols-1  gap-x-8 gap-y-3 lg:grid-cols-2'}>
-        <Select styles={multiSelectStyle} label={TextConstant.region} {...form.getInputProps('regionId')}   key={form.key('regionId')} data={ region.data?.data.map(e=>({label:e.name!, value:`${e.id}`})) } />
-        { <Select styles={multiSelectStyle}   label={TextConstant.city}  {...form.getInputProps('departementId')}  key={form.key('departementId')}  data={ city.data?.data.map(e=>({label:e.name!, value:`${e.id}`})) }/>}
-        <Select styles={multiSelectStyle}   label={TextConstant.district} {...form.getInputProps('municipalityId')}  key={form.key('municipalityId')} data={ arrondissment.data?.data.map(e=>({label:e.name!, value:`${e.id}`})) }/>
+        <Select styles={multiSelectStyle} label={TextConstant.region} {...f2.getInputProps('regionId')}   key={f2.key('regionId')} data={ region.data?.data.map(e=>({label:e.name!, value:`${e.id}`})) } />
+        { <Select styles={multiSelectStyle}   label={TextConstant.city}  {...f2.getInputProps('departementId')}  key={f2.key('departementId')}  data={ city.data?.data.map(e=>({label:e.name!, value:`${e.id}`})) }/>}
+        <Select styles={multiSelectStyle}   label={TextConstant.district} {...f2.getInputProps('municipalityId')}  key={f2.key('municipalityId')} data={ arrondissment.data?.data.map(e=>({label:e.name!, value:`${e.id}`})) }/>
           <Select styles={multiSelectStyle}   label={TextConstant.municipality}  {...form.getInputProps('cityId')}  key={form.key('cityId')} data={ commune.data?.data.map(e=>({label:e.name!, value:`${e.id}`})) }/>
       </div>}
       </>

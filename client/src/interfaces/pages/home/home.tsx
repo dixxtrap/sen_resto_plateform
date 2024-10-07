@@ -1,6 +1,5 @@
 
 import { HomeCompany } from './widget/home_company'
-import { ProductDiscountedWidget } from './widget/product_discounted';
 import { FastDeliver } from './widget/fast_deliver';
 import { SafePaid } from './widget/safe-paid';
 import { Banners } from './widget/banners';
@@ -23,9 +22,9 @@ const Home = () => {
       {/* <HomeRestaurant/> */}
 
       <SafePaid />
-      <div className="bg-white min-h-[20px]">
+      {/* <div className="bg-white min-h-[20px]">
         <ProductDiscountedWidget />
-      </div>
+      </div> */}
       <div className="bg-white h-40"></div>
     </div>
   );

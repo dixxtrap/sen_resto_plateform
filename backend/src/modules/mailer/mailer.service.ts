@@ -9,6 +9,7 @@ import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
 import { Repository } from 'typeorm';
 import { Message } from 'src/typeorm/message.entity';
+import { Env } from 'src/env';
 @Injectable()
 export class EmailerService {
   constructor(
@@ -21,7 +22,7 @@ export class EmailerService {
     return `${to} ${message}`;
   }
   sendMessage({ to, message }: { to: String; message: String }) {
-    return fetch(this.config.getOrThrow<string>('LAM_URL'), {
+     if(process.env.ENV!==Env.LOCAL) return fetch(this.config.getOrThrow<string>('LAM_URL'), {
       method: 'POST',
       body: JSON.stringify({
         accountid: this.config.getOrThrow<string>('LAM_ACCESS_KEY'),
@@ -31,6 +32,7 @@ export class EmailerService {
         text: message,
       }),
     });
+    return this.senOtp({ to, message });
   }
   async sendUserConfirmation({ user, token }: { user: any; token: string }) {
     const content = await Mustache.render(

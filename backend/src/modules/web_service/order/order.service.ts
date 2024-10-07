@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { WebSocketServer } from '@nestjs/websockets/decorators/gateway-server.decorator';
 import { ProductHistoryService } from 'src/modules/product/history/product_history.service';
 import { CustomerDto } from 'src/typeorm/customer.entity';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
@@ -10,7 +11,8 @@ import { BaseResponse } from 'src/typeorm/response_base';
 import { CreateUserDto } from 'src/typeorm/user.entity';
 import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
-
+import { Server } from 'socket.io';
+import { ChatGateway } from 'src/chat/chat.gateway';
 @Injectable()
 export class WsOrderService {
   constructor(
@@ -18,6 +20,8 @@ export class WsOrderService {
     @Inject(EntityProviderEnum.ORDER_PRODUCT)
     private orderProductRepos: Repository<OrderProduct>,
     private productHistoryService: ProductHistoryService,
+    private  chatGateway: ChatGateway
+    
   ) {}
   getBag({ by }: { by: CustomerDto }) {
     return this.repos
@@ -193,7 +197,8 @@ export class WsOrderService {
           customerId: by.id,
           partnerId: productHistory.data.product.parentId,
         }).then((order) => {
-          return this.orderProductRepos
+          
+          return( !(body.quantity===0) ?this.orderProductRepos
           .save(
             this.orderProductRepos.create({
               productHistoryId: productHistory.data.id,
@@ -201,9 +206,15 @@ export class WsOrderService {
               quantity: body.quantity,
               orderId: order.id,
             }),
-          )
+          ):this.orderProductRepos.delete({productHistoryId: productHistory.data.id,orderId: order.id}))
           .then((result) => {
-            if (result)
+            try{
+            this.chatGateway.server.emit("messageFrom",{id:productHistory.data.product.parentId,})
+           }catch(err){
+            console.log(err);
+           }
+           
+           if (result)
               throw new WsMessage(HttpExceptionCode.SUCCEEDED);
             else throw new WsMessage(HttpExceptionCode.FAILLURE);
           });

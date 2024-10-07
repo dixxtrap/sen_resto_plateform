@@ -8,6 +8,7 @@ import {
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { UserDto } from 'src/typeorm/user.entity';
+import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
@@ -49,37 +50,29 @@ export class RestaurantService {
     id,
     body,
     file,
+    background,
   }: {
     id: number;
-    body: CompanyRestaurantBaseDto;
-    file: Express.Multer.File;
+    body: CompanyRestaurantBaseDto,
+    file?: Express.Multer.File,
+    background?: Express.Multer.File,
   }) {
     console.log(body);
     return this.repos
       .findOne({ where: { id: Equal(id) } })
       .then(async (old) => {
-        if (
-          file &&
-          old?.imagePath &&
-          body.imagePath &&
-          old.imagePath !== body.imagePath
-        ) {
-          body.imagePath = await this.s3Service.uploadFileToS3AndDeleteLocal({
-            file,
-            oldPath: old.imagePath,
-          });
-          console.log(`==================${body.imagePath}===============`);
+        if(file){
+          body.imagePath= await this.s3Service.uploadFileToS3AndDeleteLocal({file:file, oldPath:old.imagePath})
+        }
+        if(background){
+          body.backgroundPath= await this.s3Service.uploadFileToS3AndDeleteLocal({file:background,  oldPath:old.backgroundPath})
         }
         return this.repos.update({ id: Equal(id) }, this.repos.create(body)).then((result) => {
           if (result.affected! > 0) return HttpExceptionCode.SUCCEEDED;
           else throw new WsMessage(HttpExceptionCode.FAILLURE);
         });
       })
-      .catch((err) => {
-        console.log(err);
-        if (err instanceof WsMessage) throw err;
-        throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
+      .catch(WsCatch);
   }
   getAll({ by }: { by: UserDto }) {
     return this.repos

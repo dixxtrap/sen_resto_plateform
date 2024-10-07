@@ -32,7 +32,7 @@ export class SecurityService {
     // if (user.isActive == false) throw new UnauthorizedException();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordCrypt, password, ...rest } = user;
-    console.log(user);
+  
     if (user.password === CryptoService.createHash(body.password)) {
       return { ...rest };
     } 
@@ -70,8 +70,7 @@ export class SecurityService {
     token: string;
     password: string;
   }) {
-    console.log(token);
-    console.log(password);
+
     const decode = await this.jwtService.verify(token, {
       secret: process.env.CRYPTO_KEY,
     });
@@ -84,7 +83,7 @@ export class SecurityService {
     const user = await this.userService.findByEmail({ email: item });
     if (user) {
       const { passwordCrypt, password, ...rest } = user;
-      console.log(`${passwordCrypt}, ${password} `);
+  
       if (user) return this.jwtService.sign(rest);
     }
   }
@@ -113,13 +112,14 @@ export class SecurityService {
     return this.customerService
       .getByPhone({ phone })
       .then((user) => {
-        console.log(user);
+       
         if (user) {
           const { firstname, lastname, id, phone, location } = user;
           const token = this.jwtService.sign(
             { firstname, lastname, id, phone, location },
             {
-              secret: process.env.CRYPTO_KEY,
+              secret: process.env.CRYPTO_KEY, 
+              
             },
           );
           return { ...HttpExceptionCode.SUCCEEDED, token };

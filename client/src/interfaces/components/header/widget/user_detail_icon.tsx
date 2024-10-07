@@ -11,79 +11,50 @@ import {
 import { BagIcon } from "./bag_icon";
 import { NotificationIcon } from "./notification_icon";
 import { LoginForm } from "../../login/login_form";
-import { useDisclosure } from "@mantine/hooks";
 import {
 
-  Box,
-  Burger,
   Button,
-  Divider,
-  Drawer,
-  Flex,
   UnstyledButton,
 
   Menu,
   rem,
 } from "@mantine/core";
-import { constant, links } from "../../../../utils/constant";
-import { Link, Navigate, NavLink } from "react-router-dom";
-import logo from "/assets/react.svg";
-import clsx from "clsx";
-export const UserDetailsMobile = () => {
-  const [opened, { close, open }] = useDisclosure(false);
-  const profile = useProfileQuery("");
-  return (
-    <>
-      {" "}
-      <Drawer
-        offset={0}
-        closeButtonProps={{
-          icon: <Burger opened={opened} onClick={close} />,
-        }}
-        className="top-10"
-        position={"top"}
-        classNames={{ content: "top-10" }}
-        opened={opened}
-        onClose={close}
-        title={
-          <Link to="/" className="flex  items-end justify-center">
-            <img alt="logo" src={logo} className="h-10" />
-            <span className="text-lg md:text-2xl font-bold font-serif ml-4  text-kprimary-500">
-              {constant.app_name}
-            </span>
-          </Link>
-        }
-      >
-        {/* Drawer content */}
-        <Box className="flex  flex-col gap-5">
-          {links.map((e) => (
-            <NavLink to={e.route} onClick={close}>
-              {({ isActive }) => (
-                <UnstyledButton variant={isActive ? "filled" : "light"}>
-                  <Flex
-                    className={clsx("font-bold gap-3", {
-                      "text-primary-500": isActive,
-                    })}
-                  >
-                    <e.icon className="size-6" />
-                    <span className="text-2xl">{e.name}</span>
-                  </Flex>
-                </UnstyledButton>
-              )}
-            </NavLink>
-          ))}
-          <Divider />
+import {  Navigate, NavLink } from "react-router-dom";
+import  HomeIconSolid from "@heroicons/react/24/solid/HomeIcon";
+import  HomeIcon from "@heroicons/react/24/outline/HomeIcon";
 
-          {profile.isSuccess && (
-            <>
-              <BagIcon isShort={false} />
-              <NotificationIcon isShort={false} />
-            </>
-          )}
-        </Box>
-      </Drawer>
-      <Burger opened={opened} className="lg:hidden" onClick={open}></Burger>
-    </>
+import MapPinIcon from "@heroicons/react/24/outline/MapPinIcon";
+import BuildingStorefrontIcon from "@heroicons/react/24/outline/BuildingStorefrontIcon";
+import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
+
+export const UserDetailsMobile = () => {
+
+  // const profile = useProfileQuery("");
+  return (
+    <div className="sticky bg-white z-[99] bottom-0 md:hidden  pt-2 w-screen px-5 ring-1  ring-gray-800/10">
+      <div className="flex justify-between">
+        <NavLink to={""}>
+        {({isActive})=><div className="flex flex-col items-center">
+          {isActive?<HomeIconSolid className="size-6"/>:<HomeIcon className="size-6"/>}
+          <span className="text-xs">Home</span>
+          </div>}
+        </NavLink>
+      
+          <div className="flex flex-col items-center">
+          <MapPinIcon className="size-6"/>
+          <span className="text-xs">Localisation</span>
+          </div>
+          <div className="flex flex-col items-center">
+          <BuildingStorefrontIcon className="size-6"/>
+          <span className="text-xs">Company</span>
+          </div>
+          <div className="flex flex-col items-center">
+          <UserCircleIcon className="size-6"/>
+          <span className="text-xs">Profile</span>
+          </div>
+      </div>
+          
+      </div>
   );
 };
 export const UserDetailIcon = () => {
@@ -94,10 +65,10 @@ export const UserDetailIcon = () => {
   return (
     <div className=" lg:ml-4 flex  relative  items-center">
       {logoutStatus.isSuccess && <Navigate to="/" />}
-      <UserDetailsMobile />
+      {/* <UserDetailsMobile /> */}
       {profileState.isSuccess && (
         <>
-          <div className="hidden lg:flex relative  border-b-2  border-r-2 bg-white/60 backdrop-blur-xl items-strech  gap-8 p-2  rounded-lg py-1  ">
+          <div className="hidden md:flex relative  border-b-2  border-r-2 bg-white/60 backdrop-blur-xl items-strech  gap-8 p-2  rounded-lg py-1  ">
             <BagIcon />
             <NotificationIcon />
             <Menu

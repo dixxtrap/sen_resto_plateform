@@ -3,89 +3,72 @@ import { OrderDto } from "../../../../cores/models/order.dto";
 
 import {
   ActionIcon,
-  Button,
-  ButtonGroup,
-  Group,
+
   Image,
-  LoadingOverlay,
-  Modal,
+
   Pill,
   Text,
 } from "@mantine/core";
-import { ExclamationCircleIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
+import {
+  
+  PlusIcon,
+  
+} from "@heroicons/react/24/solid";
 import { CompanyEnum } from "../../../../cores/models/company.dto";
-import { orderApi } from "../../../../cores/apis/order.slice";
-import { OrderDetailWidget } from "./oreder_detail_widget";
-import { useDisclosure } from "@mantine/hooks";
+import { OrderDetailWidget } from "./validate_order";
+import { DeleteOrder } from "./delete_order";
 
 type OrderWidgetProps = {
   order: OrderDto;
 };
 export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
-  const [del, deleteStatus] = orderApi.useDeleteMutation();
-  const ondelete = async () => {
-    try {
-      await del(`${order.id}`).unwrap();
-      close();
-    } catch (error) {
-      console.error("Erreur lors de la suppression:", error);
-    } finally {
-    }
-  };
-  const [opened, { close, open }] = useDisclosure();
+ 
+ 
   return (
     <div
       key={`order_${order.id}`}
-      className="ring-1 hover:shadow-xl h-min  p-3 flex  duration-150 ring-gray-300 overflow-hidden  rounded-md "
+      className="ring-1 hover:shadow-xl h-full  p-3 flex  duration-150 ring-gray-300 overflow-hidden  rounded-md "
     >
       {/* {order.partner.type} */}
-       
-      
-  
-     
-      <div className=" flex flex-col w-full  gap-3">
+
+      <div className=" flex flex-col w-full  h-full gap-3">
         <div className="flex  items-start  justify-start ">
-        <Image
-          className="h-10 w-auto"
-          src={
-            order.partner.type === CompanyEnum.RESTO &&
-            order.partner.parentId == 1
-              ? order.partner.parent?.imagePath
-              : order.partner.imagePath
-          }
-        />
+          <Image
+            className="h-10 w-auto"
+            src={
+              order.partner.type === CompanyEnum.RESTO &&
+              order.partner.parentId == 1
+                ? order.partner.parent?.imagePath
+                : order.partner.imagePath
+            }
+          />
           <div>
             <Text className="text-2xl font-bold">
               {order.partner.shortname}
             </Text>
             <Text className="text-sm font-thin">{order.partner.name}</Text>
           </div>
-          
         </div>
         <div className="flex gap-3 w-full">
           {order.products.slice(0, 2).map((e) => (
             <Pill
-            key={e.productHistoryId}
+              key={e.productHistoryId}
               w={"auto"}
               classNames={{ label: "text-sm" }}
-             
-           
-            
-             
             >
-              <div className="flex  gap-2">
+              <div className="flex items-center  gap-2">
                 <span className="text-sm">
                   {" "}
                   {e.productHistory.product.name}
                 </span>
-                <span className="text-white bg-primary-600 size-4 rounded-full text-center">
+                <span className="text-white leading-3 p-0.5 bg-primary-500 size-4 rounded-full text-center">
                   {e.quantity}
                 </span>
               </div>
             </Pill>
           ))}
           {order.products.length > 2 && (
-            <ActionIcon radius={100} size={"lg"}>
+            <ActionIcon radius={100} size={"sm"}>
               <PlusIcon className="size-10" />
             </ActionIcon>
           )}
@@ -94,6 +77,7 @@ export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
           <span>Total</span>
           {order && (
             <span className="text-2xl font-bold">
+              
               {order.products
                 .map((_e, j) => j)
                 .map(
@@ -111,52 +95,9 @@ export const OrderWidget: FC<OrderWidgetProps> = ({ order }) => {
             </span>
           )}
         </div>
-        <Modal p={0} size={"xs"} classNames={{ content: " p-0",body:"p-0", header: " p-0 px-2" }} title={<div className="flex text-red-500 items-center"> 
-          <ExclamationCircleIcon className="size-8"/> 
-          <span className="text-2xl font-bold">Annulation</span>
-        </div>} opened={opened} onClose={close}>
-          <LoadingOverlay
-            visible={deleteStatus.isLoading}
-            zIndex={1000}
-            overlayProps={{ radius: "sm", blur: 2 }}
-            loaderProps={{ color: "pink", type: "bars" }}
-          />
-         
-
-          <Group  gap="md" className="flex flex-col" style={{ marginTop: "5px" }}>
-            <Text className="text-left w-full px-5">
-            Voulez-Vous Annuler la Commande {order.id} ?
-            </Text>
-            <div className="flex justify-around w-full">
-              <ButtonGroup className="grow">
-           
-            <Button 
-           className="grow rounded-none"
-             color="red" onClick={close}>
-              Annuler
-            </Button>
-            <Button
-              onClick={ondelete}
-              color="green"
-              className="grow rounded-none"
-              disabled={deleteStatus.isLoading}
-            >
-              Valider
-            </Button>
-            </ButtonGroup>
-         </div>
-           
-          </Group>
-        </Modal>
+      
         <div className="grow flex justify-between w-fit min-w-full ">
-          <Button
-            onClick={open}
-            leftSection={<TrashIcon className="size-5" />}
-            color="primary"
-            className=""
-          >
-            Annuler
-          </Button>
+          <DeleteOrder orderId={order.id}/>
           <OrderDetailWidget order={order} />
         </div>
       </div>

@@ -43,20 +43,27 @@ export class RestaurantController {
   ],{storage:storageCustom}))
   @UseGuards(AuthenticatedGuard)
   create(@Body() body: CompanyRestaurantBaseDto, @CurrentUser() by: UserDto, @UploadedFiles() files: { file?: Express.Multer.File[], background?: Express.Multer.File[] }) {
-    const  file=  (files.file?.length>0)?files.file[0]:null;
-    const  background=  (files.background?.length>0)?files.background[0]:null;
+    const  file=  (files && files.file?.length>0)?files.file[0]:null;
+    const  background=  (files && files.background?.length>0)?files.background[0]:null;
     if (file){ body.imagePath = file.path };
     if (background) body.backgroundPath = background.path;
     return this.service.create({ body, by , file, background});
   }
   @Put('update/:id')
-  @UseInterceptors(fileInterCeptorImg)
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'file', maxCount: 1 },
+    { name: 'background', maxCount: 1 },
+  ],{storage:storageCustom}))
+  @UseGuards(AuthenticatedGuard)
   update(
     @Body() body: CompanyRestaurantBaseDto,
     @Param('id') id: number,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFiles() files: { file?: Express.Multer.File[], background?: Express.Multer.File[] }
   ) {
-    if (file) body.imagePath = file?.path ?? null;
-    return this.service.update({ id, body, file });
+    const  file=  (files && files.file?.length>0)?files.file[0]:null;
+    const  background=  (files && files.background?.length>0)?files.background[0]:null;
+    if (file){ body.imagePath = file.path };
+    if (background) body.backgroundPath = background.path;
+    return this.service.update({ id, body, file , background});
   }
 }

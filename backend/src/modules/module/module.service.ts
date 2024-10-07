@@ -28,10 +28,10 @@ export class ModuleService implements OnModuleInit {
           Tables_in_sen_resto: string;
         }[],
       ) => {
-        console.log(value);
+       
         return Promise.all(
           value.map(async (item) => {
-            const exits = await this.repos.exist({
+            const exits = await this.repos.exists({
               where: { name: item[`Tables_in_${process.env.DB_NAME}`] },
             });
             if (!exits)

@@ -53,7 +53,7 @@ export const Login = () => {
           >
           
         <TextInput label={TextConstant.email} {...form.getInputProps("username")} error={form.errors["username"]} key={form.key("username")} />
-        <PasswordInput styles={multiSelectStyle} label={TextConstant.password} {...form.getInputProps("password")} error={form.errors["password"]} key={form.key("password")} />
+        <PasswordInput  styles={multiSelectStyle} label={TextConstant.password} {...form.getInputProps("password")} error={form.errors["password"]} key={form.key("password")} />
 
           </CustomForm>
 

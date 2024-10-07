@@ -30,9 +30,9 @@ category:CompanyCategory[]
   @AfterLoad()
   setOpen(){
     const now=new Date();
-    console.log(now)
+    
     const time=`${now.toTimeString()}`
-console.log(time)
+
 this.isOpen= this.closingTime>time&&this.openingTime<time;
   }
 }

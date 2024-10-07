@@ -4,16 +4,15 @@ import {
   Button,
   Modal,
   Text,
-  ScrollArea,
-  Pill,
+
   Avatar,
   Stepper,
-  ButtonGroup,
-  Textarea,
+
   ActionIcon,
+  ScrollAreaAutosize,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { EyeIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
+import {  MinusIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { OrderPaymentType } from "./order_payment_type";
 import { AddressForm } from "../../../components/form/address_form";
 import { useForm } from "@mantine/form";
@@ -42,36 +41,33 @@ export const OrderProductRecap = ({
   orderProduct: OrderProduct;
 }) => {
   return (
-    <div key={orderProduct.productHistoryId} className="py-3">
-      <Text className="font-bold">
+    <div key={orderProduct.productHistoryId} className="p-0.5 grid gap-2  grid-cols-12">
+      <Text className="font-bold col-span-12">
         {orderProduct.productHistory.product.name}
       </Text>
 
-      <div className="my-3  flex">
+      <div className=" col-span-4  rounded-md  ring-1 ring-gray-300 ">
         {orderProduct.productHistory.product.file?.slice(0,1)?.map((f) => (
           
-                <Avatar className="h-[160px] w-auto mx-auto ring-1 ring-gray-300 " radius={8} src={f.path} />
+                <Avatar className=" w-full h-full mx-auto  " radius={8} src={f.path} />
               
 
         ))}
       </div>
-      <div className="flex flex-nowrap w-full overflow-x-scroll gap-2 snap-mandatory">
+      {/* <div className="flex flex-nowrap w-full overflow-x-scroll gap-2 snap-mandatory">
         {orderProduct.productHistory.product.category?.slice(0, 3).map((c) => (
           <Pill>{c.name}</Pill>
         ))}
-      </div>
-      <div></div>
-      <div className="flex flex-col gap-4">
+      </div> */}
+      
+      <div className="flex col-span-8 flex-col ">
         {OrderDetailsItem({
           label: <span>Prix Unitaire</span>,
           value: `${orderProduct.productHistory?.price!} ${
             import.meta.env.VITE_REACT_CURRENCY
           }`,
         })}
-        <Textarea
-          defaultValue={orderProduct.description}
-          label={"Description"}
-        />
+     
         
         {OrderDetailsItem({
           label: "Pieces",
@@ -113,20 +109,24 @@ export const OrderDetailWidget: FC<OrderWidgetProps> = ({ order }) => {
         title={<div>{order.partner.name}</div>}
         onClose={close}
       >
-        <ScrollArea className="h-[75vh] relative">
+        <div className="flex h-[74vh] flex-col">
+
+        
+        <ScrollAreaAutosize className="grow">
           <Stepper
             size="sm"
             active={active}
             iconSize={28}
             classNames={{
               content: "pt-10",
-              steps: "absolute pb-2 border-b z-[300]  top-0 w-full bg-white",
+              steps: "sticky pb-2 border-b z-[300]  top-0 w-full bg-white",
             }}
             onStepClick={setActive}
             allowNextStepsSelect={false}
           >
+            
             <Stepper.Step label={active == 0 ? <span>Recapulatif</span> : null}>
-              <div className="flex flex-col divide-y space">
+              <div className="flex flex-col gap-4 divide-y space">
                 {order.products.map((op) => (
                   <OrderProductRecap
                     key={op.productHistoryId}
@@ -138,22 +138,19 @@ export const OrderDetailWidget: FC<OrderWidgetProps> = ({ order }) => {
             <Stepper.Step label={active == 1 ? "Details Livraison" : null}>
               <AddressForm form={form} />
             </Stepper.Step>
-            <Stepper.Step label={active == 2 ? "Payment" : null}>
-              <OrderPaymentType />
-            </Stepper.Step>
-            <Stepper.Completed>
-              Completed, click back button to get to previous step
+            <Stepper.Completed  >
+              <OrderPaymentType  order={order}/>
             </Stepper.Completed>
+            
           </Stepper>
-          <div className="flex flex-col gap-5 divide-y">
-            <div className="h-20 "></div>
-            <div className="pt-2 absolute w-full  bottom-0 bg-white z-50">
-              <ButtonGroup className="  ">
+          </ScrollAreaAutosize>
+        <div className="pt-2  w-full  flex justify-between  bg-white z-50">
+              
                 <Button
                   color="primary.4"
                   variant="filled"
                   onClick={() => setActive(active - 1)}
-                  className=" z-50  grow    "
+                  className=" z-50     "
                 >
                   precedent
                 </Button>
@@ -161,19 +158,19 @@ export const OrderDetailWidget: FC<OrderWidgetProps> = ({ order }) => {
                   color="secondary.6"
                   variant="filled"
                   onClick={() => setActive(active + 1)}
-                  className=" z-50 grow   "
+                  className=" z-50    "
                 >
                   suivant
                 </Button>
-              </ButtonGroup>
+              
             </div>
-          </div>
-        </ScrollArea>
+            </div>
       </Modal>
       <Button
         onClick={open}
-        leftSection={<EyeIcon className="size-5" />}
-        className=""
+        color="green"
+        
+        className="ring ring-green-400"
       >
         Confirmer
       </Button>

@@ -52,6 +52,9 @@ const store = configureStore({
     [storyApi.reducerPath]:storyApi.reducer,
     [establishmentTypeApi.reducerPath]:establishmentTypeApi.reducer,
     [companyCategoryApi.reducerPath]:companyCategoryApi.reducer,
+   
+
+    
     theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -80,7 +83,7 @@ customerApi.middleware,
       giftApi.middleware,
       storyApi.middleware,
       establishmentTypeApi.middleware,
-      companyCategoryApi.middleware
+      companyCategoryApi.middleware,
     ),
 });
 

@@ -28,6 +28,7 @@ import { WsPaymentTypeService } from './payment_type/payment_type.service';
 import { PaymentType } from 'src/typeorm/payment_type.entity';
 import { WsStoryController } from './story/story.controller';
 import { WsStoryService } from './story/story.service';
+import { ChatGateway } from 'src/chat/chat.gateway';
 
 @Module({
   imports: [
@@ -55,7 +56,7 @@ import { WsStoryService } from './story/story.service';
     WsCategoryService,
     WsOrderService,
     WsPaymentTypeService,
-    WsStoryService
+    WsStoryService,
   ],
 })
 export class WebServiceModule {}

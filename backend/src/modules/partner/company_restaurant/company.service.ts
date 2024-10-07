@@ -42,7 +42,7 @@ export class CompanyRestaurantService {
   }
  async  create({ body, by , background, file}: { body: CompanyRestaurantBaseDto; by: UserDto, file:Express.Multer.File, background:Express.Multer.File }) {
 
-    console.log(body)
+   
  
     return this.repos
       .save(
@@ -82,7 +82,7 @@ export class CompanyRestaurantService {
     background
     ?: Express.Multer.File;
   }) {
-    console.log(body);
+
     return this.repos
       .findOne({ where: { id: Equal(id) } })
       .then(async (old) => {

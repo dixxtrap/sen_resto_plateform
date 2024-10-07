@@ -1,32 +1,34 @@
 import { useEffect, useState } from "react";
 import { ProductDto } from "../../../../cores/models/product";
 
-import { MinusSmallIcon, PlusSmallIcon } from "@heroicons/react/24/solid";
+import { MinusIcon,  PlusIcon } from "@heroicons/react/24/solid";
 import { useForm } from '@mantine/form'
 import { CustomForm } from "../../../components/custom_form";
 import { useAddProductMutation } from "../../../../cores/apis/order.slice";
 import { Button, Text, Image, ActionIcon } from "@mantine/core";
 import { priceFormated, reductionPrice } from "../../../../utils/calcul";
+import { OrderProduct } from "../../../../cores/models/order.dto";
 
 export const PlateItemPoppup = ({
-  product,close
+  product,close, orderProduct
 }: {
   open: boolean;
   close: ()=>void,
   product: ProductDto;
+  orderProduct?: OrderProduct;
 }) => {
   const [selectedSize, _] = useState<string>(
     product?.file![0]?.path ?? ""
   );
   const [addProduct, { isLoading, isSuccess, isError, reset }] = useAddProductMutation();
-  const form = useForm<{ quantity: number, description: string }>({ initialValues: { quantity: 1, description: "" } });
+  const form = useForm<{ quantity: number, description: string }>({ initialValues: { quantity: orderProduct?.quantity?? 1, description: "" } });
   const quantity = form.getValues().quantity;
   const handleQuantity = (method: "increment" | "decrement") => {
     console.log(`--------------------------${method}----------------------`);
     const value = form.getValues().quantity;
     if (method == "increment") {
       form.setFieldValue("quantity", value + 1);
-    } else if (value > 1) {
+    } else if (value > 0) {
       form.setFieldValue("quantity", value - 1);
     }
   };
@@ -112,7 +114,7 @@ export const PlateItemPoppup = ({
                 onClick={() => handleQuantity("decrement")}
 
               >
-                <MinusSmallIcon className="size-5" />
+                <MinusIcon className="size-5" />
               </ActionIcon>
               <Text className="text-2xl font-bold  leading-3" >
 
@@ -125,7 +127,7 @@ export const PlateItemPoppup = ({
                 size={"lg"}
                 onClick={() => handleQuantity("increment")}
               >
-                <PlusSmallIcon className="size-5" />
+                <PlusIcon className="size-5" />
               </ActionIcon>
               <Button
                 type="submit"

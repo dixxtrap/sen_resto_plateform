@@ -11,10 +11,13 @@ import { TimeInput } from "@mantine/dates";
 import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
 import { AddressForm } from "../../components/form/address_form";
 import { AppTextarea } from "../../components/form/app_textarea";
+import { ImgWithHandler } from "../../components/img_with_handler";
+import { handlePreviewV2 } from "../../utils/handle_preview";
 
 export const RestaurantCreate = () => {
   const [create, { isError, isLoading, isSuccess, reset }] =
     useCreateRestaurantMutation();
+    const background=handlePreviewV2({});
   const form = useForm<CompanyDto>({
     initialValues:{
       openingTime:"08:00",
@@ -29,7 +32,7 @@ export const RestaurantCreate = () => {
   const _onSubmit = form.onSubmit((body) => {
     console.log(`-------------------${body.description}`);
     console.log(body);
-    create({ ...body });
+    create({ restos:body ,background: background.file!});
   });
   return (
     <>
@@ -42,8 +45,8 @@ export const RestaurantCreate = () => {
       onSubmit={_onSubmit}
      onFinish={reset}
     >
-      
-    
+       <ImgWithHandler htmlFor="Couverture" {...background }/>
+          
       <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
 
      

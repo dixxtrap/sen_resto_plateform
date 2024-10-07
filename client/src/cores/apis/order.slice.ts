@@ -19,7 +19,7 @@ export const orderApi=createApi({
             invalidatesTags:['order'],
            transformErrorResponse:errorTrasform
         }),
-        addProduct:builder.mutation<WsMessage, {productId:number, description:string,quantity:number}>({
+        addProduct:builder.mutation<WsMessage, {productId:number, description?:string,quantity:number}>({
             query:(body)=>({
                 url:'ws/order/product/add',
                 method:'POST',

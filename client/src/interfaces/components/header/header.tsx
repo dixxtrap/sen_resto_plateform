@@ -8,7 +8,7 @@ import {  Flex, Text, UnstyledButton } from "@mantine/core";
 export const Header = () => {
   return (
   
-          <div className=" px-2 sm:px-4 z-[1000] bg-transparent content-center flex w-full  h-full lg:px-4    ">
+          <div className=" px-2 sm:px-4 z-[1000] bg-transparent content-center flex w-screen h-full lg:px-4    ">
             <div className="flex h-full w-full  items-center justify-between">
            
                 <Link to="/" className="flex  items-end justify-center">

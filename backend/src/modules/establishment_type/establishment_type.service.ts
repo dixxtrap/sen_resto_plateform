@@ -32,7 +32,7 @@ export class EstablishmentTypeService {
     console.log(body);
     return this.s3Service
       .createFileToS3AndDeleteLocal({ file })
-      .then((path) => {
+      .then((path) => { 
         body.imagePath = path;
         return this.repos.save(this.repos.create(body));
       });

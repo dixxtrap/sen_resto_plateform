@@ -1,14 +1,16 @@
 import { baseApi } from "../../../../cores/apis/api";
 import { Avatar, Text, SegmentedControl } from "@mantine/core";
+import { OrderDto } from "../../../../cores/models/order.dto";
 
-export const OrderPaymentType = () => {
+export const OrderPaymentType = ({order}:{order:OrderDto}) => {
   const payemntType = baseApi.usePaymentTypeQuery("");
+  console.log(order)
   return (
     <div className="flex flex-col justify-between ">
       {/* <Text size="sm" fw={500} mb={3}>
         Disabled option
       </Text> */}
-      
+     
      {payemntType.data&& <SegmentedControl
      color="primary"
         data={payemntType.data.data.map((e) => ({

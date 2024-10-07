@@ -1,6 +1,11 @@
+import { RefetcOrder } from "../order/widget/refetch_order"
 
 export const TransactionList = () => {
   return (
-    <div>TransactionList</div>
+    <div>
+      
+      TransactionList
+      <RefetcOrder/>
+      </div>
   )
 }

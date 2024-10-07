@@ -11,6 +11,7 @@ import {
 
   Spoiler,
   Badge,
+  
 } from "@mantine/core";
 import clsx from "clsx";
 import CompanyProduct from "./widget/company_product_item";
@@ -22,7 +23,8 @@ export const CompanyDetails = () => {
   console.log(company)
   return (
     <Fetchingdata {...company}>
-      <div className=" ">
+     
+      <div className=" -mt-16 pb-16">
         <div className="h-[200px] md:h-[400px] relative w-full  mb-12 md:mb-14 bg-amber-500">
           <Image src={company.data?.data.backgroundPath} w={"100%"} className="h-full w-full  overflow-hidden" />
           <div className="-bottom-10 absolute flex items-end gap-3 md:-bottom-12  left-2 md:left-8">
@@ -51,7 +53,7 @@ export const CompanyDetails = () => {
         {/* TODO: filter */}
 
 
-       <CompanyProduct category={company.data?.data.category!} />
+       <CompanyProduct  category={company.data?.data.category!} />
 
 
 

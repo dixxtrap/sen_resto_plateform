@@ -58,7 +58,7 @@ export class WsCustomerService {
                 message: `your  otp code  is ${otp.code}`,
               })
               .then((restult) => {
-                console.log('================opt sended==========');
+                console.log('================opt sended==========', otp.code);
                 return new WsMessage(HttpExceptionCode.SUCCEEDED);
               })
 
@@ -91,7 +91,7 @@ export class WsCustomerService {
             .userLogin({ phone: body.to, code: body.code })
             .then((resultLogin) => {
               return res
-                .cookie('access_token', `Bearer ${resultLogin.token}`)
+                .cookie('access_token', `Bearer ${resultLogin.token}`, {maxAge:31536000000})
                 .json(
                   BaseResponse.success({
                     customer,

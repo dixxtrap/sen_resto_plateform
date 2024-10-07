@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CustomForm } from "../../components/custom_form";
 import { useParams } from "react-router-dom";
 import {
@@ -9,8 +9,7 @@ import {
 import { useForm } from "@mantine/form";
 import { CompanyDto,  } from "../../../core/models/company.dto";
 import { Title } from "../../components/title";
-import { handlePreview } from "../../utils/handle_preview";
-import { CameraIcon } from "@heroicons/react/24/solid";
+import {  handlePreviewV2 } from "../../utils/handle_preview";
 import { ProtecterPage } from "../../components/protecter_page";
 import { TextConstant } from "../../../core/data/textConstant";
 import { TimeInput } from "@mantine/dates";
@@ -21,14 +20,13 @@ import { CustomSwitchInput } from "../../components/switch";
 import { Select, TextInput } from "@mantine/core";
 import { Fetchingdata } from "../../components/fetching_data";
 import { establishmentTypeApi } from "../../../core/features/establishment_type.slice";
+import { ImgWithHandler } from "../../components/img_with_handler";
 
 export const RestaurantEdit = () => {
   const { id } = useParams();
   const {data:establishmentType, }=establishmentTypeApi.useGetAllQuery('')
-  const [preview, setPreview]=useState<string>();
-  const [file, setFile]=useState<File>();
-  const [changed, setChanged]=useState< boolean>(false);
-  const handleImage=handlePreview({previewImage:preview!, setPreviewImage:setPreview, setFile:setFile, setChanged:setChanged})
+  const front=handlePreviewV2({})
+  const back=handlePreviewV2({})
   const form = useForm<CompanyDto>({});
   const [updateCompany, { isLoading, isSuccess, isError, reset }] =
     useUpdateRestaurantByIdMutation();
@@ -36,13 +34,16 @@ export const RestaurantEdit = () => {
     useGetRestaurantByIdQuery(parseInt(id!));
   const _onSubmit =form.onSubmit(async  (body: CompanyDto) => {
     console.log(body)
-    console.log(file)
-    updateCompany({ id: parseInt(id!), restos: body!, file:file! });
+    updateCompany({
+      id: parseInt(id!), restos: body!, file: front.file!,
+      background: back.file
+    });
   });
   useEffect(() => {
     if (old.data?.data&& old.isSuccess) {
-      setPreview(old.data.data.imagePath!);
+      front.setPreview(old.data.data.imagePath!);
     //  form.setValues(old.data.data)
+    back.setPreview(old.data.data.backgroundPath);
     const oldaData= old.data.data
     form.setValues({
       name:oldaData.name,
@@ -67,14 +68,13 @@ export const RestaurantEdit = () => {
         title="Restaurant"
         subTitle={"Modifier le restaurant" + " " + old.data?.data?.name}
       />
-      {changed&& <></>}
-    <div>
+  
+    <div className="flex ">
        <ProtecterPage permissions={[{code:"update_restaurant_profile", type:"update"}]}>
-       <label htmlFor="file">
-        <input type="file" hidden id="file" name="file" onChange={handleImage}/>
-        {preview?<img  alt='' src={preview} className="h-20 rounded-md"/>:<CameraIcon className="h-20 text-secondary-500 "/>}
-        </label>
+       <ImgWithHandler htmlFor="Profile" {...front }/>
        </ProtecterPage>
+       <ImgWithHandler htmlFor="Couverture" {...back }/>
+
      </div>
      <Fetchingdata {...old}>
      <CustomForm

@@ -22,6 +22,7 @@ export class TextConstant {
   static Total: string = "Totale";
   static organiwation: string = "Organisation";
   static address: string = "Adresse";
+  static addressDetails: string = "Details de votre Adresse";
   static city: string = "Ville";
   static label: string = "Label";
   static  description: string = "Description";

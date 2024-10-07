@@ -20,7 +20,7 @@ export const OrganisationCreate = () => {
   const form = useForm();
   const _onsubmit = form.onSubmit((data) => {
     console.log(data);
-    const { regionId, departementId, municipalityId, ...rest } = data;
+    const {  ...rest } = data;
     createCompany({company:rest as CompanyDto, file:front.file!, background:back.file!});
   });
   return (

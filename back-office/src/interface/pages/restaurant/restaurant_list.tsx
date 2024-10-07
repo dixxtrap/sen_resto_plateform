@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { Status } from "../../components/status";
 import { formatDate } from "../../utils/date_format";
 import { ProtecterPage } from "../../components/protecter_page";
-import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
 import { TablePagination } from "../../components/table/table";
-import { Button, Table } from "@mantine/core";
+import { Button, Image, Table } from "@mantine/core";
 import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item";
 import { PermissionCode } from "../../utils/per;ission_code";
 
@@ -39,12 +38,11 @@ export const RestaurantList = () => {
                 
                     {/* <ImgPreview  name={`img_${restaurant.id}`} img={ restaurant.company.short_name=="SR" ? restaurant.profile!:restaurant.company.profile!}/> */}
 
-                    <div className="flex items-center">
-                        <div className=" pl-2 flex-shrink-0  w-16 mr-2 content-center flex  justify-start ">
-                          {/* <ImgPreview name={`Prile_${company?.profile?.id}`} className='bg-blue-400 h-11' img={company.profile!}/> */}
-                          {  restaurant.imagePath? <img src={`${restaurant.imagePath!}`} className='h-8 rounded-md' alt=""  />:<BuildingStorefrontIcon className='h-8 p-1 text-primary-500 bg-primary-500/20 ring-1  ring-primary-500/80 rounded-md'/>}
+                    <div className="flex gap-4 items-center">
+                        <div>
+                        <Image className="size-8" fallbackSrc="" src={restaurant.backgroundPath}/>
+
                         </div>
-                       
                           <div className="font-medium ">{restaurant.name}</div>
                           {/* <div className="mt-1 text-gray-500">{company.email}</div> */}
                       
