@@ -11,6 +11,7 @@ import { CreationDetails } from './details.entity';
 import { Deliver } from './deliver.entity';
 import { OrderProduct } from './order_product.entity';
 import { Customer } from './partner.entity';
+import { City } from './city.entity';
 export class AddOrderDto {
   productId: number;
   partnerId: number;
@@ -50,8 +51,12 @@ export class Order {
   customerId: number;
   @ManyToOne(() => Deliver)
   deliver: Deliver;
+  @ManyToOne(() => City)
+  city: City;
   @Column({ nullable: true, default: null })
   deliverId: number;
+  @Column({ nullable: true, default: null })
+  cityId: number;
   @Column(() => CreationDetails)
   details: CreationDetails;
   @Column('timestamp', { nullable: true })
@@ -64,4 +69,13 @@ export class Order {
   status: OrderStatus;
   @OneToMany(() => OrderProduct, (item) => item.order)
   products: OrderProduct[];
+  @Column("text", {nullable:true, default:null})
+  description:string;
+  @Column('double')
+  fees: number;
+}
+
+
+export class OrderDto{
+
 }

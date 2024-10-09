@@ -13,8 +13,6 @@ export class OrderProduct {
   productHistory: ProductHistory;
   @ManyToOne(() => Order)
   order: Order;
-  @Column('text')
-  description: string;
   @Column()
   quantity: number;
 }
@@ -24,8 +22,7 @@ export class OrderProductDto {
   productHistoryId: number;
   @ApiProperty()
   orderId: number;
-  @ApiProperty()
-  description: number;
+ 
   @ApiProperty()
   quantity: number;
 }

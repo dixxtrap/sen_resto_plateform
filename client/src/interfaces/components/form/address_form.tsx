@@ -13,8 +13,8 @@ export const AddressForm = ({form,isUpdatable}:{
   const city=baseApi.useCityQuery()
 const [update, setUpdate]=useState(false)
   return (
-    <>*
-    <Textarea label={"Details de la Commande"}/>
+    <>
+    <Textarea label={"Details de la Commande"}   {...form.getInputProps('description')} />
       <TextInput label={TextConstant.addressDetails}  {...form.getInputProps('address')} />
       {isUpdatable&& <Checkbox
       checked={update}

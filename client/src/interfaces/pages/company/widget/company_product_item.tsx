@@ -114,10 +114,10 @@ const CompanyProduct = ({
                 </>
               ))}
           </div>
-          <div className="p-3 hidden md:inline-block">
+          <div className="p-0 hidden md:inline-block">
             <SimpleGrid
               cols={{ base: 1, sm: 2, md: 2 }}
-              className=" p-1 gap-3 md:gap-4 mx-1 lg:mx-3   "
+              className=" p-1 gap-3 md:gap-4     "
             >
               {category
                 .filter((e) => e.product.length > 0)

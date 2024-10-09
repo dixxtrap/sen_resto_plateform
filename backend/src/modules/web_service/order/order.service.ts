@@ -20,8 +20,7 @@ export class WsOrderService {
     @Inject(EntityProviderEnum.ORDER_PRODUCT)
     private orderProductRepos: Repository<OrderProduct>,
     private productHistoryService: ProductHistoryService,
-    private  chatGateway: ChatGateway
-    
+    private chatGateway: ChatGateway,
   ) {}
   getBag({ by }: { by: CustomerDto }) {
     return this.repos
@@ -30,13 +29,13 @@ export class WsOrderService {
         relations: {
           partner: { parent: true },
           products: {
-            productHistory: { product: { file: true, category:true } },
+            productHistory: { product: { file: true, category: true } },
           },
         },
         select: {
           id: true,
           partnerId: true,
-        
+
           details: {
             createdAt: true,
             updatedAt: true,
@@ -46,17 +45,18 @@ export class WsOrderService {
             type: true,
             imagePath: true,
             shortname: true,
+            backgroundPath: true,
             parent: {
               id: true,
               name: true,
               shortname: true,
               type: true,
               imagePath: true,
+              backgroundPath: true,
             },
           },
           products: {
             quantity: true,
-            description: true,
             productHistoryId: true,
             productHistory: {
               productId: true,
@@ -68,7 +68,7 @@ export class WsOrderService {
                 cookingTime: true,
                 description: true,
                 file: { path: true },
-                category:{id:true, name:true}
+                category: { id: true, name: true },
               },
             },
           },
@@ -110,8 +110,6 @@ export class WsOrderService {
         },
         products: {
           quantity: true,
-          description: true,
-
           productHistoryId: true,
           productHistory: {
             productId: true,
@@ -192,30 +190,41 @@ export class WsOrderService {
     return this.productHistoryService
       .last({ id: body.productId })
       .then((productHistory) => {
-        console.log(productHistory)
+        console.log(productHistory);
         return this.getOrderOrCreate({
           customerId: by.id,
           partnerId: productHistory.data.product.parentId,
         }).then((order) => {
-          
-          return( !(body.quantity===0) ?this.orderProductRepos
-          .save(
-            this.orderProductRepos.create({
-              productHistoryId: productHistory.data.id,
-              description: body.description,
-              quantity: body.quantity,
-              orderId: order.id,
-            }),
-          ):this.orderProductRepos.delete({productHistoryId: productHistory.data.id,orderId: order.id}))
-          .then((result) => {
-            try{
-            this.chatGateway.server.emit("messageFrom",{id:productHistory.data.product.parentId,})
-           }catch(err){
-            console.log(err);
-           }
-           
-           if (result)
-              throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+          return (
+            !(body.quantity === 0)
+              ? this.orderProductRepos.save(
+                  this.orderProductRepos.create({
+                    productHistoryId: productHistory.data.id,
+                    quantity: body.quantity,
+                    orderId: order.id,
+                  }),
+                )
+              : this.orderProductRepos
+                  .delete({
+                    productHistoryId: productHistory.data.id,
+                    orderId: order.id,
+                  })
+                  .then((delResult) => {
+                    if (order.products.length === 1) {
+                      return this.repos.delete({ id: order.id });
+                    }
+                    return delResult;
+                  })
+          ).then((result) => {
+            try {
+              this.chatGateway.server.emit('messageFrom', {
+                id: productHistory.data.product.parentId,
+              });
+            } catch (err) {
+              console.log(err);
+            }
+
+            if (result) throw new WsMessage(HttpExceptionCode.SUCCEEDED);
             else throw new WsMessage(HttpExceptionCode.FAILLURE);
           });
         });

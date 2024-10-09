@@ -8,7 +8,7 @@ import {
   securityApi,
   useProfileQuery,
 } from "../../../../cores/apis/security.slice";
-import { BagIcon } from "./bag_icon";
+import { BagIcon, BagIconMobile } from "./bag_icon";
 import { NotificationIcon } from "./notification_icon";
 import { LoginForm } from "../../login/login_form";
 import {
@@ -24,32 +24,43 @@ import  HomeIconSolid from "@heroicons/react/24/solid/HomeIcon";
 import  HomeIcon from "@heroicons/react/24/outline/HomeIcon";
 
 import MapPinIcon from "@heroicons/react/24/outline/MapPinIcon";
-import BuildingStorefrontIcon from "@heroicons/react/24/outline/BuildingStorefrontIcon";
 import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
+import clsx from "clsx";
 
 export const UserDetailsMobile = () => {
 
   // const profile = useProfileQuery("");
   return (
-    <div className="sticky bg-white z-[99] bottom-0 md:hidden  pt-2 w-screen px-5 ring-1  ring-gray-800/10">
+    <div className="sticky bg-white z-[1000] bottom-0 md:hidden  pt-2 w-screen px-5 ring-1  ring-gray-800/10">
       <div className="flex justify-between">
         <NavLink to={""}>
-        {({isActive})=><div className="flex flex-col items-center">
+        {({isActive})=><div className={clsx("bottom_nav_item",)}>
+          <div className={clsx("bottom_nav_item_icon",{"active":isActive})}>
           {isActive?<HomeIconSolid className="size-6"/>:<HomeIcon className="size-6"/>}
+
+          </div>
           <span className="text-xs">Home</span>
           </div>}
         </NavLink>
       
-          <div className="flex flex-col items-center">
-          <MapPinIcon className="size-6"/>
+          <div className="bottom_nav_item">
+            <div className={clsx("bottom_nav_item_icon",{"active":false})} >
+            <MapPinIcon className="size-6"/>
+
+            </div>
           <span className="text-xs">Localisation</span>
           </div>
-          <div className="flex flex-col items-center">
-          <BuildingStorefrontIcon className="size-6"/>
-          <span className="text-xs">Company</span>
-          </div>
-          <div className="flex flex-col items-center">
+          
+         <BagIconMobile/>
+          
+          
+          
+          <div className="bottom_nav_item">
+          <div className={clsx("bottom_nav_item_icon",{"active":false})} >
           <UserCircleIcon className="size-6"/>
+
+            </div>
+     
           <span className="text-xs">Profile</span>
           </div>
       </div>
