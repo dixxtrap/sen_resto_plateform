@@ -18,6 +18,7 @@ export class CompanyRestaurantBase extends Partner {
 category:CompanyCategory[]
   @Column()
   name: string;
+  
   @Column('time', { default: '23:00:00' })
   closingTime: string;
   @Column('time', { default: '08:00:00' })

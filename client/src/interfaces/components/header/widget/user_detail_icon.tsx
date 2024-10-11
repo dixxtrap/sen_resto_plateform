@@ -25,6 +25,7 @@ import  HomeIcon from "@heroicons/react/24/outline/HomeIcon";
 
 import MapPinIcon from "@heroicons/react/24/outline/MapPinIcon";
 import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
+import UserCircleIconFill from "@heroicons/react/24/solid/UserCircleIcon";
 import clsx from "clsx";
 
 export const UserDetailsMobile = () => {
@@ -53,16 +54,17 @@ export const UserDetailsMobile = () => {
           
          <BagIconMobile/>
           
-          
-          
-          <div className="bottom_nav_item">
-          <div className={clsx("bottom_nav_item_icon",{"active":false})} >
-          <UserCircleIcon className="size-6"/>
+          <NavLink to={"profile/#"}>
+         {({isActive})=>( <div  className="bottom_nav_item">
+          <div className={clsx("bottom_nav_item_icon",{"active":isActive})} >
+          {isActive?<UserCircleIconFill className="size-6"/>:<UserCircleIcon className="size-6"/>}
 
             </div>
      
           <span className="text-xs">Profile</span>
-          </div>
+          </div>)}
+          </NavLink>
+        
       </div>
           
       </div>

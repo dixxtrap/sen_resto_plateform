@@ -10,16 +10,16 @@ import { Repository } from 'typeorm';
 export class OrderService {
   constructor(@Inject(EntityProviderEnum.ORDER) private repos: Repository<Order>) {}
 
-  getAll() {
+  getAll({by}:{by:UserDto}) {
     return this.repos
-      .find({ relations: { customer: true, deliver: true, partner: true , products:{productHistory:{product:true}}} })
+      .find({where:[{partnerId:by.parentId}, {partner:{parentId:by.parentId}}], relations: { customer: true, deliver: true, partner: true , products:{productHistory:{product:true}}} })
       .then((val) => {
         return BaseResponse.success(val);
       });
   }
 
-  preparingStatus({id, by}:{id:number,by:UserDto}){
-    return this.repos.update({id,status:OrderStatus.Active},{status:OrderStatus.Preparing})
+  changeStatus({id,status, by}:{id:number,status:OrderStatus,by:UserDto}){
+    return this.repos.update({id,},{status:status})
   }
   outForDeliveryStatus({id, by}:{id:number,by:UserDto}){
     return this.repos.update({id,status:OrderStatus.Active},{status:OrderStatus.OutForDelivery })

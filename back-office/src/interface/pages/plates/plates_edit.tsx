@@ -96,7 +96,7 @@ export const PlatesEdit = () => {
             onFinish={reset}
           >
             <TextInput
-              label={TextConstant.name}
+              label={TextConstant.label}
               {...form.getInputProps("name")}
               error={form.errors["name"]}
               key={form.key("name")}

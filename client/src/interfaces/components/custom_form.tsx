@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { Alert, DialogAlert } from "./dialog";
 import { getWsMessage } from "../../cores/apis/error_transformer";
+import { LoadingOverlay } from "@mantine/core";
 type CustomeFormProps = {
   children?: ReactNode;
   title?: string;
@@ -43,6 +44,13 @@ confirmationMessage,
   const[isOpen ,setIsOpen ]=useState<boolean>(false);
   const firstButtonRef = useRef<HTMLButtonElement>(null);
   return (
+    <>
+     <LoadingOverlay  visible ={isLoading}
+  
+  overlayProps={{ radius: 'sm', blur:1,className :"backdrop-blur-lg bg-black/5"}}
+  loaderProps={{ color: 'primary', type: 'bars' }}
+
+/>
     <div className={btnClassName?"":"flex flex-col divide-y darkDivider gap-y-2 "}>
       {isSuccess && successMessage!="." && <Navigate to={successPath??".."} />}
       {title &&<Title title={title} subTitle={subTitle} />}
@@ -99,10 +107,11 @@ confirmationMessage,
   
     { isSuccess&& <Alert isOpen={isSuccess} type="succeedded" title="Félicitation" message={successMessage} onClose={onFinish}/>}
      {isError&& <Alert isOpen={isError} type="faillure" title="Ooops!" message={ getWsMessage(error)}  onClose={onFinish} />}
-    { isLoading&&<Alert isOpen={isLoading} type="loading" title="Traitement..."   onClose={onFinish} message="Patientez un moment "/>}
+    {/* { isLoading&&<Alert isOpen={isLoading} type="loading" title="Traitement..."   onClose={onFinish} message="Patientez un moment "/>} */}
  
       {/* <Alert isOpen={isSuccess} type="succeedded" title="Félicitation"/> */}
       {/* <Alert isOpen={isError}/> */}
     </div>
+    </>
   );
 };

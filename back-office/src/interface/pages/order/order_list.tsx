@@ -1,35 +1,21 @@
 import {
-  Alert,
   Badge,
-  Button,
-  Group,
-  LoadingOverlay,
-  Modal,
   Pill,
   Table,
 } from "@mantine/core";
 import { orderApi } from "../../../core/features/order.slice";
 import { TablePagination } from "../../components/table/table";
-import { statusMessages } from "../../../core/models/order.dto";
+import { OrderStatus, statusMessages } from "../../../core/models/order.dto";
 import {
   TableActionItemDetails,
   TableActionItemEdit,
 } from "../../components/table/action_item";
-import { useDisclosure } from "@mantine/hooks";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { getSocket } from "../../../core/features/get_socket";
+import { ChangeStatus } from "./widget/chane_status";
 
 export const OrderList = () => {
   const { data: order, ...state } = orderApi.useGetOrdersQuery("");
-  const [opened, { close, open }] = useDisclosure();
-  const onValidate = async () => {
-    try {
-      close();
-    } catch (error) {
-      console.error(error);
-    } finally {
-    }
-  };
+ 
   getSocket()?.on("messageFrom", async () => {
    handleRefetch()
   });
@@ -72,38 +58,12 @@ export const OrderList = () => {
                 </Table.Td>
 
                 <Table.Td className="">
-                  <Modal opened={opened} onClose={close}>
-                    <LoadingOverlay
-                      zIndex={1000}
-                      overlayProps={{ radius: "sm", blur: 2 }}
-                      loaderProps={{ color: "pink", type: "bars" }}
-                    />
-                    <Alert
-                      variant="light"
-                      color="green"
-                      title="Validation"
-                      icon={<CheckCircleIcon fontSize={30} />}
-                    ></Alert>
-                    voulez-vous valider la commande{" "}
-                    {order?.data.map((e) => e.id)}?
-                    <Group
-                      justify="center"
-                      gap="md"
-                      style={{ marginTop: "20px" }}
-                    >
-                      <Button color="green" onClick={onValidate}>
-                        Valider
-                      </Button>
-                      <Button color="red" onClick={close}>
-                        Annuler
-                      </Button>
-                    </Group>
-                  </Modal>
-                  <Group justify="center">
-                    <Button fw={400} className="border-2 border-secondary-400" color="secondary.4" onClick={open} size="compact-sm">
-                      valider
-                    </Button>
-                  </Group>
+                {e.status=== OrderStatus.Active&&<ChangeStatus id={e.id} status={OrderStatus.Cancelled} title={"preparation"} variant={"danger"} message={""} />}
+
+               { e.status=== OrderStatus.Active&&<ChangeStatus id={e.id} status={OrderStatus.Preparing} title={"preparation"} variant={"success"} message={""} />}
+               { e.status=== OrderStatus.Preparing&&<ChangeStatus id={e.id} status={OrderStatus.ReadyForDelivery} title={"Fin de preparation"} variant={"success"} message={""} />}
+              
+              
                   <TableActionItemDetails
                     label="voir details"
                     path={`/order/details/${e.id}`}

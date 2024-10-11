@@ -19,6 +19,16 @@ export const orderApi=createApi({
             invalidatesTags:['order'],
            transformErrorResponse:errorTrasform
         }),
+        confirm:builder.mutation<WsMessage, number>({
+            query:(id)=>({url:`ws/order/confirm_status/${id}`, method:"PUT"}),
+            invalidatesTags:['order'],
+           transformErrorResponse:errorTrasform
+        }),
+        update:builder.mutation<WsMessage, {id:number, body:OrderDto}>({
+            query:({id, body})=>({url:`ws/order/update/${id}`, body:body,method:"PUT"}),
+            invalidatesTags:['order'],
+           transformErrorResponse:errorTrasform
+        }),
         addProduct:builder.mutation<WsMessage, {productId:number, description?:string,quantity:number}>({
             query:(body)=>({
                 url:'ws/order/product/add',

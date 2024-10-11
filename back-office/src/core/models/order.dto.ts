@@ -11,6 +11,7 @@ export type OrderDto={
 }
 export enum OrderStatus {
     OnBag = 'onbag',
+    Active = 'active',
 
     Preparing = 'preparing',
     ReadyForDelivery = 'ready_for_delivery',
@@ -27,14 +28,15 @@ export const statusMessages: { [key in OrderStatus]: string } = {
     [OrderStatus.OnBag]: "En attente de confirmation!",
     [OrderStatus.Preparing]: "An error occurred during the operation.",
     [OrderStatus.Cancelled]: "The operation is currently in progress.",
-    [OrderStatus.ReadyForDelivery]: "",
-    [OrderStatus.OutForDelivery]: "",
-    [OrderStatus.Delivered]: "",
-    [OrderStatus.DeliveryDelayed]: "",
-    [OrderStatus.QualityIssue]: "",
-    [OrderStatus.PaymentProcessing]: "",
-    [OrderStatus.RefundInProgress]: "",
-    [OrderStatus.OrderNotDelivered]: ""
+    [OrderStatus.ReadyForDelivery]: "Ready For Delivery",
+    [OrderStatus.OutForDelivery]: "Out For Delivery",
+    [OrderStatus.Delivered]: "Delivered",
+    [OrderStatus.DeliveryDelayed]: "Delivery Delayed",
+    [OrderStatus.QualityIssue]: "Quality Issue",
+    [OrderStatus.PaymentProcessing]: "Payment Processing",
+    [OrderStatus.RefundInProgress]: "Refund In Progress",
+    [OrderStatus.OrderNotDelivered]: "Order Not Delivered",
+    [OrderStatus.Active]: "Confirmer"
 };
 export  type OrderProductDto={
     productHistory?:ProductHistoryDto;

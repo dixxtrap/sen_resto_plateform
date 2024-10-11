@@ -32,7 +32,7 @@ export const RestaurantCreate = () => {
   const _onSubmit = form.onSubmit((body) => {
     console.log(`-------------------${body.description}`);
     console.log(body);
-    create({ restos:body ,background: background.file!});
+    create({ restos:{...body, phone:undefined, email:undefined} ,background: background.file!});
   });
   return (
     <>
@@ -47,16 +47,13 @@ export const RestaurantCreate = () => {
     >
        <ImgWithHandler htmlFor="Couverture" {...background }/>
           
-      <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+      <TextInput label={TextConstant.names} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
 
      
       <TextInput label={TextConstant.shortname} {...form.getInputProps("shortname")} error={form.errors["shortname"]} key={form.key("shortname")} />
 
       
-      <TextInput label={TextConstant.email} {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
 
-     
-      <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
 
      
     

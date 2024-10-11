@@ -17,3 +17,19 @@ export const calcDistance = ({
     ) * R;
   return d;
 };
+export const getNearestPoint = ({
+  froms,
+  to,
+}: {
+  froms: Array<{ id: number; coordonate: CoordonatesDto }>;
+  to: CoordonatesDto;
+}) => {
+  var minId: number = froms[0].id;
+  var minDistance: number = 0;
+
+  froms.forEach((elm) => {
+     const distance = calcDistance({ from: elm.coordonate, to: to });
+     if(distance<minDistance) minId=elm.id;
+  });
+  return minId;
+};

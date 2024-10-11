@@ -13,9 +13,10 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { WsOrderService } from './order.service';
-import { AddOrderDto, OrderStatus } from 'src/typeorm/order.entity';
+import { AddOrderDto, OrderDto, OrderStatus } from 'src/typeorm/order.entity';
 import { LocalAuthGuardCustomer } from 'src/middleware/local_auth.guard';
 import { Request } from 'express';
+import { CurrentUser } from 'src/annotations/current_user';
 @Controller('ws/order')
 @ApiTags('ws/order')
 export class WsOrderController {
@@ -26,11 +27,18 @@ export class WsOrderController {
     const by = req.user as CustomerDto;
     return this.service.getBag({ by });
   }
-  @Put('consfirm_status/:id')
+  @Put('confirm_status/:id')
   @UseGuards(LocalAuthGuardCustomer)
   changeStatus(@Param('id') id: number, @Req() req :Request) {
     const by= req.user as CustomerDto;
+     console.log("==================update successFully================");
     return this.service.confirmOrder({ id, by});
+  }
+  @Put('update/:id')
+  @UseGuards(LocalAuthGuardCustomer)
+  update(@Param('id') id: number, @CurrentUser() user :CustomerDto,@Body() body:OrderDto) {
+   
+    return this.service.update({ id,body});
   }
   @Delete('delete/:id')
   @UseGuards(LocalAuthGuardCustomer)

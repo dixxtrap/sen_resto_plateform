@@ -140,7 +140,7 @@ background-color: light-dark(#f3f4f6, rgb(107 114 128 / 0.1))!important;
 .ReadyforAllocation, .accepted{
   @apply text-secondary-600 font-bold p-0.5 px-2 rounded-md bg-secondary-500
 }
-.InProgress,.initiate{
+.InProgress,.initiate, .active{
   @apply text-amber-500  font-bold font-mono p-0.5 px-2 rounded-md bg-amber-500/20
 }
 .rejected{

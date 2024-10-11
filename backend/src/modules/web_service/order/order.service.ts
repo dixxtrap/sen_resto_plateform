@@ -4,7 +4,12 @@ import { WebSocketServer } from '@nestjs/websockets/decorators/gateway-server.de
 import { ProductHistoryService } from 'src/modules/product/history/product_history.service';
 import { CustomerDto } from 'src/typeorm/customer.entity';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
-import { AddOrderDto, Order, OrderStatus } from 'src/typeorm/order.entity';
+import {
+  AddOrderDto,
+  Order,
+  OrderDto,
+  OrderStatus,
+} from 'src/typeorm/order.entity';
 import { OrderProduct } from 'src/typeorm/order_product.entity';
 import { Repository } from 'src/typeorm/repository';
 import { BaseResponse } from 'src/typeorm/response_base';
@@ -13,6 +18,8 @@ import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Server } from 'socket.io';
 import { ChatGateway } from 'src/chat/chat.gateway';
+import { orderBagSelect } from './order.select';
+import { getNearestPoint } from 'src/utils/calc_distance';
 @Injectable()
 export class WsOrderService {
   constructor(
@@ -22,57 +29,30 @@ export class WsOrderService {
     private productHistoryService: ProductHistoryService,
     private chatGateway: ChatGateway,
   ) {}
+
+  update({ id, body }: { id: number; body: OrderDto }) {
+    console.log(body);
+    return this.repos
+      .update({ id: id }, { ...body, fees: 1500 })
+      .then((result) => {
+        console.log(result);
+        if (result.affected > 0)
+          throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+        throw new WsMessage(HttpExceptionCode.FAILLURE);
+      })
+      .catch(WsCatch);
+  }
   getBag({ by }: { by: CustomerDto }) {
     return this.repos
       .find({
-        where: { customerId: by.id },
+        where: { customerId: by.id, status:OrderStatus.OnBag },
         relations: {
           partner: { parent: true },
           products: {
             productHistory: { product: { file: true, category: true } },
           },
         },
-        select: {
-          id: true,
-          partnerId: true,
-
-          details: {
-            createdAt: true,
-            updatedAt: true,
-          },
-          partner: {
-            name: true,
-            type: true,
-            imagePath: true,
-            shortname: true,
-            backgroundPath: true,
-            parent: {
-              id: true,
-              name: true,
-              shortname: true,
-              type: true,
-              imagePath: true,
-              backgroundPath: true,
-            },
-          },
-          products: {
-            quantity: true,
-            productHistoryId: true,
-            productHistory: {
-              productId: true,
-              price: true,
-              reduction: true,
-              product: {
-                id: true,
-                name: true,
-                cookingTime: true,
-                description: true,
-                file: { path: true },
-                category: { id: true, name: true },
-              },
-            },
-          },
-        },
+        select: orderBagSelect,
       })
       .then((result) => {
         return BaseResponse.success(result);
@@ -93,38 +73,7 @@ export class WsOrderService {
           productHistory: { product: { file: true } },
         },
       },
-      select: {
-        id: true,
-
-        details: {
-          createdAt: true,
-          updatedAt: true,
-        },
-        partner: {
-          name: true,
-          type: true,
-          imagePath: true,
-          parent: {
-            name: true,
-          },
-        },
-        products: {
-          quantity: true,
-          productHistoryId: true,
-          productHistory: {
-            productId: true,
-            price: true,
-            reduction: true,
-            product: {
-              id: true,
-              name: true,
-              cookingTime: true,
-              description: true,
-              file: { path: true },
-            },
-          },
-        },
-      },
+      select: orderBagSelect,
     });
   };
   changeStatus = async ({
@@ -155,6 +104,7 @@ export class WsOrderService {
           partner: [{ id: partnerId }],
           status: OrderStatus.OnBag,
         },
+        relations: { products: true },
       })) ??
       (await this.repos.save(
         this.repos.create({
@@ -163,19 +113,43 @@ export class WsOrderService {
           status: OrderStatus.OnBag,
         }),
       ));
+
     return order;
   };
 
   async confirmOrder({ id }: { id: number; by: CustomerDto }) {
+     console.log("==================update start================");
     return this.repos
-      .update(
-        { id: id, status: OrderStatus.OnBag },
-        { status: OrderStatus.Active },
-      )
-      .then((result) => {
-        if (result.affected > 0)
-          throw new WsMessage(HttpExceptionCode.SUCCEEDED);
-        throw new WsMessage(HttpExceptionCode.NOT_FOUND);
+      .findOneOrFail({
+        where: { id },
+        relations: { partner: { children: true }, city: true },
+      })
+      .then((order) => {
+        const restaurantId = getNearestPoint({
+          froms: [
+            ...order.partner.children.map((e) => ({
+              id: e.id,
+              coordonate: e.location,
+            })),
+            {
+              id: order.partner.id,
+              coordonate: order.partner.location,
+            },
+          ],
+          to: order.city,
+        });
+        return this.repos
+          .update({ id }, { status: OrderStatus.Active, restaurantId })
+          .then(() => {
+            console.log("==================update successFully================")
+            this.chatGateway.server.emit('messageFrom', {
+              id: order.partnerId,
+            });
+            this.chatGateway.server.emit('messageFrom', {
+              id: order.restaurantId,
+            });
+            throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+          });
       })
       .catch(WsCatch);
   }
@@ -210,7 +184,7 @@ export class WsOrderService {
                     orderId: order.id,
                   })
                   .then((delResult) => {
-                    if (order.products.length === 1) {
+                    if (!order.products || order.products.length === 1) {
                       return this.repos.delete({ id: order.id });
                     }
                     return delResult;

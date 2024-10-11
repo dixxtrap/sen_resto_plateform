@@ -45,22 +45,25 @@ const CompanyProduct = ({
      
       <div className="grid grid-cols-12 grid-rows-1 px-2 w-full  mt-4   justify-stretch  ">
         <div className="  h-[100%important] col-span-2  grow hidden lg:inline-block">
-          <div className=" hidden md:flex py-2 sticky h-auto  w-min top-16 gap-4 flex-col">
+          <div className=" hidden md:flex py-2 sticky h-auto  w-full  top-16 gap-4 flex-col">
             <Text className="text-3xl font-bold">Categories</Text>
             {category
               ?.filter((e) => e.product.length > 0)
               ?.map((e) => (
-                <Text
+                <div>
+<Text
                   component="a"
                   key={e.id}
                   href={`#${e.id!}`}
-                  className={clsx("text-2xl  w-min", {
+                  className={clsx("text-xl  ", {
                     "border-b-8 border-primary-500":
                       activeSection === `${e.id}`,
                   })}
                 >
                   {e.name}
                 </Text>
+                </div>
+                
               ))}
           </div>
         </div>

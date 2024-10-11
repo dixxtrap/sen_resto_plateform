@@ -30,9 +30,9 @@ export  class Partner  {
   id: number;
   @Column(() => Coordonates)
   location: Coordonates;
-  @Column()
+  @Column({unique:true, nullable:true, default:null})
   phone: string;
-  @Column({nullable:true, default:null})
+  @Column({nullable:true, default: null,})
   address: string;
   @Column({ type: 'boolean', default: false })
   isActive: boolean;
@@ -53,7 +53,7 @@ productManagement:ProductManagement
   @ManyToOne(() => Partner)
   parent: Partner | Restaurant | CompanyRestaurant;
   @OneToMany(() => Partner, (item) => item.parent)
-  children: Partner[] | Restaurant[] | CompanyRestaurant[];
+  children:  CompanyRestaurant[];
   @Column({ nullable: true, default: null })
   parentId: number;
   @Column(() => CreationDetails)

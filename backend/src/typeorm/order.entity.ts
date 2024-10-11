@@ -38,7 +38,7 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
   @ManyToOne(() => CompanyRestaurantBase)
-  restaurant: CompanyRestaurantBase;
+  restaurant: CompanyRestaurantBase[];
   @ManyToOne(() => CompanyRestaurantBase)
   partner: CompanyRestaurantBase;
   @Column({ nullable: true, default: null })
@@ -71,7 +71,9 @@ export class Order {
   products: OrderProduct[];
   @Column("text", {nullable:true, default:null})
   description:string;
-  @Column('double')
+  @Column( {nullable:true, default:null})
+  address:string;
+  @Column('double', {default:0})
   fees: number;
 }
 

@@ -42,6 +42,7 @@ export const CompanyOrderProductItem = ({orderProduct}:{orderProduct:OrderProduc
           {orderProduct.productHistory.product.description}
         </Text>
       </div>
+      <div className="grow"></div>
       <div className="flex justify-end  w-full items-center gap-2">
         <ActionIcon radius={100} onClick={()=>handlmeQuantity({quantity:orderProduct.quantity-1})}>
           <MinusIcon />
