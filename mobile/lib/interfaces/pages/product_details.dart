@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/cores/env.dart';
-import 'package:mobile/cores/model/product.dart';
 import 'package:mobile/cores/model/product.dart';
 import 'package:mobile/interfaces/component/appbar.dart';
-import 'package:mobile/interfaces/component/resto_item.dart';
 import 'package:mobile/utils/color_ressources.dart';
 import 'package:mobile/utils/helper/constant.dart';
 
@@ -110,7 +107,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       .titleLarge!
                                       .copyWith(
                                           fontWeight: FontWeight.bold,
-                                          color:  ColorResources.PRIMARY_APP_COLOR),
+                                          color:
+                                              ColorResources.PRIMARY_APP_COLOR),
                                 ),
                               ],
                             ),

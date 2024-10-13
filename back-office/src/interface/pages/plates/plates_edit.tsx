@@ -60,7 +60,7 @@ export const PlatesEdit = () => {
           message={(error as WsMessage).message!}
         />
       )}
-      :
+    
       {old && categories && (
         <div className="flex flex-col divide-y darkDivider">
           <Title title={old.data.name} subTitle="Modifier le plat" />

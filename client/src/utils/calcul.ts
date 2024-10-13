@@ -31,3 +31,7 @@ export const totalPrice = (order: OrderDto,{add=0}:{add:number}) =>
 
 export const totalPriceFormated = (order: OrderDto, {add=0}:{add:number}) =>
   `${totalPrice(order,{add})} ${import.meta.env.VITE_REACT_CURRENCY}`;
+
+
+export const formatDate = (date: string) =>
+  date.substring(0, 16).replace("T", " ");

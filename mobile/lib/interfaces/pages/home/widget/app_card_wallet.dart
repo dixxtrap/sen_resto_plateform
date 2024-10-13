@@ -6,7 +6,6 @@ import 'package:mobile/utils/color_ressources.dart';
 import 'package:mobile/utils/helper/assets_img.dart';
 import 'package:mobile/utils/helper/assets_svg.dart';
 import 'package:mobile/utils/helper/constant.dart';
-import 'package:mobile/utils/helper/svg_icon.dart';
 import 'package:mobile/utils/style.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 

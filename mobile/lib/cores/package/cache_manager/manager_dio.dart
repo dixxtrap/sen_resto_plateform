@@ -34,10 +34,8 @@ class DioCacheManager {
 
   /// interceptor for http cache.
   get interceptor {
-    if (null == _interceptor) {
-      _interceptor = InterceptorsWrapper(
-          onRequest: _onRequest, onResponse: _onResponse, onError: _onError);
-    }
+    _interceptor ??= InterceptorsWrapper(
+        onRequest: _onRequest, onResponse: _onResponse, onError: _onError);
     return _interceptor;
   }
 
@@ -80,7 +78,7 @@ class DioCacheManager {
     return handler.next(response);
   }
 
-  _onError(DioError e, ErrorInterceptorHandler handler) async {
+  _onError(DioException e, ErrorInterceptorHandler handler) async {
     if ((e.requestOptions.extra[DIO_CACHE_KEY_TRY_CACHE] ?? false) == true) {
       var responseDataFromCache =
           await _pullFromCacheBeforeMaxStale(e.requestOptions);
@@ -136,12 +134,6 @@ class DioCacheManager {
     RequestOptions options = response.requestOptions;
     Duration? maxAge = options.extra[DIO_CACHE_KEY_MAX_AGE];
     Duration? maxStale = options.extra[DIO_CACHE_KEY_MAX_STALE];
-    if (null == maxAge) {
-      _tryParseHead(response, maxStale, (_maxAge, _maxStale) {
-        maxAge = _maxAge;
-        maxStale = _maxStale;
-      });
-    }
     List<int>? data;
     if (options.responseType == ResponseType.bytes) {
       data = response.data;
@@ -160,7 +152,7 @@ class DioCacheManager {
   // try to get maxAge and maxStale from http headers
   void _tryParseHead(
       Response response, Duration? maxStale, _ParseHeadCallback callback) {
-    Duration? _maxAge;
+    Duration? maxAge;
     var cacheControl = response.headers.value(HttpHeaders.cacheControlHeader);
     if (null != cacheControl) {
       // try to get maxAge and maxStale from cacheControl
@@ -171,14 +163,12 @@ class DioCacheManager {
                 parameterSeparator: ",",
                 valueSeparator: "=")
             .parameters;
-        _maxAge = _tryGetDurationFromMap(parameters, "s-maxage");
-        if (null == _maxAge) {
-          _maxAge = _tryGetDurationFromMap(parameters, "max-age");
+        maxAge = _tryGetDurationFromMap(parameters, "s-maxage");
+        if (null == maxAge) {
+          maxAge = _tryGetDurationFromMap(parameters, "max-age");
         }
         // if maxStale has valued, don't get max-stale anymore.
-        if (null == maxStale) {
-          maxStale = _tryGetDurationFromMap(parameters, "max-stale");
-        }
+        maxStale ??= _tryGetDurationFromMap(parameters, "max-stale");
       } catch (e) {
         // print(e);
       }
@@ -193,11 +183,11 @@ class DioCacheManager {
           Logger.d(e.toString());
         }
         if (null != endTime && endTime.compareTo(DateTime.now()) >= 0) {
-          _maxAge = endTime.difference(DateTime.now());
+          maxAge = endTime.difference(DateTime.now());
         }
       }
     }
-    callback(_maxAge, maxStale);
+    callback(maxAge, maxStale);
   }
 
   Duration? _tryGetDurationFromMap(
@@ -219,7 +209,7 @@ class DioCacheManager {
   }
 
   String _getRequestMethod(String? requestMethod) {
-    if (null != requestMethod && requestMethod.length > 0) {
+    if (null != requestMethod && requestMethod.isNotEmpty) {
       return requestMethod.toUpperCase();
     }
     return _defaultRequestMethod.toUpperCase();
@@ -233,7 +223,7 @@ class DioCacheManager {
 
   String _getPrimaryKeyFromUri(Uri uri) {
     var param = "";
-    if (uri.queryParameters.length > 0) {
+    if (uri.queryParameters.isNotEmpty) {
       param = "?";
       uri.queryParameters.forEach((key, value) {
         param = "$param$key=$value";
@@ -288,7 +278,7 @@ class DioCacheManager {
   Uri _getUriByPath(String? baseUrl, String path,
       {dynamic data, Map<String, dynamic>? queryParameters}) {
     if (!path.startsWith(RegExp(r"https?:"))) {
-      assert(baseUrl != null && baseUrl.length > 0);
+      assert(baseUrl != null && baseUrl.isNotEmpty);
     }
     return RequestOptions(
             baseUrl: baseUrl,

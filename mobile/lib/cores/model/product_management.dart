@@ -38,20 +38,20 @@ class ProductManagement {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = this.id;
-    data['productId'] = this.productId;
-    data['partnerId'] = this.partnerId;
-    data['isActive'] = this.isActive;
-    if (this.details != null) {
-      data['details'] = this.details!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['productId'] = productId;
+    data['partnerId'] = partnerId;
+    data['isActive'] = isActive;
+    if (details != null) {
+      data['details'] = details!.toJson();
     }
-    if (this.product != null) {
-      data['product'] = this.product!.toJson();
+    if (product != null) {
+      data['product'] = product!.toJson();
     }
-    if (this.productManagementDay != null) {
+    if (productManagementDay != null) {
       data['productManagementDay'] =
-          this.productManagementDay!.map((v) => v.toJson()).toList();
+          productManagementDay!.map((v) => v.toJson()).toList();
     }
     return data;
   }

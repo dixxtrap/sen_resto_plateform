@@ -28,7 +28,8 @@ export const OrderList = () => {
 
   return (
     <>
-      <TablePagination
+    <div className="hidden md:inline-block">
+    <TablePagination
         {...state}
         isPaginated
         th={["customer","Téléphone", "Produit", "status", ""]}
@@ -78,6 +79,50 @@ export const OrderList = () => {
           </>
         }
       />
+    </div>
+    <div className="md:hidden">
+    <TablePagination
+        {...state}
+        isPaginated
+        th={["customer", ""]}
+        trs={
+          <>
+            {order?.data.map((e) => (
+              <Table.Tr key={e.id}>
+                <Table.Td>
+                  <div className="flex flex-col">
+                  <span>
+                  {e.customer?.firstname} {e.customer?.lastname}
+
+                  </span>
+                 
+                  </div>
+                </Table.Td>
+               
+
+                <Table.Td className="">
+                {e.status=== OrderStatus.Active&&<ChangeStatus id={e.id} status={OrderStatus.Cancelled} title={"preparation"} variant={"danger"} message={""} />}
+
+               { e.status=== OrderStatus.Active&&<ChangeStatus id={e.id} status={OrderStatus.Preparing} title={"preparation"} variant={"success"} message={""} />}
+               { e.status=== OrderStatus.Preparing&&<ChangeStatus id={e.id} status={OrderStatus.ReadyForDelivery} title={"Fin de preparation"} variant={"success"} message={""} />}
+              
+              
+                  <TableActionItemDetails
+                    label="voir details"
+                    path={`/order/details/${e.id}`}
+                  />
+                  <TableActionItemEdit
+                    label="voir details"
+                    path={`/order/edit/${e.id}`}
+                  />
+                </Table.Td>
+              </Table.Tr>
+            ))}
+          </>
+        }
+      />
+    </div>
+    
     </>
   );
 };

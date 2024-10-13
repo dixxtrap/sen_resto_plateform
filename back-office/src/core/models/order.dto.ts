@@ -25,9 +25,9 @@ export enum OrderStatus {
     OrderNotDelivered = 'order_not_delivered',
   }
 export const statusMessages: { [key in OrderStatus]: string } = {
-    [OrderStatus.OnBag]: "En attente de confirmation!",
-    [OrderStatus.Preparing]: "An error occurred during the operation.",
-    [OrderStatus.Cancelled]: "The operation is currently in progress.",
+    [OrderStatus.OnBag]: "En attente",
+    [OrderStatus.Preparing]: "en preparation",
+    [OrderStatus.Cancelled]: "Cancelled",
     [OrderStatus.ReadyForDelivery]: "Ready For Delivery",
     [OrderStatus.OutForDelivery]: "Out For Delivery",
     [OrderStatus.Delivered]: "Delivered",

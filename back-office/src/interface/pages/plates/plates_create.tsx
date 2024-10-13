@@ -9,6 +9,8 @@ import { AppTextarea } from "../../components/form/app_textarea";
 import { TimeInput } from "@mantine/dates";
 import { multiSelectStyle } from "../../components/form/custom_styles";
 import { companyCategoryApi } from "../../../core/features/company_category.slice";
+import { handlePreviewV2 } from "../../utils/handle_preview";
+import { ImgWithHandler } from "../../components/img_with_handler";
 
 
 export const PlateCreate = () => {
@@ -17,14 +19,13 @@ export const PlateCreate = () => {
     const companyCategory=companyCategoryApi.useGetQuery();
   const [createPlate, { isError, isSuccess, isLoading, error, data, reset }] =
     useCreateProductMutation();
-  const form = useForm({
-    initialValues:{
-description:"No description"
-    }
+    const front=handlePreviewV2({})
+  const form = useForm<ProductDto>({
   });
+  
   const _onSubmit = form.onSubmit((body) => {
     console.log(body);
-    createPlate({ ...body as ProductDto });
+    createPlate({product: body as ProductDto , file:front.file!});
   });
   
   return (
@@ -40,7 +41,7 @@ description:"No description"
         onSubmit={_onSubmit}
         onFinish={reset}
       >
-       
+       <ImgWithHandler htmlFor="Profile" {...front}/>
       <TextInput label={TextConstant.label} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
 
         

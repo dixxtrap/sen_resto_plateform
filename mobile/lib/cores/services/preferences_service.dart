@@ -1,5 +1,4 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:mobile/cores/model/customer_data.dart';
 import 'package:mobile/cores/model/otp_verification_response.dart';
 
 class PreferencesService {

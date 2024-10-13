@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/utils/color_ressources.dart';
 
-import 'package:mobile/utils/helper/constant.dart';
 import 'package:mobile/utils/style.dart';
 
 import '../../utils/helper/assets_svg.dart';

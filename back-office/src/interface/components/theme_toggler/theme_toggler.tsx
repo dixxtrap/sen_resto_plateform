@@ -12,9 +12,9 @@ export const  ThemeToggler=()=> {
     variant="filled"
     radius={10}
    
-    size="md"
+    size="compact-lg"
       onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
-      className="px-3  bg-input"
+      className="py-2  bg-input"
 
      
     >

@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/interfaces/component/custom_botton.dart';
-import 'package:mobile/interfaces/component/dialog/dialog.dart';
 import 'package:mobile/interfaces/pages/home/widget/app_card_wallet.dart';
 import 'package:mobile/interfaces/pages/home/widget/banner/banner_widget.dart';
 
@@ -30,29 +28,29 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return  PageWithBottomNavigator(
+    return PageWithBottomNavigator(
       currentIndex: 0,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          const  AppCardWallet(),
-          const  SizedBox(height: kSpaceM * 2),
-          const  bannerWidget(),
-          const  SizedBox(height: kSpaceM / 2),
+            const AppCardWallet(),
+            const SizedBox(height: kSpaceM * 2),
+            const bannerWidget(),
+            const SizedBox(height: kSpaceM / 2),
             CustomTitle(
               title: tr("Company"),
             ),
-          const  SizedBox(height: kSpaceM / 2),
-          const  CompanyWidget(),
-          const  SizedBox(height: kSpaceM * 2),
-          const  CustomTitle(
+            const SizedBox(height: kSpaceM / 2),
+            const CompanyWidget(),
+            const SizedBox(height: kSpaceM * 2),
+            const CustomTitle(
               title: " Plat Populaire",
             ),
-          const  SizedBox(height: kSpaceM),
-          const  ProductViewWidget(),
-           const SizedBox(
+            const SizedBox(height: kSpaceM),
+            const ProductViewWidget(),
+            const SizedBox(
               height: 50,
             )
           ],

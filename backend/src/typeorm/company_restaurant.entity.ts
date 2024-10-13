@@ -23,7 +23,7 @@ category:CompanyCategory[]
   closingTime: string;
   @Column('time', { default: '08:00:00' })
   openingTime: string;
-  @ManyToOne(()=>EstablishmentType,(alias)=>alias.company)
+  @ManyToOne(()=>EstablishmentType)
   establishmentType:EstablishmentType
   @Column()
   establishmentTypeId:number

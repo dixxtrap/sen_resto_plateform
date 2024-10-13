@@ -30,6 +30,10 @@ export const baseApi = createApi({
       query: () =>
         `/ws/company/establishment_type/all`,
     }),
+    getEtsCompanyById: builder.query<BaseResponse<EstablishmentTypeDto>, string>({
+      query: (id) =>
+        `/ws/company/establishment_type/by_id/${id}`,
+    }),
     getCompanyDetails: builder.query<BaseResponse<CompanyDto>, string>({
       query: (id) =>
         `/ws/company/details/${id}`,

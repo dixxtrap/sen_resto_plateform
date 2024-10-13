@@ -75,7 +75,6 @@ class _SearchState extends State<ProductsScreen> {
                       ))
                 ],
               ),
-
               Expanded(
                 child: BlocProvider(
                     create: (context) => _productCubit,
@@ -92,7 +91,7 @@ class _SearchState extends State<ProductsScreen> {
                             },
                             data: (data) {
                               return ListView(
-                                children: data.product!
+                                children: data.product
                                     .map((e) => ProductWidgetV2(product: e))
                                     .toList(),
                               );

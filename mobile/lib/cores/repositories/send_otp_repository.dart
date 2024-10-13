@@ -1,4 +1,3 @@
-import 'package:http/http.dart';
 import 'package:mobile/cores/model/base_response.dart';
 import 'package:mobile/cores/networking/api_result.dart';
 

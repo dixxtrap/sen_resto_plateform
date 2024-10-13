@@ -124,7 +124,7 @@ class MobileTextField extends StatelessWidget {
             fontSize: 14,
             height: 1.6,
           ),
-          suffixIcon: suffixIcon ?? null,
+          suffixIcon: suffixIcon,
           prefixText: '+221 ',
           prefixStyle: prefixStyle ??
               AppStyle.poppinsRegular(color: ColorResources.BLACK_COLOR),
@@ -280,7 +280,7 @@ class MobileTextFieldV2 extends StatelessWidget {
             fontSize: 14,
             height: 1.6,
           ),
-          suffixIcon: suffixIcon ?? null,
+          suffixIcon: suffixIcon,
           prefixText: '+221 ',
           prefixStyle: prefixStyle ??
               AppStyle.poppinsRegular(color: ColorResources.BLACK_COLOR),
@@ -510,7 +510,7 @@ class MobileTextFieldV3 extends StatelessWidget {
             fontSize: 14,
             height: 1.6,
           ),
-          suffixIcon: suffixIcon ?? null,
+          suffixIcon: suffixIcon,
           prefixText: '+221 ',
           prefixStyle: prefixStyle ??
               AppStyle.poppinsRegular(color: ColorResources.BLACK_COLOR),

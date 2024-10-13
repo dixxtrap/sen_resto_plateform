@@ -12,16 +12,16 @@ class FileDoc {
     id = json['id'];
     plateId = json['plateId'];
     photoId = json['photoId'];
-    photo = json['photo'] != null ? new Photo.fromJson(json['photo']) : null;
+    photo = json['photo'] != null ? Photo.fromJson(json['photo']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['plateId'] = this.plateId;
-    data['photoId'] = this.photoId;
-    if (this.photo != null) {
-      data['photo'] = this.photo!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['plateId'] = plateId;
+    data['photoId'] = photoId;
+    if (photo != null) {
+      data['photo'] = photo!.toJson();
     }
     return data;
   }

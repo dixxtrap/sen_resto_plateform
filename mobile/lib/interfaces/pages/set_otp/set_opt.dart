@@ -1,16 +1,11 @@
-import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile/cores/bloc/otp_verification_cubit.dart';
-import 'package:mobile/cores/bloc/send_otp_cubit.dart';
-import 'package:mobile/cores/model/base_response.dart';
-import 'package:mobile/cores/model/customer_data.dart';
 import 'package:mobile/cores/model/otp_verification_response.dart';
 import 'package:mobile/cores/networking/api_client.dart';
 import 'package:mobile/cores/networking/result_state.dart';
 import 'package:mobile/cores/repositories/otp_verification_repository_impl.dart';
-import 'package:mobile/cores/repositories/send_otp_repository_impl.dart';
 import 'package:mobile/cores/services/navigation/navigation_service.dart';
 import 'package:mobile/cores/services/preferences_service.dart';
 import 'package:mobile/interfaces/pages/home/home.dart';

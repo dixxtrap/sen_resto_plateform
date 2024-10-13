@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/utils/routes/default_page_route.dart';
 
-
 class Navigation {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -35,6 +34,6 @@ class Navigation {
   }
 
   Future _addDelay() async {
-    await Future.delayed(Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 100));
   }
 }

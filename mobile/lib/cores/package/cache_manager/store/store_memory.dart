@@ -55,7 +55,7 @@ class MemoryCacheStore extends ICacheStore {
 
   List<String> _removeKey(String key, {String? subKey}) {
     List<String>? subKeyList = _keys[key];
-    if (null == subKeyList || subKeyList.length <= 0) return [];
+    if (null == subKeyList || subKeyList.isEmpty) return [];
     if (null == subKey) {
       _keys.remove(key);
       return subKeyList.map((sKey) => "${key}_$sKey").toList();

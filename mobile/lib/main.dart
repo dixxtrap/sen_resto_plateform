@@ -13,7 +13,6 @@ import 'package:mobile/utils/color_ressources.dart';
 import 'cores/services/navigation/navigation_service.dart';
 import 'interfaces/pages/home/home.dart';
 import 'interfaces/pages/bag.dart';
-import 'interfaces/pages/init_page.dart';
 import 'interfaces/pages/restaurant.dart';
 import 'interfaces/pages/setting.dart';
 
@@ -68,13 +67,13 @@ class MyApp extends StatelessWidget {
       //       background: const Color(0xFFf7f7f7),
       //     )),
       // useMaterial3: true,
-      home: SplashScreen(),
+      home: const SplashScreen(),
       routes: {
-        "home": (context) => Home(),
+        "home": (context) => const Home(),
         "products": (context) => const ProductsScreen(),
         "restaurant": (context) => Restaurant(),
         "bag": (context) => const Bag(),
-        "login": (context) => Login(),
+        "login": (context) => const Login(),
         "profile": (context) => Setting(),
         "set_phone": (context) => SetPhone(),
       },

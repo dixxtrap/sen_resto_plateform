@@ -8,6 +8,7 @@ import { Modal, Image, Indicator, UnstyledButton } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { ReactNode, useState } from "react";
 import clsx from "clsx";
+import { formatDate } from "../../../../utils/calcul";
 export const BagIconMobile = () => {
   const [active, setActive] = useState<boolean>();
   return (
@@ -71,7 +72,7 @@ export const BagIcon = ({
                         {e.partner.name}
                       </span>
                     </div>
-                    <div>{e.details.createdAt}</div>
+                    <div>{ formatDate(e.details.createdAt!)}</div>
                   </div>
                 </div>
               </Link>

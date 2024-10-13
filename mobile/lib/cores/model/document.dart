@@ -39,18 +39,18 @@ class Photo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['fieldname'] = this.fieldname;
-    data['originalname'] = this.originalname;
-    data['encoding'] = this.encoding;
-    data['mimetype'] = this.mimetype;
-    data['destination'] = this.destination;
-    data['filename'] = this.filename;
-    data['path'] = this.path;
-    data['size'] = this.size;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['fieldname'] = fieldname;
+    data['originalname'] = originalname;
+    data['encoding'] = encoding;
+    data['mimetype'] = mimetype;
+    data['destination'] = destination;
+    data['filename'] = filename;
+    data['path'] = path;
+    data['size'] = size;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

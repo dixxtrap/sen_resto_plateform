@@ -21,7 +21,7 @@ class SvgIcon extends StatelessWidget {
             )
           : null,
       matchTextDirection: true,
-      theme: SvgTheme(fontSize: 100, xHeight: 290),
+      theme: const SvgTheme(fontSize: 100, xHeight: 290),
     );
   }
 }

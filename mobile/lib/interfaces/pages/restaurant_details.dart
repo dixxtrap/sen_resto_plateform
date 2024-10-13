@@ -44,7 +44,7 @@ class _RestoDetailsState extends State<RestoDetails> {
                 padding: EdgeInsets.all(kpadding / 2),
                 width: double.maxFinite,
                 decoration: BoxDecoration(
-                    color:  ColorResources.PRIMARY_APP_COLOR,
+                    color: ColorResources.PRIMARY_APP_COLOR,
                     borderRadius: BorderRadius.circular(kpadding / 4)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +90,7 @@ class _RestoDetailsState extends State<RestoDetails> {
                   margin: EdgeInsets.all(kpadding / 2),
                   child: Column(
                     children: [
-                      CustomTitle(
+                      const CustomTitle(
                         title: "Description",
                       ),
                       SizedBox(

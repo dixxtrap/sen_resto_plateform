@@ -56,7 +56,7 @@ class _ProductViewWidgetState extends State<ProductViewWidget> {
                             children: List.generate(
                                 2,
                                 (index2) =>
-                                    data.product!.length > index * 2 + index2
+                                    data.product.length > index * 2 + index2
                                         ? TableCell(
                                             child: ProductWidget(
                                               product: data
@@ -85,10 +85,10 @@ class _ProductViewWidgetState extends State<ProductViewWidget> {
                   // );
                 },
                 error: (NetworkExceptions err) => Center(
-                    child: Text(
-                      NetworkExceptions.getErrorMessage(err),
-                    ),
-                  ));
+                      child: Text(
+                        NetworkExceptions.getErrorMessage(err),
+                      ),
+                    ));
           },
         ));
   }

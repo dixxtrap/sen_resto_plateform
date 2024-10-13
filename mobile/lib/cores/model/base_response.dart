@@ -62,9 +62,9 @@ class Messages {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['shortMessage'] = this.shortMessage;
-    data['longMessage'] = this.longMessage;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['shortMessage'] = shortMessage;
+    data['longMessage'] = longMessage;
     return data;
   }
 }

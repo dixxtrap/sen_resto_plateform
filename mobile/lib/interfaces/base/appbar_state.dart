@@ -14,6 +14,7 @@ abstract class AppBarState<T extends StatefulWidget>
     extends BaseScaffoldState<T> {
   final StreamController _titleStreamController = StreamController();
 
+  @override
   AppBar appBar() => AppBar(
         elevation: 0,
         backgroundColor: ColorResources.WHITE_COLOR,
@@ -30,7 +31,7 @@ abstract class AppBarState<T extends StatefulWidget>
           color: ColorResources.BLACK_COLOR,
         ),
         title: StreamBuilder(
-          initialData: "$APP_NAME",
+          initialData: APP_NAME,
           stream: _titleStreamController.stream,
           builder: (ctx, snapshot) => Text(
             "${snapshot.data}",

@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mobile/cores/env.dart';
 import 'package:mobile/cores/model/company.dart';
 import 'package:mobile/utils/helper/assets_svg.dart';
 import 'package:mobile/utils/helper/svg_icon.dart';
@@ -76,7 +75,6 @@ class CompanyItemWidget extends StatelessWidget {
                           getTheme(context).cardColor.withOpacity(.4),
                           getTheme(context).primaryColor.withOpacity(.17),
                         ])),
-               
                   ),
                 ),
               ),

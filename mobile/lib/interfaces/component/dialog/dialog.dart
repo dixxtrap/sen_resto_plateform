@@ -73,7 +73,7 @@ class DialogUtils {
           ),
         );
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 500),
       barrierDismissible: true,
       barrierLabel: '',
       context: context,
@@ -128,7 +128,7 @@ class DialogUtils {
           ),
         );
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 500),
       barrierDismissible: true,
       barrierLabel: '',
       context: context,
@@ -182,7 +182,7 @@ class DialogUtils {
           ),
         );
       },
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: const Duration(milliseconds: 500),
       barrierDismissible: false,
       barrierLabel: '',
       context: context,
@@ -235,7 +235,7 @@ class DialogUtils {
             ),
           ],
           content: Text(
-            "$content",
+            content,
             style: AppStyle.poppinsRegular(fontSize: 13),
           ),
           title: ListTile(
@@ -248,7 +248,7 @@ class DialogUtils {
             ),
             tileColor: ColorResources.PRIMARY_APP_COLOR,
             title: Text(
-              tr("$title"),
+              tr(title),
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
             ),
@@ -326,10 +326,10 @@ class DialogUtils {
 
   static void inputBottomSheet(
       BuildContext context, Function(String title, String remarks) onYesClick) {
-    final GlobalKey<FormState> _keyTitle = GlobalKey();
-    final GlobalKey<FormState> _keyRemarks = GlobalKey();
-    final TextEditingController _controllerTitle = TextEditingController();
-    final TextEditingController _controllerRemarks = TextEditingController();
+    final GlobalKey<FormState> keyTitle = GlobalKey();
+    final GlobalKey<FormState> keyRemarks = GlobalKey();
+    final TextEditingController controllerTitle = TextEditingController();
+    final TextEditingController controllerRemarks = TextEditingController();
     showModalBottomSheet(
       context: context,
       enableDrag: false,
@@ -389,10 +389,9 @@ class DialogUtils {
                     top: 8.0, right: 70.0, left: 70, bottom: 8.0),
                 child: CustomButton(
                   onPressed: () {
-                    if (_keyTitle.currentState!.validate() &&
-                        _keyRemarks.currentState!.validate()) {
-                      onYesClick(
-                          _controllerTitle.text, _controllerRemarks.text);
+                    if (keyTitle.currentState!.validate() &&
+                        keyRemarks.currentState!.validate()) {
+                      onYesClick(controllerTitle.text, controllerRemarks.text);
                     }
                   },
                   btnText: tr('OK'),
@@ -564,7 +563,7 @@ class DialogUtils {
             ),
             tileColor: ColorResources.PRIMARY_APP_COLOR,
             title: Text(
-              tr("$title"),
+              tr(title),
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,

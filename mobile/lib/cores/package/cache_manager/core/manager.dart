@@ -7,18 +7,20 @@ import 'config.dart';
 import 'obj.dart';
 
 class CacheManager {
-  CacheConfig _config;
+  final CacheConfig _config;
   ICacheStore? _diskCacheStore;
   ICacheStore? _memoryCacheStore;
   late Utf8Encoder _utf8encoder;
 
   CacheManager(this._config) {
     _utf8encoder = const Utf8Encoder();
-    if (!_config.skipDiskCache)
+    if (!_config.skipDiskCache) {
       _diskCacheStore = _config.diskStore ??
           MyDiskCacheStore(encrypt: _config.encrypt, decrypt: _config.decrypt);
-    if (!_config.skipMemoryCache)
+    }
+    if (!_config.skipMemoryCache) {
       _memoryCacheStore = MemoryCacheStore(_config.maxMemoryCacheCount);
+    }
   }
 
   Future<CacheObj?> _pullFromCache(String key, {String? subKey}) async {

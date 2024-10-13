@@ -29,11 +29,11 @@ class CacheObj {
   }
 
   set maxAge(Duration? duration) {
-    if (null != duration) this.maxAgeDate = _convertDuration(duration);
+    if (null != duration) maxAgeDate = _convertDuration(duration);
   }
 
   set maxStale(Duration? duration) {
-    if (null != duration) this.maxStaleDate = _convertDuration(duration);
+    if (null != duration) maxStaleDate = _convertDuration(duration);
   }
 
   _convertDuration(Duration duration) =>

@@ -26,14 +26,14 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await Future.delayed(Duration(milliseconds: 2));
+      await Future.delayed(const Duration(milliseconds: 2));
       _onStart();
     });
   }
 
   _onStart() async {
     if (await locator<PreferencesService>().isLogIn) {
-      locator<Navigation>().pushAndRemoveUntil(Home());
+      locator<Navigation>().pushAndRemoveUntil(const Home());
     } else if (await locator<PreferencesService>().setup ==
         StateOfSetup.registered.name) {
       // Navigator.of(context).pushReplacementNamed("set_phone");
@@ -63,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-              child: SvgIcon(
+              child: const SvgIcon(
                 AssetSvg.logo,
                 size: 150,
               ),

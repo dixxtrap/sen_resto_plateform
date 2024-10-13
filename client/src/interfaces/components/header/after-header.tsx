@@ -8,7 +8,7 @@ export const AfterHeader = () => {
   const { data, ...state } = baseApi.useGetEtsQuery();
   return (
     <Fetchingdata {...state}>
-      <div className=" flex flex-col -mt-16 items-center pt-16 relative bg-[#ffc244]">
+      <div className=" flex flex-col -mt-16 items-center pt-16 relative bg-amber-400">
         <Text className="text-xl md:text-4xl  p-4">Bienvenu sur <span className="font-bold">{import.meta.env.VITE_APP_NAME}</span> </Text>
         <div className="  pb-20 md:pt-5 flex w-full items-start justify-center gap-2 md:gap-10 ">
           {data?.data.map((e) => (

@@ -59,29 +59,28 @@ class Restaurant {
     openingTime = json['openingTime'];
     closingTime = json['closingTime'];
     company =
-        json['company'] != null ? new Company.fromJson(json['company']) : null;
-    profile =
-        json['profile'] != null ? new Photo.fromJson(json['profile']) : null;
+        json['company'] != null ? Company.fromJson(json['company']) : null;
+    profile = json['profile'] != null ? Photo.fromJson(json['profile']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['companyId'] = this.companyId;
-    data['address'] = this.address;
-    data['city'] = this.city;
-    data['country'] = this.country;
-    data['postal_code'] = this.postalCode;
-    data['phone'] = this.phone;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['laltitude'] = this.laltitude;
-    data['longitude'] = this.longitude;
-    data['isDelecetd'] = this.isDelecetd;
-    data['openingTime'] = this.openingTime;
-    data['closingTime'] = this.closingTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['companyId'] = companyId;
+    data['address'] = address;
+    data['city'] = city;
+    data['country'] = country;
+    data['postal_code'] = postalCode;
+    data['phone'] = phone;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['laltitude'] = laltitude;
+    data['longitude'] = longitude;
+    data['isDelecetd'] = isDelecetd;
+    data['openingTime'] = openingTime;
+    data['closingTime'] = closingTime;
     return data;
   }
 }

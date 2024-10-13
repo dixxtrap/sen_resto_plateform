@@ -1,4 +1,3 @@
-
 import 'package:mobile/cores/database/data_base.dart';
 import 'package:mobile/cores/package/cache_manager/core/config.dart';
 import 'package:mobile/cores/package/cache_manager/core/obj.dart';
@@ -6,7 +5,6 @@ import 'package:mobile/cores/package/cache_manager/store/store_impl.dart';
 import 'package:sembast/sembast.dart';
 
 class MyDiskCacheStore extends ICacheStore {
-
   final _store = stringMapStoreFactory.store("app");
   Encrypt? encrypt;
   Decrypt? decrypt;
@@ -19,10 +17,11 @@ class MyDiskCacheStore extends ICacheStore {
   Future<CacheObj?> getCacheObj(String key, {String? subKey}) async {
     final finder = Finder(filter: Filter.byKey(key));
     var snapshot = await _store.findFirst(await _db, finder: finder);
-    if (snapshot != null)
+    if (snapshot != null) {
       return _decryptCacheObj(CacheObj.fromJson(snapshot.value));
-    else
+    } else {
       return null;
+    }
   }
 
   @override

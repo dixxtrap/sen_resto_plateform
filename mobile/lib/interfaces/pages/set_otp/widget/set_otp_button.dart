@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,13 +6,8 @@ import 'package:mobile/cores/model/base_response.dart';
 import 'package:mobile/cores/networking/api_client.dart';
 import 'package:mobile/cores/networking/result_state.dart';
 import 'package:mobile/cores/repositories/send_otp_repository_impl.dart';
-import 'package:mobile/cores/services/navigation/navigation_service.dart';
-import 'package:mobile/cores/services/preferences_service.dart';
 import 'package:mobile/interfaces/component/custom_botton.dart';
-import 'package:mobile/interfaces/component/dialog/dialog.dart';
 import 'package:mobile/interfaces/component/dialog/progress_widget.dart';
-import 'package:mobile/interfaces/pages/home/home.dart';
-import 'package:mobile/interfaces/pages/set_otp/widget/otp_verification_widget.dart';
 import 'package:mobile/locator.dart';
 
 class SendOtpButton extends StatefulWidget {

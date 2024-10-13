@@ -1,6 +1,5 @@
 .icon {
-    width: 22px;
-    height: 22px;
+   @apply size-5
   }
   .dark 
   .dark {

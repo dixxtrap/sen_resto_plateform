@@ -260,21 +260,22 @@ class CustomFieldInternalName {
 
 extension Masking on String {
   String mobileNumberMasking() {
-    if (this.length == regularMobileLength)
-      return "XXXXX${this.substring(5, 9)}";
-    else
+    if (length == regularMobileLength) {
+      return "XXXXX${substring(5, 9)}";
+    } else {
       return this;
+    }
   }
 
   String emailAddressMasking() {
-    int index = this.indexOf("@");
-    String endId = this.substring(index);
+    int index = indexOf("@");
+    String endId = substring(index);
     String mask = '';
-    int size = this.substring(2, index).length;
+    int size = substring(2, index).length;
     for (int i = 0; i < size; i++) {
       mask += "*";
     }
-    mask = this.substring(0, 2) + mask + endId;
+    mask = substring(0, 2) + mask + endId;
     return mask;
   }
 }

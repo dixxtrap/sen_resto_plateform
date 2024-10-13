@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mobile/cores/env.dart';
 import 'package:mobile/cores/model/restaurant.dart';
 import 'package:mobile/interfaces/pages/restaurant_details.dart';
 

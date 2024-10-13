@@ -41,7 +41,7 @@ class InitPage extends StatefulWidget {
 class _InitPageState extends State<InitPage> {
   final pageViewCtr = PageController(initialPage: 0);
   int index = 0;
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +104,7 @@ class _InitPageState extends State<InitPage> {
                       3,
                       (i) => AnimatedContainer(
                             margin: EdgeInsets.all(kpadding / 3),
-                            duration: Duration(milliseconds: 500),
+                            duration: const Duration(milliseconds: 500),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: index == i

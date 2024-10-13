@@ -41,7 +41,6 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget> {
       child: Padding(
         padding: const EdgeInsets.all(kpadding / 2),
         child: Column(children: [
-    
           Stack(
             children: [
               Align(
@@ -96,8 +95,8 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget> {
               children: [
                 Text(
                   tr('Resend'),
-                  style: AppStyle.poppinsRegular(
-                      color: ColorResources.GRAY_COLOR),
+                  style:
+                      AppStyle.poppinsRegular(color: ColorResources.GRAY_COLOR),
                 ),
                 const Spacer(),
                 Text('00:${remainingSeconds.toString().padLeft(2, '0')}',
@@ -136,7 +135,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget> {
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       setState(() {
         if (remainingSeconds > 0) {
           remainingSeconds--;

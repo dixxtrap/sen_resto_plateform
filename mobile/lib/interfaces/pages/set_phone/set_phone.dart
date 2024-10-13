@@ -51,7 +51,7 @@ class _SetPhoneState extends State<SetPhone> {
                   const SizedBox(
                     height: kSpaceM * 4,
                   ),
-                  SvgIcon(
+                  const SvgIcon(
                     AssetSvg.logo,
                     size: 150,
                   ),

@@ -1,7 +1,4 @@
-import {
-  ArrowRightCircleIcon,
-  Bars3Icon,
-} from "@heroicons/react/24/outline";
+import { ArrowRightCircleIcon, Bars3Icon } from "@heroicons/react/24/outline";
 import {
   BellIcon,
   UserIcon,
@@ -44,72 +41,64 @@ export const Header: FC<{
       <div className="dark sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b  shadow-sm sm:gap-x-2  darkBg bg-white  darkDivider  px-3">
         {isSuccess && (
           <>
+            <div className="flex items-center lg:ml-20 ">
+              <ActionIcon
+                size={40}
+                color="primary.5"
+                className="  lg:hidden"
+                onClick={open}
+              >
+                <Bars3Icon className="h-6 w-6 " aria-hidden="true" />
+              </ActionIcon>
+              <div className="flex h-16 shrink-0  p-2  items-center sticky top-0 justify-center">
+                {user?.parent && user.parent.imagePath && (
+                  <img
+                    alt=""
+                    className=" h-8 md:h-10  rounded-md backdrop-blur-lg"
+                    src={`${user.parent.imagePath}`}
+                  />
+                )}
 
-          <div className="flex items-center lg:ml-20 ">
-          <ActionIcon
-              size={40}
-              color="primary.5"
-              className="  lg:hidden"
-              onClick={open}
-            >
-              <Bars3Icon className="h-6 w-6 " aria-hidden="true" />
-            </ActionIcon>
-          <div className="flex h-16 shrink-0  p-2  items-center sticky top-0 justify-center">
-      {user?.parent && user.parent.imagePath && (
-                <img
-                alt=""
-                className=" h-8 md:h-10  rounded-md backdrop-blur-lg"
-                 src={`${user.parent.imagePath}`}
-                />
-              
-              )}
-              
-        {/* <Logo className="bg-gradient-to-tr to-teal-500/20 backdrop-blur-sm from-indigo-500/20 h-14 w-14 p-1 rounded-md" /> */}
-      </div>
+                {/* <Logo className="bg-gradient-to-tr to-teal-500/20 backdrop-blur-sm from-indigo-500/20 h-14 w-14 p-1 rounded-md" /> */}
+              </div>
+            </div>
 
-          </div>
-           
             {/* Separator */}
-            <span className=" text-xl  text-left font-bold">
-              {user?.parent?.parent?.id === 1|| user?.parent?.id === 1
+            <span className="hidden md:inline-block md:text-xl  text-left font-bold">
+              {user?.parent?.parent?.id === 1 || user?.parent?.id === 1
                 ? user.parent?.name
                 : user?.parent?.parent?.name}
             </span>
-            <div className="grow flex items-center gap-x-1"></div>
+            <div className="grow "></div>
             <ThemeToggler />
 
-            <Group className="gap-6 py-0.5 ring-1 ring-secondary-900/10 dark:ring-secondary-400/10 rounded-lg px-1 bg_card">
-            
-            <Indicator offset={0} size={16} label={"0"}>  <ActionIcon
-                radius={10}
-                type="button"
-                color="secondary.5"
-                variant="transparent"
-                className=""
-              >
-            
-                <ChatBubbleBottomCenterIcon
-                  className="size-6 bg-slate-900 text-white p-0.5 rounded-full"
-                  aria-hidden="true"
-                />{" "}
-                <span className="sr-only">View notifications</span>
-              </ActionIcon>
+            <Group className="md:gap-6 py-0.5 ring-1 ring-secondary-900/10 dark:ring-secondary-400/10 rounded-lg md:px-1 flex-nowrap bg_card">
+              <Indicator offset={0} size={16} label={"0"}>
+                {" "}
+                <ActionIcon
+                  radius={10}
+                  type="button"
+                  color="secondary.5"
+                  variant="transparent"
+                  className=""
+                >
+                  <ChatBubbleBottomCenterIcon
+                    className="size-6 bg-slate-900 text-white p-0.5 rounded-full"
+                    aria-hidden="true"
+                  />{" "}
+                  <span className="sr-only">View notifications</span>
+                </ActionIcon>
               </Indicator>
               <Indicator offset={0} size={16} label={0}>
-              <ActionIcon
-                radius={10}
-                type="button"
-                variant="transparent"
-                
-                color="primary.5"
-              >
-                <BellIcon
-                  className="size-6 bg-slate-900 text-white p-0.5 rounded-full"
-                  
-                />{" "}
-                <span className="sr-only">View notifications</span>
-               
-              </ActionIcon>
+                <ActionIcon
+                  radius={10}
+                  type="button"
+                  variant="transparent"
+                  color="primary.5"
+                >
+                  <BellIcon className="size-6 bg-slate-900 text-white p-0.5 rounded-full" />{" "}
+                  <span className="sr-only">View notifications</span>
+                </ActionIcon>
               </Indicator>
               {/* Separator */}
 
@@ -120,8 +109,7 @@ export const Header: FC<{
                 withArrow
               >
                 <Menu.Target>
-                  
-                  <ActionIcon radius={10} variant="transparent" >
+                  <ActionIcon radius={10} variant="transparent">
                     <UserIcon className="size-6 p-1 rounded-full text-white bg-slate-900" />
                   </ActionIcon>
                 </Menu.Target>
@@ -142,13 +130,12 @@ export const Header: FC<{
                     Transfer my data
                   </Menu.Item>
                   <Menu.Item
-                  
                     leftSection={
                       <ArrowRightStartOnRectangleIcon className="size-4 rounded-full" />
                     }
-                    onClick={()=>signout("")}
-                    >
-                     Déconnexion
+                    onClick={() => signout("")}
+                  >
+                    Déconnexion
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>

@@ -8,7 +8,6 @@ import 'package:mobile/cores/networking/network_exceptions.dart';
 import 'package:mobile/cores/networking/result_state.dart';
 import 'package:mobile/cores/repositories/company_repository_impl.dart';
 import 'package:mobile/cores/services/navigation/navigation_service.dart';
-import 'package:mobile/interfaces/component/company_item_widget.dart';
 import 'package:mobile/interfaces/pages/company_restaurant/company/company_screen.dart';
 import 'package:mobile/interfaces/pages/company_restaurant/restaurant/restaurant_screen.dart';
 import 'package:mobile/locator.dart';

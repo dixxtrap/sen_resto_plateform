@@ -7,8 +7,8 @@ export const HomeCompanyItem = ({ company }: { company: CompanyDto }) => {
   return (
     <Link className=" " to={`/company/details/${company.id}`}>
       <div className="flex gap-3  flex-col  group h-full w-full">
-        <div className="h-36 md:h-44 w-full ring overflow-hidden rounded-md ring-gray-300">
-          <Image className="h-full w-ful transform transition-transform duration-500 ease-in-out group-hover:scale-125  mx-auto rounded-md " fallbackSrc={company.imagePath} src={company.backgroundPath} />
+        <div className="h-36 md:h-52 lg:h-52 w-full ring overflow-hidden rounded-md ring-gray-300">
+          <Image className="h-full w-full transform transition-transform duration-500 ease-in-out group-hover:scale-125  mx-auto rounded-md " fallbackSrc={company.imagePath} src={company.backgroundPath} />
         </div>
         <div>
           <div className="flex justify-between">

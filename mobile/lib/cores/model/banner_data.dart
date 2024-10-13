@@ -39,18 +39,18 @@ class BannerData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['audioUrl'] = this.audioUrl;
-    data['imageUrl'] = this.imageUrl;
-    data['type'] = this.type;
-    data['description'] = this.description;
-    data['start'] = this.start;
-    data['end'] = this.end;
-    data['isActive'] = this.isActive;
-    if (this.details != null) {
-      data['details'] = this.details!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['audioUrl'] = audioUrl;
+    data['imageUrl'] = imageUrl;
+    data['type'] = type;
+    data['description'] = description;
+    data['start'] = start;
+    data['end'] = end;
+    data['isActive'] = isActive;
+    if (details != null) {
+      data['details'] = details!.toJson();
     }
     return data;
   }

@@ -69,7 +69,7 @@ const data = [
 
 export const TransactionChart = () => {
   return (
-    <div className="flex items-stretch gap-2">
+    <div className="flex flex-col md:flex-row items-stretch gap-2">
       <div
         className={clsx(
           " flex  flex-col grow bgInput  p-3 ring-1 ring-gray-400/20 rounded-md",
@@ -79,7 +79,7 @@ export const TransactionChart = () => {
         <span className=" text-left font-semibold text-xl pb-6" > Evolutions des Commandes</span>
         <BarChart
           data={data}
-          h={{ sm: 300, md: 400 }}
+          h={{ base: 300, md: 400 }}
           yAxisProps={{ tickMargin: 15, orientation: 'left' }}
           xAxisProps={{ tickMargin: 15, orientation: 'bottom'  }}
           dataKey="date"

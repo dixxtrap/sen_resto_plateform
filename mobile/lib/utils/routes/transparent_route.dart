@@ -35,5 +35,5 @@ class TransparentRoute<T> extends PageRoute<T> {
   }
 
   @override
-  Duration get transitionDuration => Duration(milliseconds: 500);
+  Duration get transitionDuration => const Duration(milliseconds: 500);
 }

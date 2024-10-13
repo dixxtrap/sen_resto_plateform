@@ -102,7 +102,7 @@ class PartnerHeaderWidget extends StatelessWidget {
                         width: kSpaceS,
                       ),
                       Text(
-                        '${partner.openingTime!.substring(0, 5)!}/${partner.closingTime!.substring(0, 5)!}',
+                        '${partner.openingTime!.substring(0, 5)}/${partner.closingTime!.substring(0, 5)}',
                         style: AppStyle.poppinsSemiBold(
                             color: ColorResources.BLACK_COLOR),
                       ),

@@ -1,7 +1,7 @@
 import 'package:mobile/cores/package/cache_manager/store/store_impl.dart';
 
-typedef Future<List<int>> Encrypt(List<int> str);
-typedef Future<List<int>> Decrypt(List<int> str);
+typedef Encrypt = Future<List<int>> Function(List<int> str);
+typedef Decrypt = Future<List<int>> Function(List<int> str);
 
 class CacheConfig {
   final Duration defaultMaxAge;

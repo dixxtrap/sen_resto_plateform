@@ -85,6 +85,7 @@ class ApiClient implements RemoteSource {
     }
   }
 
+  @override
   Future<dynamic> get(
     String uri, {
     Map<String, dynamic>? queryParameters,
@@ -107,10 +108,11 @@ class ApiClient implements RemoteSource {
         throw StatusException(baseResponse.errorMessage);
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
+  @override
   Future<dynamic> post(
     String uri, {
     data,
@@ -134,10 +136,11 @@ class ApiClient implements RemoteSource {
       }
     } catch (e) {
       Logger.d(e);
-      throw e;
+      rethrow;
     }
   }
 
+  @override
   Future<dynamic> put(
     String uri, {
     data,
@@ -153,14 +156,14 @@ class ApiClient implements RemoteSource {
       );
 
       var baseResponse = BaseResponse.fromJson(response.data);
-      if (baseResponse.status == true)
+      if (baseResponse.status == true) {
         return response.data;
-      else {
+      } else {
         throw StatusException(baseResponse.errorMessage);
       }
     } catch (e) {
       if (kDebugMode) print(e);
-      throw e;
+      rethrow;
     }
   }
 
@@ -179,7 +182,7 @@ class ApiClient implements RemoteSource {
       );
       return response;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -199,9 +202,9 @@ class ApiClient implements RemoteSource {
 
       try {
         var baseResponse = BaseResponse.fromJson(response.data);
-        if (baseResponse.status == true)
+        if (baseResponse.status == true) {
           return response.data;
-        else {
+        } else {
           throw StatusException(baseResponse.errorMessage);
         }
       } on NoSuchMethodError catch (_) {
@@ -209,7 +212,7 @@ class ApiClient implements RemoteSource {
       }
     } catch (e) {
       Logger.d(e);
-      throw e;
+      rethrow;
     }
   }
 
@@ -235,9 +238,9 @@ class ApiClient implements RemoteSource {
         try {
           var jsonString = utf8.decode(response.data);
           var baseResponse = BaseResponse.fromJson(jsonDecode(jsonString));
-          if (baseResponse.status == true)
+          if (baseResponse.status == true) {
             return response;
-          else {
+          } else {
             throw StatusException(baseResponse.errorMessage);
           }
         } on NoSuchMethodError catch (_) {
@@ -246,7 +249,7 @@ class ApiClient implements RemoteSource {
       }
     } catch (e) {
       Logger.d(e);
-      throw e;
+      rethrow;
     }
   }
 }

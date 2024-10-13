@@ -1,12 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mobile/cores/env.dart';
 import 'package:mobile/cores/model/product.dart';
-import 'package:mobile/interfaces/pages/company_details.dart';
 import 'package:mobile/interfaces/pages/product_details.dart';
 import 'package:mobile/utils/color_ressources.dart';
-import 'package:mobile/utils/helper/assets_img.dart';
 import 'package:mobile/utils/helper/assets_svg.dart';
 import 'package:mobile/utils/helper/constant.dart';
 
