@@ -13,6 +13,7 @@ import { ProductHistory } from 'src/typeorm/product_history.entity';
 import { ProductHistoryService } from './history/product_history.service';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { WsCatch } from 'src/utils/catch';
+import { ProductFileService } from './file/product_file.service';
 
 @Injectable()
 export class ProductService {
@@ -25,8 +26,9 @@ export class ProductService {
     private productManagementService: ProductManagementService,
     private weekdayService: WeekdayService,
     private productHistoryService: ProductHistoryService,
+    private productFileService:ProductFileService
   ) {}
-  create({ by, body }: { by: UserDto; body: ProductDto }) {
+  create({ by, body, file }: { by: UserDto; body: ProductDto , file?:Express.Multer.File}) {
     const {categoryIds, ...rest}=body
     return this.repos
       .save(
@@ -74,7 +76,8 @@ export class ProductService {
                   throw new WsMessage(HttpExceptionCode.FAILLURE);
                 });
             } else {
-              throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+             return  this.productFileService.create({body:{productId:value.id, idActive:true, path:file.path}, file}).then(result=>{throw new WsMessage(HttpExceptionCode.SUCCEEDED)})
+              ;
             };
             throw new WsMessage(HttpExceptionCode.FAILLURE);
           });

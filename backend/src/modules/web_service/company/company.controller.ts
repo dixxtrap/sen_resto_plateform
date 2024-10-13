@@ -17,6 +17,10 @@ export class WsCompanyController {
   getByEstablishmentTypeAll() {
     return this.service.getByEstablishmentType();
   }
+  @Get('establishment_type/by_id/:id')
+  getByEstablishmentTypeById(@Param('id')id:number) {
+    return this.service.getbyEstablishmentId({id});
+  }
   @Get('details/:id')
   getById(@Param("id") id:number) {
     return this.service.getById({id});

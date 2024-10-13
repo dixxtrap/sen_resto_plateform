@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Put,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+
 import { ProductService } from './product.service';
 import { ProductDto } from 'src/typeorm/product.entity';
 import { Request } from 'express';
@@ -16,6 +7,13 @@ import { AuthenticatedGuard } from '../security/authenticated.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { HttpExceptionCode } from 'src/utils/http_exception_code';
 import { ProductManagementDayDto } from 'src/typeorm/product_management.entity';
+import { Controller } from '@nestjs/common/decorators/core/controller.decorator';
+import { Get, Post, Put } from '@nestjs/common/decorators/http/request-mapping.decorator';
+import { UseGuards } from '@nestjs/common/decorators/core/use-guards.decorator';
+import { UseInterceptors } from '@nestjs/common/decorators/core/use-interceptors.decorator';
+import { fileInterCeptorImg } from 'src/utils/multer.config';
+import { Body, Param, Req, UploadedFile } from '@nestjs/common/decorators/http/route-params.decorator';
+import { CurrentUser } from 'src/annotations/current_user';
 
 @Controller('product')
 @ApiTags('product')
@@ -23,9 +21,10 @@ export class ProductController {
   constructor(private service: ProductService) {}
   @Post('create')
   @UseGuards(AuthenticatedGuard)
-  create(@Body() body: ProductDto, @Req() req: Request) {
-    const by = req.user as UserDto;
-    return this.service.create({ body, by });
+  @UseInterceptors(fileInterCeptorImg)
+  create(@Body() body: ProductDto, @CurrentUser() by: UserDto, @UploadedFile() file: Express.Multer.File,) {
+
+    return this.service.create({ body, by, file });
   }
   @Get('refetch')
   refetch() {
