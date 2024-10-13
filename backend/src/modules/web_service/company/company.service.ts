@@ -73,6 +73,7 @@ export class WsCompanyService {
       .findOne({ where: { id: id, }, relations:{company:true} })
       .then((result) => {
         result.company=result.company.sort(()=>Math.random()*0.5)
+        return BaseResponse.success(result)
       })
       .catch(WsCatch);
   }
