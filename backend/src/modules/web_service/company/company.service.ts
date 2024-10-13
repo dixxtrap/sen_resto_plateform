@@ -69,9 +69,11 @@ export class WsCompanyService {
       });
   }
   getbyEstablishmentId({ id }: { id: number }) {
-    return this.repos
-      .find({ where: { establishmentTypeId: id } })
-      .then((result) => BaseResponse.success(result.sort(()=>Math.random()*0.5)))
+    return this.establishmentTypeRepos
+      .findOne({ where: { id: id, }, relations:{company:true} })
+      .then((result) => {
+        result.company=result.company.sort(()=>Math.random()*0.5)
+      })
       .catch(WsCatch);
   }
   search({ name }: { name: string }) {
