@@ -9,8 +9,11 @@ export const Company = () => {
     <>
     <div className="-mt-16 pb-16">
     <div className="h-[200px] content-center md:h-[400px] relative w-full  mb-12 md:mb-14 bg-amber-400">
-          <div className="w-full text-center">
-          <span className="text-3xl">  Bienvenu sur nos restaurant</span>
+          <div className="w-full text-center   ">
+            <div className="max-w-3xl mx-auto">
+            <span className="md:text-3xl ">  {companyApi.data?.data.description}</span>
+            </div>
+          
           </div>
           <div className="-bottom-10 absolute flex items-end gap-3 md:-bottom-12  left-2 md:left-8">
             <div className="md:size-24 size-20  bg-white rounded-full content-center ring p-4 ring-gray-500  ">
