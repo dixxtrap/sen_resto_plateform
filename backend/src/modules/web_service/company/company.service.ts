@@ -72,6 +72,9 @@ export class WsCompanyService {
     return this.establishmentTypeRepos
       .findOne({ where: { id: id, }, relations:{company:true} })
       .then((result) => {
+        console.log(
+          result
+        )
         result.company=result.company.sort(()=>Math.random()*0.5)
         return BaseResponse.success(result)
       })
