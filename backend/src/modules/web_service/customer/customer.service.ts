@@ -59,7 +59,7 @@ export class WsCustomerService {
               })
               .then((restult) => {
                 console.log('================opt sended==========', otp.code);
-                return new WsMessage(HttpExceptionCode.SUCCEEDED);
+                throw  new WsMessage(HttpExceptionCode.SUCCEEDED);
               })
 
           })

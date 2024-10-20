@@ -55,10 +55,10 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.from(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
-              primary: ColorResources.PRIMARY_APP_COLOR,
-              seedColor: Color.fromARGB(255, 226, 53, 111),
-              brightness: Brightness.dark,
-              background: Color.fromARGB(255, 0, 0, 0))),
+            primary: ColorResources.PRIMARY_APP_COLOR,
+            seedColor: Color.fromARGB(255, 226, 53, 111),
+            brightness: Brightness.dark,
+          )),
       // darkTheme: ThemeData.from(
       //     useMaterial3: true,
       //     colorScheme: ColorScheme.fromSeed(

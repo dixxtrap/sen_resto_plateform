@@ -63,7 +63,8 @@ class _AppCardWalletState extends State<AppCardWallet> {
           Align(
             alignment: Alignment.bottomLeft,
             child: ClipRRect(
-              borderRadius: BorderRadius.horizontal(left: Radius.circular(20)),
+              borderRadius:
+                  const BorderRadius.horizontal(left: Radius.circular(20)),
               child: SvgPicture.asset(
                 AssetSvg.shape2,
                 height: 200,

@@ -46,6 +46,8 @@ class BannerItem extends StatelessWidget {
                         vertical: kSpaceS / 3, horizontal: kSpaceS),
                     child: Text(
                       banner.title!,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                       style: AppStyle.poppinsBold(
                           color: ColorResources.WHITE_COLOR),
                     ),

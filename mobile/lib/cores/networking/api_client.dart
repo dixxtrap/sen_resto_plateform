@@ -52,7 +52,6 @@ class ApiClient implements RemoteSource {
   // static final baseUrl = Environment().config.baseUrl;
   // static final imageUrl = Environment().config.imageUrl;
   static final baseUrl = Environment().config.baseUrl;
-  static final imageUrl = Environment().config.imageUrl;
 
   final Dio _dio = Dio();
 
