@@ -16,8 +16,8 @@ export default defineConfig({
 server:{
   port:3001,
   proxy:{
-    // "/v1":"http://localhost:3000"
-    "/v1":"https://api.senrestos.com"
+    "/v1":"http://localhost:3000"
+    // "/v1":"https://api.senrestos.com"
   }
 },
 preview:{
