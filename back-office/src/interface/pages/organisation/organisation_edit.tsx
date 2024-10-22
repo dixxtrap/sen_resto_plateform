@@ -55,6 +55,7 @@ export const OrganisationEdit = () => {
         closingTime: old.data.closingTime,
         openingTime: old.data.openingTime,
         establishmentTypeId: `${old.data.establishmentTypeId}`,
+        location:old.data.location
       });
     }
   }, [isOldSuccess]);

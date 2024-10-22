@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { createApi } from "@reduxjs/toolkit/dist/query/react";
 import { ProductDto } from "../models/product";
 import { errorTrasform } from "./error_transformer";
 import { WsMessage } from "../models/error.dto";

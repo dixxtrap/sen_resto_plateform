@@ -34,16 +34,23 @@ export class CompanyRestaurantService {
           description: '',
           name: 'Sen Resto',
           location: new CoordonatesDto(),
-          address: "",
+          address: '',
           parentId: null,
           details: { byId: byId },
         }),
       );
   }
- async  create({ body, by , background, file}: { body: CompanyRestaurantBaseDto; by: UserDto, file:Express.Multer.File, background:Express.Multer.File }) {
-
-   
- 
+  async create({
+    body,
+    by,
+    background,
+    file,
+  }: {
+    body: CompanyRestaurantBaseDto;
+    by: UserDto;
+    file: Express.Multer.File;
+    background: Express.Multer.File;
+  }) {
     return this.repos
       .save(
         this.repos.create({
@@ -54,13 +61,18 @@ export class CompanyRestaurantService {
       )
       .then(async (result) => {
         // if (result) await this.reposClosure.update({childId:result.id,}, {parentId:result.partnerId});
-        if(file){
-          body.imagePath= await this.s3Service.createFileToS3AndDeleteLocal({file:file})
+        if (file) {
+          body.imagePath = await this.s3Service.createFileToS3AndDeleteLocal({
+            file: file,
+          });
         }
-        if(background){
-          body.backgroundPath= await this.s3Service.createFileToS3AndDeleteLocal({file:background})
+        if (background) {
+          body.backgroundPath =
+            await this.s3Service.createFileToS3AndDeleteLocal({
+              file: background,
+            });
         }
-       await  this.repos.update({id:result.id},body);
+        await this.repos.update({ id: result.id }, body);
         if (result) return HttpExceptionCode.SUCCEEDED;
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
@@ -74,15 +86,17 @@ export class CompanyRestaurantService {
     id,
     body,
     file,
-    background
+    background,
   }: {
     id: number;
     body: CompanyRestaurantBaseDto;
     file?: Express.Multer.File;
-    background
-    ?: Express.Multer.File;
+    background?: Express.Multer.File;
   }) {
-
+    console.log(
+      '===================================data========================',
+    );
+    console.log(body);
     return this.repos
       .findOne({ where: { id: Equal(id) } })
       .then(async (old) => {
@@ -92,16 +106,24 @@ export class CompanyRestaurantService {
             oldPath: old.imagePath,
           });
         }
-        if (old && background && body.backgroundPath && old.backgroundPath !== body.backgroundPath) {
-          body.backgroundPath = await this.s3Service.uploadFileToS3AndDeleteLocal({
-         file:   background,
-            oldPath: old.backgroundPath,
-          });
+        if (
+          old &&
+          background &&
+          body.backgroundPath &&
+          old.backgroundPath !== body.backgroundPath
+        ) {
+          body.backgroundPath =
+            await this.s3Service.uploadFileToS3AndDeleteLocal({
+              file: background,
+              oldPath: old.backgroundPath,
+            });
         }
-        return this.repos.update({ id: Equal(id) }, this.repos.create(body)).then((result) => {
-          if (result.affected! > 0) return HttpExceptionCode.SUCCEEDED;
-          else throw new WsMessage(HttpExceptionCode.FAILLURE);
-        });
+        return this.repos
+          .update({ id: Equal(id) }, this.repos.create(body))
+          .then((result) => {
+            if (result.affected! > 0) return HttpExceptionCode.SUCCEEDED;
+            else throw new WsMessage(HttpExceptionCode.FAILLURE);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -111,7 +133,7 @@ export class CompanyRestaurantService {
   }
   getAll() {
     return this.repos
-      .find({relations:{establishmentType:true}})
+      .find({ relations: { establishmentType: true } })
       .then((result) => {
         if (result)
           return Promise.all(
@@ -131,7 +153,10 @@ export class CompanyRestaurantService {
   }
   getById({ id }: { id: number }) {
     return this.repos
-      .findOne({ where: { id: Equal(id) } , relations:{city:{parent:{parent:{parent:true}}}}})
+      .findOne({
+        where: { id: Equal(id) },
+        relations: { city: { parent: { parent: { parent: true } } } },
+      })
       .then((result) => {
         if (result) return BaseResponse.success(result);
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
