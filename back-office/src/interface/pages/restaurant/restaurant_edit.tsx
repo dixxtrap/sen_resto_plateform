@@ -54,7 +54,7 @@ export const RestaurantEdit = () => {
       isActive:oldaData.isActive,
       closingTime:oldaData.closingTime,
       openingTime:oldaData.openingTime,
-    location:{...oldaData.location},
+    location:{...oldaData.location!},
     establishmentTypeId:oldaData.establishmentTypeId,
     })
   
