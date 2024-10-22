@@ -13,7 +13,9 @@ export const LaltitudeLongituide: FC<LaltitudeLongituide> = ({ form }) => {
         label={TextConstant.laltitude}
         {...form.getInputProps("location.latitude")}
         error={form.errors["location.latitude"]}
-        key={form.key("location.latitude")}
+        key={form.key("location.latitude")} onChange={(va) => {console.log(`======================${va}=================`)
+          form.setFieldValue("location.latitude", va)
+        }}
       />
 
       <NumberInput
@@ -22,6 +24,7 @@ export const LaltitudeLongituide: FC<LaltitudeLongituide> = ({ form }) => {
         {...form.getInputProps("location.longitude")}
         error={form.errors["location.longitude"]}
         key={form.key("location.longitude")}
+        onChange={(va)=>{form.setFieldValue("location.longitude", va)}}
       />
     </div>
   );
