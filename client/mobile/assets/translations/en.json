@@ -1,0 +1,9 @@
+{
+    "restaurant":"restaurant",
+    "Company":"Compangnies",
+    "Mobile":"Phone",
+    "MobileReason":"En entrant votre téléphone vous allew recevoir un code otp  a fin de confirmer votre identité",
+    "Next":"Next",
+    "Resend":"Resend",
+    "OtpReason":"Un code otp est envoye sur le numero {} a fin verifier votre identité"
+}

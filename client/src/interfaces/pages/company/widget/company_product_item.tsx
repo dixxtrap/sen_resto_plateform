@@ -81,7 +81,7 @@ const CompanyProduct = ({
               ?.filter((e) => e.product.length > 0)
               ?.map((cat, index) => (
                 <>
-                  <div className="mb-3  md:hidden md:mb-3">
+                  <div key={"category-"+cat.id} className="mb-3  md:hidden md:mb-3">
                     <Text className=" sticky top-[4.5rem]  z-50 text-lg mx-4  font-bold">
                       {cat.name}
                     </Text>
@@ -92,7 +92,7 @@ const CompanyProduct = ({
                       {cat.product?.map((p) => {
                         return (
                           <div
-                            key={cat.id}
+                            key={"product"+p.id}
                             id={`${cat.id}`}
                             ref={(el) => {
                               if (el) sectionRefs.current[index] = el;
@@ -133,7 +133,7 @@ const CompanyProduct = ({
                         if (el) sectionRefs.current[index] = el;
                       }}
                     >
-                      <ProductItem
+                      <ProductItem key={"produit-"+p.id}
                         orderProduct={order.data?.data
                           .find((e) => e.partnerId == p.parentId)
                           ?.products.find(

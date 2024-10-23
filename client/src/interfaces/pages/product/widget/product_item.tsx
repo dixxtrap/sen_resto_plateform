@@ -40,7 +40,7 @@ export const ProductItem = ({ product, orderProduct }: { product: ProductDto, or
       <Card
      
        
-     
+     key={"product-"+ product.id}
         className={clsx(
           "bg-table flex  p-1  md:p-3 border-b md:border-none group  sm:ring-1  ring-slate-300/60  rounded-none sm:rounded-md  border-gray-400/40 bg-[#f5f8fc58] h-full   duration-500  "
         )}
