@@ -101,10 +101,10 @@ export const TablePagination: FC<TablePaginationProps> = ({
       )}
       {isSuccess && (
         <ScrollArea
-          h={{ sm: 400, lg: "70vh" }}
+         
           w={"100%"}
           className={clsx(
-            " bg_table  ring-1 ring-slate-400/30  rounded-md",
+            " bg_table  ring-1 ring-slate-400/30 calc(100vh - 200px) rounded-md",
             classes.body
           )}
           onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
