@@ -57,8 +57,8 @@ export const BagIcon = ({
         <div className="flex flex-col gap-4 p-2">
           {bagState.isSuccess &&
             data?.data.map((e) => (
-              <Link to={`/company/details/${e.partnerId}`} onClick={close}>
-                <div className="grid grid-cols-12 gap-2">
+            
+                <div onClick={()=>{location.href=`/company/details/${e.partnerId}`}} className="grid grid-cols-12 gap-2">
                   <div className="col-span-4 md:col-span-3 h-20 ring-1 ring-slate-300 rounded-md content-center">
                     <Image
                       className="max-h-full w-auto mx-auto"
@@ -75,7 +75,7 @@ export const BagIcon = ({
                     <div>{ formatDate(e.details.createdAt!)}</div>
                   </div>
                 </div>
-              </Link>
+              
             ))}
         </div>
       </Modal>

@@ -10,10 +10,10 @@ export const BasePage = () => {
  useFavicon(logo)
  useMantineColorScheme().setColorScheme("light");
  const [scroll]=useWindowScroll()
- const size =useViewportSize()
+ 
 
   return (
-    <AppShell p={0} w={size.width}  classNames={{root:"",header:clsx((scroll.y<100)?"       border-transparent   bg-transparent ":"  bg-white    backdrop-blur-lg border-slate-400/40 border     ")}}  header={{ height: 60 , }}>
+    <AppShell p={0}   classNames={{root:"",header:clsx((scroll.y<100)?"       border-transparent   bg-transparent ":"  bg-white    backdrop-blur-lg border-slate-400/40 border     ")}}  header={{ height: 60 , }}>
      <AppShell.Header>
         {/* <Burger
           opened={opened}
@@ -24,7 +24,7 @@ export const BasePage = () => {
        
         <Header/>
       </AppShell.Header>
-      <AppShell.Main w={size.width}  className="h-[75vh] "> 
+      <AppShell.Main    > 
         <div className="relative h-full  flex flex-col ">
           <div className="">
           
