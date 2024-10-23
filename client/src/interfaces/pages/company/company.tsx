@@ -2,9 +2,14 @@ import { useParams } from "react-router-dom";
 import { baseApi } from "../../../cores/apis/api"
 import { HomeCompanyItem } from "../home/widget/home_company_item"
 import {Image, Text} from '@mantine/core'
+import { useEffect } from "react";
 export const Company = () => {
   const {id}=useParams();
-    const companyApi=baseApi.useGetEtsCompanyByIdQuery(id!);
+  const companyApi = baseApi.useGetEtsCompanyByIdQuery(id!);
+  useEffect(() => {
+    companyApi.refetch()
+  }, [id])
+  
   return (
     <>
     <div className="-mt-16 pb-16">
