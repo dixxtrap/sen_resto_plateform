@@ -2,7 +2,7 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "../components/header/header";
 import { AppShell, useMantineColorScheme } from "@mantine/core";
-import { useFavicon, useViewportSize, useWindowScroll } from "@mantine/hooks";
+import { useFavicon, useWindowScroll } from "@mantine/hooks";
 import logo from  '/assets/react.ico';
 import clsx from "clsx";
 import { UserDetailsMobile } from "../components/header/widget/user_detail_icon";
