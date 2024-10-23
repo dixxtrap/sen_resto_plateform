@@ -2,7 +2,7 @@ import ShoppingCartIconFill from "@heroicons/react/24/solid/ShoppingCartIcon";
 import ShoppingCartIcon from "@heroicons/react/24/outline/ShoppingCartIcon";
 import { useGetBagQuery } from "../../../../cores/apis/order.slice";
 
-import { Link, NavLink } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 import { Modal, Image, Indicator, UnstyledButton } from "@mantine/core";
 
 import { useDisclosure } from "@mantine/hooks";
