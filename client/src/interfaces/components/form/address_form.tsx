@@ -1,6 +1,12 @@
-import { Checkbox, Textarea } from "@mantine/core";
+import {
+  
+  Checkbox,
+  Textarea,
+  TextInput,
+
+} from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import {
   setKey,
@@ -22,46 +28,94 @@ export const AddressForm = ({
   isUpdatable?: boolean;
 }) => {
   setKey(import.meta.env.VITE_GOOGLE_KEY);
-  const getLocation=()=>{
-    navigator.geolocation.getCurrentPosition((position)=>{fromLatLng(position.coords.latitude, position.coords.longitude, "", "","", "APPROXIMATE").then(pred=>{
-      const address:any=(pred.results as []).find((e: any)=>e.geometry.location_type==="APPROXIMATE");
-form.setFieldValue("address", address.formatted_address);
-      console.log("=====================prediction====================",address.formatted_address)
-    })})
-  }
-  useEffect(() => {
-  getLocation()
-  }, [])
-  
+  const [useMyPosition, setUseMyPosition] = useState<boolean>(false);
+
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      fromLatLng(
+        position.coords.latitude,
+        position.coords.longitude,
+        "",
+        "",
+        "",
+        "APPROXIMATE"
+      ).then((pred) => {
+        const address: any = (pred.results as []).find(
+          (e: any) => e.geometry.location_type === "APPROXIMATE"
+        );
+        form.setValues({ address: address.formatted_address });
+        form.setFieldValue("location.latitude", position.coords.latitude);
+        form.setFieldValue("location.longitude", position.coords.longitude);
+        console.log(
+          "=====================prediction====================",
+          address.formatted_address
+        );
+      });
+    });
+  };
+
   const [update, setUpdate] = useState(false);
   return (
     <>
-     <div className="text-sm">address</div>
-     <GooglePlacesAutocomplete 
-        apiKey={import.meta.env.VITE_GOOGLE_KEY} 
-
-        selectProps={{defaultInputValue:form.getValues().address,
+      {/* <Checkbox  onChange={getLocation}></Checkbox> */}
+      <Checkbox
+        checked={useMyPosition}
+        variant="filled"
+        c={"secondary"} color="secondary" pb={4}
+        label="utiliser mon adresse actuelle"
+        classNames={{label:"text-slate-900"}}
+        onChange={(event) => {
+          setUseMyPosition(event.currentTarget.checked);
+          if (event.currentTarget.checked == true) getLocation();
+          else form.setFieldValue("address", "");
+        }}
+      />
+     { useMyPosition?<TextInput readOnly value={form.getValues().address}/>:<GooglePlacesAutocomplete
+        apiKey={import.meta.env.VITE_GOOGLE_KEY}
+        selectProps={{
+          // value:form.getValues().address,
+          // onInputChange: (newValue) => {
+          //   // setAddress( newValue!);
+          //   on
+          // },
+          // inputValue:address,
           onChange: (newValue, actionMeta) => {
-            form.setFieldValue("address",newValue!.label)
+            form.setFieldValue("address", newValue!.label);
+
             console.log(newValue), console.log(actionMeta);
-            fromPlaceId(newValue?.value.place_id, import.meta.env.VITE_GOOGLE_KEY)
+            fromPlaceId(
+              newValue?.value.place_id,
+              import.meta.env.VITE_GOOGLE_KEY
+            )
               .then(({ results }) => {
                 const { lat, lng } = results[0].geometry.location;
                 console.log(lat, lng);
 
-                form.setFieldValue("location.latitude",lat);
-                form.setFieldValue("location.longitude",lng);
+                form.setFieldValue("location.latitude", lat);
+                form.setFieldValue("location.longitude", lng);
               })
               .catch(console.error);
-          },classNames:{dropdownIndicator:({})=>'z-[2300] ', menuList:({})=>'z-[2300]  h-[150px] relative overflow-y-scroll'}
+          },
+          classNames: {
+            dropdownIndicator: ({}) => "z-[2300] ",
+            menuList: ({}) => "z-[2300]  h-[150px] relative overflow-y-scroll",
+          },
         }}
-        apiOptions={{ region: "sn" ,}}
+        apiOptions={{ region: "sn" }}
+      />}
+
+      <Textarea
+        className="h-max relative "
+        label={"Details de la Commande"}
+        h={140}
+        classNames={{
+          section: "h-full h-max scroll-y-none",
+          input: "h-max h-[120px]",
+        }}
+        {...form.getInputProps("description")}
+        resize={"vertical"}
       />
-      <Textarea className="h-max relative "
-        label={"Details de la Commande"} h={140} classNames={{section:'h-full h-max scroll-y-none', input:'h-max h-[120px]'}}
-        {...form.getInputProps("description")} resize={"vertical"}
-      />
-     
+
       {isUpdatable && (
         <Checkbox
           checked={update}
@@ -71,9 +125,6 @@ form.setFieldValue("address", address.formatted_address);
           onChange={(event) => setUpdate(event.currentTarget.checked)}
         />
       )}
-     
-     
-      
     </>
   );
 };

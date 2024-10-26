@@ -28,7 +28,7 @@ export const OrderList = () => {
 
   return (
     <>
-    <div className="hidden md:inline-block">
+    <div className="hidden md:inline-block w-full">
     <TablePagination
         {...state}
         isPaginated

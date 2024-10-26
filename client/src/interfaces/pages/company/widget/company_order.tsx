@@ -74,7 +74,7 @@ export const CompanyOrderWeb = ({ compnayId }: { compnayId: number }) => {
 export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
   console.log("=================companyId==============", compnayId);
   const orders = orderApi.useGetBagQuery();
-  const [order, setOrder] = useState<OrderDto>();
+  const [order, setOrder] = useState<OrderDto|undefined>();
   const [update, updateState] = orderApi.useUpdateMutation();
   const [confirm, confirmState] = orderApi.useConfirmMutation();
   const [current, { increment, decrement, set }] = useCounter(0, {
@@ -88,7 +88,6 @@ export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
       _onsubmit();
       increment();
     } else if (current === 3) {
-      console.log("=======================confirm================");
       confirm(order?.id!);
     } else increment();
   };
@@ -102,7 +101,7 @@ export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
   const form = useForm();
  
   useEffect(() => {
-    if (orders.isSuccess) {
+    if (orders.isSuccess&& order===undefined) {
       const o = orders.data.data.find((e) => e.partnerId === compnayId);
       setOrder(o);
       form.setValues({
@@ -112,7 +111,7 @@ export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
         
       });
     }
-  }, [orders]);
+  }, [orders.isSuccess]);
 
   return (
     <>
@@ -179,7 +178,7 @@ export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
                   {"Details de payments"}
                 </Accordion.Control>
                 <Accordion.Panel p={0}>
-                  <AddressForm form={form} />
+                  {current===2&&<AddressForm form={form} />}
                 </Accordion.Panel>
               </Accordion.Item>
               <Accordion.Item key={"3"} value={"3"}>

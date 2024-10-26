@@ -18,14 +18,15 @@ import { reductionPrice } from "../../../../utils/calcul";
 import { ProtectedAction } from "../../../components/login/login_form";
 import { useDisclosure } from "@mantine/hooks";
 import { OrderProduct } from "../../../../cores/models/order.dto";
+import  {  Fragment, } from "react";
 
 export const ProductItem = ({ product, orderProduct }: { product: ProductDto, orderProduct?:OrderProduct }) => {
   const [opened, { toggle, close }] = useDisclosure();
-  console.log(import.meta.env.CURRENCY);
+ 
   return (
-    <>
+    <Fragment key={"product-base-"+ product.id}>
       {opened && (
-        <Modal
+        <Modal key={"product-modal-"+ product.id}
           opened={opened}
         title={<span className="font-bold text-2xl">{product.name}</span>}
           onClose={() => toggle()}
@@ -107,6 +108,6 @@ export const ProductItem = ({ product, orderProduct }: { product: ProductDto, or
 
       
       </Card>
-    </>
+    </Fragment>
   );
 };

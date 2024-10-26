@@ -8,6 +8,7 @@ import {
   Select,
   Button,
   TextInput,
+  ScrollAreaAutosize,
 } from "@mantine/core";
 import classes from "./table.module.css";
 import { Link } from "react-router-dom";
@@ -57,7 +58,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
   const [scrolled, setScrolled] = useState(false);
 
   return (
-    <div className="flex flex-col app_table">
+    <div className="flex flex-col  app_table">
       <div className="pb-3 flex  justify-between  items-baseline">
         <Title className="leading-3" order={1}>
           {title}
@@ -101,7 +102,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
       )}
       {isSuccess && (
         <ScrollArea
-         
+         h={"calc(100vh - 200px)"}
           w={"100%"}
           className={clsx(
             " bg_table  ring-1 ring-slate-400/30 calc(100vh - 200px) rounded-md",
@@ -109,7 +110,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
           )}
           onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
         >
-          <Table miw={"100%"} className="table border-none">
+          <Table miw={"100%"}  className="table border-none">
             <Table.Thead
               className={cx(classes.header, " bg-primary-500  z-50 ", {
                 [classes.scrolled]: scrolled,
