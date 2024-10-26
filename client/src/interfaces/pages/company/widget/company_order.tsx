@@ -101,7 +101,7 @@ export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
   const form = useForm();
  
   useEffect(() => {
-    if (orders.isSuccess&& order===undefined) {
+    if (orders.isSuccess) {
       const o = orders.data.data.find((e) => e.partnerId === compnayId);
       setOrder(o);
       form.setValues({
