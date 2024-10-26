@@ -19,7 +19,7 @@ export const databaseProviders = [
         entities: 
             entities
         ,
-        synchronize: false,
+        synchronize: true,
       });
       return dataSource.initialize();
     },
