@@ -111,7 +111,7 @@ export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
         
       });
     }
-  }, [orders.isSuccess]);
+  }, [orders]);
 
   return (
     <>
