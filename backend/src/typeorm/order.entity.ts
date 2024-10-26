@@ -12,6 +12,7 @@ import { Deliver } from './deliver.entity';
 import { OrderProduct } from './order_product.entity';
 import { Customer } from './partner.entity';
 import { City } from './city.entity';
+import { Coordonates } from './coordonates.entity';
 export class AddOrderDto {
   productId: number;
   partnerId: number;
@@ -75,6 +76,8 @@ export class Order {
   address:string;
   @Column('double', {default:0})
   fees: number;
+  @Column(()=>Coordonates)
+  location:Coordonates
 }
 
 

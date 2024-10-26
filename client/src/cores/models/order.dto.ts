@@ -1,4 +1,5 @@
 import { CompanyDto } from "./company.dto"
+import { CoordonatesDto } from "./coordonates.dto";
 import { CreationDetailDto } from "./creation_details.dto"
 import { ProductDto } from "./product"
 
@@ -14,6 +15,7 @@ export interface OrderDto {
     address: string;
     status: string;
     details: CreationDetailDto;
+    location:CoordonatesDto;
     partner:CompanyDto;
     products: OrderProduct[];
   }

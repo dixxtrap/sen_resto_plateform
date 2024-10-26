@@ -99,9 +99,8 @@ export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
       body: data,
     });
   };
-  const form = useForm({
-    initialValues: {},
-  });
+  const form = useForm();
+ 
   useEffect(() => {
     if (orders.isSuccess) {
       const o = orders.data.data.find((e) => e.partnerId === compnayId);
@@ -109,7 +108,8 @@ export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
       form.setValues({
         description: o?.description,
         address: o?.address,
-        cityId: o?.cityId?.toString(),
+        location:{latitude:o?.location?.latitude??0,longitude:o?.location?.longitude??0, },
+        
       });
     }
   }, [orders]);

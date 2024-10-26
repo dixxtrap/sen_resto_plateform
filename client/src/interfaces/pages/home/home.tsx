@@ -7,7 +7,7 @@ import { Story } from './widget/story';
 import { AfterHeader } from '../../components/header/after-header';
 
 const Home = () => {
-  console.log("------------------------ coordonner -----------------",navigator.geolocation.getCurrentPosition((position)=>{console.log(position.coords)}));
+  console.log("------------------------ coordonner -----------------",);
   return (
     <div className="relative">
       <AfterHeader />

@@ -10,17 +10,17 @@ export const CompanyOrderRecap = ({order}:{order:OrderDto}) => {
       
 
       {order.products.map(p=>(<div className="grid grid-cols-12  ">
-        <div className="line-clamp-1 col-span-8 break-words">
+        <div className="line-clamp-1 text-xs col-span-7 break-words">
         {p.productHistory.product.name}
         </div>
-        <div className="col-span-4  text-right">
+        <div className="col-span-5  text-right">
       {p.quantity} X {reductionPrice({price:p.productHistory.price!, reduction:p.productHistory.reduction!})}
         </div>
       </div>
     ))}
     <Divider className="col-span-12 "/>
     <div className="grid grid-cols-12  ">
-        <div className="line-clamp-1 col-span-8 break-words">
+        <div className="line-clamp-1 text-sm col-span-8 break-words">
         Livraison
         </div>
         <div className="col-span-4  text-right">
@@ -29,7 +29,7 @@ export const CompanyOrderRecap = ({order}:{order:OrderDto}) => {
       </div>
     <Divider className="col-span-12 "/>
     <div className="grid grid-cols-12 ">
-     <div className="line-clamp-1 col-span-8 break-words">
+     <div className="line-clamp-1 text-sm col-span-8 break-words">
         TOTAL
         </div>
         <div className="col-span-4 text-right">
