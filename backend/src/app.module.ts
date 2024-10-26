@@ -33,6 +33,7 @@ import { EstablishmentTypeModule } from './modules/establishment_type/establishm
 import { IconModule } from './modules/icon/icon.module';
 import { ChatGateway } from './chat/chat.gateway';
 import { ChatModuleGateway } from './chat/chat.module.gateway';
+import { SeatingModule } from './modules/seating/seating.module';
 @Module({
   imports: [
     DatabaseModule,
@@ -67,7 +68,8 @@ import { ChatModuleGateway } from './chat/chat.module.gateway';
     CompanyCategoryModule,
     EstablishmentTypeModule,
     IconModule,
-    ChatModuleGateway
+    ChatModuleGateway,
+    SeatingModule
   ],
   controllers: [AppController],
   providers: [AppService],

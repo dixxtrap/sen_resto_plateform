@@ -52,11 +52,8 @@ export const PlateItemPoppup = ({
         />
 
       </div>
-      <div className="sm:col-span-8 mt-10 lg:col-span-7  ">
-        <h2 className="text-xl font-bold text-gray-900 sm:pr-12">
-          {product.name}
-        </h2>
-
+      <div className="sm:col-span-8  lg:col-span-7  ">
+        
         <section
           aria-labelledby="information-heading"
           className="  flex flex-col gap-3 pt-2 "
@@ -65,7 +62,7 @@ export const PlateItemPoppup = ({
                           Product information
                         </h3> */}
           <div className="flex justify-between font-semibold items-center">
-            <span>Prix</span>
+            <span>{product.name}</span>
             <div>
               {product.reduction! > 0 && <span className="line-through text-gray-600 mr-3">{priceFormated({ price: product.price! })}</span>}
               <span className="font-bold text-lg   text-red-500">

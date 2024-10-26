@@ -27,10 +27,10 @@ export const ProductItem = ({ product, orderProduct }: { product: ProductDto, or
       {opened && (
         <Modal
           opened={opened}
-        title={product.name}
+        title={<span className="font-bold text-2xl">{product.name}</span>}
           onClose={() => toggle()}
           size={"md"}
-         classNames={{close:"bg-slate-800 text-white rounded-full"}}
+         classNames={{close:"bg-slate-800 hover:bg-slate-950 text-white rounded-full"}}
         >
           {" "}
           <PlateItemPoppup orderProduct={orderProduct} open={opened} close={close} product={product} />
@@ -93,7 +93,7 @@ export const ProductItem = ({ product, orderProduct }: { product: ProductDto, or
               <ActionIcon
                 p={8}
                 color={"secondary"}
-               
+               onClick={toggle}
                 className="rounded-full size-6 "
               >
                 <div className="flex items-center">
