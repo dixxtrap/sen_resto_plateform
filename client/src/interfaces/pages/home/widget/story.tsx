@@ -20,7 +20,7 @@ export const Story = () => {
       <Modal
         fullScreen
         withCloseButton={false}
-        classNames={{ body: "p-0" }}
+        classNames={{ body: "p-0 z-[2001]" }}
         opened={opened}
         onClose={close}
       >
@@ -52,7 +52,7 @@ export const Story = () => {
             p={0}
             classNames={{ indicator: "bg-primary-500" }}
             plugins={[autoplay.current]}
-            className="h-[100vh]  overflow-hidden  bg-slate-600"
+            className="h-[100vh]  overflow-hidden  "
             // onMouseEnter={autoplay.current.stop}
             // onMouseLeave={autoplay.current.reset}
           >
