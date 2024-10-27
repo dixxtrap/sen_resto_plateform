@@ -61,11 +61,12 @@ export const OrderList = () => {
                   <span className={e.status}>{statusMessages[e.status]}</span>
                 </Table.Td>
                 <Table.Td className="">
+                 {e.status!==OrderStatus.OnBag&& <>
                 {e.status=== OrderStatus.Active&&<ChangeStatus id={e.id} status={OrderStatus.Cancelled} title={"preparation"} variant={"danger"} message={""} />}
 
                { e.status=== OrderStatus.Active&&<ChangeStatus id={e.id} status={OrderStatus.Preparing} title={"preparation"} variant={"success"} message={""} />}
                { e.status=== OrderStatus.Preparing&&<ChangeStatus id={e.id} status={OrderStatus.ReadyForDelivery} title={"Fin de preparation"} variant={"success"} message={""} />}
-              
+               </>}
               
                   <TableActionItemDetails
                     label="voir details"
