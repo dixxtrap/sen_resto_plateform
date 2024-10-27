@@ -6,12 +6,12 @@ export const  StoryItem=({story}:{story:Story,company:CompanyDto}) =>{
   return (
     <Paper  h={'100%'} style={{backgroundImage:`url(${story.imagePath})`}} className={classes.card+ " relative "}>
      
-  <div className="flex justify-between items-center w-full rounded-lg h-full bg-black/30 ">
-    <div className="grow "></div>
-    <center className="w-full  mx-auto">
-      <Avatar  radius={0} h={'auto'} w={"100%"} src={story.imagePath}/>
+  <div className="flex justify-between items-center content-center w-full  h-full bg-black/20 ">
+    
+    <center className="w-full h-auto md:h-full md:w-auto  m-auto">
+      <Avatar  radius={0} h={'100%'} w={"100%"} src={story.imagePath}/>
     </center>
-    <div className="grow"></div>
+   
     </div>
     {/* <Button variant="white" color="dark">
       Read article
