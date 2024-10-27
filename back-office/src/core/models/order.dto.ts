@@ -6,7 +6,8 @@ export type OrderDto={
     status: OrderStatus;
     customer?:Customer;
     partner?:Customer;
-    products?:OrderProductDto[]
+    products?:OrderProductDto[];
+    address?:string;
     
 }
 export enum OrderStatus {

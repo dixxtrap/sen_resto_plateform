@@ -32,7 +32,7 @@ export const OrderList = () => {
     <TablePagination
         {...state}
         isPaginated
-        th={["customer","Téléphone", "Produit", "status", ""]}
+        th={["customer","Téléphone", "Produit","Adresse", "status", ""]}
         trs={
           <>
             {order?.data.map((e) => (
@@ -55,9 +55,11 @@ export const OrderList = () => {
                   </div>
                 </Table.Td>
                 <Table.Td>
+                 {e.address}
+                </Table.Td>
+                <Table.Td>
                   <span className={e.status}>{statusMessages[e.status]}</span>
                 </Table.Td>
-
                 <Table.Td className="">
                 {e.status=== OrderStatus.Active&&<ChangeStatus id={e.id} status={OrderStatus.Cancelled} title={"preparation"} variant={"danger"} message={""} />}
 
