@@ -18,8 +18,8 @@ export const CompanyCategoryList = () => {
                             {e.name}
                         </TableTd>
                         <TableTd>
-                            <div className="w-[200px]">
-                                <Text truncate="end" className=" w-full   ">{e.description}</Text>
+                            <div className="max-w-[200px]">
+                                <Text truncate="end" className=" w-full   "> {e.description}</Text>
                             </div>
                         </TableTd>
                         <TableTd>

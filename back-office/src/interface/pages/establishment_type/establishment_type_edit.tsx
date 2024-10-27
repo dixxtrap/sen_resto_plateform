@@ -40,7 +40,7 @@ if(form.validate()){
             <CustomSwitchInput itemKey={'isActive'} form={form} />
         </CustomForm>
         </Modal>
-      <ActionIcon onClick={open}>
+      <ActionIcon variant='outline' onClick={open}>
         <PencilIcon/>
       </ActionIcon>
       </>
