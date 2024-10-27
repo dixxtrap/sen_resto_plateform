@@ -8,7 +8,7 @@ import {
   Select,
   Button,
   TextInput,
-  ScrollAreaAutosize,
+  
 } from "@mantine/core";
 import classes from "./table.module.css";
 import { Link } from "react-router-dom";
