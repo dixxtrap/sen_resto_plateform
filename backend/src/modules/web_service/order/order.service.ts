@@ -33,11 +33,32 @@ export class WsOrderService {
   update({ id, body }: { id: number; body: OrderDto }) {
     console.log(body);
     return this.repos
-      .update({ id: id }, { ...body, fees: 1500 })
-      .then((result) => {
+      .update({ id: id }, { ...body,  })
+      .then(async (result) => {
         console.log(result);
-        if (result.affected > 0)
+        if (result.affected > 0) {
+          if (body.location) {
+            const order = await this.repos.findOneOrFail({
+              where: { id },
+              relations: { partner: { children: true } },
+            });
+            const {minId, minDistance} = getNearestPoint({
+              froms: [
+                ...order.partner.children.map((e) => ({
+                  id: e.id,
+                  coordonate: e.location,
+                })),
+                {
+                  id: order.partner.id,
+                  coordonate: order.partner.location,
+                },
+              ],
+              to: body.location,
+            });
+            await this.repos.update({ id }, { restaurantId:minId,fees: Math.round(90*minDistance)+1000  });
+          }
           throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+        }
         throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
       .catch(WsCatch);
@@ -45,7 +66,7 @@ export class WsOrderService {
   getBag({ by }: { by: CustomerDto }) {
     return this.repos
       .find({
-        where: { customerId: by.id, status:OrderStatus.OnBag },
+        where: { customerId: by.id, status: OrderStatus.OnBag },
         relations: {
           partner: { parent: true },
           products: {
@@ -118,7 +139,7 @@ export class WsOrderService {
   };
 
   async confirmOrder({ id }: { id: number; by: CustomerDto }) {
-     console.log("==================update start================");
+    console.log('==================update start================');
     return this.repos
       .findOneOrFail({
         where: { id },
@@ -136,12 +157,18 @@ export class WsOrderService {
               coordonate: order.partner.location,
             },
           ],
-          to: order.city,
+          to: order.location,
         });
+        console.log(
+          '==================restaurant minId================',
+          restaurantId,
+        );
         return this.repos
-          .update({ id }, { status: OrderStatus.Active, restaurantId })
+          .update({ id }, { status: OrderStatus.Active, })
           .then(() => {
-            console.log("==================update successFully================")
+            console.log(
+              '==================update successFully================',
+            );
             this.chatGateway.server.emit('messageFrom', {
               id: order.partnerId,
             });

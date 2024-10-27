@@ -12,7 +12,8 @@ import { Deliver } from './deliver.entity';
 import { OrderProduct } from './order_product.entity';
 import { Customer } from './partner.entity';
 import { City } from './city.entity';
-import { Coordonates } from './coordonates.entity';
+import { Coordonates, CoordonatesDto } from './coordonates.entity';
+import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decorator';
 export class AddOrderDto {
   productId: number;
   partnerId: number;
@@ -82,5 +83,9 @@ export class Order {
 
 
 export class OrderDto{
-
+@ApiProperty()
+address?:string;
+@ApiProperty()
+description?:string;
+location?:CoordonatesDto;
 }
