@@ -1,4 +1,4 @@
-import { Checkbox, Textarea, TextInput } from "@mantine/core";
+import { Checkbox, TextInput } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
 import { useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
