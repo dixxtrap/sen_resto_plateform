@@ -10,6 +10,7 @@ import { AppTextarea } from "../../components/form/app_textarea";
 import { handlePreviewV2 } from "../../utils/handle_preview";
 import { ImgWithHandler } from "../../components/img_with_handler";
 import { TimeInput } from "@mantine/dates";
+import { PlaceAddressForm } from "../../components/form/google_place_address";
 
 export const OrganisationCreate = () => {
 
@@ -44,7 +45,7 @@ export const OrganisationCreate = () => {
        
         <AppTextarea form={form} />
 
-        
+        <PlaceAddressForm form={form}/>
         <AddressForm form={ form} />
         <LaltitudeLongituide form={form } />
         <div className="flex gap-4">

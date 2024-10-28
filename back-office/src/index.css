@@ -27,8 +27,8 @@ th {
   @apply py-2 pl-2
 }
 .bgInput, input, select {
-
-background-color: light-dark(#f3f4f6, rgb(107 114 128 / 0.1))!important;
+color:light-dark(#171b22ab ,#f3f4f6d2 )!important ;
+background-color: light-dark(#f3f4f6, #171b22)!important;
 }
 .bg_card {
 

@@ -19,6 +19,7 @@ import { establishmentTypeApi } from "../../../core/features/establishment_type.
 import { AppTextarea } from "../../components/form/app_textarea";
 import { ImgWithHandler } from "../../components/img_with_handler";
 import { TimeInput } from "@mantine/dates";
+import { PlaceAddressForm } from "../../components/form/google_place_address";
 
 export const OrganisationEdit = () => {
   const id = useParams().id!;
@@ -130,8 +131,9 @@ export const OrganisationEdit = () => {
           {old && isOldSuccess && (
             <>
               {" "}
+              <PlaceAddressForm form={form}/>
               <AddressForm form={form} isUpdatable />
-              <LaltitudeLongituide form={form} />
+              {/* <LaltitudeLongituide form={form} /> */}
             </>
           )}
           <div className="flex gap-4">
