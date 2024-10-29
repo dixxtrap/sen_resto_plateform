@@ -30,7 +30,7 @@ useEffect(() => {
     const r:Array<CompanyDto> =[];
     ets?.data.forEach((e)=>{
 e.company.forEach(c=>{r.push(c); if(c.children?.length!>=0){c.children?.forEach(ch=>{
-  r.push({...ch, name:c.name, shortname:c.shortname,parentId:c.id})
+  r.push({...ch, name:c.name, shortname:c.shortname,parentId:c.id, isCHild:true})
 })}})
     })
     setResto(r);
@@ -61,7 +61,7 @@ e.company.forEach(c=>{r.push(c); if(c.children?.length!>=0){c.children?.forEach(
             icon={img}
             label={e.name}
             onClick={() => {
-              nav(`/restaurant/details/${e.id}`);
+              nav(`/company/details/:id${e.isCHild==true?e.parentId:e.id}`);
             }}
           />
         ))}

@@ -34,6 +34,7 @@ export class CompanyDto {
   isOpen?: boolean;
   category?: CompanyCategoryDto[];
   children?: CompanyDto[];
+  isCHild?:boolean
 }
 // export const companySchema = yup.object({
 //   name: yup.string().max(30).required(),
