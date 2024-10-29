@@ -3,7 +3,6 @@ import { useLoadScript, MarkerF, GoogleMap } from "@react-google-maps/api";
 import { baseApi } from "../../../cores/apis/api";
 import { useEffect, useState } from "react";
 import { CompanyDto } from "../../../cores/models/company.dto";
-import img from "../../../../assets/svg/restoMap.svg"
 import { useNavigate } from "react-router-dom";
 const containerStyle = {
   width: "fit",
