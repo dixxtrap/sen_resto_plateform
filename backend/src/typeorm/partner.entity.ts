@@ -15,7 +15,11 @@ import { Coordonates, CoordonatesDto } from './coordonates.entity';
 import { Address, AddressDto } from './address.entity';
 import { CreationDetails } from './details.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { CompanyRestaurant, Restaurant } from './company_restaurant.entity';
+import {
+  CompanyRestaurant,
+  CompanyRestaurantBase,
+  Restaurant,
+} from './company_restaurant.entity';
 import { Contrat } from './contrat.entity';
 import { City } from './city.entity';
 import { ProductManagement } from './product_management.entity';
@@ -25,14 +29,14 @@ import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator'
 @Entity({})
 @Injectable()
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
-export  class Partner  {
+export class Partner {
   @PrimaryGeneratedColumn()
   id: number;
   @Column(() => Coordonates)
   location: Coordonates;
-  @Column({unique:true, nullable:true, default:null})
+  @Column({ unique: true, nullable: true, default: null })
   phone: string;
-  @Column({nullable:true, default: null,})
+  @Column({ nullable: true, default: null })
   address: string;
   @Column({ type: 'boolean', default: false })
   isActive: boolean;
@@ -48,12 +52,12 @@ export  class Partner  {
   city: City;
   @Column({ nullable: true, default: null })
   cityId: number;
-@OneToMany(()=>ProductManagement, (alias)=>alias.partner)
-productManagement:ProductManagement
-  @ManyToOne(() => Partner)
-  parent: Partner | Restaurant | CompanyRestaurant;
-  @OneToMany(() => Partner, (item) => item.parent)
-  children:  CompanyRestaurant[];
+  @OneToMany(() => ProductManagement, (alias) => alias.partner)
+  productManagement: ProductManagement;
+  @ManyToOne(() => CompanyRestaurantBase)
+  parent: CompanyRestaurantBase;
+  @OneToMany(() => CompanyRestaurantBase, (item) => item.parent)
+  children: CompanyRestaurantBase[];
   @Column({ nullable: true, default: null })
   parentId: number;
   @Column(() => CreationDetails)
@@ -65,11 +69,10 @@ productManagement:ProductManagement
   @BeforeInsert()
   @BeforeUpdate()
   changeBoolean() {
-    console.log(typeof(this.isActive))
-    this.isActive=`${this.isActive}`=='true'
-    this.isBloqued=`${this.isBloqued}`=='true'
+    console.log(typeof this.isActive);
+    this.isActive = `${this.isActive}` == 'true';
+    this.isBloqued = `${this.isBloqued}` == 'true';
   }
- 
 }
 
 export class PartnerDto {
@@ -101,7 +104,7 @@ export class PartnerDto {
 @ChildEntity()
 @Injectable()
 @Index(['phone', 'parentId'], { unique: true })
-export  class Customer extends Partner {
+export class Customer extends Partner {
   @Column({ nullable: true, default: null })
   firstname: string;
   @Column({ nullable: true, default: null })
@@ -112,5 +115,4 @@ export  class Customer extends Partner {
   externalId: string;
   @Column(() => Coordonates)
   coordonates: Coordonates;
- 
 }

@@ -1,0 +1,1 @@
+export const locationSelect={latitude:true, longitude:true};

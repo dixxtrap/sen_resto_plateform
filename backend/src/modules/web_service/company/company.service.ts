@@ -8,6 +8,7 @@ import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { IsNull, Repository, In, Like } from 'typeorm';
 import { join } from 'path';
 import { WsCatch } from 'src/utils/catch';
+import { selectDefault } from './company_select';
 
 @Injectable()
 export class WsCompanyService {
@@ -22,7 +23,7 @@ export class WsCompanyService {
       .find({
         where: {
           parent: { parentId: IsNull() },
-          type: In(['CompanyRestaurant', 'restaurant']),
+          type: In(['CompanyRestaurant', 'Restaurant']),
         },
         relations: { establishmentType: true },
       })
@@ -40,12 +41,25 @@ export class WsCompanyService {
       .then((ets) => {
         return Promise.all(
           ets.map(async (et, i) => {
-            ets[i].company = (await this.repos
-              .createQueryBuilder('partner')
-              .where('partner.establishmentTypeId=:id', { id: et.id })
-              .orderBy('RAND()')
-              .limit(12)
-              .getMany()) as CompanyRestaurantBase[];
+            ets[i].company = await this.repos.find({
+              where: { establishmentTypeId: et.id },
+              relations: { children: true },
+              select: { id: true,
+                backgroundPath: true,
+                imagePath: true,
+                // name: true,
+                address:true,
+                shortname: true,
+                isActive: true,
+                closingTime: true,
+                openingTime: true,
+                description: true,
+                location: { longitude:true, latitude:true},
+                
+                children: { id: true, location: { longitude:true, latitude:true} }
+                },
+            });
+            console.log(ets[i].company)
             return null;
           }),
         ).then(() => BaseResponse.success(ets));
@@ -70,14 +84,14 @@ export class WsCompanyService {
   }
   getbyEstablishmentId({ id }: { id: number }) {
     return this.establishmentTypeRepos
-      .findOne({ where: { id: id, }, relations:{company:true} })
+      .findOne({ where: { id: id }, relations: { company: true } })
       .then((result) => {
-       
-        return this.repos.find({where:{establishmentTypeId:id}}).then(shops=>{
-          result.company=shops.sort(()=>Math.random()*0.5)
-          return BaseResponse.success(result)
-        })
-        
+        return this.repos
+          .find({ where: { establishmentTypeId: id } })
+          .then((shops) => {
+            result.company = shops.sort(() => Math.random() * 0.5);
+            return BaseResponse.success(result);
+          });
       })
       .catch(WsCatch);
   }

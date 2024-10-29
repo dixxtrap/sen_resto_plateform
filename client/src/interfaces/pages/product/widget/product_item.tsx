@@ -94,7 +94,7 @@ export const ProductItem = ({ product, orderProduct }: { product: ProductDto, or
               <ActionIcon
                 p={8}
                 color={"secondary"}
-               onClick={toggle}
+             
                 className="rounded-full size-6 "
               >
                 <div className="flex items-center">
