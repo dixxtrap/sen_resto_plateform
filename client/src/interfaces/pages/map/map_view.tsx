@@ -1,5 +1,5 @@
 
-import { useLoadScript, MarkerF, GoogleMap } from "@react-google-maps/api";
+import { useLoadScript, MarkerF, GoogleMap, MarkerProps } from "@react-google-maps/api";
 import { baseApi } from "../../../cores/apis/api";
 import { useEffect, useState } from "react";
 import { CompanyDto } from "../../../cores/models/company.dto";
@@ -59,7 +59,9 @@ e.company.forEach(c=>{r.push(c); if(c.children?.length!>=0){c.children?.forEach(
               lng: Number(e.location?.longitude!) ?? 14,
             }}
             icon={img}
-            label={e.name}
+            label={{text:`${e.shortname!}`, className:"text-sm rounded-md text-white font-bold -mt-14 px-0.5  bg-secondary-500"}}
+            
+            title={e.name}
             onClick={() => {
               nav(`/company/details/${e.isCHild==true?e.parentId:e.id}`);
             }}
