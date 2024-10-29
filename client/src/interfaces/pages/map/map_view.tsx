@@ -61,7 +61,7 @@ e.company.forEach(c=>{r.push(c); if(c.children?.length!>=0){c.children?.forEach(
             icon={img}
             label={e.name}
             onClick={() => {
-              nav(`/company/details/:id${e.isCHild==true?e.parentId:e.id}`);
+              nav(`/company/details/${e.isCHild==true?e.parentId:e.id}`);
             }}
           />
         ))}
