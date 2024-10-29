@@ -47,7 +47,7 @@ e.company.forEach(c=>{r.push(c); if(c.children?.length!>=0){c.children?.forEach(
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={15.18}
+        zoom={14.18}
         clickableIcons={true}
       >
         {/* Marker */}
@@ -58,8 +58,8 @@ e.company.forEach(c=>{r.push(c); if(c.children?.length!>=0){c.children?.forEach(
               lat: Number(e.location?.latitude!) ?? 17,
               lng: Number(e.location?.longitude!) ?? 14,
             }}
-            icon={img}
-            label={{text:`${e.shortname!}`, className:"text-sm rounded-md text-white font-bold -mt-14 px-0.5  bg-secondary-500"}}
+           
+            label={{text:`${e.shortname!}`, className:"text-sm rounded-full text-white font-bold -mt-10 px-3  bg-secondary-500"}}
             
             title={e.name}
             onClick={() => {

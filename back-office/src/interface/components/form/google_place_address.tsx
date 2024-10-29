@@ -4,7 +4,7 @@ import { useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import {
   setKey,
-  // setDefaults,
+  setDefaults,
   // setLanguage,
   // setRegion,
   // fromAddress,
@@ -106,7 +106,7 @@ export const PlaceAddressForm = ({
                 "z-[10000] bgInput hover:bg-red-500 h-[150px] ring-1 relative overflow-y-scroll",
             },
           }}
-          apiOptions={{ region: "sn",  }}
+          apiOptions={{ region: "sn", apiKey:import.meta.env.VITE_GOOGLE_KEY }}
         />
       )}
 
