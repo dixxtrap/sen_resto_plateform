@@ -1,6 +1,5 @@
 import {
   ArrowLongRightIcon,
-  
   PhoneIcon,
   UserIcon,
 } from "@heroicons/react/24/solid";
@@ -11,69 +10,81 @@ import {
 import { BagIcon, BagIconMobile } from "./bag_icon";
 import { NotificationIcon } from "./notification_icon";
 import { LoginForm } from "../../login/login_form";
-import {
-
-  Button,
-  UnstyledButton,
-
-  Menu,
-  rem,
-} from "@mantine/core";
-import {  Navigate, NavLink } from "react-router-dom";
-import  HomeIconSolid from "@heroicons/react/24/solid/HomeIcon";
-import  HomeIcon from "@heroicons/react/24/outline/HomeIcon";
+import { Button, UnstyledButton, Menu, rem } from "@mantine/core";
+import { Navigate, NavLink } from "react-router-dom";
+import HomeIconSolid from "@heroicons/react/24/solid/HomeIcon";
+import HomeIcon from "@heroicons/react/24/outline/HomeIcon";
 
 import MapPinIcon from "@heroicons/react/24/outline/MapPinIcon";
+import MapPinIconFill from "@heroicons/react/24/solid/MapPinIcon";
 import UserCircleIcon from "@heroicons/react/24/outline/UserCircleIcon";
 import UserCircleIconFill from "@heroicons/react/24/solid/UserCircleIcon";
 import clsx from "clsx";
 
 export const UserDetailsMobile = () => {
-
   // const profile = useProfileQuery("");
   return (
     <div className="sticky bg-white z-[1000] bottom-0 md:hidden  pt-2 w-screen px-5 ring-1  ring-gray-800/10">
       <div className="flex justify-between">
         <NavLink to={""}>
-        {({isActive})=><div className={clsx("bottom_nav_item",)}>
-          <div className={clsx("bottom_nav_item_icon",{"active":isActive})}>
-          {isActive?<HomeIconSolid className="size-6"/>:<HomeIcon className="size-6"/>}
-
-          </div>
-          <span className="text-xs">Home</span>
-          </div>}
+          {({ isActive }) => (
+            <div className={clsx("bottom_nav_item")}>
+              <div
+                className={clsx("bottom_nav_item_icon", { active: isActive })}
+              >
+                {isActive ? (
+                  <HomeIconSolid className="size-6" />
+                ) : (
+                  <HomeIcon className="size-6" />
+                )}
+              </div>
+              <span className="text-xs">Home</span>
+            </div>
+          )}
         </NavLink>
-      
-          <div className="bottom_nav_item">
-            <div className={clsx("bottom_nav_item_icon",{"active":false})} >
-            <MapPinIcon className="size-6"/>
-
+        <NavLink to={"/map"}>
+          {({ isActive }) => (
+            <div className={clsx("bottom_nav_item")}>
+              <div
+                className={clsx("bottom_nav_item_icon", { active: isActive })}
+              >
+                {isActive ? (
+                  <MapPinIconFill className="size-6" />
+                ) : (
+                  <MapPinIcon className="size-6" />
+                )}
+              </div>
+              <span className="text-xs">Home</span>
             </div>
-          <span className="text-xs">Localisation</span>
-          </div>
-          
-         <BagIconMobile/>
-          
-          <NavLink to={"profile/#"}>
-         {({isActive})=>( <div  className="bottom_nav_item">
-          <div className={clsx("bottom_nav_item_icon",{"active":isActive})} >
-          {isActive?<UserCircleIconFill className="size-6"/>:<UserCircleIcon className="size-6"/>}
+          )}
+        </NavLink>
 
+        <BagIconMobile />
+
+        <NavLink to={"profile/#"}>
+          {({ isActive }) => (
+            <div className="bottom_nav_item">
+              <div
+                className={clsx("bottom_nav_item_icon", { active: isActive })}
+              >
+                {isActive ? (
+                  <UserCircleIconFill className="size-6" />
+                ) : (
+                  <UserCircleIcon className="size-6" />
+                )}
+              </div>
+
+              <span className="text-xs">Profile</span>
             </div>
-     
-          <span className="text-xs">Profile</span>
-          </div>)}
-          </NavLink>
-        
+          )}
+        </NavLink>
       </div>
-          
-      </div>
+    </div>
   );
 };
 export const UserDetailIcon = () => {
   const { data: profile, ...profileState } = useProfileQuery("");
   const [logout, logoutStatus] = securityApi.useLogoutMutation();
-
 
   return (
     <div className=" lg:ml-4 flex  relative  items-center">
@@ -139,19 +150,13 @@ export const UserDetailIcon = () => {
           </div>
         </>
       )}
-  
-      { (
-    profileState.isSuccess==false&&
-          <LoginForm
-            component={
-              <Button radius={30}>
-                Connexion
-              </Button>
-            }
-            close={close}
-            action={() => close()}
-          />
-       
+
+      {profileState.isSuccess == false && (
+        <LoginForm
+          component={<Button radius={30}>Connexion</Button>}
+          close={close}
+          action={() => close()}
+        />
       )}
     </div>
   );

@@ -7,6 +7,7 @@ import { orderRoute } from "./order.route";
 import { Company } from '../interfaces/pages/company/company';
 import { CompanyDetails } from "../interfaces/pages/company/company_details";
 import { UserProfile } from "../interfaces/components/header/widget/user_profile";
+import { MapView } from "../interfaces/pages/map/map_view";
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,11 @@ export const router = createBrowserRouter([
         path: "",
         index: true,
         element: <Home />,
+      },
+      {
+        path: "map",
+        index: true,
+        element: <MapView />,
       },
       {
         path: "profile",

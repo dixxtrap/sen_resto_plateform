@@ -4,10 +4,10 @@ import { AddressDto } from "./address.dto";
 import { ProductManagement } from "./product_management.dto";
 import { CompanyCategoryDto } from "./company_category.dto";
 export enum CompanyEnum {
-  RESTO = 'restaurant',
-  MASTER = 'master',
-  DELIVER = 'deliver',
-  COMPANY = 'CompanyRestaurant',
+  RESTO = "restaurant",
+  MASTER = "master",
+  DELIVER = "deliver",
+  COMPANY = "CompanyRestaurant",
 }
 export class CompanyDto {
   id?: number;
@@ -21,18 +21,19 @@ export class CompanyDto {
   city?: string;
   country?: string;
   phone?: string;
-  productManagement?:ProductManagement[]
-  location?:CoordonatesDto;
+  productManagement?: ProductManagement[];
+  location?: CoordonatesDto;
   isActive?: boolean;
   canPublish?: boolean;
   openingTime?: string;
   closingTime?: string;
   imagePath?: string;
-  parentId?:number;
-  parent?:CompanyDto;
-  details?:CreationDetailDto;
-  isOpen?:boolean;
-  category?:CompanyCategoryDto[]
+  parentId?: number;
+  parent?: CompanyDto;
+  details?: CreationDetailDto;
+  isOpen?: boolean;
+  category?: CompanyCategoryDto[];
+  children?: CompanyDto[];
 }
 // export const companySchema = yup.object({
 //   name: yup.string().max(30).required(),
