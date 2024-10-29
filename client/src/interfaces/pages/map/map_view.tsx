@@ -15,10 +15,10 @@ const center = {
   lng: -17.390524,
 };
 
-const destination = {
-  lat: 14.757556,
-  lng: -17.390524,
-};
+// const destination = {
+//   lat: 14.757556,
+//   lng: -17.390524,
+// };
 export const MapView = () => {
   const nav = useNavigate();
 
