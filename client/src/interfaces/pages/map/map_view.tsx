@@ -1,5 +1,5 @@
 
-import { useLoadScript, MarkerF, GoogleMap, MarkerProps } from "@react-google-maps/api";
+import { useLoadScript, MarkerF, GoogleMap } from "@react-google-maps/api";
 import { baseApi } from "../../../cores/apis/api";
 import { useEffect, useState } from "react";
 import { CompanyDto } from "../../../cores/models/company.dto";
