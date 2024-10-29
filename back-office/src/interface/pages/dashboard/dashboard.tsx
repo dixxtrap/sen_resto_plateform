@@ -39,7 +39,7 @@ export const GoogleMapComponent: React.FC = () => {
   const { data: restos } = useGetResttaurantQuery("");
   const { data: company } = useGetCompanyQuery("");
   const loadScript = useLoadScript({
-    googleMapsApiKey: "AIzaSyAkkKGmA3OpeRzTdTzy_o48pp1MlK2hiZ4",
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_KEY,
   });
   console.log(restos);
   console.log(key);
