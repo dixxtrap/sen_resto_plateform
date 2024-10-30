@@ -6,7 +6,7 @@ import { CompanyDto } from "../../../cores/models/company.dto";
 import { useNavigate } from "react-router-dom";
 const containerStyle = {
   width: "fit",
-  height: "100vh",
+  height: "calc(100vh - 180px)",
 };
 
 const center = {
@@ -46,7 +46,7 @@ e.company.forEach(c=>{r.push(c); if(c.children?.length!>=0){c.children?.forEach(
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={14.18}
+        zoom={11.18}
         clickableIcons={true}
       >
         {/* Marker */}
@@ -58,7 +58,7 @@ e.company.forEach(c=>{r.push(c); if(c.children?.length!>=0){c.children?.forEach(
               lng: Number(e.location?.longitude!) ?? 14,
             }}
            
-            label={{text:`${e.shortname!}`, className:"text-sm rounded-full text-white font-bold -mt-10 px-3  bg-secondary-500"}}
+            label={{text:`${e.shortname!}`, className:"text-sm rounded-full text-[white!important] font-semi-bold font-serif -mt-10 px-3  bg-secondary-500"}}
             
             title={e.name}
             onClick={() => {

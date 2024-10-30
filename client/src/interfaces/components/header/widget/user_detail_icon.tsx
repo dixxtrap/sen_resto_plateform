@@ -24,7 +24,7 @@ import clsx from "clsx";
 export const UserDetailsMobile = () => {
   // const profile = useProfileQuery("");
   return (
-    <div className="sticky bg-white z-[1000] bottom-0 md:hidden  pt-2 w-screen px-5 ring-1  ring-gray-800/10">
+    <div className=" bg-white  md:hidden  h-full w-full pt-1 px-5 r  ring-gray-800/10">
       <div className="flex justify-between">
         <NavLink to={""}>
           {({ isActive }) => (
