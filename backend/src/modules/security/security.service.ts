@@ -29,14 +29,13 @@ export class SecurityService {
     });
     if (!user)
       throw new HttpException({ ...HttpExceptionCode.LOGIN_FAILLURE }, 401);
-    // if (user.isActive == false) throw new UnauthorizedException();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const { passwordCrypt, password, ...rest } = user;
-  
+
     if (user.password === CryptoService.createHash(body.password)) {
       return { ...rest };
-    } 
- 
+    }
+
     // 💡inplement the logic
     throw new WsMessage(HttpExceptionCode.NOT_FOUND);
   }
@@ -44,7 +43,7 @@ export class SecurityService {
     const user = await this.userService.findByEmail({ email: body.username });
     if (!user)
       throw new HttpException({ ...HttpExceptionCode.LOGIN_FAILLURE }, 401);
-    // if (user.isActive == false) throw new UnauthorizedException();
+
     const {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       passwordCrypt,
@@ -70,7 +69,6 @@ export class SecurityService {
     token: string;
     password: string;
   }) {
-
     const decode = await this.jwtService.verify(token, {
       secret: process.env.CRYPTO_KEY,
     });
@@ -83,7 +81,7 @@ export class SecurityService {
     const user = await this.userService.findByEmail({ email: item });
     if (user) {
       const { passwordCrypt, password, ...rest } = user;
-  
+
       if (user) return this.jwtService.sign(rest);
     }
   }
@@ -107,19 +105,22 @@ export class SecurityService {
     }
     throw new NotFoundException();
   }
+  sign({ payload }: { payload: Object }) {
+    return this.jwtService.sign(payload, {
+      secret: process.env.CRYPTO_KEY,
+    });
+  }
   userLogin({ phone, code }: { phone: string; code: string }) {
     console.log(code);
     return this.customerService
       .getByPhone({ phone })
       .then((user) => {
-       
         if (user) {
           const { firstname, lastname, id, phone, location } = user;
           const token = this.jwtService.sign(
             { firstname, lastname, id, phone, location },
             {
-              secret: process.env.CRYPTO_KEY, 
-              
+              secret: process.env.CRYPTO_KEY,
             },
           );
           return { ...HttpExceptionCode.SUCCEEDED, token };

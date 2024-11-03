@@ -1,4 +1,5 @@
 import { City } from "./city.dto"
+import { CoordonatesDto } from "./coordonates.dto"
 import { CreationDetailDto } from "./creation_details.dto"
 
 export class DeliverDto{
@@ -6,7 +7,7 @@ export class DeliverDto{
         phone?: string
         address?: string
         email?: string
-        city?: City
+        location?:CoordonatesDto;
         isPhoneVeirified?: boolean
         firstname?: string
         lastname?: string

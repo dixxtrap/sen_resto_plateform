@@ -24,7 +24,7 @@ export class CompanyRestaurantService {
     private s3Service: S3Service,
   ) {}
   async itinitCompany(byId?: number) {
-    const exist = await this.repos.exist({ where: { shortname: 'Sen Resto' } });
+    const exist = await this.repos.exists({ where: { shortname: 'Sen Resto' } });
     if (!exist)
       return this.repos.save(
         this.repos.create({

@@ -32,10 +32,16 @@ import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator'
 export class Partner {
   @PrimaryGeneratedColumn()
   id: number;
+  @Column()
+  shortname: string;
   @Column(() => Coordonates)
   location: Coordonates;
-  @Column({ unique: true, nullable: true, default: null })
+  @Column({ nullable: true, default: null })
   phone: string;
+  @Column({name:"name", nullable: true, default: null })
+  displayname: string;
+  @Column({ nullable: true, default: null })
+  password: string;
   @Column({ nullable: true, default: null })
   address: string;
   @Column({ type: 'boolean', default: false })
@@ -56,7 +62,7 @@ export class Partner {
   productManagement: ProductManagement;
   @ManyToOne(() => CompanyRestaurantBase)
   parent: CompanyRestaurantBase;
-  @OneToMany(() => CompanyRestaurantBase, (item) => item.parent)
+  @OneToMany(() => CompanyRestaurantBase, (item) => item.parent )
   children: CompanyRestaurantBase[];
   @Column({ nullable: true, default: null })
   parentId: number;
@@ -69,7 +75,7 @@ export class Partner {
   @BeforeInsert()
   @BeforeUpdate()
   changeBoolean() {
-    console.log(typeof this.isActive);
+    if (this.password) console.log(typeof this.isActive);
     this.isActive = `${this.isActive}` == 'true';
     this.isBloqued = `${this.isBloqued}` == 'true';
   }
@@ -78,11 +84,13 @@ export class Partner {
 export class PartnerDto {
   id?: number;
   @ApiProperty()
-  location: CoordonatesDto;
+  location?: CoordonatesDto;
   @ApiProperty()
   address: string;
   @ApiProperty()
   phone: string;
+  @ApiProperty()
+  password: string;
   @ApiProperty()
   // @IsBoolean()
   isActive: boolean;
@@ -98,6 +106,7 @@ export class PartnerDto {
   type: string;
   @ApiProperty()
   partnerId: number;
+ 
   partner: { id: number };
 }
 
@@ -113,6 +122,5 @@ export class Customer extends Partner {
   isPhoneVeirified: boolean;
   @Column({ nullable: true, default: null })
   externalId: string;
-  @Column(() => Coordonates)
-  coordonates: Coordonates;
+  
 }

@@ -91,7 +91,6 @@ export const PlaceAddressForm = ({
                 .then(({ results }) => {
                   const { lat, lng } = results[0].geometry.location;
                   console.log(lat, lng);
-
                   form.setFieldValue("location.latitude", lat);
                   form.setFieldValue("location.longitude", lng);
                 })

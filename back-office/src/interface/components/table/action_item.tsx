@@ -1,12 +1,13 @@
 import { EyeIcon, PencilIcon } from '@heroicons/react/24/solid'
 import { ActionIcon, Tooltip } from '@mantine/core'
+import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-export const TableActionItemFonction = ({label, onClick}:{label:string,onClick?:()=>void}) => {
+export const TableActionItemFonction = ({label, onClick, icon}:{label:string,onClick?:()=>void, icon?:ReactNode}) => {
   return (
     <Tooltip  withArrow label={label} >
    
       <ActionIcon onClick={onClick} variant="light" className='text-secondary-500' color="secondary.5" size={"md"} p={3}>
-<PencilIcon/>
+{icon??<PencilIcon/>}
         </ActionIcon>
      
       </Tooltip>

@@ -5,22 +5,14 @@ import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { Otp, OtpVerificationDto } from 'src/typeorm/otp.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { WsCatch } from 'src/utils/catch';
+import { generateCode } from 'src/utils/generate_code';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository } from 'typeorm';
+
 @Injectable()
 export class OtpService {
   constructor(@Inject(EntityProviderEnum.OTP) private repos: Repository<Otp>) {}
-  generateCode(length: number): string {
-    const chars = '0123456789';
-    let otp = '';
-
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * chars.length);
-      otp += chars[randomIndex];
-    }
-
-    return otp;
-  }
+ 
   generateOtp({
     to,
     configId,
@@ -31,7 +23,7 @@ export class OtpService {
     channel: string;
   }) {
     return this.repos.save(
-      this.repos.create({ code: this.generateCode(4), to, configId, expiredAt:new Date( new Date().getTime()+1000*60*15) }),
+      this.repos.create({ code: generateCode(4), to, configId, expiredAt:new Date( new Date().getTime()+1000*60*15) }),
     );
   }
   getAll() {

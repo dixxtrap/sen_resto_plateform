@@ -1,4 +1,3 @@
-
 import { ChildEntity } from 'typeorm/decorator/entity/ChildEntity';
 import { Partner, PartnerDto } from './partner.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -10,31 +9,30 @@ import { CompanyCategory } from './company_category.entity';
 import { AfterLoad } from 'typeorm';
 @ChildEntity()
 export class CompanyRestaurantBase extends Partner {
-  @Column()
-  shortname: string;
+  
   @Column('text')
   description: string;
-  @OneToMany(()=>CompanyCategory, (alias)=>alias.partner)
-category:CompanyCategory[]
-  @Column()
+  @OneToMany(() => CompanyCategory, (alias) => alias.partner)
+  category: CompanyCategory[];
+  @Column({name:"name"})
   name: string;
-  
+
   @Column('time', { default: '23:00:00' })
   closingTime: string;
   @Column('time', { default: '08:00:00' })
   openingTime: string;
-  @ManyToOne(()=>EstablishmentType)
-  establishmentType:EstablishmentType
+  @ManyToOne(() => EstablishmentType)
+  establishmentType: EstablishmentType;
   @Column()
-  establishmentTypeId:number
-  isOpen:boolean
+  establishmentTypeId: number;
+  isOpen: boolean;
   @AfterLoad()
-  setOpen(){
-    const now=new Date();
-    
-    const time=`${now.toTimeString()}`
+  setOpen() {
+    const now = new Date();
 
-this.isOpen= this.closingTime>time&&this.openingTime<time;
+    const time = `${now.toTimeString()}`;
+
+    this.isOpen = this.closingTime > time && this.openingTime < time;
   }
 }
 

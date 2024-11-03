@@ -55,7 +55,7 @@ export class WsCustomerService {
             return this.mailService
               .sendMessage({
                 to: phone,
-                message: `your  otp code  is ${otp.code}`,
+                message: `Bonjour, voici votre code d’accès : ${otp.code}. Veuillez l'utiliser pour finaliser votre connexion ou validation sur la plateforme.`,
               })
               .then((restult) => {
                 console.log('================opt sended==========', otp.code);

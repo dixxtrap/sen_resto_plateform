@@ -56,8 +56,7 @@ export const Navigation: FC<{
         classNames={{
           body: "bg-black",
           header: "bg-black ring-primary-500 ring",
-          content:
-            "  box-content  ring-1 ring-primary-500/30",
+          content: "  box-content  ring-1 ring-primary-500/30",
         }}
         styles={{
           header: {
@@ -77,10 +76,10 @@ export const Navigation: FC<{
         onClose={close}
       >
         <ThemeProvider>
-          <div className="relative h-[100vh]  flex w-full max-w-xs flex-1">
-            <div className="flex grow flex-col gap-y-5 overflow-y-auto  bg-gradient-to-tr  from-slate-950 to-black  pb-2  ">
+          <div className="relative h-[100vh] overflow-hidden  flex w-full max-w-xs flex-1">
+            <div className="flex grow flex-col gap-y-5 overflow-hidden  bg-gradient-to-tr  from-slate-950 to-black  pb-2  ">
               <nav className="flex flex-1 flex-col px-2 ">
-                <ul  className="-mx-2 flex-1 space-y-1 px-2 pt-5">
+                <ul className="-mx-2 flex-1 space-y-1 px-2 pt-5">
                   {navigationData.map((item) => (
                     <ProtecterPage
                       key={`nav_item2_${item.name}`}
@@ -122,7 +121,12 @@ export const ShortNav = ({ open }: { open: () => void }) => {
   return (
     <div className="hidden dark lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:block lg:w-20 lg:overflow-y-auto   border-r darkDivider  bg-slate-900 dark:bg-black/90 lg:pb-4">
       <div className="flex h-16 shrink-0  p-2  items-center sticky top-0 justify-center">
-        <ActionIcon size={40} color="secondary.5" className=" bg-secondary-500 " onClick={open}>
+        <ActionIcon
+          size={40}
+          color="secondary.5"
+          className=" bg-secondary-500 "
+          onClick={open}
+        >
           <Bars3Icon className="h-6 w-6 " aria-hidden="true" />
         </ActionIcon>
         {/* <Logo className="bg-gradient-to-tr to-teal-500/20 backdrop-blur-sm from-indigo-500/20 h-14 w-14 p-1 rounded-md" /> */}

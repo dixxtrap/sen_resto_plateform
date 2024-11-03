@@ -1,18 +1,29 @@
-
 import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
 import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
 import { Deliver, DeliverDto } from 'src/typeorm/deliver.entity';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
+import { UserDto } from 'src/typeorm/user.entity';
+import { WsCatch } from 'src/utils/catch';
+import { CryptoService } from 'src/utils/crypto_service';
+import { generateCode } from 'src/utils/generate_code';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
 
 @Injectable()
 export class DeliverService {
-  constructor(  @Inject(EntityProviderEnum.DELIVER) private repos: Repository<Deliver>) {}
-  create({ body }: { body: DeliverDto }) {
+  constructor(
+    @Inject(EntityProviderEnum.DELIVER) private repos: Repository<Deliver>,
+  ) {}
+  create({ body, by }: { by: UserDto; body: DeliverDto }) {
     return this.repos
-      .save(this.repos.create(body))
+      .save(
+        this.repos.create({
+          ...body,
+          parentId: by.parentId,
+          password: CryptoService.createHash(generateCode(6)),
+        }),
+      )
       .then((result) => {
         if (result) return HttpExceptionCode.SUCCEEDED;
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
@@ -24,6 +35,7 @@ export class DeliverService {
       });
   }
   update({ id, body }: { id: number; body: DeliverDto }) {
+    console.log(`======================body======================`, body);
     return this.repos
       .update({ id: Equal(id) }, body)
       .then((result) => {
@@ -36,11 +48,25 @@ export class DeliverService {
         throw new WsMessage(HttpExceptionCode.FAILLURE);
       });
   }
-  getAll() {
+  reGenerateCode({ id, by }: { id: number; by: UserDto }) {
     return this.repos
-      .find()
+      .update(
+        { id, parent: [{ id: by.parentId }, { parentId: by.parentId }] },
+        { password: CryptoService.createHash(generateCode(6)) },
+      )
       .then((result) => {
-        if (result) return BaseResponse.successWithPagination(result, 10,20);
+        if (result.affected > 0)
+          throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+      })
+      .catch(WsCatch);
+  }
+  getAll({ by }: { by: UserDto }) {
+    return this.repos
+      .find({
+        where: { parent: [{ id: by.parentId }, { parentId: by.parentId }] },
+      })
+      .then((result) => {
+        if (result) return BaseResponse.successWithPagination(result, 10, 20);
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
       .catch((err) => {
@@ -53,7 +79,7 @@ export class DeliverService {
     return this.repos
       .findOne({ where: { id: Equal(id) } })
       .then((result) => {
-        if (result) return result;
+        if (result) return BaseResponse.success(result);
         else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
       .catch((err) => {

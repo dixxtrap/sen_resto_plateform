@@ -40,7 +40,7 @@ create({file:file!,body:value})
             <AppTextarea form={form}/>
         </CustomForm>
         </Modal>
-        <Button color={"secondary.4"} fw={400} onClick={open}>EstablishmentTypeCreate</Button>
+        <Button color={"secondary.4"} fw={400} onClick={open}>Ajouter</Button>
       </>
     )
   }

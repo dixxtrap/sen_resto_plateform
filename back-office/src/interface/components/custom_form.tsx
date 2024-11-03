@@ -51,7 +51,7 @@ confirmationMessage,
       message: 'Opération effectuée avec succé 🌟',
       icon:<CheckCircleIcon className=""/>,
       color:"primary",
-      classNames:{icon:""},
+      classNames:{icon:"", root:"z-auto"},
       className:"ring-1 ring-primary-300"
     })
  }, [isSuccess])

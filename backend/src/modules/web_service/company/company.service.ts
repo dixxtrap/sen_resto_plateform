@@ -43,23 +43,47 @@ export class WsCompanyService {
           ets.map(async (et, i) => {
             ets[i].company = await this.repos.find({
               where: { establishmentTypeId: et.id },
-              relations: { children: true },
-              select: { id: true,
+             
+              select: {
+                id: true,
                 backgroundPath: true,
                 imagePath: true,
                 // name: true,
-                address:true,
+                address: true,
                 shortname: true,
                 isActive: true,
                 closingTime: true,
                 openingTime: true,
                 description: true,
-                location: { longitude:true, latitude:true},
-                
-                children: { id: true, location: { longitude:true, latitude:true} }
-                },
+                location: { longitude: true, latitude: true },
+
+               
+              },
             });
-            console.log(ets[i].company)
+            ets.forEach((et, etI) => {
+              et.company.forEach(async (c, cI) => {
+                ets[etI].company[cI].children = await this.repos.find({
+                  where: { parentId: c.id },
+                  
+                  select: {
+                    id: true,
+                    backgroundPath: true,
+                    imagePath: true,
+                    // name: true,
+                    address: true,
+                    shortname: true,
+                    isActive: true,
+                    closingTime: true,
+                    openingTime: true,
+                    description: true,
+                    location: { longitude: true, latitude: true },
+
+                    
+                  },
+                });
+              });
+            });
+            console.log(ets[i].company);
             return null;
           }),
         ).then(() => BaseResponse.success(ets));
@@ -99,7 +123,7 @@ export class WsCompanyService {
     return this.repos
       .find({
         where: {
-          name: Like(name),
+          displayname: Like(name),
           parent: { parentId: IsNull() },
           type: In(['CompanyRestaurant', 'restaurant']),
         },
