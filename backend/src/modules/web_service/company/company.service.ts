@@ -43,26 +43,26 @@ export class WsCompanyService {
           ets.map(async (et, i) => {
             ets[i].company = await this.repos.find({
               where: { establishmentTypeId: et.id },
-             
-              select: {
-                id: true,
+              relations: { children: true },
+              select: { id: true,
                 backgroundPath: true,
                 imagePath: true,
                 // name: true,
-                address: true,
+                address:true,
                 shortname: true,
                 isActive: true,
                 closingTime: true,
                 openingTime: true,
                 description: true,
-                location: { longitude: true, latitude: true },
-
-               
-              },
+                location: { longitude:true, latitude:true},
+                
+                children: { id: true, location: { longitude:true, latitude:true} }
+                },
             });
-            ets.forEach((et, etI) => {
+           
+              
               et.company.forEach(async (c, cI) => {
-                ets[etI].company[cI].children = await this.repos.find({
+                ets[i].company[cI].children = await this.repos.find({
                   where: { parentId: c.id },
                   
                   select: {
@@ -82,8 +82,8 @@ export class WsCompanyService {
                   },
                 });
               });
-            });
-            console.log(ets[i].company);
+           
+            console.log(ets[i].company)
             return null;
           }),
         ).then(() => BaseResponse.success(ets));
