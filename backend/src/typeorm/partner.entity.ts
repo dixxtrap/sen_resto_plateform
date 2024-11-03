@@ -32,8 +32,7 @@ import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator'
 export class Partner {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
-  shortname: string;
+ 
   @Column(() => Coordonates)
   location: Coordonates;
   @Column({ nullable: true, default: null })
