@@ -9,6 +9,19 @@ export enum CompanyEnum {
   DELIVER = "deliver",
   COMPANY = "CompanyRestaurant",
 }
+export type ShopDto = {
+  id?: number;
+  name?: string;
+  address?: string;
+  phone?: string;
+  isActive?: boolean;
+  closingTime?: boolean;
+  openingTime?: boolean;
+  backgroundPath?: string;
+  description?: string;
+  details?: CreationDetailDto;
+  location?: CoordonatesDto;
+};
 export class CompanyDto {
   id?: number;
   name?: string;
@@ -33,7 +46,7 @@ export class CompanyDto {
   details?: CreationDetailDto;
   isOpen?: boolean;
   category?: CompanyCategoryDto[];
-  children?: CompanyDto[];
+  shop?: ShopDto[];
   isCHild?:boolean
 }
 // export const companySchema = yup.object({

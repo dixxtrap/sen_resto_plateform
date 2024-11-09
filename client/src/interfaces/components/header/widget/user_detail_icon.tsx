@@ -54,7 +54,7 @@ export const UserDetailsMobile = () => {
                   <MapPinIcon className="size-6" />
                 )}
               </div>
-              <span className="text-xs">Home</span>
+              <span className="text-xs">Localisation</span>
             </div>
           )}
         </NavLink>
