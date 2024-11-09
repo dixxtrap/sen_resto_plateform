@@ -27,7 +27,7 @@ export class Partner {
   partnerId:number
   @ManyToOne(() => Contrat)
   contrat: Contrat;
-  @Column({enum:PartnerEnum})
+  @Column("enum",{enum:PartnerEnum})
   type: PartnerEnum;
   
 }
