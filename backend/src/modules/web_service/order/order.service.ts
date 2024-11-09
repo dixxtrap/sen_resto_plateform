@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { WebSocketServer } from '@nestjs/websockets/decorators/gateway-server.decorator';
 import { ProductHistoryService } from 'src/modules/product/history/product_history.service';
-import { CustomerDto } from 'src/typeorm/customer.entity';
+import { CustomerDto } from 'src/typeorm/partner/customer.entity';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import {
   AddOrderDto,
@@ -40,11 +40,11 @@ export class WsOrderService {
           if (body.location) {
             const order = await this.repos.findOneOrFail({
               where: { id },
-              relations: { partner: { children: true } },
+              relations: { partner: { shop: true } },
             });
             const {minId, minDistance} = getNearestPoint({
               froms: [
-                ...order.partner.children.map((e) => ({
+                ...order.partner.shop.map((e) => ({
                   id: e.id,
                   coordonate: e.location,
                 })),
@@ -55,7 +55,7 @@ export class WsOrderService {
               ],
               to: body.location,
             });
-            await this.repos.update({ id }, { restaurantId:minId,fees: Math.round(90*minDistance)+1000  });
+            await this.repos.update({ id }, { shopId:minId,fees: Math.round(90*minDistance)+1000  });
           }
           throw new WsMessage(HttpExceptionCode.SUCCEEDED);
         }
@@ -68,9 +68,9 @@ export class WsOrderService {
       .find({
         where: { customerId: by.id, status: OrderStatus.OnBag },
         relations: {
-          partner: { parent: true },
+          partner: true,
           products: {
-            productHistory: { product: { file: true, category: true } },
+            productHistory: { product: { file: true } },
           },
         },
         select: orderBagSelect,
@@ -143,12 +143,12 @@ export class WsOrderService {
     return this.repos
       .findOneOrFail({
         where: { id },
-        relations: { partner: { children: true }, city: true },
+        relations: { partner: { shop: true }, city: true },
       })
       .then((order) => {
         const restaurantId = getNearestPoint({
           froms: [
-            ...order.partner.children.map((e) => ({
+            ...order.partner.shop.map((e) => ({
               id: e.id,
               coordonate: e.location,
             })),
@@ -173,7 +173,7 @@ export class WsOrderService {
               id: order.partnerId,
             });
             this.chatGateway.server.emit('messageFrom', {
-              id: order.restaurantId,
+              id: order.shopId,
             });
             throw new WsMessage(HttpExceptionCode.SUCCEEDED);
           });
@@ -194,7 +194,7 @@ export class WsOrderService {
         console.log(productHistory);
         return this.getOrderOrCreate({
           customerId: by.id,
-          partnerId: productHistory.data.product.parentId,
+          partnerId: productHistory.data.product.companyId,
         }).then((order) => {
           return (
             !(body.quantity === 0)
@@ -219,7 +219,7 @@ export class WsOrderService {
           ).then((result) => {
             try {
               this.chatGateway.server.emit('messageFrom', {
-                id: productHistory.data.product.parentId,
+                id: productHistory.data.product.companyId,
               });
             } catch (err) {
               console.log(err);

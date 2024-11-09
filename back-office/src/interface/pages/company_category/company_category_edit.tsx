@@ -7,7 +7,9 @@ import { ActionIcon, Modal, NumberInput, TextInput } from "@mantine/core";
 import { CustomForm } from "../../components/custom_form";
 import { AppTextarea } from "../../components/form/app_textarea";
 import { TextConstant } from "../../../core/data/textConstant";
-import { PencilIcon } from "@heroicons/react/24/outline";
+import {
+    IconPencil
+    } from "@tabler/icons-react";
 import { CustomSwitchInput } from "../../components/switch";
 
 export const CompanyCategoryEdit = ({cat}:{cat:CompanyCategoryDto}) => {
@@ -45,7 +47,7 @@ export const CompanyCategoryEdit = ({cat}:{cat:CompanyCategoryDto}) => {
         </CustomForm>
     </Modal>
     <ActionIcon color="secondary.4" fw={400} onClick={open}>
-       <PencilIcon/>
+       <IconPencil/>
     </ActionIcon>
 </>
   )

@@ -25,6 +25,7 @@ export class PermissionService implements OnModuleInit {
   }
   initPermission() {
     return this.module.getAll().then((value) => {
+      console.log(value)
       return Promise.all(
         value.data.map((e) => {
           return [

@@ -1,17 +1,21 @@
-
-import { CompanyEnum } from "./company_enu";
 import { CoordonatesDto } from "./coordonates.dto";
 import { CreationDetailDto } from "./creation_details.dto";
-import { City } from "./city.dto";
 import { EstablishmentTypeDto } from "./establishment_type.dto";
 import { CompanyCategoryDto } from "./company_category.dto";
-type AddressType={
-regionId?:number,
-municipalityId?:number,
-departementId?:number,
-cityId?:number,
-}
-export type CompanyDto  = Partial<AddressType>&{
+export type ShopDto = {
+  id?: number;
+  name?: string;
+  address?: string;
+  phone?: string;
+  isActive?: boolean;
+  closingTime?: boolean;
+  openingTime?: boolean;
+  backgroundPath?: string;
+  description?: string;
+  details?: CreationDetailDto;
+  location?: CoordonatesDto;
+};
+export type CompanyDto = {
   id?: number;
   name?: string;
   email?: string;
@@ -19,23 +23,22 @@ export type CompanyDto  = Partial<AddressType>&{
   shortname?: string;
   description?: string;
   establishmentTypeId?: string;
-  establishmentType?:EstablishmentTypeDto
+  establishmentType?: EstablishmentTypeDto;
   address?: string;
   phone?: string;
-  city?: City;
-  cityId?: number;
-  location?:CoordonatesDto;
+  shop?: companyShop;
+  location?: CoordonatesDto;
   isActive?: boolean;
-  category?:CompanyCategoryDto[]
+  category?: CompanyCategoryDto[];
   canPublish?: boolean;
   openingTime?: string;
   closingTime?: string;
-  isOpen?:boolean;
+  isOpen?: boolean;
   imagePath?: string;
   backgroundPath?: string;
-  parentId?:number;
-  details?:CreationDetailDto,
-} & { type?: CompanyEnum.RESTO; parent?: CompanyDto } & {
-  type?: CompanyEnum.MASTER;
-  children?: number | CompanyDto[];
+  details?: CreationDetailDto;
 };
+export class companyShop {
+  backgroundPath?: string;
+  name?: string;
+}

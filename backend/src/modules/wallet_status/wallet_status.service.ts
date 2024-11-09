@@ -30,7 +30,7 @@ export class WalletStatusService {
           if (body.type === WalletStatusEnum.credit) {
             console.log('-----------credit----------------');
             const result = await queryRunner.query(
-              ` INSERT INTO wallet_status (entityId, totalCredit, totalDebit, transactionId)  SELECT entityId , totalCredit+${body.amount}, totalDebit , ${body.transactionId}  FROM wallet_status  w where entityId=${body.entityId} ORDER BY id DESC LIMIT 1  `,
+              ` INSERT INTO wallet_status (partnerId, totalCredit, totalDebit, transactionId)  SELECT entityId , totalCredit+${body.amount}, totalDebit , ${body.transactionId}  FROM wallet_status  w where entityId=${body.entityId} ORDER BY id DESC LIMIT 1  `,
             );
 
             console.log('------------------------credit--------------------');
@@ -40,7 +40,7 @@ export class WalletStatusService {
             console.log('-----------credit----------------');
 
             const result = await queryRunner.query(
-              ` INSERT INTO wallet_status (entityId, totalCredit, totalDebit, transactionId) SELECT entityId , totalCredit , totalDebit + ${body.amount} , ${body.transactionId} FROM wallet_status w  where entityId=${body.entityId} ORDER BY id DESC LIMIT 1 `,
+              ` INSERT INTO wallet_status (partnerId, totalCredit, totalDebit, transactionId) SELECT entityId , totalCredit , totalDebit + ${body.amount} , ${body.transactionId} FROM wallet_status w  where entityId=${body.entityId} ORDER BY id DESC LIMIT 1 `,
             );
             console.log(result);
             insertId = result.insertId;
@@ -50,7 +50,7 @@ export class WalletStatusService {
 
             console.log(body.entityId);
             const result = await queryRunner.query(
-              ` INSERT INTO wallet_status (entityId, totalCredit, totalDebit)
+              ` INSERT INTO wallet_status (partnerId, totalCredit, totalDebit)
                   VALUES (${body.entityId}, 0, 0   ) `,
             );
 
@@ -103,13 +103,13 @@ export class WalletStatusService {
   }
 
   async getByEntityId(entityId: number) {
-    return await this.repos.findOne({ where: { entityId: entityId } });
+    return await this.repos.findOne({ where: { partnerId: entityId } });
   }
 
   async getOrCreateByEntityId(entityId: number) {
     return await this.repos
       .findOne({
-        where: { entityId: Equal(entityId) },
+        where: { partnerId: Equal(entityId) },
         order: { id: 'DESC' },
       })
       .then(async (value) => {
@@ -125,7 +125,7 @@ export class WalletStatusService {
           });
       });
   }
-  // async getByPartnerId(receiverId: number){
-  //   return this.repos.find({where: {entityId: receiverId}});
-  // }
+  async getByPartnerId(receiverId: number){
+    return this.repos.find({where: {partnerId: receiverId}});
+  }
 }

@@ -1,4 +1,3 @@
-import { XMarkIcon } from "@heroicons/react/20/solid";
 import { FC } from "react";
 import { navigationData } from "../../core/data/navigation.data";
 import { classNames, clsx } from "../utils/clsx";
@@ -8,9 +7,9 @@ import {
   useProfileQuery,
   // useSignoutMutation,
 } from "../../core/features/security.slice";
-import { ActionIcon, Drawer, Text } from "@mantine/core";
+import { ActionIcon, Drawer, Text, Tooltip } from "@mantine/core";
 import ThemeProvider from "../../core/providers/theme.provider";
-import Bars3Icon from "@heroicons/react/24/solid/Bars3Icon";
+import {  IconMenu2, IconX } from "@tabler/icons-react";
 export const Navigation: FC<{
   opened: boolean;
   close: () => void;
@@ -18,18 +17,14 @@ export const Navigation: FC<{
   const { data: user, isSuccess } = useProfileQuery("");
   const AppDrawerHeader = () => (
     <div className="flex  px-2 w-['100%']   h-[60px]    items-center justify-between">
-      {user?.parent && user.parent.imagePath && (
+      {user?.company && (
         <img
           alt=""
           className="h-8 md:h-10  bg-gradient-to-tr  backdrop-blur-lg  rounded-md"
-          src={`${user.parent.imagePath}`}
+          src={`${user.company.imagePath}`}
         />
       )}
-      <Text className="text-white grow">
-        {user?.parent?.parent?.id === 1 || user?.parent?.id === 1
-          ? user.parent?.name
-          : user?.parent?.parent?.name}
-      </Text>
+      <Text className="text-white grow">{user?.company?.shortname}</Text>
 
       <ActionIcon
         type="button"
@@ -38,7 +33,7 @@ export const Navigation: FC<{
         onClick={close}
       >
         <span className="sr-only">Close sidebar</span>
-        <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
+        <IconX className="h-6 w-6 text-white" aria-hidden="true" />
       </ActionIcon>
     </div>
   );
@@ -99,11 +94,17 @@ export const Navigation: FC<{
                             )
                           }
                         >
-                          <item.icon
-                            className="h-6 w-6  text-sm shrink-0"
-                            aria-hidden="true"
-                          />
-                          {item.name}
+                          {({ isActive }) => (
+                            <>
+                              {" "}
+                              <item.icon
+                                fill={isActive ? "white" : ""}
+                                className="h-6 w-6 text-white text-sm shrink-0"
+                                aria-hidden="true"
+                              />
+                              {item.name}
+                            </>
+                          )}
                         </NavLink>
                       </li>
                     </ProtecterPage>
@@ -127,7 +128,7 @@ export const ShortNav = ({ open }: { open: () => void }) => {
           className=" bg-secondary-500 "
           onClick={open}
         >
-          <Bars3Icon className="h-6 w-6 " aria-hidden="true" />
+          <IconMenu2 className="h-6 w-6 " aria-hidden="true" />
         </ActionIcon>
         {/* <Logo className="bg-gradient-to-tr to-teal-500/20 backdrop-blur-sm from-indigo-500/20 h-14 w-14 p-1 rounded-md" /> */}
       </div>
@@ -139,20 +140,36 @@ export const ShortNav = ({ open }: { open: () => void }) => {
               permissions={item.permissions}
             >
               <li key={item.name}>
+              <Tooltip withArrow label={item.name}>
                 <NavLink
                   to={item.href}
                   className={({ isActive }) =>
                     clsx(
                       isActive
-                        ? "bg-gradient-to-tr   dark:from-slate-800 ring-1 ring-secondary-400  from-slate-400/20 via-secondary-500/20  to-secondary-500/40 dark:text-secondary-400 text-secondary-400"
+                        ? "    ring-1 ring-primary-400  bg-primary-500     dark:text-secondary-400 text-secondary-400"
                         : "dark:text-white/90 text-black/70 hover:text-white hover:bg-secondary-600",
                       "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                     )
                   }
                 >
-                  <item.icon className="h-6 w-6 shrink-0" aria-hidden="true" />
-                  <span className="sr-only">{item.name}</span>
+                  {({ isActive }) => (
+                   
+                      <div>
+                        <item.icon
+                          className={clsx(
+                            "h-6 w-6  shrink-0",
+                            isActive ? " text-white" : ""
+                          )}
+                          aria-hidden="true"
+                        />
+
+                        <span className="sr-only">{item.name}</span>
+                      </div>
+                    
+                  )}
                 </NavLink>
+              </Tooltip>
+
               </li>
             </ProtecterPage>
           ))}

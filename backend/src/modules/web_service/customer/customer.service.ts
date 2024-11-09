@@ -5,10 +5,10 @@ import { EmailerService } from 'src/modules/mailer/mailer.service';
 import { OtpService } from 'src/modules/otp/otp.service';
 import { LoginDto } from 'src/modules/security/security.dto';
 import { SecurityService } from 'src/modules/security/security.service';
-import { Customer, CustomerDto } from 'src/typeorm/customer.entity';
+import { Customer, CustomerDto } from 'src/typeorm/partner/customer.entity';
 import { OtpChannel, OtpVerificationDto } from 'src/typeorm/otp.entity';
 import { BaseResponse } from 'src/typeorm/response_base';
-import { SetProfileDto } from 'src/typeorm/customer.entity';
+import { SetProfileDto } from 'src/typeorm/partner/customer.entity';
 import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository } from 'src/typeorm/repository';
@@ -85,7 +85,7 @@ export class WsCustomerService {
           const customer =
             (await this.repos.findOne({ where: { phone: body.to } })) ??
             (await this.repos.save(
-              this.repos.create({ phone: body.to, parentId: 1 }),
+              this.repos.create({ phone: body.to}),
             ));
           return this.securityService
             .userLogin({ phone: body.to, code: body.code })

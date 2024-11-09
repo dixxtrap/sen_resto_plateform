@@ -6,12 +6,12 @@ import { CardDto } from "../../../core/models/card.dto";
 import {Row, Workbook} from 'exceljs';
 import { Constant } from "../../../core/data/constante";
 import { Title } from "../../components/title";
-import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import {saveAs} from'file-saver';
 
 import { TablePagination } from "../../components/table/table";
 import { useNavigate } from "react-router-dom";
 import { useGetCardQuery } from "../../../core/features/card.slice";
+import { IconFile } from "@tabler/icons-react";
 export const CardCreate = () => {
   const nav=useNavigate();
   const {refetch}=useGetCardQuery('');
@@ -105,7 +105,7 @@ return card;
       </div>
       <label className="flex items-center justify-center  ring-1 rounded-sm ring-gray-400/30 bgInput">
         <input hidden type="file" onChange={handleFile} />
-        {!file && <DocumentTextIcon className="h-20 text-secondary-500" />}
+        {!file && <IconFile className="h-20 text-secondary-500" />}
         {file && cards && (
           <div className="flex flex-col pt-5  w-full">
            

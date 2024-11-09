@@ -1,12 +1,8 @@
 import { ReactNode, useState } from "react";
 
 import { handlePreview } from "../utils/handle_preview";
-import {
-  CameraIcon,
-  CheckCircleIcon,
-  LockClosedIcon,
-} from "@heroicons/react/20/solid";
 import { Button } from "@mantine/core";
+import { IconPhoto, IconX , IconCheck} from "@tabler/icons-react";
 
 export const ImgPreview = ({
   img,
@@ -87,7 +83,7 @@ export const ImgPreview = ({
           />
         ) : (
           icon ?? (
-            <CameraIcon className={className ?? " text-7xl text-rose-400"} />
+            <IconPhoto className={className ?? " text-7xl text-rose-400"} />
           )
         )}
       </label>
@@ -97,14 +93,14 @@ export const ImgPreview = ({
             type="submit"
             className="px-2 z-50 w-14 h-7 rounded-md bg-teal-100 flex text-xs items-center   justify-center"
           >
-            <CheckCircleIcon className="text-teal-800 h-6 w-6 m-auto  my-auto " />
+            <IconCheck className="text-teal-800 h-6 w-6 m-auto  my-auto " />
             <span>OK</span>
           </Button>
         )}
 
         {isDelectable && (
           <Button type="submit"  className="p-2 z-50 w-14 h-8  text-rose-500">
-            <LockClosedIcon />
+            <IconX />
           </Button>
         )}
       </div>

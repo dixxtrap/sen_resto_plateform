@@ -26,18 +26,11 @@ export const orderBagSelect: FindOptionsSelect<Order> = {
   },
   partner: {
     name: true,
-    type: true,
+    
     imagePath: true,
     shortname: true,
     backgroundPath: true,
-    parent: {
-      id: true,
-      name: true,
-      shortname: true,
-      type: true,
-      imagePath: true,
-      backgroundPath: true,
-    },
+    
   },
   products: {
     quantity: true,
@@ -52,7 +45,7 @@ export const orderBagSelect: FindOptionsSelect<Order> = {
         cookingTime: true,
         description: true,
         file: { path: true },
-        category: { id: true, name: true },
+       
       },
     },
   },

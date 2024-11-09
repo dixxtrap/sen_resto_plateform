@@ -11,3 +11,4 @@ export const generateCode = (length: number): string => {
   );
   return otp;
 };
+ 

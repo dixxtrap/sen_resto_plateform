@@ -1,7 +1,7 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { UserService } from './modules/user/user.service';
-import { CompanyRestaurantService } from './modules/partner/company_restaurant/company.service';
+import { CompanyService } from './modules/partner/company/company.service';
 import { RoleService } from './modules/role/role.service';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class AppService implements OnModuleInit {
   constructor(
     @Inject("DATA_SOURCE") private dataSource: DataSource,
     private user: UserService,
-    private company: CompanyRestaurantService,
+    private company: CompanyService,
     private role: RoleService,
   ) {}
   onModuleInit() {

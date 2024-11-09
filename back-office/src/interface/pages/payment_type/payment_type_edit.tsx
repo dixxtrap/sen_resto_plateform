@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CustomForm } from "../../components/custom_form";
 import {
   useGetPaymentTypeByIdQuery,
@@ -11,23 +11,18 @@ import {
 } from "../../../core/models/payment_type";
 import { CustomSwitch } from "../../components/switch";
 import { Title } from "../../components/title";
-import { handlePreview } from "../../utils/handle_preview";
-import { CameraIcon } from "@heroicons/react/20/solid";
+import {  handlePreviewV2 } from "../../utils/handle_preview";
 import { useForm } from "@mantine/form";
 import { NumberInput, TextInput } from "@mantine/core";
 import { TextConstant } from "../../../core/data/textConstant";
+import { ImgWithHandler } from "../../components/img_with_handler";
 
 export const PaymentTypeEdit = () => {
   const id = useParams().id!;
-  const [preview, setPreview] = useState<string>();
-  const [file, setFile] = useState<File>();
-  const [changed, setChanged] = useState<boolean>(false);
-  console.log(changed);
-  const handleImage = handlePreview({
-    previewImage: preview!,
-    setPreviewImage: setPreview,
-    setFile: setFile,
-    setChanged: setChanged,
+
+  const handleImage = handlePreviewV2({
+  
+    
   });
   const [update, { isLoading, isError, isSuccess, reset }] =
     useUpdatePaymentTypeMutation();
@@ -38,7 +33,7 @@ export const PaymentTypeEdit = () => {
   });
   const _onsubmit = form.onSubmit(async (body: PaymentType) => {
     console.log(body);
-    update({ id: id, paymentType: {...body}, file:file! });
+    update({ id: id, paymentType: {...body}, file:handleImage.file! });
   });
   useEffect(() => {
     if (old.data) {
@@ -50,10 +45,7 @@ export const PaymentTypeEdit = () => {
   return (
        <div>
       <Title title="Terminaison de Paiement" />
-      <label htmlFor="file">
-        <input type="file" hidden  id="file" name="file" onChange={(event)=>handleImage(event)}/>
-        {preview?<img title="payment type" src={preview} className="h-20"/>:old?.data?.data.imagePath?<img title="payment type" src={`${old?.data.data?.imagePath}`} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
-        </label>
+      <ImgWithHandler htmlFor="Couverture" key={'file'} {...handleImage}/>
         <CustomForm
 
       isError={isError}

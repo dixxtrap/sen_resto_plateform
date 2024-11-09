@@ -1,165 +1,156 @@
-
 import {
-  BanknotesIcon,
-  BuildingOffice2Icon,
-  BuildingStorefrontIcon,
-  CakeIcon,
-  BellIcon,
-  // CalendarIcon,
-  // ChartPieIcon,
-  ClipboardDocumentCheckIcon,
-  ClipboardIcon,
-  Cog6ToothIcon,
-  CreditCardIcon,
-  // DocumentDuplicateIcon,
-  // FolderIcon,
-  MapPinIcon,
-  HomeIcon,
-  IdentificationIcon,
-  ShieldCheckIcon,
-  TruckIcon,
-  UsersIcon,
-  WalletIcon,
-  HomeModernIcon,
-  GiftIcon,
-  MegaphoneIcon,
-  RocketLaunchIcon,
-  AdjustmentsHorizontalIcon
-} from "@heroicons/react/24/solid";
-import {
-  ForwardRefExoticComponent,
-
-  RefAttributes,
-  SVGProps,
-} from "react";
+  Icon,
+  IconAdjustments,
+  IconBuilding,
+  IconBuildingBridge2,
+  IconBuildingStore,
+  IconCards,
+  IconCheese,
+  IconCoins,
+  IconDeviceSpeaker,
+  IconFile3d,
+  IconGift,
+  IconHome,
+  IconMotorbike,
+  IconNotification,
+  IconPrison,
+  IconProps,
+  IconSettings2,
+  IconShoppingCart,
+  
+  IconUserCog,
+  IconUsersGroup,
+  IconWallet,
+} from "@tabler/icons-react";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
 import { PathRouter } from "../../interface/router/path.route";
 // import { PermissionDto } from "../../interface/role.dto";
 type INavigation = {
   name: string;
   href: string;
-  icon: ForwardRefExoticComponent<
-    Omit<SVGProps<SVGSVGElement>, "ref"> & {
-      title?: string | undefined;
-      titleId?: string | undefined;
-    } & RefAttributes<SVGSVGElement>
-  >;
+  icon: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>;
   permissions: { code: string; type: string }[];
 };
 export const navigationData: INavigation[] = [
   {
     name: "Dashboard",
     href: "/dashboard",
-    icon: HomeIcon,
+    icon: IconHome,
     permissions: [{ code: "*", type: "*" }],
   },
   {
     name: "Type d'Etablissement",
     href: "/establishment_type",
-    icon: AdjustmentsHorizontalIcon,
+    icon: IconAdjustments,
     permissions: [{ code: "establishment_type", type: "*" }],
   },
   {
     name: "Produit Categories",
     href: "/company_category",
-    icon: AdjustmentsHorizontalIcon,
+    icon: IconAdjustments,
     permissions: [{ code: "company_category", type: "*" }],
   },
   {
     name: "Organisation",
     href: "/organisation",
-    icon:HomeModernIcon ,
-    permissions: [{ code: "company_restaurant", type: "*" }],
+    icon: IconBuilding,
+    permissions: [{ code: "company", type: "*" }],
   },
   {
-    name: "Restaurants",
-    href: "/restaurant",
-    icon: BuildingStorefrontIcon,
-    permissions: [{ code: "restaurant", type: "*" }],
+    name: "Shop",
+    href: "/shop",
+    icon: IconBuildingStore,
+    permissions: [{ code: "company_shop", type: "*" }],
   },
   {
     name: "Coorporate",
     href: `${PathRouter.coorporate}`,
-    icon:BuildingOffice2Icon ,
-    permissions: [{ code: "company_restaurant", type: "*" }],
+    icon: IconBuildingBridge2,
+    permissions: [{ code: "coorporate", type: "*" }],
   },
   {
     name: "Clients",
     href: "/customer",
-    icon: IdentificationIcon,
+    icon: IconUsersGroup,
     permissions: [{ code: "customer", type: "*" }],
   },
   {
     name: "Publications",
     href: "/story",
-    icon: RocketLaunchIcon,
+    icon: IconDeviceSpeaker,
     permissions: [{ code: "story", type: "*" }],
   },
-   {
+  {
     name: "notification",
     href: "/notification",
-    icon: BellIcon,
+    icon: IconNotification,
     permissions: [{ code: "notification", type: "*" }],
   },
   {
     name: "Delivers",
     href: "/deliver",
-    icon: TruckIcon,
-    permissions: [{ code: "*", type: "*" }],
+    icon: IconMotorbike,
+    permissions: [{ code: "deliver", type: "*" }],
   },
   {
     name: "Utilisateurs",
     href: "/user",
-    icon: UsersIcon,
+    icon: IconUserCog,
     permissions: [{ code: "user", type: "*" }],
   },
- 
+
   {
     name: "Cartes",
     href: "/card",
-    icon: CreditCardIcon,
-    permissions: [{ code: "*", type: "*" }],
+    icon: IconCards,
+    permissions: [{ code: "card", type: "*" }],
   },
   {
     name: "Contrats",
     href: "/contrat",
-    icon: ClipboardIcon,
-    permissions: [{ code: "*", type: "*" }],
+    icon: IconFile3d,
+    permissions: [{ code: "contrat", type: "*" }],
   },
   {
     name: "Produits",
     href: "/product",
-    icon: CakeIcon,
+    icon: IconCheese,
     permissions: [{ code: "product", type: "*" }],
   },
   {
     name: "Commandes",
     href: "/order",
-    icon: ClipboardDocumentCheckIcon,
+    icon: IconShoppingCart,
     permissions: [{ code: "order", type: "*" }],
   },
   {
     name: "Methode de paiement",
     href: "/payment_type",
-    icon: WalletIcon,
+    icon: IconWallet,
     permissions: [{ code: "payment_type", type: "*" }],
   },
   {
     name: "Transaction",
-    href:`/${PathRouter.transaction}`,
-    icon: BanknotesIcon,
+    href: `/${PathRouter.transaction}`,
+    icon: IconCoins,
     permissions: [{ code: "transaction", type: "*" }],
   },
-  { name: "Cadeaux / Remise", href: `/${PathRouter.gift}`, icon: GiftIcon, permissions: [{ code: "*", type: "*" }] },
+  {
+    name: "Cadeaux / Remise",
+    href: `/${PathRouter.gift}`,
+    icon: IconGift,
+    permissions: [{ code: "*", type: "*" }],
+  },
   {
     name: "Publicité",
     href: `${PathRouter.banner}`,
-    icon:MegaphoneIcon ,
+    icon: IconDeviceSpeaker,
     permissions: [{ code: "create_banner", type: "*" }],
   },
   {
     name: "Adresse",
     href: `/${PathRouter.city}`,
-    icon:MapPinIcon ,
+    icon: IconHome,
     permissions: [{ code: "read_city", type: "*" }],
   },
   // { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
@@ -167,10 +158,15 @@ export const navigationData: INavigation[] = [
   {
     name: "Permission",
     href: "/permission",
-    icon: ShieldCheckIcon,
+    icon: IconPrison,
     permissions: [{ code: "permission", type: "*" }],
   },
-  { name: "Role", href: "/security", icon: Cog6ToothIcon, permissions: [{ code: "role", type: "*" }]  },
+  {
+    name: "Role",
+    href: "/security",
+    icon: IconSettings2,
+    permissions: [{ code: "role", type: "*" }],
+  },
 ];
 export const userNavigation = [
   { name: "Your profile", href: "#" },

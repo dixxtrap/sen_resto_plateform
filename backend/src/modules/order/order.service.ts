@@ -12,7 +12,7 @@ export class OrderService {
 
   getAll({by}:{by:UserDto}) {
     return this.repos
-      .find({where:[{partnerId:by.parentId}, {partner:{parentId:by.parentId}}], relations: { customer: true, deliver: true, partner: true , products:{productHistory:{product:true}}} })
+      .find({where:[{partnerId:by.companyId}, ], relations: { customer: true, deliver: true, partner: true , products:{productHistory:{product:true}}} })
       .then((val) => {
         return BaseResponse.success(val);
       });

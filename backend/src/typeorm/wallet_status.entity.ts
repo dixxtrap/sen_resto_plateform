@@ -10,16 +10,16 @@ import {
 } from 'typeorm';
 import { Transac } from './transaction.entity';
 import { Partner } from './partner.entity';
-import { CompanyRestaurantBase } from './company_restaurant.entity';
+import { Company } from './partner/company.entity';
 
 @Entity({ orderBy: { createdAt: 'DESC' } })
 export class WalletStatus {
   @PrimaryGeneratedColumn()
   id: number;
-  @OneToOne(() => Partner)
-  partner: Partner | CompanyRestaurantBase;
+  @ManyToOne(() => Partner)
+  partner: Partner;
   @Column({ default: null, nullable: true })
-  entityId: number;
+  partnerId: number;
   @Column({ default: 0, type: 'double' })
   totalCredit: number;
   @Column({ default: 0, type: 'double' })
@@ -27,13 +27,12 @@ export class WalletStatus {
   @ManyToOne(() => Transac)
   transaction: Transac;
   @Column({ nullable: true, default: null })
-  transactionId: number;
+  transactionId: number; 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
   @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
   balance: number;
-  loyaltyBalance: number;
   @AfterLoad()
   getBalance() {
     this.balance = this.totalCredit - this.totalDebit;

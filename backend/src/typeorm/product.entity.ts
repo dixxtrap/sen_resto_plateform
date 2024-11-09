@@ -7,13 +7,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CompanyRestaurantBase } from './company_restaurant.entity';
 import { CreationDetails, CreationDetailsDto } from './details.entity';
 import { ProductFile } from './product_file.entity';
-import { Category, CategoryDto } from './category.entity';
 import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decorator';
 import { ProductRaiting } from './product_rating.entity';
 import { CompanyCategory } from './company_category.entity';
+import { Company } from './partner/company.entity';
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
@@ -22,36 +21,28 @@ export class Product {
   name: string;
   @Column('text')
   description: string;
-  @ManyToOne(()=>CompanyCategory)
-companyCategory:CompanyCategory;
-@Column({nullable:true, default:null})
-companyCategoryId:number;
+  @ManyToOne(() => CompanyCategory)
+  companyCategory: CompanyCategory;
+  @Column({ nullable: true, default: null })
+  companyCategoryId: number;
   @Column('double')
   price: number;
   @Column('double')
   reduction: number;
   @Column()
   cookingTime: string;
-  @Column({nullable:true, default:true})
-  isActive:boolean
+  @Column({ nullable: true, default: true })
+  isActive: boolean;
   @OneToMany(() => ProductFile, (item) => item.product)
   file: ProductFile;
-  @ManyToMany(() => Category, {
-    cascade: true,
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinTable()
-  category: Category[];
-  @ManyToOne(() => CompanyRestaurantBase)
-  parent: CompanyRestaurantBase;
-
+  @ManyToOne(() => Company)
+  company: Company;
   @Column()
-  parentId: number;
-  @Column(() => CreationDetails) 
-  details: CreationDetails;  
+  companyId: number;
+  @Column(() => CreationDetails)
+  details: CreationDetails;
   @OneToMany(() => ProductRaiting, (item) => item.product)
-  rating: ProductRaiting[]; 
+  rating: ProductRaiting[];
 }
 
 export class ProductDto {
@@ -65,13 +56,13 @@ export class ProductDto {
   @ApiProperty()
   reduction: number;
   @ApiProperty()
-  companyCategoryId:number;
+  companyCategoryId: number;
   @ApiProperty()
   cookingTime: string;
   @ApiProperty()
   isActive: boolean;
   categoryIds: number[];
-  parentId: number;
+  companyId: number;
   @ApiProperty({ type: () => CreationDetailsDto })
   details: CreationDetailsDto;
 }

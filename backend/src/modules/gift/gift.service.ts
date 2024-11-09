@@ -21,8 +21,7 @@ export class GiftService {
     return this.repos
       .findOne({
         where: [
-          { partnerId: by.parentId },
-          { partner: { parentId: by.parentId } },
+          { companyId: by.companyId },
         ],
       })
       .then((old) => {
@@ -44,7 +43,7 @@ export class GiftService {
             });
         } else {
           return this.repos
-            .save(this.repos.create({ ...body ,partnerId: by.parentId, byId:by.id }))
+            .save(this.repos.create({ ...body ,companyId: by.companyId, byId:by.id }))
             .then((result) => {
               if (result) {
                 return this.reposHistory
@@ -63,7 +62,7 @@ export class GiftService {
 
   getAll({ by }: { by: UserDto }) {
     return this.repos
-      .findOne({ where: { partnerId: by.parentId }, relations:{history:{by:true}} })
+      .findOne({ where: { companyId: by.companyId }, relations:{history:{by:true}} })
       .then((result) => BaseResponse.success(result));
   }
 }

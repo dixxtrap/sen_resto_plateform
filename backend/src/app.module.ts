@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import config from './mysql.config';
 import { ModuleModule } from './modules/module/module.module';
-import { CategoryModule } from './modules/category/category.module';
 import { RoleModule } from './modules/role/role.module';
 import { PermissionModule } from './modules/permission/permssion.module';
 import { RolePermissionModule } from './modules/role_permsion/role_permission.module';
@@ -44,7 +43,7 @@ import { SeatingModule } from './modules/seating/seating.module';
       envFilePath: '.env',
     }),
     ModuleModule,
-    CategoryModule,
+  
     RoleModule,
     PermissionModule,
     RolePermissionModule,

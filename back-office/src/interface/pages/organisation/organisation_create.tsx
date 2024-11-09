@@ -3,16 +3,16 @@ import { CompanyDto } from "../../../core/models/company.dto";
 import { useCreateCompanyMutation } from "../../../core/features/company.slice";
 import { CustomForm } from "../../components/custom_form";
 import { TextConstant } from "../../../core/data/textConstant";
-import {  TextInput } from "@mantine/core";
-import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
-import { AddressForm } from "../../components/form/address_form";
+import {  Select, TextInput } from "@mantine/core";
 import { AppTextarea } from "../../components/form/app_textarea";
 import { handlePreviewV2 } from "../../utils/handle_preview";
 import { ImgWithHandler } from "../../components/img_with_handler";
 import { TimeInput } from "@mantine/dates";
 import { PlaceAddressForm } from "../../components/form/google_place_address";
+import { establishmentTypeApi } from "../../../core/features/establishment_type.slice";
 
 export const OrganisationCreate = () => {
+  const { data: establishmentType } = establishmentTypeApi.useGetAllQuery("");
 
   const [createCompany, { isError, isSuccess, isLoading, reset, error }] =
     useCreateCompanyMutation();
@@ -31,7 +31,7 @@ export const OrganisationCreate = () => {
      <div className="flex gap-3 md:gap-8"> <ImgWithHandler  htmlFor="Profile" {...front}/>
       <ImgWithHandler htmlFor="Couverture" {...back }/>
       </div>
-        <TextInput label={TextConstant.name} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+        <TextInput label={TextConstant.names} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
 
        
         <TextInput label={TextConstant.shortname} {...form.getInputProps("shortname")} error={form.errors["shortname"]} key={form.key("shortname")} />
@@ -41,13 +41,24 @@ export const OrganisationCreate = () => {
 
        
         <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
-
+        {establishmentType && (
+            <Select
+              {...form.getInputProps("establishmentTypeId")}
+              error={form.errors["establishmentTypeId"]}
+              key={form.key("establishmentTypeId")}
+              label={"Type"}
+              data={[{value:"",label:"Aucun"}].concat(establishmentType!.data!.map((e) => ({
+                label: e.name!,
+                value: `${e.id}`,
+              })))}
+            />
+          )}
        
         <AppTextarea form={form} />
 
         <PlaceAddressForm form={form}/>
-        <AddressForm form={ form} />
-        <LaltitudeLongituide form={form } />
+        {/* <AddressForm form={ form} /> */}
+        {/* <LaltitudeLongituide form={form } /> */}
         <div className="flex gap-4">
         <TimeInput label={"Ouverture"} {...form.getInputProps("openingTime")} error={form.errors["openingTime"]} key={form.key("openingTime")} />
       <TimeInput label={"Fermuture"} {...form.getInputProps("closingTime")} error={form.errors["closingTime"]} key={form.key("closingTime")} />

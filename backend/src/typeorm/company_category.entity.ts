@@ -1,6 +1,6 @@
 import { PrimaryGeneratedColumn } from "typeorm/decorator/columns/PrimaryGeneratedColumn";
 import { Entity } from "typeorm/decorator/entity/Entity";
-import { CompanyRestaurantBase } from "./company_restaurant.entity";
+import { Company } from "./partner/company.entity"
 import { ManyToOne } from "typeorm/decorator/relations/ManyToOne";
 import { Column } from "typeorm/decorator/columns/Column";
 import { ApiProperty } from "@nestjs/swagger/dist/decorators/api-property.decorator";
@@ -15,8 +15,8 @@ import { Product } from "./product.entity";
 export class CompanyCategory {
     @PrimaryGeneratedColumn()
     id: number;
-    @ManyToOne(() => CompanyRestaurantBase)
-    partner: CompanyRestaurantBase
+    @ManyToOne(() => Company)
+    partner: Company
     @Column()
     name: string;
 

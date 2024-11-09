@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
 import { JwtService } from '@nestjs/jwt/dist/jwt.service';
 import { LoginDto } from 'src/modules/security/security.dto';
 import { SecurityService } from 'src/modules/security/security.service';
-import { Deliver } from 'src/typeorm/deliver.entity';
+import { Deliver } from 'src/typeorm/partner/deliver.entity';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { WsCatch } from 'src/utils/catch';
 import { CryptoService } from 'src/utils/crypto_service';

@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
 import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
-import { Deliver, DeliverDto } from 'src/typeorm/deliver.entity';
+import { Deliver, DeliverDto } from 'src/typeorm/partner/deliver.entity';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { UserDto } from 'src/typeorm/user.entity';
@@ -20,7 +20,7 @@ export class DeliverService {
       .save(
         this.repos.create({
           ...body,
-          parentId: by.parentId,
+          companyId: by.companyId,
           password: CryptoService.createHash(generateCode(6)),
         }),
       )
@@ -51,7 +51,7 @@ export class DeliverService {
   reGenerateCode({ id, by }: { id: number; by: UserDto }) {
     return this.repos
       .update(
-        { id, parent: [{ id: by.parentId }, { parentId: by.parentId }] },
+        { id, company: [{ id: by.companyId }] },
         { password: CryptoService.createHash(generateCode(6)) },
       )
       .then((result) => {
@@ -63,7 +63,7 @@ export class DeliverService {
   getAll({ by }: { by: UserDto }) {
     return this.repos
       .find({
-        where: { parent: [{ id: by.parentId }, { parentId: by.parentId }] },
+        where: { company: [{ id: by.companyId }] },
       })
       .then((result) => {
         if (result) return BaseResponse.successWithPagination(result, 10, 20);

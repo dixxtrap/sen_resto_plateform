@@ -2,9 +2,7 @@ import { TablePagination } from "../../components/table/table";
 import { useGetPaymentTypeQuery } from "../../../core/features/payment_type.slice";
 import { Status } from "../../components/status";
 import { formatDate } from "../../utils/date_format";
-import { Img } from "../../components/image_updatable";
-import { BanknotesIcon } from "@heroicons/react/24/outline";
-import { Table } from "@mantine/core";
+import { Table, Image } from "@mantine/core";
 import { TableActionItemDetails, TableActionItemEdit } from "../../components/table/action_item";
 
 export const PaymentTypeList = () => {
@@ -30,11 +28,11 @@ export const PaymentTypeList = () => {
           <Table.Tr key={e.id} className="whitespace-nowrap  max-w-xs text-sm text-gray-500 py-2">
             <Table.Td>
               <div className="flex gap-x-3 items-center " >
-                <Img
-                  imgPath={e.imagePath}
+                <Image
+                  src={e.imagePath}
 
                   className="w-8 rounded-md"
-                  icon={<BanknotesIcon className="h-7 mx-1 text-primary-600 bg" />} hasImg={e.imagePath!==null}                />
+                 />
                 <span className="font-bold">{e.name}</span>
               </div>
             </Table.Td>

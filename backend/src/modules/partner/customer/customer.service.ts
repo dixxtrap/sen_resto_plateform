@@ -1,25 +1,31 @@
-
 import { Inject } from '@nestjs/common/decorators/core/inject.decorator';
 import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
-import { Customer, CustomerDto } from 'src/typeorm/customer.entity';
+import { Customer, CustomerDto } from 'src/typeorm/partner/customer.entity';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { WsCatch } from 'src/utils/catch';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Equal, Repository } from 'typeorm';
-
+import { PartnerService } from '../partner.service';
+import { PartnerEnum } from 'src/enum/partner.enum';
 
 @Injectable()
 export class CustomerService {
   constructor(
     @Inject(EntityProviderEnum.CUSTOMER) private repos: Repository<Customer>,
+    private partner: PartnerService,
   ) {}
   create({ body }: { body: CustomerDto }) {
     return this.repos
       .save(this.repos.create(body))
-      .then((result) => {
-        if (result) return HttpExceptionCode.SUCCEEDED;
-        else throw new WsMessage(HttpExceptionCode.FAILLURE);
+      .then(async (result) => {
+        if (result) {
+          const partner = await this.partner.create({
+            body: { partnerId: result.id, type: PartnerEnum.company },
+          });
+          await this.repos.update({ id: result.id }, { partnerId: partner.id });
+          throw new WsMessage(HttpExceptionCode.SUCCEEDED);
+        } else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
       .catch(WsCatch);
   }

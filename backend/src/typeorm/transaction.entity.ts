@@ -11,7 +11,6 @@ import {
 // import { TransactionTypeEnum } from 'src/enum/transaction_type.enum';
 import { CreationDetails } from './details.entity';
 import { Partner } from './partner.entity';
-import { CompanyRestaurantBase } from './company_restaurant.entity';
 
 @Entity('transaction', { orderBy: { updatedAt: 'DESC', createdAt: 'DESC' } })
 export class Transac {
@@ -20,9 +19,9 @@ export class Transac {
   @Column({ type: 'double', default: 0 })
   amount: number;
   @ManyToOne(() => Partner)
-  sender: Partner | CompanyRestaurantBase;
+  sender: Partner ;
   @ManyToOne(() => Partner)
-  receiver: Partner | CompanyRestaurantBase;
+  receiver: Partner ;
   @Column({ nullable: true, default: null })
   receiverId: number;
   @Column({ nullable: true, default: null })

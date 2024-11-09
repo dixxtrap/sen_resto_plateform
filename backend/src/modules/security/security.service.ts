@@ -116,9 +116,9 @@ export class SecurityService {
       .getByPhone({ phone })
       .then((user) => {
         if (user) {
-          const { firstname, lastname, id, phone, location } = user;
+          const { displayname, id, phone, location } = user;
           const token = this.jwtService.sign(
-            { firstname, lastname, id, phone, location },
+            { displayname, id, phone, location },
             {
               secret: process.env.CRYPTO_KEY,
             },

@@ -4,7 +4,6 @@ import { useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import {
   setKey,
-  setDefaults,
   // setLanguage,
   // setRegion,
   // fromAddress,
@@ -16,7 +15,7 @@ import {
 } from "react-geocode";
 export const PlaceAddressForm = ({
   form,
-  isUpdatable,
+
 }: {
   form: UseFormReturnType<any, any>;
   isUpdatable?: boolean;
@@ -48,7 +47,6 @@ export const PlaceAddressForm = ({
     });
   };
 
-  const [update, setUpdate] = useState(false);
   return (
     <>
       {/* <Checkbox  onChange={getLocation}></Checkbox> */}
@@ -109,15 +107,7 @@ export const PlaceAddressForm = ({
         />
       )}
 
-      {isUpdatable && (
-        <Checkbox
-          checked={update}
-          variant="filled"
-          iconColor="secondary.6"
-          label="Changer l address"
-          onChange={(event) => setUpdate(event.currentTarget.checked)}
-        />
-      )}
+    
     </>
   );
 };

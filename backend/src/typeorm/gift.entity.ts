@@ -6,18 +6,18 @@ import { Entity } from 'typeorm/decorator/entity/Entity';
 import { PrimaryGeneratedColumn } from 'typeorm/decorator/columns/PrimaryGeneratedColumn';
 import { Column } from 'typeorm/decorator/columns/Column';
 import { OneToMany } from 'typeorm/decorator/relations/OneToMany';
-import { Partner } from './partner.entity';
 import { ManyToOne } from 'typeorm/decorator/relations/ManyToOne';
+import { Company } from './partner/company.entity';
 @Entity()
 export class Gift extends CreationDetails{
     @PrimaryGeneratedColumn()
     id:number
     @Column("text")
     description:string
-    @ManyToOne((type) => Partner)
-    partner:Partner
+    @ManyToOne(() => Company)
+    company:Company
     @Column({nullable:true, default:null})
-    partnerId:number
+    companyId:number
     @Column()
     isActive:boolean
     @Column("double")

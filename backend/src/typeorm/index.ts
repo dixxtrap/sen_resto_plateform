@@ -1,29 +1,22 @@
-import {
-  CompanyRestaurantBase,
-  CompanyRestaurant,
-  Restaurant,
-  Coorporate,
-} from './company_restaurant.entity';
+
 import { ModuleEntity } from './module.entity';
 import { Partner } from './partner.entity';
 import { Icon } from './icon.entity';
-import { PaymentType } from './payment_type.entity';
 import { Permission } from './permission.entity';
 import { Role } from './role.entity';
 import { RolePermission } from './role_permissison.entity';
-import { Weekday } from './weekday.entity';
-import { Category } from './category.entity';
-import { Customer } from './customer.entity';
+
+import { Customer } from './partner/customer.entity';
 import { Contrat } from './contrat.entity';
 import {
   ProductManagement,
-  ProductManagementDay,
+  
 } from './product_management.entity';
 import { ProductFile } from './product_file.entity';
 import { Product } from './product.entity';
 import { ProductHistory } from './product_history.entity';
 import { Order } from './order.entity';
-import { Deliver } from './deliver.entity';
+import { Deliver } from './partner/deliver.entity';
 import { CardAllocation } from './card_allocation.entity';
 import { ProductCategory } from './product_category.entity';
 import { Card } from './card.entity';
@@ -49,40 +42,38 @@ import { EstablishmentType } from './establishment_type';
 import { CompanyCategory } from './company_category.entity';
 import { Message } from './message.entity';
 import { Seating } from './seating.entity';
+import { Company } from './partner/company.entity';
+import { CompanyShop } from './partner/company_shop.entity';
 
 // export
 export {
   Partner,
-  CompanyRestaurant,
-  CompanyRestaurantBase,
-  Weekday,
+
   User,
   Role,
   Permission,
 };
 export const entities = [
   Partner,
-  CompanyRestaurantBase,
-  CompanyRestaurant,
+
   CompanyCategory,
-  Coorporate,
+
   Deliver,
-  Weekday,
+  
   User,
   Role,
   RolePermission,
   Permission,
   ModuleEntity,
-  PaymentType,
-  Category,
-  Restaurant,
+  Company,
+  CompanyShop,
   Customer,
   Contrat,
   Product,
   ProductCategory,
   ProductFile,
   ProductManagement,
-  ProductManagementDay,
+  
   ProductHistory,
   Order,
   CardAllocation,
@@ -115,6 +106,11 @@ export const entityProviders = [
     inject: ['DATA_SOURCE'],
   },
   {
+    provide: EntityProviderEnum.PARTNER,
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(Partner),
+    inject: ['DATA_SOURCE'],
+  },
+  {
     provide: EntityProviderEnum.USER,
     useFactory: (dataSource: DataSource) => dataSource.getRepository(User),
     inject: ['DATA_SOURCE'],
@@ -133,15 +129,16 @@ export const entityProviders = [
   {
     provide: EntityProviderEnum.COMPANY,
     useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(CompanyRestaurant),
+      dataSource.getRepository(Company),
     inject: ['DATA_SOURCE'],
   },
   {
-    provide: EntityProviderEnum.RESTAURANT,
+    provide: EntityProviderEnum.COMPANY_SHOP,
     useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(Restaurant),
+      dataSource.getRepository(CompanyShop),
     inject: ['DATA_SOURCE'],
   },
+   
   {
     provide: EntityProviderEnum.COMPANY_CATEGORY,
     useFactory: (dataSource: DataSource) =>
@@ -153,12 +150,7 @@ export const entityProviders = [
     useFactory: (dataSource: DataSource) => dataSource.getRepository(Deliver),
     inject: ['DATA_SOURCE'],
   },
-  {
-    provide: EntityProviderEnum.COMPANY_RESTAURANT_BASE,
-    useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(CompanyRestaurantBase),
-    inject: ['DATA_SOURCE'],
-  },
+ 
   {
     provide: EntityProviderEnum.CUSTOMER,
     useFactory: (dataSource: DataSource) => dataSource.getRepository(Customer),
@@ -169,23 +161,19 @@ export const entityProviders = [
     useFactory: (dataSource: DataSource) => dataSource.getRepository(Gift),
     inject: ['DATA_SOURCE'],
   },
-  {
-    provide: EntityProviderEnum.COORPORATE,
-    useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(Coorporate),
-    inject: ['DATA_SOURCE'],
-  },
+  // {
+  //   provide: EntityProviderEnum.COORPORATE,
+  //   useFactory: (dataSource: DataSource) =>
+  //     dataSource.getRepository(Coorporate),
+  //   inject: ['DATA_SOURCE'],
+  // },
   {
     provide: EntityProviderEnum.GIFT_HISTORY,
     useFactory: (dataSource: DataSource) =>
       dataSource.getRepository(GiftHistory),
     inject: ['DATA_SOURCE'],
   },
-  {
-    provide: EntityProviderEnum.CATEGORY,
-    useFactory: (dataSource: DataSource) => dataSource.getRepository(Category),
-    inject: ['DATA_SOURCE'],
-  },
+  
   {
     provide: EntityProviderEnum.MODULE_ENTITY,
     useFactory: (dataSource: DataSource) =>
@@ -240,12 +228,12 @@ export const entityProviders = [
       dataSource.getRepository(WalletStatus),
     inject: ['DATA_SOURCE'],
   },
-  {
-    provide: EntityProviderEnum.PAYMENT_TYPE,
-    useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(PaymentType),
-    inject: ['DATA_SOURCE'],
-  },
+  // {
+  //   provide: EntityProviderEnum.PAYMENT_TYPE,
+  //   useFactory: (dataSource: DataSource) =>
+  //     dataSource.getRepository(PaymentType),
+  //   inject: ['DATA_SOURCE'],
+  // },
   {
     provide: EntityProviderEnum.PRODUCT,
     useFactory: (dataSource: DataSource) => dataSource.getRepository(Product),
@@ -263,12 +251,7 @@ export const entityProviders = [
       dataSource.getRepository(ProductManagement),
     inject: ['DATA_SOURCE'],
   },
-  {
-    provide: EntityProviderEnum.PRODUCT_MANAGEMENT_DAY,
-    useFactory: (dataSource: DataSource) =>
-      dataSource.getRepository(ProductManagementDay),
-    inject: ['DATA_SOURCE'],
-  },
+  
   {
     provide: EntityProviderEnum.PRODUCT_HISTORY,
     useFactory: (dataSource: DataSource) =>
@@ -281,11 +264,7 @@ export const entityProviders = [
       dataSource.getRepository(ProductCategory),
     inject: ['DATA_SOURCE'],
   },
-  {
-    provide: EntityProviderEnum.WEEKDAY,
-    useFactory: (dataSource: DataSource) => dataSource.getRepository(Weekday),
-    inject: ['DATA_SOURCE'],
-  },
+  
   {
     provide: EntityProviderEnum.ORDER,
     useFactory: (dataSource: DataSource) => dataSource.getRepository(Order),

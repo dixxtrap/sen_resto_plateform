@@ -76,7 +76,7 @@ export class UserService {
     return this.repos
       .find({
         relations: { role: true },
-        where: { parent: [{ parentId: by.parentId }, { id: by.parentId }] },
+        where: { companyId:by.companyId  },
       })
       .then((value) => BaseResponse.success(value))
       .catch(WsCatch);
@@ -85,7 +85,7 @@ export class UserService {
     return this.repos
       .findOne({
         where: { id },
-        relations: { role: true, parent: true },
+        relations: { role: true, company: true },
         select: {
           id: true,
           firstname: true,
@@ -93,7 +93,7 @@ export class UserService {
           email: true,
           phone: true,
 
-          parent: { name: true, shortname: true, imagePath: true, id: true },
+          company: { name: true, shortname: true, imagePath: true, id: true },
         },
       })
       .then((value) => BaseResponse.success(value))
@@ -146,7 +146,7 @@ export class UserService {
       .findOne({
         where: { id: Equal(by.id) },
         relations: {
-          parent: { parent: true },
+          company:  true ,
           role: { rolePermission: { permission: { module: true } } },
         },
       })

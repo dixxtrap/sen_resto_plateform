@@ -2,16 +2,11 @@ import React, { useEffect } from "react";
 import { useLoadScript, MarkerF, GoogleMap } from "@react-google-maps/api";
 import img from "../../../assets/svg/restoMap.svg";
 import plateMapImg from "../../../assets/svg/plateMap.svg";
-import { useGetResttaurantQuery } from "../../../core/features/restaurant.slice";
 import { useNavigate } from "react-router-dom";
-import {
-  BanknotesIcon,
-  CakeIcon,
-  QueueListIcon,
-  WalletIcon,
-} from "@heroicons/react/24/outline";
+
 import { useGetCompanyQuery } from "../../../core/features/company.slice";
 import { TransactionChart } from "./widget/transaction/transaction_chart";
+import { IconBrandProducthunt, IconCashBanknote, IconList, IconWallet } from "@tabler/icons-react";
 const containerStyle = {
   width: "fit",
   height: "100vh",
@@ -36,12 +31,11 @@ const destination = {
 export const GoogleMapComponent: React.FC = () => {
   const nav = useNavigate();
   const key = import.meta.env.VITE_MY_VARIABLE;
-  const { data: restos } = useGetResttaurantQuery("");
   const { data: company } = useGetCompanyQuery("");
   const loadScript = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_KEY,
   });
-  console.log(restos);
+  // console.log(restos);
   console.log(key);
   useEffect(() => {}, []);
 
@@ -54,26 +48,26 @@ export const GoogleMapComponent: React.FC = () => {
               number: 12005600,
               label: "Solde",
               color: "card0",
-              icon: <BanknotesIcon className="h-full" />,
+              icon: <IconCashBanknote className="h-full" />,
             },
 
             {
               number: 16870,
               label: "Commandes",
               color: "card1",
-              icon: <WalletIcon className="h-full" />,
+              icon: <IconWallet className="h-full" />,
             },
             {
               number: 150,
               label: "Produits",
               color: "card2",
-              icon: <CakeIcon className="h-full" />,
+              icon: <IconBrandProducthunt className="h-full" />,
             },
             {
               number: 2768,
               label: "Transactions",
               color: "card3",
-              icon: <QueueListIcon className="h-full" />,
+              icon: <IconList className="h-full" />,
             },
           ].map((item) => (
             <div
@@ -99,7 +93,7 @@ export const GoogleMapComponent: React.FC = () => {
               clickableIcons={true}
             >
               {/* Marker */}
-              {restos?.data.map((e) => (
+              {/* {restos?.data.map((e) => (
                 <MarkerF
                   key={`key_${e.name}`}
                   position={{
@@ -112,7 +106,7 @@ export const GoogleMapComponent: React.FC = () => {
                     nav(`/restaurant/details/${e.id}`);
                   }}
                 />
-              ))}
+              ))} */}
               {company?.data.map((e) => (
                 <MarkerF
                   key={`key_${e.name}`}

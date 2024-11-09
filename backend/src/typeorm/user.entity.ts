@@ -9,11 +9,12 @@ import {
 import { Coordonates, CoordonatesDto } from './coordonates.entity';
 import { Address, AddressDto } from './address.entity';
 import { CreationDetails, CreationDetailsDto } from './details.entity';
-import { CompanyRestaurantBase } from './company_restaurant.entity';
 import { CryptoService } from 'src/utils/crypto_service';
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from './role.entity';
 import { City } from './city.entity';
+import { Company } from './partner/company.entity';
+import { CompanyShop } from './partner/company_shop.entity';
 
 @Entity()
 export class User {
@@ -38,21 +39,21 @@ export class User {
   @Column('datetime', { nullable: true, default: null })
   birthday: Date;
   @Column(() => Coordonates)
-  coordonates: Coordonates;
- @Column({nullable:true, default:null})
- address:string
-  @ManyToOne(() => City)
-  city: City
+  location: Coordonates;
   @Column({ nullable: true, default: null })
-  cityId: number;
-  @ManyToOne(() => CompanyRestaurantBase)
-  parent: CompanyRestaurantBase;
+  address: string;
+  @ManyToOne(() => Company)
+  company: Company;
+  @ManyToOne(() => CompanyShop)
+  shop: CompanyShop;
   @Column({ default: true })
   isActive: boolean;
   @Column({ default: true })
   isBloqued: boolean;
   @Column({ nullable: true, default: null })
-  parentId: number;
+  companyId: number;
+  @Column({ nullable: true, default: null })
+  shopId: number;
   @Column(() => CreationDetails)
   details: CreationDetails;
   @Column({ default: true })
@@ -75,9 +76,10 @@ export class UserDto {
   @ApiProperty()
   email: string;
   @ApiProperty()
-  coordonates: CoordonatesDto;
-  parentId?: number;
-  cityId?: number;
+  location: CoordonatesDto;
+  companyId?: number;
+  shopId?: number;
+
   roleId?: number;
 
   @ApiProperty({ type: () => CreationDetailsDto })

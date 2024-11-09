@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { userApi } from "./auth.slice";
 import themeReducer from "../features/theme.slice";
-import { restaurantApi } from "./restaurant.slice";
+import {  shopApi } from "./shop.slice";
 import { companyApi } from "./company.slice";
 import { roleApi } from "./role.slice";
 import { productApi } from "./product.slice";
@@ -28,7 +28,7 @@ import { companyCategoryApi } from "./company_category.slice";
 const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
-    [restaurantApi.reducerPath]: restaurantApi.reducer,
+    [shopApi.reducerPath]: shopApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
     [roleApi.reducerPath]: roleApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
@@ -38,42 +38,40 @@ const store = configureStore({
     [customerApi.reducerPath]: customerApi.reducer,
     [paymentTypeApi.reducerPath]: paymentTypeApi.reducer,
     [restaurantUserApi.reducerPath]: restaurantUserApi.reducer,
-    [permissionApi.reducerPath ]: permissionApi.reducer,
-    [moduleApi.reducerPath ]: moduleApi.reducer,
-    [categoryApi.reducerPath ]: categoryApi.reducer,
-    [coorporateApi.reducerPath ]: coorporateApi.reducer,
-    [cardApi.reducerPath]:cardApi.reducer,
-    [cardAllocationApi.reducerPath]:cardAllocationApi.reducer,
+    [permissionApi.reducerPath]: permissionApi.reducer,
+    [moduleApi.reducerPath]: moduleApi.reducer,
+    [categoryApi.reducerPath]: categoryApi.reducer,
+    [coorporateApi.reducerPath]: coorporateApi.reducer,
+    [cardApi.reducerPath]: cardApi.reducer,
+    [cardAllocationApi.reducerPath]: cardAllocationApi.reducer,
     [bannerApi.reducerPath]: bannerApi.reducer,
     [cityApi.reducerPath]: cityApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
     [deliverApi.reducerPath]: deliverApi.reducer,
-    [giftApi.reducerPath]:giftApi.reducer,
-    [storyApi.reducerPath]:storyApi.reducer,
-    [establishmentTypeApi.reducerPath]:establishmentTypeApi.reducer,
-    [companyCategoryApi.reducerPath]:companyCategoryApi.reducer,
-   
+    [giftApi.reducerPath]: giftApi.reducer,
+    [storyApi.reducerPath]: storyApi.reducer,
+    [establishmentTypeApi.reducerPath]: establishmentTypeApi.reducer,
+    [companyCategoryApi.reducerPath]: companyCategoryApi.reducer,
 
-    
     theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       userApi.middleware,
-      restaurantApi.middleware,
+      shopApi.middleware,
       companyApi.middleware,
       coorporateApi.middleware,
       roleApi.middleware,
       securityApi.middleware,
       productApi.middleware,
       paymentTypeApi.middleware,
-customerApi.middleware,
+      customerApi.middleware,
       companyAgentApi.middleware,
       tagApi.middleware,
       restaurantUserApi.middleware,
-      permissionApi.middleware, 
-      moduleApi.middleware, 
-      categoryApi.middleware, 
+      permissionApi.middleware,
+      moduleApi.middleware,
+      categoryApi.middleware,
       cardApi.middleware,
       cardAllocationApi.middleware,
       bannerApi.middleware,
@@ -83,7 +81,7 @@ customerApi.middleware,
       giftApi.middleware,
       storyApi.middleware,
       establishmentTypeApi.middleware,
-      companyCategoryApi.middleware,
+      companyCategoryApi.middleware
     ),
 });
 

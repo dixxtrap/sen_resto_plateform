@@ -1,8 +1,7 @@
 import { useGetCompanyQuery } from '../../../core/features/company.slice'
 import { TablePagination } from '../../components/table/table';
-import { BuildingOfficeIcon } from '@heroicons/react/24/solid';
 import { Status } from '../../components/status';
-import { Table } from '@mantine/core';
+import { Table, Image } from '@mantine/core';
 import { TableActionItemDetails, TableActionItemEdit } from '../../components/table/action_item';
 // import { BuildingOfficeIcon } from '@heroicons/react/24/outline';
 export const OrganisationList = () => {
@@ -19,8 +18,8 @@ export const OrganisationList = () => {
                     <Table.Td className="">
                       <div className="flex items-center">
                         <div className=" pl-2 flex-shrink-0  w-16 mr-2 content-center flex  justify-start ">
-                          {/* <ImgPreview name={`Prile_${company?.profile?.id}`} className='bg-blue-400 h-11' img={company.profile!}/> */}
-                          {  company.imagePath? <img src={`${company.imagePath!}`} className='h-8 rounded-md' alt=""  />:<BuildingOfficeIcon className='h-8 p-1 text-primary-500 bg-secondary-500/20 ring-2  ring-secondary-500/80 rounded-md'/>}
+                         
+                        <Image src={`${company.imagePath!}`} className='h-8 rounded-md' alt=""  />
                         </div>
                        
                           <div className="font-medium ">{company.name}</div>
@@ -32,7 +31,7 @@ export const OrganisationList = () => {
 
                   
                   
-                    <Table.Td className="">{company.address}</Table.Td>
+                    <Table.Td className=""><span className=" max-w-52 text-ellipsis  overflow-clip">{company.address}</span></Table.Td>
                     <Table.Td className="">{company.phone}</Table.Td>
                     <Table.Td className="font-bold">{company.balance} Fcfa</Table.Td>
                     <Table.Td >{company.establishmentType?.name}</Table.Td>

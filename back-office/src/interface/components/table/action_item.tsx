@@ -1,38 +1,75 @@
-import { EyeIcon, PencilIcon } from '@heroicons/react/24/solid'
-import { ActionIcon, Tooltip } from '@mantine/core'
-import { ReactNode } from 'react'
-import { Link } from 'react-router-dom'
-export const TableActionItemFonction = ({label, onClick, icon}:{label:string,onClick?:()=>void, icon?:ReactNode}) => {
+import { ActionIcon, Tooltip } from "@mantine/core";
+import { IconEye, IconPencil } from "@tabler/icons-react";
+import { ReactNode } from "react";
+import { Link } from "react-router-dom";
+export const TableActionItemFonction = ({
+  label,
+  onClick,
+  icon,
+}: {
+  label: string;
+  onClick?: () => void;
+  icon?: ReactNode;
+}) => {
   return (
-    <Tooltip  withArrow label={label} >
-   
-      <ActionIcon onClick={onClick} variant="light" className='text-secondary-500' color="secondary.5" size={"md"} p={3}>
-{icon??<PencilIcon/>}
-        </ActionIcon>
-     
-      </Tooltip>
-  )
-}
-export const TableActionItemEdit = ({label, path}:{label:string,path:string}) => {
+    <Tooltip withArrow label={label}>
+      <ActionIcon
+        onClick={onClick}
+        variant="light"
+        className="text-secondary-500"
+        color="secondary.5"
+        size={"md"}
+        p={3}
+      >
+        {icon ?? <IconPencil />}
+      </ActionIcon>
+    </Tooltip>
+  );
+};
+export const TableActionItemEdit = ({
+  label,
+  path,
+}: {
+  label: string;
+  path: string;
+}) => {
   return (
-    <Tooltip  withArrow label={label} >
-    <Link to={path} >
-      <ActionIcon variant="light" className='text-secondary-500' color="secondary.5" size={"md"} p={3}>
-<PencilIcon/>
+    <Tooltip withArrow label={label}>
+      <Link to={path}>
+        <ActionIcon
+          variant="light"
+          className="text-secondary-500"
+          color="secondary.5"
+          size={"md"}
+          p={3}
+        >
+          <IconPencil />
         </ActionIcon>
       </Link>
-      </Tooltip>
-  )
-}
+    </Tooltip>
+  );
+};
 
-export const TableActionItemDetails = ({label, path}:{label:string,path:string}) => {
-    return (
-      <Tooltip  withArrow label={label} >
-      <Link to={path} >
-        <ActionIcon variant="light"  className='text-secondary-500' color="secondary.5" size={"md"} p={3}>
-  <EyeIcon/>
-          </ActionIcon>
-        </Link>
-        </Tooltip>
-    )
-  }
+export const TableActionItemDetails = ({
+  label,
+  path,
+}: {
+  label: string;
+  path: string;
+}) => {
+  return (
+    <Tooltip withArrow label={label}>
+      <Link to={path}>
+        <ActionIcon
+          variant="light"
+          className="text-secondary-500"
+          color="secondary.5"
+          size={"md"}
+          p={3}
+        >
+          <IconEye />
+        </ActionIcon>
+      </Link>
+    </Tooltip>
+  );
+};

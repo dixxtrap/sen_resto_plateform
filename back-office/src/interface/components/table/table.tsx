@@ -12,13 +12,12 @@ import {
 } from "@mantine/core";
 import classes from "./table.module.css";
 import { Link } from "react-router-dom";
-import { PlusIcon } from "@heroicons/react/24/outline";
 import { PaginationDto } from "../../../core/features/pagination";
 import { DateInput } from "@mantine/dates";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { poppoverStyle } from "../form/custom_styles";
 import { Alert } from "../alert_success";
 import { getWsMessage } from "../../../core/features/error_transformer";
+import {  IconSearch } from "@tabler/icons-react";
 
 type TablePaginationProps = {
   th?: string[];
@@ -60,7 +59,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
   return (
     <div className="flex flex-col  app_table">
       <div className="pb-3 flex  justify-between  items-baseline">
-        <Title className="leading-3" order={1}>
+        <Title  className="leading-3" order={3}>
           {title}
         </Title>
 
@@ -73,7 +72,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
                 color="secondary.4"
               >
                 Ajouter
-                <PlusIcon className="text-white bg-primary-500" />
+                {/* <IconPlus className="text-white " /> */}
               </Button>
             </Link>
           ))}
@@ -82,7 +81,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
         <div className="flex  text-left justify-between my-3">
           <TextInput
             placeholder="Rechercher"
-            leftSection={<MagnifyingGlassIcon className="size-6" />}
+            leftSection={<IconSearch className="size-6" />}
           />
           <DateInput
             popoverProps={poppoverStyle}

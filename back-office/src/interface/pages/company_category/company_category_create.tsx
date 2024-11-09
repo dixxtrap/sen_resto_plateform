@@ -22,8 +22,9 @@ export const CompanyCategoryCreate = () => {
     const _onsubmit = form.onSubmit((data) => {
         console.log(data)
        if(form.validate()){ 
+        form.setValues({name:"", description:""});
         create(data); 
-        form.setInitialValues({name:"", description:""});
+        
     }
 
     })

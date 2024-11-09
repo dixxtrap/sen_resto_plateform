@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, ManyToOne, Column } from 'typeorm';
-import { Customer } from './customer.entity';
+import { Customer } from './partner/customer.entity';
 import { CreationDetailsWithoutBy } from './details.entity';
 import { Partner } from './partner.entity';
 import { ApiProperty } from '@nestjs/swagger';

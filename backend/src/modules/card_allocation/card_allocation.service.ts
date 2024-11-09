@@ -133,7 +133,7 @@ export class CardAllocationService {
     return this.reposCard
       .find({
         where: {
-          parentId: by.parentId,
+          companyId: by.companyId,
           status: CardStatusEnum.readyForAllocation,
         },
         take: quantity,
@@ -176,7 +176,7 @@ export class CardAllocationService {
                       },
                       {
                         status: CardStatusEnum.readyForAllocation,
-                        parentId: by.parentId,
+                        companyId: by.companyId,
                       },
                     )
                     .then((updateCardResult) => {
@@ -242,7 +242,7 @@ export class CardAllocationService {
   }
   getAll({ by }: { by: UserDto }) {
     return this.repos
-      .find({ where: [{ senderId: by.parentId }, { receiverId: by.parentId }] })
+      .find({ where: [{ senderId: by.companyId }, { receiverId: by.companyId }] })
       .then((result) => BaseResponse.success(result));
   }
 }

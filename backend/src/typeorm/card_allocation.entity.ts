@@ -6,11 +6,12 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CompanyRestaurantBase } from './company_restaurant.entity';
+
 import { CreationDetails } from './details.entity';
 import { Card } from './card.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from './user.entity';
+import { Partner } from './partner.entity';
 export enum AllocationStatusEnum {
   initiate = 'initiate',
   accepted = 'accepted',
@@ -21,10 +22,10 @@ export enum AllocationStatusEnum {
 export class CardAllocation {
   @PrimaryGeneratedColumn()
   id: number;
-  @ManyToOne(() => CompanyRestaurantBase)
-  sender: CompanyRestaurantBase;
-  @ManyToOne(() => CompanyRestaurantBase)
-  receiver: CompanyRestaurantBase;
+  @ManyToOne(() => Partner)
+  sender: Partner;
+  @ManyToOne(() => Partner)
+  receiver: Partner;
   @Column({ nullable: true, default: null })
   senderId: number;
   @Column({ nullable: true, default: null })

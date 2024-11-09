@@ -11,8 +11,8 @@ const Home = () => {
   return (
     <div className="relative">
       <AfterHeader />
-      {/* <Story /> */}
-      {/* <Banners /> */}
+      <Story />
+      <Banners />
 
       <FastDeliver />
 

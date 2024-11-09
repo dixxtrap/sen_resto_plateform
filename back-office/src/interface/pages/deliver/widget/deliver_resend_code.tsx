@@ -2,7 +2,7 @@ import { Modal, Text, Button } from "@mantine/core";
 import { TableActionItemFonction } from "../../../components/table/action_item";
 import { DeliverDto } from "../../../../core/models/deliver.dto";
 import { useDisclosure } from "@mantine/hooks";
-import { LockClosedIcon } from "@heroicons/react/24/solid";
+import { IconLockAccess } from "@tabler/icons-react";
 
 export const DeliverResendCode = ({ deliver }: { deliver: DeliverDto }) => {
   const [opened, { open, close }] = useDisclosure();
@@ -27,7 +27,7 @@ export const DeliverResendCode = ({ deliver }: { deliver: DeliverDto }) => {
 
       <TableActionItemFonction
         onClick={open}
-        icon={<LockClosedIcon />}
+        icon={<IconLockAccess />}
         label={"renvoyer code"}
       />
     </>

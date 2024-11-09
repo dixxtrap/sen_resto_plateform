@@ -1,5 +1,5 @@
 
-import { useGetCompanyChildrenQuery } from '../../../core/features/company.slice'
+import { useGetCompanyQuery } from '../../../core/features/company.slice'
 import { CustomForm } from '../../components/custom_form'
 import { useForm } from '@mantine/form'
 import { clsx } from '../../utils/clsx'
@@ -8,7 +8,7 @@ import { getWsMessage } from '../../../core/features/error_transformer'
 import { Select, TextInput } from '@mantine/core'
 
 export const CardAllocationCreate = () => {
-    const{data:children}=useGetCompanyChildrenQuery('');
+    const{data:children}=useGetCompanyQuery('');
     const [create ,{isLoading, isError, isSuccess, error, reset}]=useCreateAllocationMutation()
     const form=useForm()
     const _onsubmit=form.onSubmit((data)=>{

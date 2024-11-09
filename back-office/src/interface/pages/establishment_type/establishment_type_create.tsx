@@ -3,10 +3,10 @@ import { useDisclosure } from "@mantine/hooks"
 import { CustomForm } from "../../components/custom_form"
 import { useForm } from "@mantine/form"
 import { handlePreviewV2 } from "../../utils/handle_preview"
-import { PhotoIcon } from "@heroicons/react/24/solid"
 import { AppTextarea } from "../../components/form/app_textarea"
 import { establishmentTypeApi } from '../../../core/features/establishment_type.slice';
 import { inputRequirementValidation } from "../../components/form/validation"
+import { IconPhoto } from "@tabler/icons-react"
 
 export const EstablishmentTypeCreate = () => {
     const [opened, {close, open}]=useDisclosure(false)
@@ -34,7 +34,7 @@ create({file:file!,body:value})
         <CustomForm {...state} successPath="." onSubmit={_onSubmit}>
         <label   className=" mx-auto">
             <input type="file" hidden onChange={handlerFile}></input>
-            {file?<Image className="h-20 w-auto mx-auto" src={preview!}/>:<PhotoIcon className="h-20 w-auto mx-auto" />}
+            {file?<Image className="h-20 w-auto mx-auto" src={preview!}/>:<IconPhoto className="h-20 w-auto mx-auto" />}
             </label>
             <TextInput key={form.key("name")} {...form.getInputProps("name")} label="Label"/>
             <AppTextarea form={form}/>

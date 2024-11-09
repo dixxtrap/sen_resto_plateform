@@ -62,8 +62,8 @@ export const OrganisationEdit = () => {
 
   const _onSubmit = form.onSubmit(async (data: CompanyDto) => {
     console.log(data);
-    const { regionId, departementId, municipalityId, ...rest } = data;
-    update({ id: parseInt(id), company: rest as CompanyDto, file: front.file!, background: back.file! });
+   
+    update({ id: parseInt(id), company: {...data, establishmentTypeId:data.establishmentTypeId!==""?data.establishmentTypeId:undefined} as CompanyDto, file: front.file!, background: back.file! });
   });
   return !isOldSuccess ? (
     <Alert isOpen={isOldLoading} type="loading" title="Recuperation" />
@@ -121,10 +121,10 @@ export const OrganisationEdit = () => {
               error={form.errors["establishmentTypeId"]}
               key={form.key("establishmentTypeId")}
               label={"Type"}
-              data={establishmentType!.data!.map((e) => ({
+              data={[{label:"Aucun",value:""}].concat(establishmentType!.data!.map((e) => ({
                 label: e.name!,
                 value: `${e.id}`,
-              }))}
+              })))}
             />
           )}
           {old && isOldSuccess && (

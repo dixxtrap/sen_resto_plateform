@@ -1,9 +1,12 @@
 import {FC, ReactNode} from 'react'
 
-import {Modal,Text} from "@mantine/core"
-import SunIcon from '@heroicons/react/24/outline/SunIcon'
-import LightBulbIcon from '@heroicons/react/24/outline/LightBulbIcon'
-import CheckIcon from '@heroicons/react/24/outline/CheckIcon'
+import { Modal,Text} from "@mantine/core"
+import {
+  IconAlertOctagon,
+  
+  IconCheck,
+  IconLoader3
+  } from "@tabler/icons-react";
 import ThemeProvider from '../../core/providers/theme.provider'
 import { useDisclosure } from '@mantine/hooks'
 import { modalStyleProps } from './form/custom_styles'
@@ -27,16 +30,16 @@ const [opened,{close}]=useDisclosure(isOpen)
 
                 <div>
                   {type==="succeedded"&&<div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                    <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                    <IconCheck className="h-6 w-6 text-green-600" aria-hidden="true" />
                   </div>}
                   {type==="loading"&&<div className="mx-auto animate-spin flex h-12 w-12 items-center justify-center rounded-full bg-sky-100">
-                    <SunIcon className="h-6 w-6 text-sky-600" aria-hidden="true" />
+                    <IconLoader3 className="h-6 w-6 text-sky-600" aria-hidden="true" />
                   </div>}
                   {type==="info"&&<div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-sky-100">
-                    <LightBulbIcon className="h-6 w-6 text-sky-600" aria-hidden="true" />
+                    <IconLoader3 className="h-6 w-6 text-sky-600" aria-hidden="true" />
                   </div>}
                   {type==="faillure"&&<div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-100">
-                    <CheckIcon className="h-6 w-6 text-rose-600" aria-hidden="true" />
+                    <IconAlertOctagon className="h-6 w-6 text-rose-600" aria-hidden="true" />
                   </div>}
                   <div className="mt-3 text-center sm:mt-5">
                   

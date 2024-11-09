@@ -4,7 +4,7 @@ import Public from "../pages/public/public";
 import { organisationRouter } from "./organisation.router";
 import { userRouter } from "./user.router";
 import { customerRouter } from "./costumer.router";
-import { restaurantRouter } from "./restaurant.router";
+import { shopRouter } from "./shop.router";
 import { plateRouter } from "./plateRouter";
 import { securityRouter } from "./secutrity.router";
 import { paymentTypeRouter } from "./payment_type.router";
@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
       organisationRouter,
       userRouter,
       customerRouter,
-      restaurantRouter,
+      shopRouter,
       plateRouter,
       securityRouter,
       paymentTypeRouter,

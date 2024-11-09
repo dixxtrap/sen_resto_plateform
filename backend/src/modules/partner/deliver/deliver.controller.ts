@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { DeliverService } from './deliver.service';
-import { DeliverDto } from 'src/typeorm/deliver.entity';
+import { DeliverDto } from 'src/typeorm/partner/deliver.entity';
 import { AuthenticatedGuard } from 'src/modules/security/authenticated.guard';
 import { CurrentUser } from 'src/annotations/current_user';
 import { UserDto } from 'src/typeorm/user.entity';

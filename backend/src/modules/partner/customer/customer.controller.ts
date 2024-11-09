@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CustomerService } from './customer.service';
-import { CustomerDto } from 'src/typeorm/customer.entity';
+import { CustomerDto } from 'src/typeorm//partner/customer.entity';
 
 @Controller('customer')
 @ApiTags('customer')

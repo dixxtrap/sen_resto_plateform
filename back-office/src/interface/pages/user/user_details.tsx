@@ -20,10 +20,10 @@ export const UserDetails = () => {
 <DetailItem label={TextConstant.lastname} value={data?.data.lastname}/>
 <DetailItem label={TextConstant.phone} value={data?.data.phone}/>
 <DetailItem label={TextConstant.email} value={data?.data.email}/>
-<DetailItem label={TextConstant.address} value={`${data?.data.address?.streetAddress}-${data?.data.address?.city}-${data?.data.address?.country}`}/>
-{data?.data.parent&&<DetailItem label={'Organisation'} value={<div className="flex items-center gap-3">
-  <img title="logo/org" className="h-8 rounded-md" src={data.data.parent.imagePath}/>
- { data?.data.parent?.name}
+<DetailItem label={TextConstant.address} value={`${data?.data.address}`}/>
+{data?.data.company&&<DetailItem label={'Organisation'} value={<div className="flex items-center gap-3">
+  <img title="logo/org" className="h-8 rounded-md" src={data.data.company.imagePath}/>
+ { data?.data.company?.name}
 </div>}/>}
    </Details>
   )

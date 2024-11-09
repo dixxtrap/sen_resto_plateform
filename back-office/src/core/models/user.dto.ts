@@ -4,7 +4,6 @@ import { CompanyDto } from "./company.dto";
 import { RoleDto } from "./role.dto";
 import { CreationDetailDto } from "./creation_details.dto";
 import { CoordonatesDto } from "./coordonates.dto";
-import { AddressDto } from "./address.dto";
 
 export class User {
   [x: string]: unknown;
@@ -12,7 +11,7 @@ export class User {
   lastname?: string;
   email?: string;
   phone?: string;
-  address?: AddressDto;
+  address?: String;
   city?: string;
   isAgent?: boolean;
   isAdmin?: boolean;
@@ -22,11 +21,11 @@ export class User {
  details?:CreationDetailDto;
   pin?: string;
 coordonates?:CoordonatesDto;
-  parentId?: number|null;
-  parent?: CompanyDto;
+  companyId?: string;
+  company?: CompanyDto;
   isActive?: boolean;
   profile?: FileDocument;
-  roleId?: number;
+  roleId?: string;
   role?: RoleDto;
 }
 

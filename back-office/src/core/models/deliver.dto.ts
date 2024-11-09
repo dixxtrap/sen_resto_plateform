@@ -1,4 +1,3 @@
-import { City } from "./city.dto"
 import { CoordonatesDto } from "./coordonates.dto"
 import { CreationDetailDto } from "./creation_details.dto"
 

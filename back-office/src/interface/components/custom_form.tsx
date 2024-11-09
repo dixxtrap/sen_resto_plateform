@@ -3,9 +3,9 @@ import { Title } from "./title";
 import { Alert, DialogAlert } from "./alert_success";
 import { Navigate } from "react-router-dom";
 import { getWsMessage } from "../../core/features/error_transformer";
-import { CheckCircleIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { Button, LoadingOverlay } from "@mantine/core";
 import { notifications } from '@mantine/notifications'
+import { IconCheck, IconExclamationCircle } from "@tabler/icons-react";
 type CustomeFormProps = {
   children?: ReactNode;
   title?: string;
@@ -34,7 +34,7 @@ export const CustomForm: FC<CustomeFormProps> = ({
   isLoading,
   error,
   successPath, 
-successMessage,
+
 confirmeBefore=false,
 confirmationMessage,
   onFinish,
@@ -49,7 +49,7 @@ confirmationMessage,
     notifications.show({
       title: <span className="text-xl font-bold">Reussi</span>,
       message: 'Opération effectuée avec succé 🌟',
-      icon:<CheckCircleIcon className=""/>,
+      icon:<IconCheck className=""/>,
       color:"primary",
       classNames:{icon:"", root:"z-auto"},
       className:"ring-1 ring-primary-300"
@@ -78,7 +78,7 @@ confirmationMessage,
         {children}
         {isOpen&& <DialogAlert  isOpen={isOpen} onClose={()=>{console.log("==============close=======")} }>
        <div className="flex flex-col  ">
-        <ExclamationTriangleIcon className="text-primary-500 h-20"/>
+        <IconExclamationCircle className="text-primary-500 h-20"/>
        <span className="text-lg mx-auto font-bold">Confirmation</span>
         <span className="text-lg mx-auto">{confirmationMessage??'Voulez vous poursuivre cette action'}</span>
         <div className="flex justify-between">
@@ -125,7 +125,7 @@ confirmationMessage,
       {/* <Alert isOpen={isSuccess} type="succeedded" title="Félicitation"/> */}
       {/* <Alert isOpen={isError}/> */}
     </div>
-     { isSuccess&& <Alert isOpen={isSuccess} type="succeedded" title="Félicitation" message={successMessage} onClose={onFinish}/>}
+     {/* { isSuccess&& <Alert isOpen={isSuccess} type="succeedded" title="Félicitation" message={successMessage} onClose={onFinish}/>} */}
      {isError&& <Alert isOpen={isError} type="faillure" title="Ooops!" message={ getWsMessage(error)}  onClose={onFinish} />}
     {/* { isLoading&&<Alert isOpen={isLoading} type="loading" title="Traitement..."   onClose={onFinish} message="Patientez un moment "/>} */}
    

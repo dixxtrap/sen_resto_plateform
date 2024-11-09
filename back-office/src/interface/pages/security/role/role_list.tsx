@@ -4,6 +4,7 @@ import { Title } from "../../../components/title";
 import { RoleDto } from "../../../../core/models/role.dto";
 import { clsx } from "../../../utils/clsx";
 import { Button } from "@mantine/core";
+import { RoleCreate } from "./role_create";
 
 export const RoleList = () => {
   const { data: roles  } = useGetRolesQuery("");
@@ -22,7 +23,7 @@ export const RoleList = () => {
       <Button component={Link} size="compact-sm"  color="secondary.4" fw={400}  to={`/security/role/permission/${role.id}`} className="">Permissions</Button>
 
       <Button component={Link} size="compact-sm" color="secondary.4" fw={400}  to={`/security/role/details/${role.id}`} className=" ">Details</Button>
-      <Button component={Link} size="compact-sm" color="secondary.4" fw={400}   to={`/security/role/create/${role.id}`} className="  ">Ajouter Sous Role</Button>
+      <RoleCreate  id={role.id!}/>
       </div>
     </div>
      </div>
@@ -38,7 +39,8 @@ export const RoleList = () => {
       <div className="flex gap-2">      <Button size="compact-sm" color="secondary.4" fw={400}  component={Link} to={`/security/role/permission/${roles?.id}`} className="">Permissions</Button>
 
 <Button color="secondary.4"size="compact-sm" fw={400}  component={Link} to={`/security/role/details/${roles?.id}`} className="">Details</Button>
-<Button color="secondary.4"size="compact-sm" fw={400}  component={Link} to={`/security/role/create/${roles?.id}`}  className="">Ajouter  Sous Role</Button></div>
+<RoleCreate  id={roles?.id!}/>
+</div>
     </div>
 
      <div className="dark:bg-gray-500/5 bg-gray-100/5 ">

@@ -8,11 +8,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { handlePreview } from "../../utils/handle_preview";
 import { useForm } from "@mantine/form";
-import { CameraIcon } from "@heroicons/react/24/solid";
 import {  TextInput } from "@mantine/core";
 import { AddressForm } from "../../components/form/address_form";
 import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
 import { AppTextarea } from "../../components/form/app_textarea";
+import { IconCamera } from "@tabler/icons-react";
 
 export const CoorporateEdit = () => {
   const id = useParams().id!;
@@ -52,7 +52,7 @@ console.log(changed)
         <label htmlFor="file">
      
         <input type="file" hidden id="file" name="file" onChange={handleImage} onLoad={handleImage} onLoadedData={handleImage}  />
-        {preview?<img title="daxx" src={preview} className="h-20"/>:<CameraIcon className="h-20 text-secondary-500"/>}
+        {preview?<img title="daxx" src={preview} className="h-20"/>:<IconCamera className="h-20 text-secondary-500"/>}
         </label>
      </div>
 

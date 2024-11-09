@@ -26,7 +26,7 @@ export class CardService {
       .save(
         this.repos.create({
           ...body,
-          parentId: by.parentId,
+          companyId: by.companyId,
           details: { byId: by.id },
         }),
       )
@@ -67,7 +67,7 @@ export class CardService {
                 serial: e['Numéro de série'],
                 uid: e.uid,
                 pan: e.pan,
-                parentId: by.parentId,
+                parentId: by.companyId,
                 details: { byId: by.id },
               }),
             )
@@ -109,7 +109,7 @@ export class CardService {
           quantity: body.quantity,
           rejectionMotif: null,
           status: AllocationStatusEnum.accepted,
-          receiverId: by.parentId,
+          receiverId: by.companyId,
           startSerial: body.startSerial,
           endSerial: body.endSerial,
         },
@@ -124,7 +124,7 @@ export class CardService {
     return this.repos
       .find({
         where: {
-          parentId: by.parentId,
+          companyId: by.companyId,
           status: CardStatusEnum.readyForAllocation,
         },
         take: quantity,
@@ -137,7 +137,7 @@ export class CardService {
   getAll({ by }: { by: CreateUserDto }) {
     logInfo({ by, action: 'Get Card details' });
     return this.repos
-      .find({ where: { parentId: by.parentId } })
+      .find({ where: { companyId: by.companyId } })
       .then((value) => {
         if (value) return BaseResponse.success(value);
       })

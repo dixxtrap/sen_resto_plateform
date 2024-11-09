@@ -1,92 +1,50 @@
 import { EstablishmentType } from 'src/typeorm/establishment_type';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CompanyRestaurantBase } from 'src/typeorm';
+
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 import { BaseResponse } from 'src/typeorm/response_base';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { IsNull, Repository, In, Like } from 'typeorm';
 import { join } from 'path';
 import { WsCatch } from 'src/utils/catch';
-import { selectDefault } from './company_select';
+import { selectCompanyDefaultItem } from './company_select';
+import { Company } from 'src/typeorm/partner/company.entity';
 
 @Injectable()
 export class WsCompanyService {
   constructor(
-    @Inject(EntityProviderEnum.COMPANY_RESTAURANT_BASE)
-    private repos: Repository<CompanyRestaurantBase>,
+    @Inject(EntityProviderEnum.COMPANY)
+    private repos: Repository<Company>,
     @Inject(EntityProviderEnum.ESTABLISHMENT_TYPE)
     private establishmentTypeRepos: Repository<EstablishmentType>,
   ) {}
-  getAll() {
-    return this.repos
-      .find({
-        where: {
-          parent: { parentId: IsNull() },
-          type: In(['CompanyRestaurant', 'Restaurant']),
-        },
-        relations: { establishmentType: true },
-      })
-      .then((result) => {
-        return BaseResponse.success(result.sort(() => Math.random() - 0.5));
-      })
-      .catch((err) => {
-        console.log(err);
-        throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
-  }
+
   getByEstablishmentType() {
     return this.establishmentTypeRepos
-      .find({ where: { isActive: true } })
+      .find({
+        where: { isActive: true },
+        relations: { company: {shop:true} },
+        select: {
+          id: true,
+          description: true,
+          isActive: true,
+          name: true,
+          company: {
+            id: true,
+            closingTime: true,
+            openingTime: true,
+            shortname: true,
+            name: true,
+            imagePath: true,
+            backgroundPath: true,
+            shop: { backgroundPath: true, name: true, id: true , location:{longitude:true, latitude:true}},
+            location: { latitude: true, longitude: true },
+          },
+        },
+      })
       .then((ets) => {
-        return Promise.all(
-          ets.map(async (et, i) => {
-            ets[i].company = await this.repos.find({
-              where: { establishmentTypeId: et.id },
-              relations: { children: true },
-              select: { id: true,
-                backgroundPath: true,
-                imagePath: true,
-                // name: true,
-                address:true,
-                shortname: true,
-                isActive: true,
-                closingTime: true,
-                openingTime: true,
-                description: true,
-                location: { longitude:true, latitude:true},
-                
-                children: { id: true, location: { longitude:true, latitude:true} }
-                },
-            });
-           
-              
-              et.company.forEach(async (c, cI) => {
-                ets[i].company[cI].children = await this.repos.find({
-                  where: { parentId: c.id },
-                  
-                  select: {
-                    id: true,
-                    backgroundPath: true,
-                    imagePath: true,
-                    // name: true,
-                    address: true,
-                    shortname: true,
-                    isActive: true,
-                    closingTime: true,
-                    openingTime: true,
-                    description: true,
-                    location: { longitude: true, latitude: true },
-
-                    
-                  },
-                });
-              });
-           
-            console.log(ets[i].company)
-            return null;
-          }),
-        ).then(() => BaseResponse.success(ets));
+        return BaseResponse.success(ets);
       });
   }
   getById({ id }: { id: number }) {
@@ -94,9 +52,8 @@ export class WsCompanyService {
       .findOne({
         where: { id },
         relations: {
-          parent: true,
           establishmentType: true,
-          category: { product: { file: true, category: true } },
+          category: { product: { file: true } },
         },
       })
       .then((result) => {
@@ -123,9 +80,7 @@ export class WsCompanyService {
     return this.repos
       .find({
         where: {
-          displayname: Like(name),
-          parent: { parentId: IsNull() },
-          type: In(['CompanyRestaurant', 'restaurant']),
+          name: Like(name),
         },
         relations: { establishmentType: true },
       })

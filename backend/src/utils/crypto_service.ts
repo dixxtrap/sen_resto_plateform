@@ -19,7 +19,7 @@ export class CryptoService {
     const hashString = hash.toString(CryptoJS.enc.Hex);
     return hashString;
   }
-
+  
   // Generate String representation
   // static generateRandomString(length) {
   //   const randomBytes = CryptoJS.(length);

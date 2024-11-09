@@ -6,7 +6,6 @@ import { UserDto } from 'src/typeorm/user.entity';
 import { AuthenticatedGuard } from '../security/authenticated.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { HttpExceptionCode } from 'src/utils/http_exception_code';
-import { ProductManagementDayDto } from 'src/typeorm/product_management.entity';
 import { Controller } from '@nestjs/common/decorators/core/controller.decorator';
 import { Get, Post, Put } from '@nestjs/common/decorators/http/request-mapping.decorator';
 import { UseGuards } from '@nestjs/common/decorators/core/use-guards.decorator';
@@ -27,53 +26,48 @@ export class ProductController {
     return this.service.create({ body, by, file });
   }
   @Get('refetch')
+  @UseGuards(AuthenticatedGuard)
   refetch() {
     return HttpExceptionCode.SUCCEEDED;
   }
-  @Get('protect/product_management')
+  @Get('all')
   @UseGuards(AuthenticatedGuard)
-  getProductManagement(@Req() req: Request) {
-    const by = req.user as UserDto;
-    return this.service.getProductMamangement(by);
+get(@CurrentUser() by:UserDto) {
+    return  this.service.getAll({by});
   }
-  @Put('protect/product_management_day')
-  @UseGuards(AuthenticatedGuard)
-  updateProductManagementDay(
-    @Req() req: Request,
-    @Body() body: ProductManagementDayDto[],
-  ) {
-    const by = req.user as UserDto;
-    return this.service.updateManagementDay(body);
-  }
-  @Get('protect/by_id/product_management/:id')
-  @UseGuards(AuthenticatedGuard)
-  getProductManagementById(@Req() req: Request, @Param('id') id: number) {
-    const by = req.user as UserDto;
-    return this.service.getProductMamangementById({ by, id });
-  }
-  @Post('protect/by_id/add_multiple_product_management/:id')
+  
+
+ 
+  @Put('management_by_shop/:id')
   @UseGuards(AuthenticatedGuard)
   createProductManagementById(
     @Req() req: Request,
-    @Body() body: ProductDto[],
+    @Body("productIds") body: Array<number>,
     @Param('id') id: number,
   ) {
     const by = req.user as UserDto;
-    return this.service.addMultiProductManagement({ by, body, partnerId: id });
+    return this.service.updateManyManagement({ by, body, partnerId: id });
   }
-  @Get('protect/by_id/available/product_management/:id')
+  @Put('management_by_id/:id')
+  @UseGuards(AuthenticatedGuard)
+  updateManagementById(
+    @Req() req: Request,
+    @Body("productIds") body: Array<number>,
+    @Param('id') id: number,
+  ) {
+    const by = req.user as UserDto;
+    return this.service.updateManyManagement({ by, body, partnerId: id });
+  }
+  @Get('management_by_shop/:id')
   @UseGuards(AuthenticatedGuard)
   getAvailableProductManagementById(
     @Req() req: Request,
     @Param('id') id: number,
   ) {
     const by = req.user as UserDto;
-    return this.service.getAvailableProductForRestaurant({ by, partnerId: id });
+    return this.service.getByShop({ by, partnerId: id });
   }
-  @Get('weekday')
-  getDay() {
-    return this.service.getWeekDay();
-  }
+ 
   @Get('by_id/:id')
   @UseGuards(AuthenticatedGuard)
   getProductById(@Param('id') id: number, @Req() req: Request) {

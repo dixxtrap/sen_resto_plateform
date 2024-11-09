@@ -18,7 +18,7 @@ export class SeatingService {
       .save(
         this.repos.create({
           ...body,
-          partnerId: by.parentId,
+          partnerId: by.companyId,
           details: { byId: by.id },
         }),
       )
@@ -31,7 +31,7 @@ export class SeatingService {
 
   update({ by, id, body }: { by: UserDto; id: number; body: SeatingDto }) {
     return this.repos
-      .update({ id }, this.repos.create({ ...body, partnerId: by.parentId }))
+      .update({ id }, this.repos.create({ ...body, partnerId: by.companyId }))
       .then((result) => {
         if (result) throw new WsMessage(HttpExceptionCode.SUCCEEDED);
         throw new Error();
@@ -41,7 +41,7 @@ export class SeatingService {
   getAll({ by }: { by: UserDto }) {
     return this.repos
       .find({
-        where: { partnerId: by.parentId },
+        where: { partnerId: by.companyId },
         order: { details: { createdAt: 'DESC' } },
       })
       .then((result) => BaseResponse.success(result))

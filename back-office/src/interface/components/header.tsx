@@ -1,9 +1,3 @@
-import { ArrowRightCircleIcon, Bars3Icon } from "@heroicons/react/24/outline";
-import {
-  BellIcon,
-  UserIcon,
-  ChatBubbleBottomCenterIcon,
-} from "@heroicons/react/24/solid";
 import { Navigate } from "react-router-dom";
 import { FC, useEffect } from "react";
 import {
@@ -11,10 +5,17 @@ import {
   useSignoutMutation,
 } from "../../core/features/security.slice";
 import { Alert } from "./alert_success";
-import { ActionIcon, Menu, rem, Group, Indicator } from "@mantine/core";
+import { ActionIcon, Menu, rem, Indicator } from "@mantine/core";
 import { ThemeToggler } from "./theme_toggler/theme_toggler";
 import { multiSelectStyle } from "./form/custom_styles";
-import ArrowRightStartOnRectangleIcon from "@heroicons/react/20/solid/ArrowRightStartOnRectangleIcon";
+import {
+  IconArrowAutofitDown,
+  IconArrowRightToArc,
+  IconBell,
+  IconMenu,
+  IconMessage,
+  IconUser,
+} from "@tabler/icons-react";
 export const Header: FC<{
   open: () => void;
   close: () => void;
@@ -44,18 +45,19 @@ export const Header: FC<{
             <div className="flex items-center lg:ml-20 ">
               <ActionIcon
                 size={40}
-                color="primary.5"
+                color="secondary.5"
                 className="  lg:hidden"
                 onClick={open}
+
               >
-                <Bars3Icon className="h-6 w-6 " aria-hidden="true" />
+                <IconMenu className="h-6 w-6 " aria-hidden="true" />
               </ActionIcon>
               <div className="flex h-16 shrink-0  p-2  items-center sticky top-0 justify-center">
-                {user?.parent && user.parent.imagePath && (
+                {user?.company && user.company.imagePath && (
                   <img
                     alt=""
                     className=" h-8 md:h-10  rounded-md backdrop-blur-lg"
-                    src={`${user.parent.imagePath}`}
+                    src={`${user.company.imagePath}`}
                   />
                 )}
 
@@ -65,38 +67,44 @@ export const Header: FC<{
 
             {/* Separator */}
             <span className="hidden md:inline-block md:text-xl  text-left font-bold">
-              {user?.parent?.parent?.id === 1 || user?.parent?.id === 1
-                ? user.parent?.name
-                : user?.parent?.parent?.name}
+              {user.company?.name}
             </span>
             <div className="grow "></div>
             <ThemeToggler />
 
-            <Group className="md:gap-6 py-0.5 ring-1 ring-secondary-900/10 dark:ring-secondary-400/10 rounded-lg md:px-1 flex-nowrap bg_card">
-              <Indicator offset={0} size={16} label={"0"}>
+            <div className=" flex h-[38px] gap-3 px-2 rounded-lg pt-2 content-center items-center justify-center bg-slate-950">
+              <Indicator
+                p={0}
+                m={0}
+                offset={0}
+                size={20}
+                classNames={{ indicator: "text-center leading-3" }}
+                label={"0"}
+              >
                 {" "}
                 <ActionIcon
                   radius={10}
                   type="button"
-                  color="secondary.5"
+                  color="primary"
                   variant="transparent"
-                  className=""
+                
                 >
-                  <ChatBubbleBottomCenterIcon
-                    className="size-6 bg-slate-900 text-white p-0.5 rounded-full"
+                  <IconMessage
+                    className="size-8  text-white rounded-full"
                     aria-hidden="true"
                   />{" "}
                   <span className="sr-only">View notifications</span>
                 </ActionIcon>
               </Indicator>
-              <Indicator offset={0} size={16} label={0}>
+              <Indicator p={0} m={0} offset={0} size={20} label={0}>
                 <ActionIcon
                   radius={10}
                   type="button"
                   variant="transparent"
-                  color="primary.5"
+                  color="transp"
+                 
                 >
-                  <BellIcon className="size-6 bg-slate-900 text-white p-0.5 rounded-full" />{" "}
+                  <IconBell className="size-6  text-white  rounded-full" />{" "}
                   <span className="sr-only">View notifications</span>
                 </ActionIcon>
               </Indicator>
@@ -109,9 +117,12 @@ export const Header: FC<{
                 withArrow
               >
                 <Menu.Target>
-                  <ActionIcon radius={10} variant="transparent">
-                    <UserIcon className="size-6 p-1 rounded-full text-white bg-slate-900" />
-                  </ActionIcon>
+                  <Indicator p={0} m={0} offset={0} size={20} classNames={{indicator:"hidden"}}>
+
+                    <ActionIcon color={"primary.6"} className="" radius={10} variant="transparent">
+                      <IconUser className="size-6  rounded-full text-white " />
+                    </ActionIcon>
+                  </Indicator>
                 </Menu.Target>
 
                 <Menu.Dropdown>
@@ -122,7 +133,7 @@ export const Header: FC<{
                   <Menu.Label>Danger zone</Menu.Label>
                   <Menu.Item
                     leftSection={
-                      <ArrowRightCircleIcon
+                      <IconArrowAutofitDown
                         style={{ width: rem(14), height: rem(14) }}
                       />
                     }
@@ -131,7 +142,7 @@ export const Header: FC<{
                   </Menu.Item>
                   <Menu.Item
                     leftSection={
-                      <ArrowRightStartOnRectangleIcon className="size-4 rounded-full" />
+                      <IconArrowRightToArc className="size-4 rounded-full" />
                     }
                     onClick={() => signout("")}
                   >
@@ -141,7 +152,7 @@ export const Header: FC<{
               </Menu>
 
               {/* Profile dropdown */}
-            </Group>
+            </div>
           </>
         )}
       </div>

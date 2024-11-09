@@ -13,7 +13,7 @@ export const companyApi = createApi({
   endpoints: (builder) => ({
     createCompany: builder.mutation<BaseResponse<CompanyDto>| WsMessage, {company:CompanyDto, file:File, background:File}>({
       query: ({file, background, company}) => ({
-        url: "/company_restaurant/create",
+        url: "/company/create",
         method: "POST",
         data: {...company, file, background},
         headers: {
@@ -24,23 +24,19 @@ export const companyApi = createApi({
       invalidatesTags: ["company"],
     }),
     getCompany:builder.query<BaseResponse<CompanyDto[]>,string>({
-        query:()=>({url:"/company_restaurant/all"}),
+        query:()=>({url:"/company/all"}),
         transformErrorResponse: errorTrasform,
         providesTags:["company",'security']
 }),
-getCompanyChildren:builder.query<BaseResponse<CompanyDto[]>,string>({
-  query:()=>({url:"/partner/children"}),
-  transformErrorResponse: errorTrasform,
-  providesTags:["company",'security']
-}),
+
 getCompanyById: builder.query<BaseResponse<CompanyDto> ,string>({
-        query: (id)=>({url:`/company_restaurant/byId/${id}`}),
+        query: (id)=>({url:`/company/byId/${id}`}),
         transformErrorResponse: errorTrasform,
         providesTags:["company",'security']
 }),
 updateCompanyById: builder.mutation<BaseResponse<CompanyDto>, { id: number, company: CompanyDto, file:File , background:File}>({
         query: ({id,company, file, background}) => ({
-          url: `/company_restaurant/update/${id}`,
+          url: `/company/update/${id}`,
           method: "PUT",
           data: {...company, file, background},
           headers: {
@@ -54,4 +50,4 @@ updateCompanyById: builder.mutation<BaseResponse<CompanyDto>, { id: number, comp
 });
 
 
-export const {useCreateCompanyMutation,useGetCompanyChildrenQuery, useGetCompanyQuery, useGetCompanyByIdQuery, useUpdateCompanyByIdMutation}=companyApi
+export const {useCreateCompanyMutation, useGetCompanyQuery, useGetCompanyByIdQuery, useUpdateCompanyByIdMutation}=companyApi

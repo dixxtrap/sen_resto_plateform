@@ -27,7 +27,7 @@ export const RoleDetails = () => {
                 <td>{e.email}</td>
                 <td>{e.phone}</td>
                 <td>
-                  {e.parent?.name!} {e.parent?.parent?.name!==null && ` / ${e.parent?.parent?.name!}`}
+                  {e.company?.name!}
                 </td>
                 <td className="last_td_container">
                   <Status

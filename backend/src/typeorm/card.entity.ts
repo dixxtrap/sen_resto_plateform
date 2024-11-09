@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { CompanyRestaurantBase } from './company_restaurant.entity';
+import { Company } from './partner/company.entity'
 import { CreationDetails, CreationDetailsDto } from './details.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Assignment } from './assignment.entity';
@@ -32,10 +32,10 @@ export class Card {
   assignment: Assignment;
   @Column({ nullable: true, default: null })
   assignmentId: number;
-  @ManyToOne(() => CompanyRestaurantBase)
-  parent: CompanyRestaurantBase;
+  @ManyToOne(() => Company)
+  company: Company;
   @Column({ nullable: true, default: null })
-  parentId: number;
+  companyId: number;
   @Column(() => CreationDetails)
   details: CreationDetails;
 }

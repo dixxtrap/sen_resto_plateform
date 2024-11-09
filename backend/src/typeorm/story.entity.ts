@@ -1,7 +1,7 @@
 import { Column, PrimaryGeneratedColumn, Entity, ManyToOne } from 'typeorm';
 import { CreationDetails } from './details.entity';
 import { Partner } from './partner.entity';
-import { CompanyRestaurantBase } from './company_restaurant.entity';
+import { Company } from './partner/company.entity'
 import { StoryGroup } from './story_group.entity';
 
 export enum StoryEnum {

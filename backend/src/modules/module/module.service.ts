@@ -31,6 +31,7 @@ export class ModuleService implements OnModuleInit {
        
         return Promise.all(
           value.map(async (item) => {
+            console.log(item)
             const exits = await this.repos.exists({
               where: { name: item[`Tables_in_${process.env.DB_NAME}`] },
             });

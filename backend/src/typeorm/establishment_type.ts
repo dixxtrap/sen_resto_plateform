@@ -4,8 +4,9 @@ import { PrimaryGeneratedColumn } from 'typeorm/decorator/columns/PrimaryGenerat
 import { Entity } from 'typeorm/decorator/entity/Entity';
 import { BeforeInsert } from 'typeorm/decorator/listeners/BeforeInsert';
 import { BeforeUpdate } from 'typeorm/decorator/listeners/BeforeUpdate';
-import { CompanyRestaurantBase } from './company_restaurant.entity';
 import { OneToMany } from 'typeorm/decorator/relations/OneToMany';
+import { Partner } from './partner.entity';
+import { Company } from './partner/company.entity';
 
 @Entity()
 export class EstablishmentType {
@@ -19,14 +20,14 @@ export class EstablishmentType {
   imagePath: string;
   @Column({ nullable: false, default: true })
   isActive: boolean;
-@OneToMany(()=>CompanyRestaurantBase, (alias)=>alias.establishmentType )
-company:CompanyRestaurantBase[]
+  @OneToMany(() => Company, (alias) => alias.establishmentType)
+  company: Company[];
   @BeforeInsert()
   @BeforeUpdate()
   changeBoolean() {
-    console.log(typeof(this.isActive))
-    this.isActive=`${this.isActive}`=='true'}
-    
+    console.log(typeof this.isActive);
+    this.isActive = `${this.isActive}` == 'true';
+  }
 }
 
 export class EstablishmentTypeDto {
@@ -37,5 +38,5 @@ export class EstablishmentTypeDto {
   @ApiProperty()
   imagePath?: string;
   @ApiProperty()
-  isActive?: boolean; 
+  isActive?: boolean;
 }

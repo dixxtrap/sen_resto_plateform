@@ -1,4 +1,3 @@
-import { CustomerDto } from './../../../typeorm/customer.entity';
 import {
   Body,
   Controller,
@@ -17,6 +16,7 @@ import { AddOrderDto, OrderDto, OrderStatus } from 'src/typeorm/order.entity';
 import { LocalAuthGuardCustomer } from 'src/middleware/local_auth.guard';
 import { Request } from 'express';
 import { CurrentUser } from 'src/annotations/current_user';
+import { CustomerDto } from 'src/typeorm/partner/customer.entity';
 @Controller('ws/order')
 @ApiTags('ws/order')
 export class WsOrderController {

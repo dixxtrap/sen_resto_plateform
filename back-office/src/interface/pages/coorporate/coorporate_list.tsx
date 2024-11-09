@@ -1,4 +1,7 @@
-import BuildingOfficeIcon from "@heroicons/react/24/outline/BuildingOfficeIcon";
+import {
+  IconBuilding,
+  
+  } from "@tabler/icons-react";
 import { useGetCoorporateQuery } from "../../../core/features/coorporate.slice";
 import { Status } from "../../components/status";
 import { TablePagination } from "../../components/table/table";
@@ -27,7 +30,7 @@ export const CoorporateList = () => {
                           <div className="  flex-shrink-0  w-16 mr-2 content-center flex  justify-start ">
                             {/* <ImgPreview name={`Prile_${company?.profile?.id}`} className='bg-blue-400 h-11' img={company.profile!}/> */}
                             {companies.imagePath}
-                            {  company.imagePath? <img src={`${company.imagePath!}`} className='h-8 rounded-md' alt=""  />:<BuildingOfficeIcon className='h-8 p-1 text-primary-500 bg-secondary-500/20 ring-2  ring-secondary-500/80 rounded-md'/>}
+                            {  company.imagePath? <img src={`${company.imagePath!}`} className='h-8 rounded-md' alt=""  />:<IconBuilding className='h-8 p-1 text-primary-500 bg-secondary-500/20 ring-2  ring-secondary-500/80 rounded-md'/>}
                           </div>
                             <div className="font-medium ">{company.name}</div>
                             {/* <div className="mt-1 text-gray-500">{company.email}</div> */} 

@@ -7,7 +7,7 @@ import { BaseResponse } from 'src/typeorm/response_base';
 import { WsCatch } from 'src/utils/catch';
 import { logInfo } from 'src/app_log';
 import { ProductManagement } from 'src/typeorm/product_management.entity';
-import { CompanyRestaurantBase } from 'src/typeorm/company_restaurant.entity';
+import { CompanyShop } from 'src/typeorm/partner/company_shop.entity'
 import { CoordonatesDto } from 'src/typeorm/coordonates.entity';
 import { calcDistance } from 'src/utils/calc_distance';
 import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
@@ -53,30 +53,30 @@ export class ProductHistoryService {
 
   getNearestPartner({ id, from }: { id: number; from: CoordonatesDto }) {
     let minDistance: number;
-    let minDistancePartner: CompanyRestaurantBase;
+    let minDistancePartner: CompanyShop;
 
     minDistance = -1;
     console.log('========product management========', id);
     return this.reposManagement
-      .find({ where: { productId: id }, relations: { partner: true } })
+      .find({ where: { productId: id }, relations: { shop: true } })
       .then((productManagements) => {
         console.log('========product management========', productManagements);
 
         productManagements.forEach((productManagement, index) => {
           console.log(
             '========product location========',
-            productManagement.partner.location,
+            productManagement.shop.location,
             from,
           );
           const distance = calcDistance({
             from: from,
-            to: productManagement.partner.location,
+            to: productManagement.shop.location,
           });
           if (index == 0) {
-            minDistancePartner = productManagement.partner;
+            minDistancePartner = productManagement.shop;
             minDistance = distance;
           } else if (distance < minDistance) {
-            minDistancePartner = productManagement.partner;
+            minDistancePartner = productManagement.shop;
             minDistance = distance;
           }
         });

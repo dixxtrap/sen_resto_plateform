@@ -13,8 +13,8 @@ export class WsProductService {
   getAll() {
     return this.repos
       .find({
-        relations: { file: true, parent: true , category:true},
-        select: { parent: { shortname: true, id: true , imagePath:true,},  category:{id:true, name:true}},
+        relations: { file: true, company: true , },
+        select: { company: { shortname: true, id: true , imagePath:true,},},
       })
       .then((result) => {
         return BaseResponse.success(result.sort(() => Math.random() - 0.5));
@@ -33,8 +33,8 @@ export class WsProductService {
             ? { category: In(categoryIds) }
             : {}),
         },
-        relations: { file: true, parent: true },
-        select: { parent: { shortname: true, id: true } },
+        relations: { file: true, company: true },
+        select: { company: { shortname: true, id: true } },
       })
       .then((result) => {
         return BaseResponse.success(result.sort(() => Math.random() - 0.5));
@@ -47,9 +47,9 @@ export class WsProductService {
   getAllByCompanyId({ id }: { id: number }) {
     return this.repos
       .find({
-        where: { parentId: id },
-        relations: { file: true, parent: true },
-        select: { parent: { shortname: true, id: true } },
+        where: { companyId: id },
+        relations: { file: true, company: true },
+        select: { company: { shortname: true, id: true } },
       })
       .then((result) => {
         return BaseResponse.success(result.sort(() => Math.random() - 0.5));
@@ -64,8 +64,8 @@ export class WsProductService {
     return this.repos
       .find({
         where: { reduction: Not(Equal(0)) },
-        relations: { category: true, file: true, parent: true },
-        select: { parent: { shortname: true, id: true } },
+        relations: { file: true, company: true },
+        select: { company: { shortname: true, id: true } },
       })
       .then((result) => {
         return BaseResponse.success(result);
@@ -77,7 +77,7 @@ export class WsProductService {
   }
   getById({ id }: { id: number }) {
     return this.repos
-      .findOne({ where: { id }, relations: { category: true, file: true } })
+      .findOne({ where: { id }, relations: { file: true } })
       .then((result) => {
         return result;
       })

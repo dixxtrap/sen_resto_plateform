@@ -1,6 +1,6 @@
 import { Column } from 'typeorm/decorator/columns/Column';
 import { PrimaryGeneratedColumn } from 'typeorm/decorator/columns/PrimaryGeneratedColumn';
-import { CompanyRestaurantBase } from './company_restaurant.entity';
+import { CompanyShop } from './partner/company_shop.entity'
 import { ManyToOne } from 'typeorm/decorator/relations/ManyToOne';
 import { Entity } from 'typeorm/decorator/entity/Entity';
 import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decorator';
@@ -12,8 +12,8 @@ export class Seating {
   id: number;
   @Column({ unique: true })
   name: string;
-  @ManyToOne(() => CompanyRestaurantBase)
-  partner: CompanyRestaurantBase;
+  @ManyToOne(() => CompanyShop)
+  shop: CompanyShop;
   @Column({ nullable: true, default: null })
   partnerId: number;
   @Column({ nullable: true, default: null })

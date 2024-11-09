@@ -5,15 +5,16 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CompanyRestaurantBase } from './company_restaurant.entity';
 import { CreationDetails } from './details.entity';
 
-import { Deliver } from './deliver.entity';
+import { Deliver } from './partner/deliver.entity';
 import { OrderProduct } from './order_product.entity';
-import { Customer } from './partner.entity';
 import { City } from './city.entity';
 import { Coordonates, CoordonatesDto } from './coordonates.entity';
 import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decorator';
+import { Company } from './partner/company.entity';
+import { CompanyShop } from './partner/company_shop.entity';
+import { Customer } from './partner/customer.entity';
 export class AddOrderDto {
   productId: number;
   partnerId: number;
@@ -39,14 +40,14 @@ export enum OrderStatus {
 export class Order {
   @PrimaryGeneratedColumn()
   id: number;
-  @ManyToOne(() => CompanyRestaurantBase)
-  restaurant: CompanyRestaurantBase[];
-  @ManyToOne(() => CompanyRestaurantBase)
-  partner: CompanyRestaurantBase;
+  @ManyToOne(() => CompanyShop)
+  shop: CompanyShop;
+  @ManyToOne(() => Company)
+  partner: Company;
   @Column({ nullable: true, default: null })
   partnerId: number;
   @Column({ nullable: true, default: null })
-  restaurantId: number;
+  shopId: number;
   @ManyToOne(() => Customer)
   customer: Customer;
   @Column({ nullable: true, default: null })

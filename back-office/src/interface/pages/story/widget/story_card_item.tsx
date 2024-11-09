@@ -14,7 +14,7 @@ import classes from "../styles/story_card_item.module.css";
 import { StoryDto } from "../../../../core/models/story.dto";
 import { storyApi } from "../../../../core/features/story.slice";
 import { useDisclosure } from "@mantine/hooks";
-import { ExclamationCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { IconExclamationCircle, IconTrash } from "@tabler/icons-react";
 
 export const StoryCardItem = ({ story }: { story: StoryDto }) => {
   const [del, delStatsu] = storyApi.useDeleteMutation();
@@ -66,7 +66,7 @@ export const StoryCardItem = ({ story }: { story: StoryDto }) => {
                 variant="light"
                 color="blue"
                 title="Suppression"
-                icon={<ExclamationCircleIcon />}
+                icon={<IconExclamationCircle />}
               >
                 Voulez-Vous supprimer le storie {story.id} ?
               </Alert>
@@ -85,7 +85,7 @@ export const StoryCardItem = ({ story }: { story: StoryDto }) => {
             <Group gap="lg">
               <Center>
                 <ActionIcon onClick={open} size={"md"} color="red">
-                  <TrashIcon />
+                  <IconTrash />
                 </ActionIcon>
               </Center>
             </Group>

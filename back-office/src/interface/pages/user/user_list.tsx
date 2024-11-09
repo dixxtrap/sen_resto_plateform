@@ -39,7 +39,7 @@ export const UserList = () => {
       
                         
                         
-                          <Table.Td className="">{user.address?.country!}-{user.address?.city}</Table.Td>
+                          <Table.Td className="">{user.address}</Table.Td>
                           <Table.Td className="">{user.phone}</Table.Td>
                           <Table.Td className="">
                        <Status status={ user.isActive!} inactiveText='Inactif' activeText='Actif' />

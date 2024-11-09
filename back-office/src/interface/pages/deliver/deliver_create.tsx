@@ -1,7 +1,5 @@
-import { PasswordInput, TextInput } from "@mantine/core";
+import {  TextInput } from "@mantine/core";
 import { CustomForm } from "../../components/custom_form";
-import { multiSelectStyle } from "../../components/form/custom_styles";
-import { AddressForm } from "../../components/form/address_form";
 import { TextConstant } from "../../../core/data/textConstant";
 import { useForm } from "@mantine/form";
 import { deliverApi } from "../../../core/features/deliver.slice";

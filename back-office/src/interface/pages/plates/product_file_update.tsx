@@ -1,8 +1,12 @@
-import { CameraIcon } from "@heroicons/react/20/solid";
-import  { FC, useEffect, useState } from "react";
-import { DialogAlert } from "../../components/alert_success";
-import { handlePreview } from "../../utils/handle_preview";
-import { useGetRefetchMutation } from "../../../core/features/product.slice";
+import {
+  IconCamera
+  } from "@tabler/icons-react";
+import  { FC, useEffect } from "react";
+import { useDisclosure } from "@mantine/hooks";
+import {  handlePreviewV2 } from "../../utils/handle_preview";
+import { Modal } from "@mantine/core";
+import { ImgWithHandler } from "../../components/img_with_handler";
+import { productApi } from "../../../core/features/product.slice";
 type ProductCreateFileProps = {
   productId: number;
   path: string;
@@ -13,21 +17,18 @@ export const ProductFileUpdate: FC<ProductCreateFileProps> = ({
   path,
   id,
 }) => {
-  const [refetch, {isLoading}] = useGetRefetchMutation();
-  const [preview, setPreview] = useState<string>();
-  const [file, setFile] = useState<File>();
-  const [changed, setChanged] = useState<boolean>(false);
-  const handleImage = handlePreview({
-    previewImage: preview!,
-    setPreviewImage: setPreview,
-    setFile: setFile,
-    setChanged: setChanged,
+  const [refetch, {isLoading}] = productApi.useGetRefetchMutation();
+  
+ 
+
+  const handleImage = handlePreviewV2({
+    previewImage: path!,
   });
-  const [showDialog, setShowDialog] = useState<boolean>(false);
+  const [opened, {close, open}] = useDisclosure(false);
   const _onSubmit = () => {
-    if (file) {
+    if (handleImage.file) {
       const formData = new FormData();
-      formData.append("file", file!);
+      formData.append("file", handleImage.file!);
       formData.append("productId", `${productId}`);
       fetch(`/v1/product_file/update/${id}`, {
         method: "PUT",
@@ -35,9 +36,8 @@ export const ProductFileUpdate: FC<ProductCreateFileProps> = ({
       }).then((value) => {
         if (value.ok) {
           refetch("");
-          setPreview(undefined);
-          setFile(undefined);
-          setShowDialog(false);
+         handleImage.setPreview(path)
+          close();
         }
       });
     }
@@ -53,69 +53,52 @@ export const ProductFileUpdate: FC<ProductCreateFileProps> = ({
           console.log(value.json())
           if (value.ok) {
             refetch("");
-            setPreview(undefined);
-            setFile(undefined);
-            setShowDialog(false);
+            
+            handleImage.setPreview(undefined);
+            close();
           }
         }
       );
   
   };
   const _onReset = () => {
-    setPreview(undefined);
-    setFile(undefined);
-    setShowDialog(false);
+   
+    close();
   };
   return (
     <div>
-     { !isLoading&&!showDialog&&<div onClick={() => setShowDialog(true)}>
+     { !isLoading&&<div onClick={() => open()}>
         {path ? (
           <img title='image' src={`${path}`} className="h-20 w-20 rounded-md" />
         ) : (
-          <CameraIcon className="h-20 text-primary-500 bg-secondary-400/30 ring-2 ring-inset ring-secondary-400 rounded-md p-2" />
+          <IconCamera className="h-20 text-primary-500 bg-secondary-400/30 ring-2 ring-inset ring-secondary-400 rounded-md p-2" />
         )}
       </div>}
-      {changed&& <></>}
-      {showDialog && (
-        <DialogAlert
+      {<></>}
+     
+        <Modal
           onClose={() => {
-            setShowDialog(false);
+            close();
           }}
-          isOpen={true}
+          opened={opened}
         >
-          <label htmlFor="file">
-            {path}
-            <input
-              type="file"
-              hidden
-              id="file"
-              name="file"
-              onChange={handleImage}
-            />
-            {preview ? (
-              <img title='image'  src={preview} className="" />
-            ) : path ? (
-              <img title='image' src={`${path}`} className="" />
-            ) : (
-              <CameraIcon className="w-full  text-secondary-300" />
-            )}
-          </label>
+        <ImgWithHandler fitContent htmlFor="File" {...handleImage}/>
           <div className="flex  pt-2  justify-between ">
-            <button className="button secondary" onClick={_onSubmit}>
-              Valider
+            <button className="button  secondary "  onClick={_onReset}>
+              Annuler
             </button>
             <button className="button  tertiary " onClick={_onDelete}>
               Supprimer l'imgae
             </button>
             <button
               className="button primary"
-              onClick={_onReset}
+              onClick={_onSubmit}  
             >
-              Annuler
+              Valider
             </button>
           </div>
-        </DialogAlert>
-      )}
+        </Modal>
+     
     </div>
   );
 };

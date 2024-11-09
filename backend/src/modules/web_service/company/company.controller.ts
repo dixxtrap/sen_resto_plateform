@@ -9,10 +9,7 @@ import { Param } from '@nestjs/common/decorators/http/route-params.decorator';
 @ApiTags('ws/company')
 export class WsCompanyController {
   constructor(private service: WsCompanyService) {}
-  @Get('all')
-  getAll() {
-    return this.service.getAll();
-  }
+ 
   @Get('establishment_type/all')
   getByEstablishmentTypeAll() {
     return this.service.getByEstablishmentType();
