@@ -26,7 +26,7 @@ export type CompanyDto = {
   establishmentType?: EstablishmentTypeDto;
   address?: string;
   phone?: string;
-  shop?: companyShop;
+  shop?: ShopDto;
   location?: CoordonatesDto;
   isActive?: boolean;
   category?: CompanyCategoryDto[];
@@ -38,7 +38,4 @@ export type CompanyDto = {
   backgroundPath?: string;
   details?: CreationDetailDto;
 };
-export class companyShop {
-  backgroundPath?: string;
-  name?: string;
-}
+

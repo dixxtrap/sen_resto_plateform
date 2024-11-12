@@ -6,9 +6,8 @@ import { CreationDetailDto } from "./creation_details.dto"
 export class Customer {
         id?: number
         phone?: string
-        isPhoneVeirified?: boolean
-        firstname?: string
-        lastname?: string
+        isPhoneVeirified?: boolean;
+       displayname?:string;
         cityId?: number;
        address?:AddressDto
     details?:CreationDetailDto

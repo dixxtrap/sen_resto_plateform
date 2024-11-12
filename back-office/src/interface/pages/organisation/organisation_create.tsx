@@ -3,7 +3,7 @@ import { CompanyDto } from "../../../core/models/company.dto";
 import { useCreateCompanyMutation } from "../../../core/features/company.slice";
 import { CustomForm } from "../../components/custom_form";
 import { TextConstant } from "../../../core/data/textConstant";
-import {  Select, TextInput } from "@mantine/core";
+import { Select, TextInput } from "@mantine/core";
 import { AppTextarea } from "../../components/form/app_textarea";
 import { handlePreviewV2 } from "../../utils/handle_preview";
 import { ImgWithHandler } from "../../components/img_with_handler";
@@ -16,55 +16,98 @@ export const OrganisationCreate = () => {
 
   const [createCompany, { isError, isSuccess, isLoading, reset, error }] =
     useCreateCompanyMutation();
-    const front=handlePreviewV2({});
-    const back=handlePreviewV2({});
-  const form = useForm();
+  const front = handlePreviewV2({});
+  const back = handlePreviewV2({});
+  const form = useForm<CompanyDto>({
+    initialValues: { location: { latitude: 0, longitude: 0 } },
+  });
   const _onsubmit = form.onSubmit((data) => {
     console.log(data);
-    const {  ...rest } = data;
-    createCompany({company:rest as CompanyDto, file:front.file!, background:back.file!});
+    const { ...rest } = data;
+    createCompany({
+      company: rest,
+      file: front.file!,
+      background: back.file!,
+    });
   });
   return (
     <div className="flex flex-col divide-y gap-y-2 ">
-      
-      <CustomForm  title="Compagnie" isLoading={isLoading} isError={isError} isSuccess={isSuccess} error={error}  subTitle="Creer une nouvelle compagnie" onSubmit={_onsubmit} onFinish={reset} >
-     <div className="flex gap-3 md:gap-8"> <ImgWithHandler  htmlFor="Profile" {...front}/>
-      <ImgWithHandler htmlFor="Couverture" {...back }/>
-      </div>
-        <TextInput label={TextConstant.names} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
+      <CustomForm
+        title="Compagnie"
+        isLoading={isLoading}
+        isError={isError}
+        isSuccess={isSuccess}
+        error={error}
+        subTitle="Creer une nouvelle compagnie"
+        onSubmit={_onsubmit}
+        onFinish={reset}
+      >
+        <div className="flex gap-3 md:gap-8">
+          {" "}
+          <ImgWithHandler htmlFor="Profile" {...front} />
+          <ImgWithHandler htmlFor="Couverture" {...back} />
+        </div>
+        <TextInput
+          label={TextConstant.names}
+          {...form.getInputProps("name")}
+          error={form.errors["name"]}
+          key={form.key("name")}
+        />
 
-       
-        <TextInput label={TextConstant.shortname} {...form.getInputProps("shortname")} error={form.errors["shortname"]} key={form.key("shortname")} />
+        <TextInput
+          label={TextConstant.shortname}
+          {...form.getInputProps("shortname")}
+          error={form.errors["shortname"]}
+          key={form.key("shortname")}
+        />
 
-       
-        <TextInput label={TextConstant.email} {...form.getInputProps("email")} error={form.errors["email"]} key={form.key("email")} />
+        <TextInput
+          label={TextConstant.email}
+          {...form.getInputProps("email")}
+          error={form.errors["email"]}
+          key={form.key("email")}
+        />
 
-       
-        <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
+        <TextInput
+          label={TextConstant.phone}
+          {...form.getInputProps("phone")}
+          error={form.errors["phone"]}
+          key={form.key("phone")}
+        />
         {establishmentType && (
-            <Select
-              {...form.getInputProps("establishmentTypeId")}
-              error={form.errors["establishmentTypeId"]}
-              key={form.key("establishmentTypeId")}
-              label={"Type"}
-              data={[{value:"",label:"Aucun"}].concat(establishmentType!.data!.map((e) => ({
+          <Select
+            {...form.getInputProps("establishmentTypeId")}
+            error={form.errors["establishmentTypeId"]}
+            key={form.key("establishmentTypeId")}
+            label={"Type"}
+            data={[{ value: "", label: "Aucun" }].concat(
+              establishmentType!.data!.map((e) => ({
                 label: e.name!,
                 value: `${e.id}`,
-              })))}
-            />
-          )}
-       
+              }))
+            )}
+          />
+        )}
+
         <AppTextarea form={form} />
 
-        <PlaceAddressForm form={form}/>
+        <PlaceAddressForm form={form} />
         {/* <AddressForm form={ form} /> */}
         {/* <LaltitudeLongituide form={form } /> */}
         <div className="flex gap-4">
-        <TimeInput label={"Ouverture"} {...form.getInputProps("openingTime")} error={form.errors["openingTime"]} key={form.key("openingTime")} />
-      <TimeInput label={"Fermuture"} {...form.getInputProps("closingTime")} error={form.errors["closingTime"]} key={form.key("closingTime")} />
-
+          <TimeInput
+            label={"Ouverture"}
+            {...form.getInputProps("openingTime")}
+            error={form.errors["openingTime"]}
+            key={form.key("openingTime")}
+          />
+          <TimeInput
+            label={"Fermuture"}
+            {...form.getInputProps("closingTime")}
+            error={form.errors["closingTime"]}
+            key={form.key("closingTime")}
+          />
         </div>
-       
       </CustomForm>
     </div>
   );

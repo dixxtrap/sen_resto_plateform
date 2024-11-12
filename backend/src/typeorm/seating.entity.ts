@@ -11,11 +11,13 @@ export class Seating {
   @PrimaryGeneratedColumn()
   id: number;
   @Column({ unique: true })
-  name: string;
+  name: string; 
+  @Column({ unique: false, nullable:true, default:1 })
+  capacity: number;
   @ManyToOne(() => CompanyShop)
   shop: CompanyShop;
   @Column({ nullable: true, default: null })
-  partnerId: number;
+  shopId: number;
   @Column({ nullable: true, default: null })
   isActive: boolean;
   @Column(() => CreationDetails) details: CreationDetails;
@@ -24,7 +26,9 @@ export class SeatingDto {
   @ApiProperty()
   name: string;
   @ApiProperty()
-  partnerId: number;
+  isActive: boolean;
   @ApiProperty()
-  isACtive: boolean;
+  shopId: number;
+  @ApiProperty()
+  capacity:number;
 }

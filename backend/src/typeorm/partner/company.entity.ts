@@ -11,6 +11,8 @@ import { CompanyShop } from './company_shop.entity';
 import { CreationDetails } from '../details.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Partner } from '../partner.entity';
+import { BeforeInsert } from 'typeorm/decorator/listeners/BeforeInsert';
+import { BeforeUpdate } from 'typeorm/decorator/listeners/BeforeUpdate';
 
 @Entity()
 export class Company {
@@ -58,13 +60,20 @@ export class Company {
   @Column({ default: false })
   isShop: boolean;
   @AfterLoad()
+  @BeforeInsert()
+  @BeforeUpdate()
+  isActiveHandler() {
+    console.log(`${this.isActive}` === 'true')
+    this.isActive = `${this.isActive}` === 'true';
+
+  }
   setOpen() {
     const now = new Date();
 
     const time = `${now.toTimeString()}`;
     if (this.closingTime > this.openingTime)
       this.isOpen = this.closingTime > time && this.openingTime < time;
-    else if (this.closingTime < this.openingTime)this.isOpen = !(this.closingTime > time && this.openingTime < time);
+    else if (this.closingTime < this.openingTime) this.isOpen = !(this.closingTime > time && this.openingTime < time);
     else this.isOpen = true;
   }
 }

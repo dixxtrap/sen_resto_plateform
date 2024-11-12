@@ -1,4 +1,3 @@
-
 import { JwtService } from '@nestjs/jwt';
 
 import { logInfo } from 'src/app_log';
@@ -76,9 +75,15 @@ export class UserService {
     return this.repos
       .find({
         relations: { role: true },
-        where: { companyId:by.companyId  },
+        where: { companyId: by.companyId },
       })
       .then((value) => BaseResponse.success(value))
+      .catch(WsCatch);
+  }
+  getAllUser() {
+    return this.repos
+      .find({ relations: { company: true , role:true} })
+      .then((result) => BaseResponse.success(result))
       .catch(WsCatch);
   }
   getById({ id }: { id: number }) {
@@ -100,8 +105,8 @@ export class UserService {
       .catch(WsCatch);
   }
   update({ id, by, body }: { id: number; by: UserDto; body: UserDto }) {
-    console.log(body)
-    
+    console.log(body);
+
     logInfo({ by, action: `update user idenfier by Id= ${id}` });
     return this.repos
       .update({ id: Equal(id) }, { ...body })
@@ -146,7 +151,7 @@ export class UserService {
       .findOne({
         where: { id: Equal(by.id) },
         relations: {
-          company:  true ,
+          company: true,
           role: { rolePermission: { permission: { module: true } } },
         },
       })
@@ -154,4 +159,3 @@ export class UserService {
       .catch(WsCatch);
   }
 }
-  

@@ -36,6 +36,11 @@ export const userApi = createApi({
       transformErrorResponse: errorTrasform,
       providesTags: ["user","security"],
     }),
+    getUserForAdmin: builder.query<BaseResponse<User[]>, string>({
+      query: () => "user/all_for_admin",
+      transformErrorResponse: errorTrasform,
+      providesTags: ["user","security"],
+    }),
     getUserById: builder.query<BaseResponse<User>, number>({
       query: (id) => `user/by_id/${id}`,
       transformErrorResponse: errorTrasform,

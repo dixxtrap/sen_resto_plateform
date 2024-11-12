@@ -25,6 +25,7 @@ export const RoleCreate = ({ id }: { id: number }) => {
           isError={isError}
           isSuccess={isSuccess}
           isLoading={isLoading}
+          successPath="."
         >
           <TextInput
             label={TextConstant.names}

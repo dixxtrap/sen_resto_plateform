@@ -7,7 +7,7 @@ import { useForm } from "@mantine/form";
 import {  ShopDto } from "../../../core/models/company.dto";
 import { Title } from "../../components/title";
 import { handlePreviewV2 } from "../../utils/handle_preview";
-import { ProtecterPage } from "../../components/protecter_page";
+import { PermisisionTypeEnum, ProtecterPage } from "../../components/protecter_page";
 import { TextConstant } from "../../../core/data/textConstant";
 
 import { AppTextarea } from "../../components/form/app_textarea";
@@ -62,7 +62,7 @@ description:oldaData.description,
 
       <div className="flex ">
         <ProtecterPage
-          permissions={[{ code: "update_restaurant_profile", type: "update" }]}
+          permissions={[{ code: "update_restaurant_profile", type: PermisisionTypeEnum.UPDATE}]}
         >
           <ImgWithHandler htmlFor="Profile" {...front} />
         </ProtecterPage>

@@ -94,17 +94,15 @@ export const Navigation: FC<{
                             )
                           }
                         >
-                          {({ isActive }) => (
-                            <>
-                              {" "}
+                         
+                            
                               <item.icon
-                                fill={isActive ? "white" : ""}
+                              
                                 className="h-6 w-6 text-white text-sm shrink-0"
                                 aria-hidden="true"
                               />
                               {item.name}
-                            </>
-                          )}
+                            
                         </NavLink>
                       </li>
                     </ProtecterPage>

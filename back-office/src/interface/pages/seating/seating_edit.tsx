@@ -1,23 +1,34 @@
-import { Modal, TextInput, Button, Select } from "@mantine/core";
+import { Modal, TextInput, Select, ActionIcon } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { CustomForm } from "../../components/custom_form";
 import { seatingApi } from "../../../core/features/seating.slice";
 import { useForm } from "@mantine/form";
 import { shopApi } from "../../../core/features/shop.slice";
-export const SeatingCreate = () => {
-  const shop = shopApi.useGetShopQuery("");
+import { Seatingto } from "../../../core/models/seating.dto";
+import { IconPencil } from "@tabler/icons-react";
+import { CustomSwitchInput } from "../../components/switch";
+
+export const SeatingEdit = (props: Seatingto) => {
+    const shop = shopApi.useGetShopQuery("");
   const [opened, { open, close }] = useDisclosure();
-  const [create, createState] = seatingApi.useCreateMutation();
-  const form = useForm();
+  const [create, createState] = seatingApi.useUpdateMutation();
+  const form = useForm<Seatingto>({
+    initialValues: {
+      name: props.name,
+      capacity: props.capacity,
+      isActive: props.isActive,
+      shopId: `${props.shopId}` ,
+    }
+  });
   const _onSubmit = form.onSubmit((data) => {
-    create(data);
+    create({ id: props.id!, body: data });
   });
   return (
     <>
       <Modal
-        opened={opened}
+        title={<span>Modifier la table</span>}
         onClose={close}
-        title={<span>Ajouter une nouvelle table</span>}
+        opened={opened}
       >
         <CustomForm successPath="." onSubmit={_onSubmit} {...createState}>
           <TextInput
@@ -41,10 +52,14 @@ export const SeatingCreate = () => {
               label: e.name!,
               value: `${e.id}`,
             }))}
+            
           />
+          <CustomSwitchInput itemKey={"isActive"} form={form} />
         </CustomForm>
       </Modal>
-      <Button onClick={open}>Creer une table</Button>
+      <ActionIcon onClick={open}>
+        <IconPencil />
+      </ActionIcon>
     </>
   );
 };

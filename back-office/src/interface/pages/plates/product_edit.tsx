@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 import { ProductCreateFile } from "./product_file_create";
 import { ProductFileUpdate } from "./product_file_update";
-import {   Select, TextInput } from "@mantine/core";
+import { Select, TextInput } from "@mantine/core";
 import { TextConstant } from "../../../core/data/textConstant";
 import { AppTextarea } from "../../components/form/app_textarea";
 import { CustomSwitchInput } from "../../components/switch";
@@ -19,7 +19,7 @@ export const PlatesEdit = () => {
   // const { data: categories, isLoading: isTagLoading } = useGetCategoryQuery("");
   const [update, { isLoading, isSuccess, isError, reset }] =
     productApi.useUpdateProductMutation();
-    const companyCategory=companyCategoryApi.useGetQuery();
+  const companyCategory = companyCategoryApi.useGetQuery();
   const old = productApi.useGetProductByIdQuery(id);
   console.log(old);
   const form = useForm({ mode: "uncontrolled" });
@@ -28,22 +28,20 @@ export const PlatesEdit = () => {
     update({ id: id, product: body as ProductDto });
   });
   useEffect(() => {
-    if (old) {
+    if (old.data?.data) {
       const { ...rest } = old.data?.data;
-      form.setValues({...rest, companyCategoryId:`${rest.companyCategoryId}`});
-      
-     
+      form.setValues({
+        ...rest,
+        companyCategoryId: `${rest.companyCategoryId}`,
+      });
     }
-  }, [old]);
+  }, [old.isSuccess]);
   console.log("dat------old", old);
   return (
     <>
-      
-      
-    
-      {old.data  && (
+      {old.data && old.isSuccess && (
         <div className="flex flex-col divide-y darkDivider">
-          <Title title={old.data?.data.name} subTitle="Modifier le plat" />
+          <Title title={old.data?.data?.name} subTitle="Modifier le plat" />
           <div className="flex flex-wrap gap-2 py-2">
             {old?.data?.data.file?.map((e) => (
               <ProductFileUpdate
@@ -98,12 +96,16 @@ export const PlatesEdit = () => {
 
             <AppTextarea form={form} />
 
-         
-              <Select
-               error={form.errors["companyCategoryId"]}
-               {...form.getInputProps("companyCategoryId")}
-               key={form.key("companyCategoryId")}
-               label={TextConstant.category} data={companyCategory.data?.data.map(e=>({label:e.name!, value:`${e.id}`}))}/>
+            <Select
+              error={form.errors["companyCategoryId"]}
+              {...form.getInputProps("companyCategoryId")}
+              key={form.key("companyCategoryId")}
+              label={TextConstant.category}
+              data={companyCategory.data?.data.map((e) => ({
+                label: e.name!,
+                value: `${e.id}`,
+              }))}
+            />
             <CustomSwitchInput itemKey={"isActive"} form={form} />
           </CustomForm>
         </div>

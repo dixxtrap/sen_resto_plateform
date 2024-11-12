@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { baseApi } from "../../../cores/apis/api"
 import { HomeCompanyItem } from "../home/widget/home_company_item"
-import {Image, Text} from '@mantine/core'
+import {Image, Text,  TooltipFloating} from '@mantine/core'
 import { useEffect } from "react";
 export const Company = () => {
   const {id}=useParams();
@@ -13,10 +13,13 @@ export const Company = () => {
   return (
     <>
     <div className="-mt-16 pb-16">
-    <div className="h-[200px] content-center md:h-[400px] relative w-full  mb-12 md:mb-14 bg-amber-400">
+    <div className=" content-center md:h-[400px] relative w-full  mb-12 md:mb-14 bg-amber-400">
           <div className="w-full text-center   ">
             <div className="max-w-3xl mx-auto">
-            <span className="md:text-3xl ">  {companyApi.data?.data.description}</span>
+              <TooltipFloating  label={<div className="max-w-screen-sm text-wrap">{companyApi.data?.data.description}</div>}>
+              <span className="md:text-3xl  line-clamp-5 ">  {companyApi.data?.data.description}</span>
+
+              </TooltipFloating >
             </div>
           
           </div>

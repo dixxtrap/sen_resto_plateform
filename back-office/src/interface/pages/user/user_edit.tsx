@@ -26,7 +26,7 @@ export const UserEdit = () => {
   const [update, { isError, isSuccess, isLoading, reset }] =
     useUpdateUserMutation();
     console.log(oldUser)
-  const form = useForm<User>();
+  const form = useForm<User>({initialValues:{location:{latitude:0, longitude:0}}});
   useEffect(() => {
     if (oldUser) {
       console.log(oldUser);

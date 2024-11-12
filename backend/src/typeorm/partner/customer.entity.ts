@@ -42,13 +42,14 @@ export class CustomerDto {
   displayname: string;
   @ApiProperty()
   phone: string;
+  @ApiProperty()
+  address:string;
 }
 
 export class SetProfileDto {
+
   @ApiProperty()
-  firstname: string;
-  @ApiProperty()
-  lastname: string;
+  displyname: string;
   @ApiProperty()
   address: string;
   @ApiProperty()

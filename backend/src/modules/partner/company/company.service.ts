@@ -170,10 +170,6 @@ export class CompanyService {
           return BaseResponse.success(result);
         } else throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
-      .catch((err) => {
-        console.log(err);
-        if (err instanceof WsMessage) throw err;
-        throw new WsMessage(HttpExceptionCode.FAILLURE);
-      });
+      .catch(WsCatch);
   }
 }

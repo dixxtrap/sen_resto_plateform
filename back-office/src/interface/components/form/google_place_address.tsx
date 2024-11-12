@@ -33,12 +33,12 @@ export const PlaceAddressForm = ({
         "",
         "APPROXIMATE"
       ).then((pred) => {
+        console.log(pred)
         const address: any = (pred.results as []).find(
           (e: any) => e.geometry.location_type === "APPROXIMATE"
         );
-        form.setValues({ address: address.formatted_address });
-        form.setFieldValue("location.latitude", position.coords.latitude);
-        form.setFieldValue("location.longitude", position.coords.longitude);
+        form.setValues({ address: address.formatted_address ,location:{latitue:position.coords.latitude, longitude:position.coords.longitude}});
+
         console.log(
           "=====================prediction====================",
           address.formatted_address
@@ -84,7 +84,7 @@ export const PlaceAddressForm = ({
               console.log(newValue), console.log(actionMeta);
               fromPlaceId(
                 newValue?.value.place_id,
-                import.meta.env.VITE_GOOGLE_KEY
+              
               )
                 .then(({ results }) => {
                   const { lat, lng } = results[0].geometry.location;

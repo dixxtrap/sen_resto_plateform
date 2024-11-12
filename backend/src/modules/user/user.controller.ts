@@ -13,6 +13,7 @@ import { AuthenticatedGuard } from '../security/authenticated.guard';
 import { Request } from 'express';
 import { CreateUserDto, UserDto } from 'src/typeorm/user.entity';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { CurrentUser } from 'src/annotations/current_user';
 @Controller('user')
 @ApiTags('user')
 export class UserController {
@@ -25,8 +26,14 @@ export class UserController {
   @Get('all')
   @UseGuards(AuthenticatedGuard)
   @ApiSecurity('session')
-  getAll(@Req() req: Request) {
-    return this.service.get({ by: req.user as UserDto });
+  getAll(@CurrentUser() by: UserDto) {
+    return this.service.get({ by });
+  }
+  @Get('all_for_admin')
+  @UseGuards(AuthenticatedGuard)
+  @ApiSecurity('session')
+  getAllUser(@Req() req: Request) {
+    return this.service.getAllUser( );
   }
   @Get('by_id/:id')
   getById(@Param('id') id: number) {
@@ -37,15 +44,15 @@ export class UserController {
   update(
     @Param('id') id: number,
     @Body() body: CreateUserDto,
-    @Req() req: Request,
+    @CurrentUser() by: UserDto
   ) {
-    const by = req.user as UserDto;
+    
     return this.service.update({ id, body, by });
   }
   @Post('create')
   @UseGuards(AuthenticatedGuard)
-  create(@Body() body: CreateUserDto, @Req() req: Request) {
-    const by = req.user as UserDto;
+  create(@Body() body: CreateUserDto, @CurrentUser() by: UserDto) {
+    
     return this.service.create({ body, by });
   }
 }

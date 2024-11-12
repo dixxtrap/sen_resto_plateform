@@ -26,7 +26,12 @@ export const EstablishmentTypeList = () => {
                     />
                   </div>
 
-                  <span> {e.name}</span>
+                  <div className="max-w-[200px]">
+                  <Text truncate="end" className=" w-full   ">
+                    {" "}
+                    {e.name}
+                  </Text>
+                </div>
                 </div>
               </TableTd>
               <TableTd>

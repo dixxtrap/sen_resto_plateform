@@ -25,8 +25,9 @@ export const Login = () => {
  
   });
   useEffect(() => {
-    return () => {
+   if (isSuccess===true){
       document.cookie = "access_token=Bearer " + data?.token!;
+      location.href="/dashboard"
     };
   }, [data]);
 
@@ -49,7 +50,7 @@ export const Login = () => {
             isLoading={isLoading}
             error={error}
             onSubmit={_onSubmit}
-            successPath="/dashboard"
+            successPath="/."
           >
           
         <TextInput label={TextConstant.email} {...form.getInputProps("username")} error={form.errors["username"]} key={form.key("username")} />
@@ -66,7 +67,7 @@ export const Login = () => {
               >
                 Mot de passe oublié ?
               </Link>
-              {import.meta.env.VITE_HOST}
+              {/* {import.meta.env.VITE_HOST} */}
             </div>
           </p>
         </div>

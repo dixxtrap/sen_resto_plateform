@@ -8,7 +8,6 @@ import {
   Select,
   Button,
   TextInput,
-  
 } from "@mantine/core";
 import classes from "./table.module.css";
 import { Link } from "react-router-dom";
@@ -17,16 +16,18 @@ import { DateInput } from "@mantine/dates";
 import { poppoverStyle } from "../form/custom_styles";
 import { Alert } from "../alert_success";
 import { getWsMessage } from "../../../core/features/error_transformer";
-import {  IconSearch } from "@tabler/icons-react";
+import { IconSearch } from "@tabler/icons-react";
 
 type TablePaginationProps = {
   th?: string[];
   trs?: ReactNode;
+  trsMobile?: ReactNode;
   header?: ReactNode;
   creaBtn?: ReactNode;
   title?: string;
   totalPage?: number;
   subtitle?: string;
+  thMobile?: string[];
   createPath?: string;
   isPaginated?: boolean;
   createTitle?: string;
@@ -41,10 +42,12 @@ type TablePaginationProps = {
 };
 export const TablePagination: FC<TablePaginationProps> = ({
   trs,
+  trsMobile,
   header,
   creaBtn,
   title,
   th,
+  thMobile,
   createPath,
   totalPage,
   pagination,
@@ -59,7 +62,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
   return (
     <div className="flex flex-col  app_table">
       <div className="pb-3 flex  justify-between  items-baseline">
-        <Title  className="leading-3" order={3}>
+        <Title className="leading-3" order={3}>
           {title}
         </Title>
 
@@ -101,7 +104,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
       )}
       {isSuccess && (
         <ScrollArea
-         h={"calc(100vh - 200px)"}
+          h={"calc(100vh - 200px)"}
           w={"100%"}
           className={clsx(
             " bg_table  ring-1 ring-slate-400/30 calc(100vh - 200px) rounded-md",
@@ -109,13 +112,16 @@ export const TablePagination: FC<TablePaginationProps> = ({
           )}
           onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
         >
-          <Table miw={"100%"}  className="table border-none">
+          <Table miw={"100%"} className={clsx("table border-none", {" hidden md:table ": thMobile,})}>
             <Table.Thead
               className={cx(classes.header, " bg-primary-500  z-50 ", {
                 [classes.scrolled]: scrolled,
+               
               })}
             >
-              <Table.Tr className="h-12 text-md ring-1  ring-slate-400/30">
+              <Table.Tr
+                className={clsx("h-12 text-md ring-1  ring-slate-400/30 ")}
+              >
                 {th?.map((e, i) => (
                   <Table.Th
                     className={clsx("font-bold text-white  dark:text-white", {
@@ -128,8 +134,34 @@ export const TablePagination: FC<TablePaginationProps> = ({
                 ))}
               </Table.Tr>
             </Table.Thead>
+           
             <Table.Tbody>{trs}</Table.Tbody>
           </Table>
+          {thMobile&&<Table miw={"100%"} className={clsx("table border-none", {"  md:hidden ": thMobile,})}>
+            
+            <Table.Thead
+              className={cx(classes.header, " bg-primary-500  z-50 ", {
+                [classes.scrolled]: scrolled,
+            
+              })}
+            >
+              <Table.Tr
+                className={clsx("h-12 text-md ring-1  ring-slate-400/30 ")}
+              >
+                {thMobile?.map((e, ) => (
+                  <Table.Th
+                    className={clsx("font-bold text-white  dark:text-white", {
+                      // "text-right": i == thMobile.length - 1,
+                    })}
+                    key={`th_${e}`}
+                  >
+                    {e}
+                  </Table.Th>
+                ))}
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{trsMobile}</Table.Tbody>
+          </Table>}
         </ScrollArea>
       )}
       {isPaginated && (

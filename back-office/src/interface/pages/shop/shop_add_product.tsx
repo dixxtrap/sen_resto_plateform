@@ -16,7 +16,6 @@ import {
   IconCheese,
   IconCircleCheck,
 } from "@tabler/icons-react";
-import { Alert } from "../../components/alert_success";
 
 export const ShopAddProduct = ({ shopId }: { shopId: string }) => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -49,7 +48,7 @@ export const ShopAddProduct = ({ shopId }: { shopId: string }) => {
 
   return (
     <>
-      <Alert isOpen={updateState.isLoading} type="loading"></Alert>
+      {/* <Alert isOpen={updateState.isLoading} type="loading"></Alert> */}
       <Modal
         title={<span className="font-bold">Ajouter des produits</span>}
         onClose={close}
@@ -81,7 +80,8 @@ export const ShopAddProduct = ({ shopId }: { shopId: string }) => {
           </div>
         </div>
       </Modal>
-      <ActionIcon onClick={open}><IconCheese/></ActionIcon>
+      <ActionIcon className="md:block hidden" onClick={open}><IconCheese/></ActionIcon>
+      <Button size="compact-md" variant="light" className="md:hidden font-light " rightSection={<IconCheese/>} onClick={open}>produits</Button>
     </>
   );
 };

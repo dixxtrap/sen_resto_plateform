@@ -41,6 +41,7 @@ export const Signup: FC<SetProfileFormProps> = ({ phone, action }) => {
   };
 handleGetLocation();
   const _onSubmit = form.onSubmit(async (data) => {
+    
     signup({
       ...data,
       phone:`221${data.phone}`,
@@ -71,14 +72,10 @@ handleGetLocation();
             />
             <TextInput
               label={TextConstant.firstname}
-              {...form.getInputProps("firstname")}
+              {...form.getInputProps("displaynam")}
               w={"100%"}
             />
-            <TextInput
-              label={TextConstant.lastname}
-              {...form.getInputProps("lastname")}
-              w={"100%"}
-            />
+            
            
            <Select label={TextConstant.city}         {...form.getInputProps("cityId")}  w={"100%"} searchable data={city.data?.data.map(e=>({value:`${e.id}`, label:`${e.parent?.parent?.parent?.name} - ${e.parent?.parent?.name} - ${e.parent?.name} - ${e?.name}`}))}/>
            
