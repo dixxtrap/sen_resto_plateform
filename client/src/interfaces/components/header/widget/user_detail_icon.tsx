@@ -119,7 +119,7 @@ export const UserDetailIcon = () => {
                     <UserIcon style={{ width: rem(14), height: rem(14) }} />
                   }
                 >
-                  {` ${profile?.data.firstname} ${profile?.data.lastname}`}
+                  {` ${profile?.data.displayname}`}
                 </Menu.Item>
 
                 <Menu.Item

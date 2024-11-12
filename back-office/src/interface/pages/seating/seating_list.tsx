@@ -19,7 +19,7 @@ export const SeatingList = () => {
               <TableTd>{e.name}</TableTd>
               <TableTd>{e.shop?.name}</TableTd>
               <TableTd>{e.capacity}</TableTd>
-              <TableTd>
+              <TableTd>  
                 <Status status={e.isActive!} />
               </TableTd>
 

@@ -59,7 +59,6 @@ export class Company {
   establishmentTypeId: number;
   @Column({ default: false })
   isShop: boolean;
-  @AfterLoad()
   @BeforeInsert()
   @BeforeUpdate()
   isActiveHandler() {
@@ -67,10 +66,11 @@ export class Company {
     this.isActive = `${this.isActive}` === 'true';
 
   }
+  @AfterLoad()
   setOpen() {
     const now = new Date();
 
-    const time = `${now.toTimeString()}`;
+    const time = `${now.toTimeString()}`
     if (this.closingTime > this.openingTime)
       this.isOpen = this.closingTime > time && this.openingTime < time;
     else if (this.closingTime < this.openingTime) this.isOpen = !(this.closingTime > time && this.openingTime < time);

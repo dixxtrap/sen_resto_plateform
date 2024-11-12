@@ -11,7 +11,7 @@ export const UserProfile = () => {
 
         <div className="flex flex-col items-center ">
           <span>
-            {profile?.data.firstname} {profile?.data.lastname}
+            {profile?.data.displayname}
           </span>
           <span>{profile?.data.phone}</span>
         </div>
