@@ -22,7 +22,7 @@ export class CompanyCategory {
 
     @Column("text", { nullable: true, default: true })
     description: string;
-    @Column()
+    @Column({nullable:true, default:null})
     partnerId: number;
     @Column({ default: 1,nullable:true })
     priority: number;
