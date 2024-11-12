@@ -18,13 +18,13 @@ export class WsCompanyService {
     private repos: Repository<Company>,
     @Inject(EntityProviderEnum.ESTABLISHMENT_TYPE)
     private establishmentTypeRepos: Repository<EstablishmentType>,
-  ) {}
+  ) { }
 
   getByEstablishmentType() {
     return this.establishmentTypeRepos
       .find({
         where: { isActive: true },
-        relations: { company: {shop:true} },
+        relations: { company: { shop: true } },
         select: {
           id: true,
           description: true,
@@ -37,8 +37,8 @@ export class WsCompanyService {
             shortname: true,
             name: true,
             imagePath: true,
-            backgroundPath: true,
-            shop: { backgroundPath: true, name: true, id: true , location:{longitude:true, latitude:true}},
+            backgroundPath: true, description: true,
+            shop: { backgroundPath: true, name: true, id: true, location: { longitude: true, latitude: true } },
             location: { latitude: true, longitude: true },
           },
         },
