@@ -12,7 +12,6 @@ import { OrderProduct } from "../../../../cores/models/order.dto";
 export const PlateItemPoppup = ({
   product,close, orderProduct
 }: {
-  open: boolean;
   close: ()=>void,
   product: ProductDto;
   orderProduct?: OrderProduct;

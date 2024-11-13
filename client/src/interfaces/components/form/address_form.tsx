@@ -6,7 +6,7 @@ import {
 
 } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import {
   setKey,
@@ -20,6 +20,12 @@ import {
   // geocode,
   // RequestType,
 } from "react-geocode";
+const loadGoogleMapsScript = (apiKey: string) => {
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+  script.async = false;
+  document.body.appendChild(script);
+};
 export const AddressForm = ({
   form,
   isUpdatable,
@@ -53,6 +59,9 @@ export const AddressForm = ({
       });
     });
   };
+useEffect(() => {
+  loadGoogleMapsScript(import.meta.env.VITE_GOOGLE_KEY)
+}, [])
 
   const [update, setUpdate] = useState(false);
   return (

@@ -14,7 +14,7 @@ export const HomeCompanyItem = ({ company }: { company: CompanyDto }) => {
             src={company.backgroundPath}
           />
         </div>
-        <div>
+        <div className="flex gap-3 flex-col">
           <div className="flex  gap-2 justify-between">
             <div className="h-5">
               <Image src={company.imagePath} className="w-8"/>

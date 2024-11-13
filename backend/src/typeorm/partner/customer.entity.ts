@@ -19,7 +19,7 @@ import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decora
 export class Customer {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+  @Column({nullable:true, default:null})
   displayname: string;
   @Column({ unique: true })
   phone: string;

@@ -92,7 +92,7 @@ const CompanyProduct = ({
                       {cat.product?.map((p) => {
                         return (
                           <div
-                            key={"product"+p.id}
+                            key={"product-mobile-"+p.id}
                             id={`${cat.id}`}
                             ref={(el) => {
                               if (el) sectionRefs.current[index] = el;
@@ -133,7 +133,7 @@ const CompanyProduct = ({
                         if (el) sectionRefs.current[index] = el;
                       }}
                     >
-                      <ProductItem key={"produit-"+p.id}
+                      <ProductItem key={"produit-web-"+p.id}
                         orderProduct={order.data?.data
                           .find((e) => e.partnerId == p.parentId)
                           ?.products.find(

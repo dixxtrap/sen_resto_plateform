@@ -52,7 +52,7 @@ confirmationMessage,
 
 />
     <div className={btnClassName?"":"flex flex-col divide-y darkDivider gap-y-2 "}>
-      {isSuccess && successMessage!="." && <Navigate to={successPath??".."} />}
+      {isSuccess &&  successPath!="." && <Navigate to={successPath??".."} />}
       {title &&<Title title={title} subTitle={subTitle} />}
       <form
         action=""

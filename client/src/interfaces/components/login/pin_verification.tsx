@@ -17,7 +17,7 @@ export const PinVerification = ({phone, onSucess}:{phone:string, onSucess:()=>vo
       verification({to:"221"+phone,code:value.password })
     })
     useEffect(() => {
-      if(verficationState.isSuccess) onSucess();
+      if(verficationState.isSuccess&&onSucess) onSucess();
     }, [verficationState.isSuccess])
     
   return (

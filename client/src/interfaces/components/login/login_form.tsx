@@ -24,10 +24,10 @@ export const ProtectedAction: FC<ProtectedActionProps> = ({
 
       <LoginForm
         component={children}
-        close={close}
+        // close={close}
         action={() => {
           action();
-          close();
+          // close();
         }}
       />
     </div>
@@ -36,7 +36,7 @@ export const ProtectedAction: FC<ProtectedActionProps> = ({
 
 type LoginFormProps = {
   action: () => void;
-  close: () => void;
+  // close: () => void;
   component: ReactNode;
 };
 export const LoginForm: FC<LoginFormProps> = ({ action, component }) => {

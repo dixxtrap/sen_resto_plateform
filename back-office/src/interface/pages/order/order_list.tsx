@@ -95,7 +95,7 @@ export const OrderList = () => {
                 <Table.Td>
                   <div className="flex flex-col">
                   <span>
-                  {e.customer?.displayname} {e.customer?.lastname}
+                  {e.customer?.displayname} 
 
                   </span>
                  

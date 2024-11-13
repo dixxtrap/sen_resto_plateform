@@ -154,7 +154,7 @@ export const UserDetailIcon = () => {
       {profileState.isSuccess == false && (
         <LoginForm
           component={<Button radius={30}>Connexion</Button>}
-          close={close}
+          
           action={() => close()}
         />
       )}

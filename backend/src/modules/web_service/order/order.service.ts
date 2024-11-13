@@ -187,7 +187,7 @@ export class WsOrderService {
     body: AddOrderDto;
     by: CustomerDto;
   }) {
-    console.log('==========customer=========', by);
+    console.log('==========customer=========', body.productId);
     return this.productHistoryService
       .last({ id: body.productId })
       .then((productHistory) => {
