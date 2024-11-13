@@ -20,7 +20,7 @@ export class Deliver  {
   companyId:number;
   @ManyToOne(()=>Partner)
   partner:Partner
-  @Column()
+  @Column({ nullable: true, default: null })
   partnerId:number;
   @Column(()=>Coordonates)
   location:Coordonates
