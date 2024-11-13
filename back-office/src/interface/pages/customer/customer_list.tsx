@@ -38,9 +38,9 @@ export const CustomerList = () => {
           <>
             {customers?.data.map((customer) => (
               <Table.Tr className=" whitespace-nowrap text-sm text-slate-500 ">
-                <Table.Td className=" ">{customer!.firstname} {customer!.lastname}</Table.Td>
+                <Table.Td className=" ">{customer!.displayname} </Table.Td>
                 <Table.Td className="">{customer!.phone}</Table.Td>
-                <Table.Td className="">{customer!.address?.streetAddress}</Table.Td>
+                <Table.Td className="">{customer!.address}</Table.Td>
                 <Table.Td className="">{formatDate(customer!.details?.createdAt!)}</Table.Td>
                 <Table.Td className="">
                   <Status

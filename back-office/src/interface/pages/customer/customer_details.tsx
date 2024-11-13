@@ -8,9 +8,9 @@ export const CustomerDetails = () => {
   const {id}=useParams()
   const {data,isLoading, isError, error , isSuccess}=useGetCustomerByIdQuery(id!);
   return (
-    <Details title={data?.data.firstname?`${data?.data.firstname}`:data?.data.phone} isLoading={isLoading} isError={isError} error={error} isSuccess={isSuccess}>
-      <DetailItem label={TextConstant.firstname} value={data?.data.firstname??TextConstant.notKnown}/>
-      <DetailItem label={TextConstant.lastname} value={data?.data.lastname??TextConstant.notKnown}/>
+    <Details title={data?.data.displayname?`${data?.data.displayname}`:data?.data.phone} isLoading={isLoading} isError={isError} error={error} isSuccess={isSuccess}>
+      <DetailItem label={TextConstant.firstname} value={data?.data.displayname??TextConstant.notKnown}/>
+      <DetailItem label={TextConstant.lastname} value={data?.data.displayname??TextConstant.notKnown}/>
       <DetailItem label={TextConstant.phone} value={data?.data.phone??TextConstant.notKnown}/>
     </Details>
   )

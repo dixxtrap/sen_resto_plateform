@@ -38,7 +38,7 @@ export const OrderList = () => {
             {order?.data.map((e) => (
               <Table.Tr key={e.id}>
                 <Table.Td>
-                  {e.customer?.firstname} {e.customer?.lastname}
+                  {e.customer?.displayname} 
                 </Table.Td>
                 <Table.Td>
                  
@@ -95,7 +95,7 @@ export const OrderList = () => {
                 <Table.Td>
                   <div className="flex flex-col">
                   <span>
-                  {e.customer?.firstname} {e.customer?.lastname}
+                  {e.customer?.displayname} {e.customer?.lastname}
 
                   </span>
                  

@@ -1,6 +1,6 @@
 import { Checkbox, TextInput } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import {
   setKey,
@@ -13,6 +13,12 @@ import {
   // geocode,
   // RequestType,
 } from "react-geocode";
+const loadGoogleMapsScript = (apiKey: string) => {
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+  script.async = true;
+  document.body.appendChild(script);
+};
 export const PlaceAddressForm = ({
   form,
 
@@ -47,6 +53,9 @@ export const PlaceAddressForm = ({
     });
   };
 
+useEffect(() => {
+  loadGoogleMapsScript(import.meta.env.VITE_GOOGLE_KEY)
+}, [])
   return (
     <>
       {/* <Checkbox  onChange={getLocation}></Checkbox> */}

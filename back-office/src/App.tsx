@@ -12,19 +12,10 @@ import { DatesProvider } from "@mantine/dates";
 import { APP_THEME } from "./theme";
 import { Notifications } from "@mantine/notifications";
 import { initializeSocket } from "./core/features/get_socket";
-import { useEffect } from "react";
-const loadGoogleMapsScript = (apiKey: string) => {
-  const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-  script.async = true;
-  document.body.appendChild(script);
-};
+
 export const App = () => {
   initializeSocket(import.meta.env.VITE_HOST);
 
-useEffect(() => {
-  loadGoogleMapsScript(import.meta.env.VITE_GOOGLE_KEY)
-}, [])
 
   return (
     <MantineProvider theme={APP_THEME}>

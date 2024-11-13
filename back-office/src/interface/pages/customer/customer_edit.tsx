@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 import { CustomForm } from "../../components/custom_form";
 import {
   useGetCustomerByIdQuery,
@@ -9,52 +9,52 @@ import { useForm } from "@mantine/form";
 import { Customer } from "../../../core/models/customer";
 import { TextConstant } from "../../../core/data/textConstant";
 import { TextInput } from "@mantine/core";
-import { AddressForm } from "../../components/form/address_form";
-import { LaltitudeLongituide } from "../../components/form/laltitude_logitude";
+import { PlaceAddressForm } from "../../components/form/google_place_address";
 
 export const CustomerEdit = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const { data: oldCustomer, isLoading: isCustomerLoading } =
-  useGetCustomerByIdQuery(id!);
-  const [update, { isLoading, isSuccess, isError , error}] =
+    useGetCustomerByIdQuery(id!);
+  const [update, { isLoading, isSuccess, isError, error }] =
     useUpdateCustomerMutation();
-  const form= useForm({
- 
-  });
-  const _onSubmit = form.onSubmit((body ) => {
+  const form = useForm({});
+  const _onSubmit = form.onSubmit((body) => {
     console.log(body);
-    update({customer:body as Customer, id:id!})
+    update({ customer: body as Customer, id: id! });
   });
   useEffect(() => {
-   if(oldCustomer){
-form.setValues(oldCustomer.data)
-   }
-  }, [oldCustomer])
-  
+    if (oldCustomer) {
+      form.setValues(oldCustomer.data);
+    }
+  }, [oldCustomer]);
+
   return (
     <>
-      
       <CustomForm
         title="Client"
-        subTitle={`Modifier le client ${oldCustomer?.data?.firstname}`}
+        subTitle={`Modifier le client ${oldCustomer?.data?.displayname}`}
         isError={isError}
         isSuccess={isSuccess}
-        isLoading={isLoading||isCustomerLoading}
+        isLoading={isLoading || isCustomerLoading}
         error={error}
         onSubmit={_onSubmit}
       >
-       
-        <TextInput label={TextConstant.firstname} {...form.getInputProps("firstname")} error={form.errors["firstname"]} key={form.key("firstname")} />
+        
 
-        
-        <TextInput label={TextConstant.lastname} {...form.getInputProps("lastname")} error={form.errors["lastname"]} key={form.key("lastname")} />
+        <TextInput
+          label={TextConstant.names}
+          {...form.getInputProps("displayname")}
+          error={form.errors["displayname"]}
+          key={form.key("displayname")}
+        />
 
-      
-        <TextInput label={TextConstant.phone} {...form.getInputProps("phone")} error={form.errors["phone"]} key={form.key("phone")} />
-<AddressForm form={form} isUpdatable/>
-        
-<LaltitudeLongituide form={form}/>
-        
+        <TextInput
+          label={TextConstant.phone}
+          {...form.getInputProps("phone")}
+          error={form.errors["phone"]}
+          key={form.key("phone")}
+        />
+        <PlaceAddressForm form={form} />
       </CustomForm>
     </>
   );
