@@ -8,8 +8,8 @@ export class DeliverDto{
         email?: string
         location?:CoordonatesDto;
         isPhoneVeirified?: boolean
-        firstname?: string
-        lastname?: string
+       
+        displayname?: string
         laltitude?: number
         longitude?: number
         isEnable?: boolean

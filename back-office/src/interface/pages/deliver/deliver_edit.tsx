@@ -23,8 +23,8 @@ export const DeliverEdit = () => {
     console.log(old)
    if(oldState.isSuccess===true){
     form.setValues({
-      firstname:old?.data.firstname,
-      lastname:old?.data.lastname,
+      displayname:old?.data.displayname,
+      
       phone:old?.data.phone,
       email:old?.data.email,
       address:old?.data.address,
@@ -35,27 +35,20 @@ export const DeliverEdit = () => {
   
   return (
     <CustomForm
-      title={"Creation d'un livreur"}
+      title={"Modifier  les infos du livreur"}
       {...state}
       isLoading={oldState.isLoading || state.isLoading}
       onSubmit={_onsubmit}
     >
       <TextInput
-        label={TextConstant.firstname}
+        label={TextConstant.displayname}
         {...{
-          key: form.key("firstname"),
-          ...form.getInputProps("firstname"),
-          error: form.errors["firstname"],
+          key: form.key("displayname"),
+          ...form.getInputProps("displayname"),
+          error: form.errors["displayname"],
         }}
       />
-      <TextInput
-        label={TextConstant.lastname}
-        {...{
-          key: form.key("lastname"),
-          ...form.getInputProps("lastname"),
-          error: form.errors["lastname"],
-        }}
-      />
+     
       <TextInput
         label={TextConstant.phone}
         {...{

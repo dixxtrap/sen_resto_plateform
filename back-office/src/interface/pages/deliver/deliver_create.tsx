@@ -19,21 +19,14 @@ export const DeliverCreate = () => {
       onSubmit={_onsubmit}
     >
       <TextInput
-        label={TextConstant.firstname}
+        label={TextConstant.displayname}
         {...{
-          key: form.key("firstname"),
-          ...form.getInputProps("firstname"),
-          error: form.errors["firstname"],
+          key: form.key("displayname"),
+          ...form.getInputProps("displayname"),
+          error: form.errors["displayname"],
         }}
       />
-      <TextInput
-        label={TextConstant.lastname}
-        {...{
-          key: form.key("lastname"),
-          ...form.getInputProps("lastname"),
-          error: form.errors["lastname"],
-        }}
-      />
+     
       <TextInput
         label={TextConstant.phone}
         {...{

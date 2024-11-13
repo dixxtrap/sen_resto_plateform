@@ -13,6 +13,7 @@ export class TextConstant {
 
   static shortname : string = "Nom Commercial";
   static  firstname : string = "Prénom";
+  static  displayname : string = "Nom Complet";
   static  laltitude : string = "laltitude";
   static  longitude : string = "longitude";
   static confirmation: string = "Confirmation";
