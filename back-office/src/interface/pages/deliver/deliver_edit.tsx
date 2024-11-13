@@ -58,8 +58,20 @@ export const DeliverEdit = () => {
         }}
       />
       <TextInput
+        label={TextConstant.email}
+        {...{
+          key: form.key("email"),
+          ...form.getInputProps("email"),
+          error: form.errors["email"],
+        }}
+      />
+      <TextInput
         label="Numéro d'Immatriculation"
-        {...form.getInputProps("email")}
+        {...{
+          key: form.key("externalId"),
+          ...form.getInputProps("externalId"),
+          error: form.errors["externalId"],
+        }}
       />
       <PlaceAddressForm form={form} />
     </CustomForm>

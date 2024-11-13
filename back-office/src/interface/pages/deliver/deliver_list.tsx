@@ -9,11 +9,12 @@ import { TextConstant } from "../../../core/data/textConstant"
 export const DeliverList = () => {
     const deliver=deliverApi.useGetQuery("")
     return (
-     <TablePagination title="Livreur" {...deliver} createPath="/deliver/create"  th={[TextConstant.displayname,'Phone', 'Immatriculation','Adresse', '']} trs={<>
+     <TablePagination title="Livreur" {...deliver} createPath="/deliver/create"  th={[TextConstant.displayname,'Phone','Email', 'Immatriculation','Adresse', '']} trs={<>
     {deliver.data?.data.map(e=><Table.Tr>
       <Table.Td>{e.displayname} </Table.Td>
       <Table.Td>{e.phone}</Table.Td>
       <Table.Td>{e.email}</Table.Td>
+      <Table.Td>{e.externalId}</Table.Td>
       <Table.Td>{e.address}</Table.Td>
       <Table.Td>
        <DeliverResendCode deliver={e}/>

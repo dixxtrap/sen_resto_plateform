@@ -45,7 +45,11 @@ export const DeliverCreate = () => {
       />
       <TextInput
         label="Numéro d'Immatriculation"
-        {...form.getInputProps("externalId")}
+        {...{
+          key: form.key("externalId"),
+          ...form.getInputProps("externalId"),
+          error: form.errors["externalId"],
+        }}
       />
 
       
