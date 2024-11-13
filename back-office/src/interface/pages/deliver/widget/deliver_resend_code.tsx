@@ -16,8 +16,8 @@ export const DeliverResendCode = ({ deliver }: { deliver: DeliverDto }) => {
       >
         <Text>
           Êtes-vous sûr de vouloir renvoyer le code d'accès au livreur ? Cette
-          action enverra un nouveau code à {deliver.firstname}{" "}
-          {deliver.lastname} / {deliver.phone}.
+          action enverra un nouveau code à {deliver.displayname}{" "}
+           / {deliver.phone}.
         </Text>
         <div className="flex justify-between">
           <Button>Annuler</Button>
