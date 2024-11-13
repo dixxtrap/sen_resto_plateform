@@ -16,7 +16,7 @@ export class Deliver  {
   phone: string;
   @ManyToOne(()=>Company)
   company:Company
-  @Column()
+  @Column({ nullable: true, default: null })
   companyId:number;
   @ManyToOne(()=>Partner)
   partner:Partner
