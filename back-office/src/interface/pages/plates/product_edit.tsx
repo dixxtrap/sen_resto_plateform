@@ -29,7 +29,7 @@ export const PlatesEdit = () => {
   });
   useEffect(() => {
     if (old.data?.data) {
-      const { ...rest } = old.data?.data;
+      const { file, ...rest } = old.data?.data;
       form.setValues({
         ...rest,
         companyCategoryId: `${rest.companyCategoryId}`,
