@@ -27,7 +27,7 @@ export const DeliverCreate = () => {
         }}
       />
      
-      <TextInput
+     <TextInput
         label={TextConstant.phone}
         {...{
           key: form.key("phone"),
@@ -36,8 +36,16 @@ export const DeliverCreate = () => {
         }}
       />
       <TextInput
+        label={TextConstant.email}
+        {...{
+          key: form.key("email"),
+          ...form.getInputProps("email"),
+          error: form.errors["email"],
+        }}
+      />
+      <TextInput
         label="Numéro d'Immatriculation"
-        {...form.getInputProps("email")}
+        {...form.getInputProps("externalId")}
       />
 
       

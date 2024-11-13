@@ -1,17 +1,17 @@
 import { CoordonatesDto } from "./coordonates.dto"
 import { CreationDetailDto } from "./creation_details.dto"
 
-export class DeliverDto{
+export class DeliverDto {
         id?: number
         phone?: string
         address?: string
         email?: string
-        location?:CoordonatesDto;
+        location?: CoordonatesDto;
         isPhoneVeirified?: boolean
-       
+        externalId?: string;
         displayname?: string
         laltitude?: number
         longitude?: number
         isEnable?: boolean
-       details?:CreationDetailDto 
+        details?: CreationDetailDto
 }
