@@ -43,7 +43,7 @@ export const PlaceAddressForm = ({
         const address: any = (pred.results as []).find(
           (e: any) => e.geometry.location_type === "APPROXIMATE"
         );
-        form.setValues({ address: address.formatted_address ,location:{latitue:position.coords.latitude, longitude:position.coords.longitude}});
+        form.setValues({ address: address.formatted_address ,location:{latitude:position.coords.latitude, longitude:position.coords.longitude}});
 
         console.log(
           "=====================prediction====================",
