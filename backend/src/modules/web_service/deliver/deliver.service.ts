@@ -9,6 +9,7 @@ import { WsCatch } from 'src/utils/catch';
 import { CryptoService } from 'src/utils/crypto_service';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
 import { Repository } from 'typeorm/repository/Repository';
+import { BaseResponse } from 'src/typeorm/response_base';
 
 export class WsDeliverService {
   constructor(
@@ -24,9 +25,10 @@ export class WsDeliverService {
 
         if (true) {
           const token = this.securityService.sign({ payload: rest }); 
-        return {user:rest, token}
+        return BaseResponse.success({user:rest, token});
         }
         throw new WsMessage(HttpExceptionCode.LOGIN_FAILLURE);
+       
       })
       .catch(WsCatch);
   }
