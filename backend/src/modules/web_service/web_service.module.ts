@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import {  Partner } from 'src/typeorm';
+import { Partner } from 'src/typeorm';
 import { Product } from 'src/typeorm/product.entity';
 import { WsProductService } from './product/product.service';
 import { WsCompanyController } from './company/company.controller';
@@ -23,6 +23,8 @@ import { ProductModule } from '../product/product.module';
 // import { WsPaymentTypeService } from './payment_type/payment_type.service';
 import { WsStoryController } from './story/story.controller';
 import { WsStoryService } from './story/story.service';
+import { WsDeliverService } from './deliver/deliver.service';
+import { WsDeliverController } from './deliver/deliver.controller';
 
 @Module({
   imports: [
@@ -30,14 +32,14 @@ import { WsStoryService } from './story/story.service';
     EmailerModule,
     OtpModule,
     ProductModule,
-  
+
   ],
   controllers: [
     WsCompanyController,
     WsProductController,
     WsCustomerController,
     WsBannerController,
-    WsOrderController,
+    WsOrderController, WsDeliverController,
     // WsPaymentTypeController,
     WsStoryController
   ],
@@ -46,9 +48,9 @@ import { WsStoryService } from './story/story.service';
     WsCompanyService,
     WsCustomerService,
     WsBannerService,
-    WsOrderService,
+    WsOrderService, WsDeliverService,
     // WsPaymentTypeService,
     WsStoryService,
   ],
 })
-export class WebServiceModule {}
+export class WebServiceModule { }

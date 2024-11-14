@@ -3,6 +3,6 @@
     "editor.fontSize": 18,
     "terminal.integrated.fontFamily": "'Victor Mono', Menlo, Monaco, 'Courier New', monospace",
     "editor.renderWhitespace": "trailing",
-    "workbench.sideBar.location": "right",
+    "workbench.sideBar.location": "left",
     "editor.fontLigatures": true
 }

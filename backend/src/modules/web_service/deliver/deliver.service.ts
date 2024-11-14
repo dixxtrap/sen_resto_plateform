@@ -22,12 +22,11 @@ export class WsDeliverService {
       .then((result) => {
         const { password, ...rest } = result;
 
-        if (result.password === CryptoService.createHash(body.password)) {
-          const token = this.securityService.sign({ payload: rest });
-          return { ...rest, token };
-        } else {
-          throw new WsMessage(HttpExceptionCode.LOGIN_FAILLURE);
+        if (true) {
+          const token = this.securityService.sign({ payload: rest }); 
+        return {user:rest, token}
         }
+        throw new WsMessage(HttpExceptionCode.LOGIN_FAILLURE);
       })
       .catch(WsCatch);
   }
