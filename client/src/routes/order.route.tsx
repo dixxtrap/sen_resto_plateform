@@ -6,7 +6,7 @@ export const orderRoute:RouteObject={
     children:[
         {path:''
             ,index:true,
-            element:<OrderList/>
+            element:<OrderList />
         }
     ]
 }

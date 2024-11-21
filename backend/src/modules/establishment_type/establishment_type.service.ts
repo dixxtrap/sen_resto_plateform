@@ -24,16 +24,23 @@ export class EstablishmentTypeService {
   }
   create({
     file,
-    body,
+    body,background,
   }: {
     file: Express.Multer.File;
+    background?: Express.Multer.File;
     body: EstablishmentTypeDto;
   }) {
     console.log(body);
     return this.s3Service
       .createFileToS3AndDeleteLocal({ file })
-      .then((path) => { 
+      .then(async (path) => { 
         body.imagePath = path;
+        if (background) {
+          body.backgroundPath =
+            await this.s3Service.createFileToS3AndDeleteLocal({
+              file: background,
+            });
+        }
         return this.repos.save(this.repos.create(body));
       });
   }
@@ -41,9 +48,10 @@ export class EstablishmentTypeService {
     file,
 
     id,
-    body,
+    body,background,
   }: {
     file: Express.Multer.File;
+    background?: Express.Multer.File;
 
     id: number;
     body: EstablishmentTypeDto;
@@ -58,6 +66,11 @@ export class EstablishmentTypeService {
               file: file,
               oldPath: old.imagePath,
             });
+            if (background)
+              body.backgroundPath = await this.s3Service.uploadFileToS3AndDeleteLocal({
+                file: background,
+                oldPath: old.backgroundPath,
+              });
           return this.repos
             .update({ id }, this.repos.create(body))
             .then((updatetedResult) => {

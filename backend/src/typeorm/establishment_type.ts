@@ -18,6 +18,8 @@ export class EstablishmentType {
   description: string;
   @Column({ nullable: true, default: null })
   imagePath: string;
+  @Column({ nullable: true, default: null })
+  backgroundPath: string;
   @Column({ nullable: false, default: true })
   isActive: boolean;
   @OneToMany(() => Company, (alias) => alias.establishmentType)
@@ -37,6 +39,8 @@ export class EstablishmentTypeDto {
   description?: string;
   @ApiProperty()
   imagePath?: string;
+  @ApiProperty()
+  backgroundPath?: string;
   @ApiProperty()
   isActive?: boolean;
 }

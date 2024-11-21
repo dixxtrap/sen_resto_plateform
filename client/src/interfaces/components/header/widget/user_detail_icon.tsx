@@ -155,7 +155,7 @@ export const UserDetailIcon = () => {
         <LoginForm
           component={<Button radius={30}>Connexion</Button>}
           
-          action={() => close()}
+          action={() =>{}}
         />
       )}
     </div>

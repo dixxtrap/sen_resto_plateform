@@ -65,6 +65,7 @@ export const LoginForm: FC<LoginFormProps> = ({ action, component }) => {
               onSucess={() => {
                 // close();
                 action();
+                close();
               }}
               phone={form.getValues().username}
             />
