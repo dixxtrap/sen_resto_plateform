@@ -19,7 +19,7 @@ import { poppoverStyle } from "../form/custom_styles";
 import { Alert } from "../alert_success";
 import { getWsMessage } from "../../../core/features/error_transformer";
 import { IconSearch } from "@tabler/icons-react";
-
+import{useViewportSize}from '@mantine/hooks';
 type TablePaginationProps = {
   th?: string[];
   trs?: ReactNode;
@@ -62,8 +62,8 @@ export const TablePagination: FC<TablePaginationProps> = ({
   const [scrolled, setScrolled] = useState(false);
 
   return (
-    <Box h={'calc(100vh - 100px)!important'} className="h-[calc(100vh - 50px)] overflo bg-red-500">
-<div className="flex flex-col   ">
+    <Box h={useViewportSize().height-(isPaginated?150:100)} className="h-[100vh]  ">
+<div className="flex flex-col  h-full ">
       <div className="pb-3 flex  justify-between  items-baseline">
         <Title className="leading-3" order={3}>
           {title}
@@ -110,12 +110,12 @@ export const TablePagination: FC<TablePaginationProps> = ({
          
        
           className={clsx(
-            " bg_table  ring-1 grow ring-slate-400/30 gr rounded-md",
+            " bg_table  ring-1 grow ring-slate-400  rounded-md",
             classes.body
           )}
           onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
         >
-          <Table  className={clsx("table border-none", {" hidden md:table ": thMobile,})}>
+          <Table  className={clsx("table ring border-none app_table", {"  hidden md:table ": thMobile,})}>
             <Table.Thead
               className={cx(classes.header, " bg-primary-500  z-50 ", {
                 [classes.scrolled]: scrolled,

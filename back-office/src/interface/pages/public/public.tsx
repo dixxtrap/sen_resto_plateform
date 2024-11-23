@@ -14,8 +14,8 @@ export default function Public() {
 
         <ShortNav open={open} />
         <Header open={open} close={close}   />
-        <main className="lg:pl-20 min-h-screen dark:dark:bg-transparent  ">
-          <div className="px-4 py-10 sm:px-6   lg:px-8 text-center lg:py-6">
+        <main className="lg:pl-20 dark:dark:bg-transparent  ">
+          <div className="px-4  sm:px-6   lg:px-8 text-center ">
             {/* Main area */}
             
             <Outlet></Outlet>
