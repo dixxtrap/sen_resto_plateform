@@ -62,7 +62,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
   const [scrolled, setScrolled] = useState(false);
 
   return (
-    <Box h={useViewportSize().height-(isPaginated?150:100)} className="h-[100vh]  ">
+    <Box h={useViewportSize().height-(isPaginated?110:100)} >
 <div className="flex flex-col  h-full ">
       <div className="pb-3 flex  justify-between  items-baseline">
         <Title className="leading-3" order={3}>
