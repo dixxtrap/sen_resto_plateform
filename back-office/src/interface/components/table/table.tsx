@@ -2,7 +2,7 @@ import cx, { clsx } from "clsx";
 import { FC, ReactNode, useState } from "react";
 import {
   Table,
-  ScrollArea,
+  // ScrollArea,
   Title,
   Pagination,
   Select,
