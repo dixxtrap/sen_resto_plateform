@@ -8,13 +8,13 @@ export default function Public() {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
-      <div>
+      <div className="flex w-full flex-col h-screen">
         <Navigation  close={close} opened={opened} />
         {/* Static sidebar for desktop */}
 
         <ShortNav open={open} />
         <Header open={open} close={close}   />
-        <main className="lg:pl-20 dark:dark:bg-transparent  ">
+        <main className="lg:pl-20 grow pt-2   dark:bg-transparent  ">
           <div className="px-4  sm:px-6   lg:px-8 text-center ">
             {/* Main area */}
             

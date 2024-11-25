@@ -18,6 +18,8 @@ server:{
   proxy:{
     "/v1":"http://localhost:3000"
     // "/v1":"https://api.senrestos.com"
+    // "/v1":"http://184.73.166.128:3000"
+
   }
 },
 preview:{

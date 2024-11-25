@@ -110,7 +110,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
          
        
           className={clsx(
-            " bg_table  ring-1 grow ring-slate-400  rounded-md",
+            " bg_table  ring-1 grow dark:ring-slate-300/10 ring-slate-300/40 ring-inset  rounded-md",
             classes.body
           )}
           onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
