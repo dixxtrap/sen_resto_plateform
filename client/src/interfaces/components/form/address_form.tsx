@@ -6,7 +6,7 @@ import {
 
 } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
-import {  useEffect, useState } from "react";
+import {   useState ,} from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import {
   setKey,
@@ -20,22 +20,24 @@ import {
   // geocode,
   // RequestType,
 } from "react-geocode";
-const loadGoogleMapsScript = (apiKey: string) => {
-  const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-  script.async = false;
-  document.body.appendChild(script);
-};
+
+// const loadGoogleMapsScript = (apiKey: string) => {
+//   const script = document.createElement("script");
+//   script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+//   script.async = false;
+//   document.body.appendChild(script);
+  
+// };
 export const AddressForm = ({
   form,
-  isUpdatable,
+  isOrder,
 }: {
   form: UseFormReturnType<any, any>;
-  isUpdatable?: boolean;
+  isOrder?: boolean;
 }) => {
   setKey(import.meta.env.VITE_GOOGLE_KEY);
   const [useMyPosition, setUseMyPosition] = useState<boolean>(false);
-
+  
   const getLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       fromLatLng(
@@ -59,11 +61,9 @@ export const AddressForm = ({
       });
     });
   };
-useEffect(() => {
-  loadGoogleMapsScript(import.meta.env.VITE_GOOGLE_KEY)
-}, [])
 
-  const [update, setUpdate] = useState(false);
+
+  
   return (
     <>
       {/* <Checkbox  onChange={getLocation}></Checkbox> */}
@@ -113,7 +113,7 @@ useEffect(() => {
         apiOptions={{ region: "sn" }}
       />}
 
-      <Textarea
+     {isOrder&& <Textarea
         className="h-max relative "
         label={"Details de la Commande"}
         h={140}
@@ -123,17 +123,9 @@ useEffect(() => {
         }}
         {...form.getInputProps("description")}
         resize={"vertical"}
-      />
+      />}
 
-      {isUpdatable && (
-        <Checkbox
-          checked={update}
-          variant="filled"
-          iconColor="secondary.6"
-          label="Changer l address"
-          onChange={(event) => setUpdate(event.currentTarget.checked)}
-        />
-      )}
+
     </>
   );
 };

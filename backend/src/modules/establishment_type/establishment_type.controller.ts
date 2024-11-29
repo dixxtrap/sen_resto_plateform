@@ -23,14 +23,15 @@ return this.service.getAll()
     @Post('create')
     @UseGuards(AuthenticatedGuard)
     @UseInterceptors(FileFieldsInterceptor([
-        { name: 'file', maxCount: 1 },
-        { name: 'background', maxCount: 1 },
-      ], {storage:storageCustom}))
+      { name: 'file', maxCount: 1 },
+      { name: 'background', maxCount: 1 },
+    ], {storage:storageCustom}))
     create(
       @Body() body: EstablishmentTypeDto,
       @CurrentUser() by: UserDto,
       @UploadedFiles() files: { file?: Express.Multer.File[], background?: Express.Multer.File[] }
     ) {
+      console.log(files);
       const  file=  (files.file?.length>0)?files.file[0]:null;
     const  background=  (files.background?.length>0)?files.background[0]:null;
         return this.service.create({body, file, background})
@@ -48,8 +49,8 @@ return this.service.getAll()
       @Param('id') id: number,
     ) {
      
-      const  file=  (files.file?.length>0)?files.file[0]:null;
-      const  background=  (files.background?.length>0)?files.background[0]:null;
+      const  file=  (files?.file?.length>0)?files.file[0]:null;
+      const  background=  (files?.background?.length>0)?files.background[0]:null;
       return this.service.update({ file,background, body, id });
     }
 }

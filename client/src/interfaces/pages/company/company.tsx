@@ -1,43 +1,45 @@
 import { useParams } from "react-router-dom";
-import { baseApi } from "../../../cores/apis/api"
-import { HomeCompanyItem } from "../home/widget/home_company_item"
-import {Image, Text,  TooltipFloating} from '@mantine/core'
+import { baseApi } from "../../../cores/apis/api";
+import { HomeCompanyItem } from "../home/widget/home_company_item";
+import { BackgroundImage, Image, Text } from "@mantine/core";
 import { useEffect } from "react";
 export const Company = () => {
-  const {id}=useParams();
+  const { id } = useParams();
   const companyApi = baseApi.useGetEtsCompanyByIdQuery(id!);
   useEffect(() => {
-    companyApi.refetch()
-  }, [id])
-  
+    companyApi.refetch();
+  }, [id]);
+
   return (
     <>
-    <div className="-mt-16 pb-16">
-    <div className=" content-center md:h-[400px] relative w-full  mb-12 md:mb-14 bg-amber-400">
-          <div className="w-full text-center   ">
-            <div className="max-w-3xl mx-auto">
-              <TooltipFloating  label={<div className="max-w-screen-sm text-wrap">{companyApi.data?.data.description}</div>}>
-              <span className="md:text-3xl  line-clamp-5 ">  {companyApi.data?.data.description}</span>
-
-              </TooltipFloating >
-            </div>
-          
+    <div className="p-2">
+    <BackgroundImage
+        className=" rounded-md"
+        src={companyApi.data?.data.backgroundPath!}
+      >
+        <div className=" content-center h-[200px] md:h-[400px] relative    mb-12 md:mb-16 ">
+          <div className=" text-center   ">
+            <div className="max-w-3xl mx-auto"></div>
           </div>
           <div className="-bottom-10 absolute flex items-end gap-3 md:-bottom-12  left-2 md:left-8">
             <div className="md:size-24 size-20  bg-white rounded-full content-center ring p-4 ring-gray-500  ">
               <Image src={companyApi.data?.data.imagePath} className="" />
-
             </div>
-            <Text className="font-serif md:text-3xl">{companyApi.data?.data.name} </Text>
+            <Text className="font-serif md:text-3xl">
+              {companyApi.data?.data.name}{" "}
+            </Text>
           </div>
-
-
         </div>
-
+      </BackgroundImage>
     </div>
-    <div className="grid grid-cols-2 gap-3  md:gap-8   sm:grid-cols-2 px-3 md:grid-cols-3 lg:grid-cols-4">
-        {companyApi.data?.data.company.map((e)=><HomeCompanyItem  key={`/company/details/${e.id}`} company={e}/>)}
-    </div>
+     <div className="py-10  ">
+     <div className="grid grid-cols-2   gap-3  md:gap-4  sm:grid-cols-2 px-4 md:grid-cols-3 lg:grid-cols-4">
+        {companyApi.data?.data.company.map((e) => (
+          <HomeCompanyItem key={`/company/details/${e.id}`} company={e} />
+        ))}
+      </div>
+     </div>
+     
     </>
-  )
-}
+  );
+};

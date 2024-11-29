@@ -31,12 +31,13 @@ import { CompanyCategoryModule } from './modules/company_category/company_catego
 import { EstablishmentTypeModule } from './modules/establishment_type/establishment_type.module';
 import { IconModule } from './modules/icon/icon.module';
 import { ChatGateway } from './chat/chat.gateway';
+import { ScheduleModule } from '@nestjs/schedule';
 import { ChatModuleGateway } from './chat/chat.module.gateway';
 import { SeatingModule } from './modules/seating/seating.module';
 @Module({
   imports: [
     DatabaseModule,
-
+    ScheduleModule.forRoot(),
     SecurityModule,
     ConfigModule.forRoot({
       isGlobal: true,

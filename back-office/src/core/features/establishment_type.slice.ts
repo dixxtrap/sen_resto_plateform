@@ -11,10 +11,10 @@ export const establishmentTypeApi = createApi({
   reducerPath: "establishment_type",
   tagTypes: ["establishment_type", "security"],
   endpoints: (builder) => ({
-    create: builder.mutation<WsMessage, { file: File; body: BannerDto }>({
-      query: ({ file, body }) => ({
+    create: builder.mutation<WsMessage, { file: File; background: File;body: BannerDto }>({
+      query: ({ file,background, body }) => ({
         url: "/establishment_type/create",
-        data: { file: file, ...body },
+        data: { file: file, background,...body },
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
@@ -26,13 +26,13 @@ export const establishmentTypeApi = createApi({
    
     update: builder.mutation<
       WsMessage,
-      { file: File; body: EstablishmentTypeDto; id: string }
+      { file: File; background: File;body: EstablishmentTypeDto; id: string }
     >({
-      query: ({ file, body, id }) => ({
+      query: ({ file, background,body, id }) => ({
         url: `/establishment_type/update/${id}`,
-        data: { file: file, ...body },
+        data: { file: file,background, ...body },
         method: "PUT",
-        headers:file? {
+        headers:file||background? {
           "Content-Type": "multipart/form-data",
         }:{},
       }),

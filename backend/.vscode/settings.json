@@ -4,5 +4,6 @@
     "terminal.integrated.fontFamily": "'Victor Mono', Menlo, Monaco, 'Courier New', monospace",
     "editor.renderWhitespace": "trailing",
     "workbench.sideBar.location": "left",
-    "editor.fontLigatures": true
+    "editor.fontLigatures": true,
+    "compile-hero.disable-compile-files-on-did-save-code": false
 }

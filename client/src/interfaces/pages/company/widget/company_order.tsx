@@ -125,7 +125,7 @@ export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
         loaderProps={{ color: "primary", type: "bars" }}
       />
       <div className="p-3">
-        <span className="text-2xl  font-bold">Vos Commandes {current}</span>
+        <span className="text-2xl  font-bold">Vos Commandes </span>
       </div>
       {orders.isSuccess && order ? (
         <>
@@ -178,7 +178,7 @@ export const CompanyOrder = ({ compnayId }: { compnayId: number }) => {
                   {"Details de payments"}
                 </Accordion.Control>
                 <Accordion.Panel p={0}>
-                  {current===2&&<AddressForm form={form} />}
+                  {current===2&&<AddressForm form={form} isOrder />}
                 </Accordion.Panel>
               </Accordion.Item>
               <Accordion.Item key={"3"} value={"3"}>

@@ -20,6 +20,7 @@ import { Server } from 'socket.io';
 import { ChatGateway } from 'src/chat/chat.gateway';
 import { orderBagSelect } from './order.select';
 import { getNearestPoint } from 'src/utils/calc_distance';
+import {Interval} from '@nestjs/schedule'
 @Injectable()
 export class WsOrderService {
   constructor(
@@ -62,6 +63,10 @@ export class WsOrderService {
         throw new WsMessage(HttpExceptionCode.FAILLURE);
       })
       .catch(WsCatch);
+  }
+  @Interval(1000)
+  findDeliver(){
+// console.log("==============find deliver===========")
   }
   getBag({ by }: { by: CustomerDto }) {
     return this.repos

@@ -80,7 +80,7 @@ export class WsCompanyService {
     return this.repos
       .find({
         where: {
-          name: Like(name),
+          name: Like(name), 
         },
         relations: { establishmentType: true },
       })

@@ -136,7 +136,7 @@ export const OrderDetailWidget: FC<OrderWidgetProps> = ({ order }) => {
               </div>
             </Stepper.Step>
             <Stepper.Step label={active == 1 ? "Details Livraison" : null}>
-              <AddressForm form={form} />
+              <AddressForm form={form} isOrder={true} />
             </Stepper.Step>
             <Stepper.Completed  >
               <OrderPaymentType  order={order}/>

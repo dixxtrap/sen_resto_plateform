@@ -7,10 +7,12 @@ import { AppTextarea } from "../../components/form/app_textarea"
 import { establishmentTypeApi } from '../../../core/features/establishment_type.slice';
 import { inputRequirementValidation } from "../../components/form/validation"
 import { IconPhoto } from "@tabler/icons-react"
+import { ImgWithHandler } from "../../components/img_with_handler"
 
 export const EstablishmentTypeCreate = () => {
     const [opened, {close, open}]=useDisclosure(false)
-    const{handlerFile, preview,file} =handlePreviewV2({});
+    const front =handlePreviewV2({});
+    const back =handlePreviewV2({});
     const [create, state]=establishmentTypeApi.useCreateMutation();
     const form=useForm({initialValues:{
         name:"",
@@ -20,22 +22,22 @@ export const EstablishmentTypeCreate = () => {
     },});
    const  _onSubmit=form.onSubmit((value)=>{
 if(form.validate()){
-create({file:file!,body:value})
+create({file:front.file!,background:back.file!,body:value})
 }
     })
     return (
         <>
 
         <Modal  title={<span className="font-bold">Creer un Type d Etablissement</span>} opened={opened} onClose={close}>
-       
-          
+       <div className="flex  gap-3">
+       <ImgWithHandler htmlFor={"logo"} {...front}/>
+       <ImgWithHandler htmlFor={"background"} {...back}/>
+
+       </div>
 
        
         <CustomForm {...state} successPath="." onSubmit={_onSubmit}>
-        <label   className=" mx-auto">
-            <input type="file" hidden onChange={handlerFile}></input>
-            {file?<Image className="h-20 w-auto mx-auto" src={preview!}/>:<IconPhoto className="h-20 w-auto mx-auto" />}
-            </label>
+       
             <TextInput key={form.key("name")} {...form.getInputProps("name")} label="Label"/>
             <AppTextarea form={form}/>
         </CustomForm>
