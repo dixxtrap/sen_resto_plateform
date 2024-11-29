@@ -14,8 +14,7 @@ const Home = () => {
       <Story />
       <Banners />
 
-      <FastDeliver />
-
+      
       <div className="bg-white ">
         <HomeCompany />
       </div>
@@ -24,6 +23,8 @@ const Home = () => {
         <MapView />
       </div>
       <SafePaid />
+      <FastDeliver />
+
       {/* <div className="bg-white min-h-[20px]">
         <ProductDiscountedWidget />
       </div> */}
