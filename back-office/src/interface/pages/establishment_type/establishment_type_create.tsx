@@ -1,4 +1,4 @@
-import { Button, Modal,Image, TextInput } from "@mantine/core"
+import { Button, Modal, TextInput } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { CustomForm } from "../../components/custom_form"
 import { useForm } from "@mantine/form"
@@ -6,7 +6,6 @@ import { handlePreviewV2 } from "../../utils/handle_preview"
 import { AppTextarea } from "../../components/form/app_textarea"
 import { establishmentTypeApi } from '../../../core/features/establishment_type.slice';
 import { inputRequirementValidation } from "../../components/form/validation"
-import { IconPhoto } from "@tabler/icons-react"
 import { ImgWithHandler } from "../../components/img_with_handler"
 
 export const EstablishmentTypeCreate = () => {

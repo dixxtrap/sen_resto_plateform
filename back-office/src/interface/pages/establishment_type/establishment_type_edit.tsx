@@ -1,4 +1,4 @@
-import { ActionIcon, Modal , Image, TextInput} from '@mantine/core';
+import { ActionIcon, Modal , TextInput} from '@mantine/core';
 import { EstablishmentTypeDto } from '../../../core/models/establishment_type.dto';
 import { useDisclosure } from '@mantine/hooks';
 import { handlePreviewV2 } from '../../utils/handle_preview';
@@ -8,7 +8,7 @@ import { useForm } from '@mantine/form';
 import { AppTextarea } from '../../components/form/app_textarea';
 import { CustomSwitchInput } from '../../components/switch';
 import { establishmentTypeApi } from '../../../core/features/establishment_type.slice';
-import { IconPencil, IconPhoto } from '@tabler/icons-react';
+import { IconPencil } from '@tabler/icons-react';
 import { ImgWithHandler } from '../../components/img_with_handler';
 
 export const EstablishmentTypeEdit = ({body}:{body:EstablishmentTypeDto}) => {
