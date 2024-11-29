@@ -33,7 +33,7 @@ export const Company = () => {
       </BackgroundImage>
     </div>
      <div className="py-10  ">
-     <div className="grid grid-cols-2   gap-3  md:gap-4  sm:grid-cols-2 px-4 md:grid-cols-3 lg:grid-cols-4">
+     <div className="grid grid-cols-2   gap-5  md:gap-10  sm:grid-cols-2 px-4 md:grid-cols-3 lg:grid-cols-4">
         {companyApi.data?.data.company.map((e) => (
           <HomeCompanyItem key={`/company/details/${e.id}`} company={e} />
         ))}
