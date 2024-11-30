@@ -13,10 +13,10 @@ export const AfterHeader = () => {
         <div className="pb-4  md:pb-20 md:pt-5 flex w-full items-start justify-center gap-4 md:gap-10 ">
           {data?.data.map((e) => (
             <Box component={Link} to={`/establishment/${e.id}`} className=" flex   group items-center    flex-col ring-gray-300  ">
-              <div className="w-auto egg border border-r-8 border-green-500/80 p-1  bg-white/90  size-12 sm:size-16 md:size-24 content-center backdrop-blur-lg">
-                <Image className="size-7 md:size-14  transform transition-transform duration-500 mx-auto ease-in-out group-hover:scale-125 m-2" src={e.imagePath!} />
+              <div className="w-auto egg border border-r-4 md:border-r-8 border-green-500/80 px-2  bg-white/90  size-14 sm:size-16 md:size-24 content-center backdrop-blur-lg">
+                <Image className="size-8 md:size-14  transform transition-transform duration-500 mx-auto ease-in-out group-hover:scale-125 m-2" src={e.imagePath!} />
               </div>
-              <Text className="text-xs line-clamp-2   text-center md:text-base">{e.name}</Text>
+              <Text className="text-xs line-clamp-2  mt-2  text-center md:text-base">{e.name}</Text>
             </Box>
           ))}
           
