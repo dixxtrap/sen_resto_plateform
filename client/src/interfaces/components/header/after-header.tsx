@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export const AfterHeader = () => {
   const { data, ...state } = baseApi.useGetEtsQuery();
   return (
-    <Fetchingdata {...state}>+
+    <Fetchingdata {...state}>
       <div className=" flex flex-col m-3 rounded-md md:pt-10  items-center bg-gradient-to-tr relative to-amber-500 via-amber-400 from-amber-300 ">
         <Text className="text-xl md:text-4xl  p-4">Bienvenu sur <span className="font-bold">{import.meta.env.VITE_APP_NAME}</span> </Text>
         <div className="pb-4  md:pb-20 md:pt-5 flex w-full items-start justify-center gap-4 md:gap-10 ">
