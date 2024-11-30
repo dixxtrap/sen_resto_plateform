@@ -30,7 +30,7 @@ export const HomeCompanyItem = ({ company }: { company: CompanyDto }) => {
                 company.isOpen ? "bg-secondary-500" : "bg-primary-500"
               )}
             >
-              {company.isOpen ? "Ouvert" : "Fermer"}
+              <span className="hidden md:block">{company.isOpen ? "Ouvert" : "Fermer"}</span>
             </Pill>
           </div>
           <Text className="text-sm md:text-base line-clamp-2  ">
