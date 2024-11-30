@@ -8,7 +8,7 @@ export const Banners = () => {
     const banners=useGetBannerQuery('')
   return (
    <Fetchingdata {...banners}>
- {banners.data?.data&& banners.data?.data?.length > 0&&<div  className='bg-transparent bg-amber-100 py-5'>
+ {banners.data?.data&& banners.data?.data?.length > 0&&<div  className='bg-transparent bg-amber-100 '>
 <div className='bg-white/20 backdrop-blur-sm '>
 <Carousel
       withIndicators
@@ -16,7 +16,7 @@ export const Banners = () => {
       // p={10}
       // pt={20}
       // px={10}
-      classNames={{indicator:"bg-secondary-400 mt-10 bottom-0", }}
+      classNames={{indicator:"bg-secondary-400 bottom-0", }}
      className='bg-transparent content-center '
       slideSize={{base:'100%', md:"48%"}}
       slideGap="sm"

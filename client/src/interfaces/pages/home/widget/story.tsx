@@ -74,7 +74,7 @@ export const Story = () => {
         {storyGroup.data?.data?.length! > 0 && (
           <Carousel
             h={{ base: rem(120), sm: rem(350) }}
-            p={10}
+           
             pt={10}
             className="bg-transparent"
             slideSize={{ base: rem(90), sm: rem(250) }}
