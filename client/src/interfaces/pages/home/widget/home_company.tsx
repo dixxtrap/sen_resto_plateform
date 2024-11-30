@@ -5,14 +5,14 @@ import { HomeCompanyItem } from "./home_company_item";
 export const HomeCompany = () => {
   const { data:ets, isLoading, isSuccess } = baseApi.useGetEtsCompanyQuery("");
   return (
-    <div className="py-8 lg:px-10">
+    <div className="md:py-8 lg:px-10">
   
       {isLoading && <span>Chargement....</span>}
-      {ets && isSuccess && (<div className='flex flex-col gap-8 '>
+      {ets && isSuccess && (<div className='flex flex-col md:gap-8 '>
       
          { 
           ets.data.map(et=>
-            <div className='flex flex-col mt-5'>
+            <div className='flex flex-col mt-1 md:mt-5'>
               <div className='flex my-4 items-center gap-2'>
               {/* <Image className='h-20 w-auto' src={et.imagePath}/> */}
               <span className='text-3xl  font-bold'>{et.name}</span>
