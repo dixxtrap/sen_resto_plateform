@@ -7,72 +7,21 @@ import {
   useProfileQuery,
   // useSignoutMutation,
 } from "../../core/features/security.slice";
-import { ActionIcon, Drawer, Text, Tooltip } from "@mantine/core";
+import { ActionIcon, Tooltip } from "@mantine/core";
 import ThemeProvider from "../../core/providers/theme.provider";
-import {  IconMenu2, IconX } from "@tabler/icons-react";
+import {  IconMenu2 } from "@tabler/icons-react";
 export const Navigation: FC<{
   opened: boolean;
   close: () => void;
-}> = ({ opened, close }) => {
-  const { data: user, isSuccess } = useProfileQuery("");
-  const AppDrawerHeader = () => (
-    <div className="flex  px-2 w-['100%']   h-[60px]    items-center justify-between">
-      {user?.company && (
-        <img
-          alt=""
-          className="h-8 md:h-10  bg-gradient-to-tr  backdrop-blur-lg  rounded-md"
-          src={`${user.company.imagePath}`}
-        />
-      )}
-      <Text className="text-white grow">{user?.company?.shortname}</Text>
+}> = ({  close }) => {
+  const { isSuccess } = useProfileQuery("");
 
-      <ActionIcon
-        type="button"
-        color="secondary.5"
-        className="   "
-        onClick={close}
-      >
-        <span className="sr-only">Close sidebar</span>
-        <IconX className="h-6 w-6 text-white" aria-hidden="true" />
-      </ActionIcon>
-    </div>
-  );
   return (
     isSuccess && (
-      <Drawer
-        title={<AppDrawerHeader />}
-        withCloseButton={false}
-        offset={8}
-        transitionProps={{
-          transition: "rotate-left",
-          duration: 150,
-          timingFunction: "linear",
-        }}
-        classNames={{
-          body: "bg-black",
-          header: "bg-black ring-primary-500 ring",
-          content: "  box-content  ring-1 ring-primary-500/30",
-        }}
-        styles={{
-          header: {
-            padding: 0,
-            margin: 0,
-            width: "100%",
-            height: "50px",
-            background: "black",
-          },
-          title: { padding: 0, width: "100%", height: "100%", margin: 0 },
-          content: { padding: 0, borderRadius: 12 },
-          body: { padding: 0, paddingTop: 0, height: "100vh" },
-        }}
-        opened={opened}
-        size={"xs"}
-        w={300}
-        onClose={close}
-      >
+     
         <ThemeProvider>
           <div className="relative h-[100vh] overflow-hidden  flex w-full max-w-xs flex-1">
-            <div className="flex grow flex-col gap-y-5 overflow-hidden  bg-gradient-to-tr  from-slate-950 to-black  pb-2  ">
+            <div className="flex grow flex-col gap-y-5 overflow-hidden   pb-2  ">
               <nav className="flex flex-1 flex-col px-2 ">
                 <ul className="-mx-2 flex-1 space-y-1 px-2 pt-5">
                   {navigationData.map((item) => (
@@ -88,8 +37,8 @@ export const Navigation: FC<{
                           className={({ isActive }) =>
                             classNames(
                               isActive
-                                ? "bg-gradient-to-tr   from-slate-800 to-primary-500/20 text-primary-500"
-                                : "text-white/90 hover:text-white hover:bg-gray-700/50",
+                                ? "bg-gradient-to-tr text-white bg-secondary-500  "
+                                : " hover:text-black hover:bg-gray-300/50",
                               "group flex gap-x-3 rounded-md p-2 text-sm leading-6 "
                             )
                           }
@@ -98,7 +47,7 @@ export const Navigation: FC<{
                             
                               <item.icon
                               
-                                className="h-6 w-6 text-white text-sm shrink-0"
+                                className="h-6 w-6 text-sm shrink-0"
                                 aria-hidden="true"
                               />
                               {item.name}
@@ -112,7 +61,7 @@ export const Navigation: FC<{
             </div>
           </div>
         </ThemeProvider>
-      </Drawer>
+     
     )
   );
 };

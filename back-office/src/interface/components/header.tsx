@@ -5,21 +5,22 @@ import {
   useSignoutMutation,
 } from "../../core/features/security.slice";
 import { Alert } from "./alert_success";
-import { ActionIcon, Menu, rem, Indicator } from "@mantine/core";
+import { ActionIcon, Menu, rem, Indicator, Burger , Image} from "@mantine/core";
 import { ThemeToggler } from "./theme_toggler/theme_toggler";
 import { multiSelectStyle } from "./form/custom_styles";
+import logo from '../../assets/react.svg'
 import {
   IconArrowAutofitDown,
   IconArrowRightToArc,
   IconBell,
-  IconMenu,
+  
   IconMessage,
   IconUser,
 } from "@tabler/icons-react";
 export const Header: FC<{
-  open: () => void;
-  close: () => void;
-}> = ({ open }) => {
+  toggle: () => void;
+  opened:boolean
+}> = ({ toggle , opened }) => {
   const [
     signout,
     {
@@ -39,27 +40,25 @@ export const Header: FC<{
       <Alert isOpen={isDisconnecteLoading} type="loading" />
       <Alert isOpen={isDisconnecteError} type="faillure" />
       {isDisconnecteSuccess && <Navigate to={"/"} />}
-      <div className="dark sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b  shadow-sm sm:gap-x-2  darkBg bg-white  darkDivider  px-3">
+      <div className="flex h-full shrink-0 items-center gap-x-4   shadow-sm sm:gap-x-2  darkBg bg-white  darkDivider  px-3">
         {isSuccess && (
           <>
-            <div className="flex items-center lg:ml-20 ">
-              <ActionIcon
-                size={40}
-                color="secondary.5"
-                className="  lg:hidden"
-                onClick={open}
-
-              >
-                <IconMenu className="h-6 w-6 " aria-hidden="true" />
-              </ActionIcon>
+            <div className="flex items-center  ">
+              <Burger
+                        opened={opened}
+                        onClick={toggle}
+                        hiddenFrom="md"
+                        size="md"
+                      />
               <div className="flex h-16 shrink-0  p-2  items-center sticky top-0 justify-center">
-                {user?.company && user.company.imagePath && (
-                  <img
+                
+                  <Image
                     alt=""
                     className=" h-8 md:h-10  rounded-md backdrop-blur-lg"
-                    src={`${user.company.imagePath}`}
+                    src={`${user?.company?.imagePath!}`}
+                    fallbackSrc={logo}
                   />
-                )}
+               
 
                 {/* <Logo className="bg-gradient-to-tr to-teal-500/20 backdrop-blur-sm from-indigo-500/20 h-14 w-14 p-1 rounded-md" /> */}
               </div>
@@ -67,7 +66,7 @@ export const Header: FC<{
 
             {/* Separator */}
             <span className="hidden md:inline-block md:text-xl  text-left font-bold">
-              {user.company?.name}
+              {user.company?.name?? import.meta.env.VITE_APP_NAME}
             </span>
             <div className="grow "></div>
             <ThemeToggler />
