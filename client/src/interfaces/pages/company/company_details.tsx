@@ -4,12 +4,25 @@ import { Fetchingdata } from "../../components/fetching_data";
 import { Image, Alert, Text, Spoiler, Badge } from "@mantine/core";
 import clsx from "clsx";
 import CompanyProduct from "./widget/company_product_item";
+import { useEffect, useState } from "react";
+import { useDocumentTitle, useFavicon } from "@mantine/hooks";
+import { logoIco } from "../../../utils/constant";
 
 export const CompanyDetails = () => {
   const { id } = useParams();
   const company = baseApi.useGetCompanyDetailsQuery(id!);
-
+  const [ico, setIco] = useState(logoIco);
+  const [title, setTitle] = useState(import.meta.env.VITE_APP_NAME);
   console.log(company);
+
+  useEffect(() => {
+    if (company.isSuccess) {
+      setIco(company.data?.data.imagePath!);
+      setTitle(company.data?.data.name!);
+    }
+  }, [company.isSuccess]);
+  useDocumentTitle(title);
+  useFavicon(ico);
   return (
     <Fetchingdata {...company}>
       <div className=" m-2 md:pt-3 rounded-md">

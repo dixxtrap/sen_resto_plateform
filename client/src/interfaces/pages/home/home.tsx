@@ -5,9 +5,15 @@ import { Banners } from "./widget/banners";
 import { Story } from "./widget/story";
 import { AfterHeader } from "../../components/header/after-header";
 import { MapView } from "../map/map_view";
+import {useDocumentTitle, useFavicon} from '@mantine/hooks'
 
+import { logoIco } from "../../../utils/constant";
 const Home = () => {
   console.log("------------------------ coordonner -----------------");
+  useDocumentTitle(import.meta.env.VITE_APP_NAME);
+  useFavicon(logoIco)
+
+
   return (
     <div className="relative">
       <AfterHeader />
