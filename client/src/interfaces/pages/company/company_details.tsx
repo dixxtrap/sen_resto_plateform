@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useDocumentTitle, useFavicon } from "@mantine/hooks";
 import { logoIco } from "../../../utils/constant";
 import { ShowHtml } from "../../components/show_html";
+import clsx from "clsx";
 
 export const CompanyDetails = () => {
   const { id } = useParams();
@@ -26,43 +27,45 @@ export const CompanyDetails = () => {
   return (
     <Fetchingdata {...company}>
       <div className=" m-2 md:pt-3 rounded-md">
-        <div className="h-[200px] md:h-[400px] relative w-full  mb-12 md:mb-14">
+        <div className="h-[140px] md:h-[400px]  ring-1 rounded-md ring-slate-700 relative w-full  mb-8 md:mb-14">
           <Image
             src={company.data?.data.backgroundPath}
             w={"100%"}
             className="h-full w-full rounded-md overflow-hidden"
           />
-          <div className="-bottom-10 absolute flex items-end gap-3 md:-bottom-12  left-4 md:left-8">
-            <div className="md:size-24 size-20  bg-white rounded-full content-center ring p-4 ring-gray-500  ">
-              <Image src={company.data?.data.imagePath} className="" />
+          <div className="top-[118px] absolute flex items-end gap-3 md:-bottom-12  left-4 md:left-8">
+            <div className="md:size-24 size-10  bg-white rounded-full content-center ring p-2 ring-secondary-500  ">
+              <Image src={company.data?.data.imagePath} fit="contain" className="rounded-sm " />
             </div>
-            <Text className="font-serif md:text-3xl">
+            <div className="mt-3">
+            <Text className="font-serif pt-3 md:text-3xl">
               {company.data?.data.shortname} / {company.data?.data.phone}{" "}
             </Text>
+            </div>
+            
           </div>
         </div>
         {/* FIXME: Company Detail */}
-        <div className="h-3"></div>
-        <div className="flex flex-col  p-2 mt-5   ring-1 rounded-md ring-gray-400">
-          <div className="flex w-full justify-between">
+        <div className="h-1"></div>
+        <div className="flex flex-col  p-2 mt-5  items-center jus  ring-1 rounded-md ring-gray-600">
+          <div className="flex w-full items-center justify-between">
             <Text className="font-bold md:text-2xl">
               {company.data?.data.name}
             </Text>
-            <Badge
-              radius={4}
-              color={company.data?.data.isOpen ? "secondary.5" : "primary.5"}
+            <div
+             className={clsx("ring-1 ring-slate-600 px-2 rounded-sm p-0 text-xs", company?.data?.data.isOpen?'bg-secondary-500/20':'bg-primary-500/20')}
             >
-              <Text className="">{`${company.data?.data.openingTime?.slice(
+              <Text className="text-xs">{`${company.data?.data.openingTime?.slice(
                 0,
                 5
               )}/${company.data?.data.closingTime?.slice(0, 5)}`}</Text>
-            </Badge>
+            </div>
           </div>
-          <Spoiler fw={'none'} showLabel={"voir plus"} hideLabel={"voir moins"}>
+          <Spoiler fw={'none'}  classNames={{content:'text-xs'}} showLabel={<span className="text-xs">voir plus</span>} hideLabel={<span className="text-xs">voir moins</span>}>
           <ShowHtml
               
               content={company.data?.data.description!}
-              
+              className="text-xs leading-5"
             />
               
           </Spoiler>
