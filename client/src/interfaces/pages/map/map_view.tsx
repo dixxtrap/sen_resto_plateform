@@ -56,10 +56,10 @@ export const MapView = () => {
     googleMapsApiKey: "AIzaSyAkkKGmA3OpeRzTdTzy_o48pp1MlK2hiZ4",
   });
   return (
-    <div className=" ring-1 absolute top-14 bg-red-500 bottom-14 left-0 right-0 ">
+    <div className=" md:bloc md:m-5   absolute md:relative top-14 bg-red-500/0 bottom-14 left-0 right-0 ">
       {loadScript.isLoaded && (
         <GoogleMap
-          mapContainerClassName="absolute  top-15 w-full h-full"
+          mapContainerClassName="absolute md:relative  ring-1 ring-slate-700/70 md:rounded-lg top-15 w-full h-full md:h-[600px] md:w-full"
           mapContainerStyle={containerStyle}
           center={center}
           zoom={13.18}

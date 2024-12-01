@@ -24,11 +24,13 @@ const Home = () => {
       <div className="bg-white ">
         <HomeCompany />
       </div>
+      <SafePaid />
       {/* <HomeRestaurant/> */}
-      <div className="hidden md:block">
+      <div className="hidden md:block ">
         <MapView />
       </div>
-      <SafePaid />
+      <div className="h-20"></div>
+      
       <FastDeliver />
 
       {/* <div className="bg-white min-h-[20px]">
