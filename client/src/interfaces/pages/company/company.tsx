@@ -21,33 +21,34 @@ export const Company = () => {
   useFavicon(ico);
   return (
     <>
-      <div className="p-2">
+      <div className="p-2 pb-10 ">
         <BackgroundImage
           className=" rounded-md"
           src={companyApi.data?.data.backgroundPath!}
         >
-          <div className=" content-center h-[170px] md:h-[400px] relative    mb-4 md:mb-16 ">
+          <div className=" content-center h-[170px] md:h-[400px] relative     md:mb-16 ">
             <div className=" text-center   ">
               <div className="max-w-3xl mx-auto"></div>
             </div>
-            <div className="top-[150px] absolute flex items-start gap-3 md:-bottom-12  left-4 md:left-8">
-              <div className="md:size-24 size-10  bg-white rounded-full content-center ring p-1.5 ring-secondary-500  ">
+            <div className="top-[150px] md:top-[355px] absolute flex items-start gap-3 md:-bottom-12  left-4 md:left-8">
+              <div className="md:size-24 size-10  bg-white rounded-full content-center ring p-1.5 md:p-4 ring-secondary-500  ">
                 <Image src={companyApi.data?.data.imagePath} className="" />
               </div>
-              <Text className="font-serif pt-5 font-bold md:text-3xl">
+              <Text className="font-serif pt-2 md:pt-12 mt-3 font-bold md:text-3xl">
                 {companyApi.data?.data.name}{" "}
               </Text>
             </div>
           </div>
         </BackgroundImage>
       </div>
-      <div className="py-10  ">
+      <div className="md:py-10  ">
         <div className="grid grid-cols-2   gap-5  md:gap-10  sm:grid-cols-2 px-4 md:grid-cols-3 lg:grid-cols-4">
           {companyApi.data?.data.company.map((e) => (
             <HomeCompanyItem key={`/company/details/${e.id}`} company={e} />
           ))}
         </div>
       </div>
+      <div className="h-20"></div>
     </>
   );
 };

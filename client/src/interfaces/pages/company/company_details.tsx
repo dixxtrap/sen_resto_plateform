@@ -26,19 +26,19 @@ export const CompanyDetails = () => {
   useFavicon(ico);
   return (
     <Fetchingdata {...company}>
-      <div className=" m-2 md:pt-3 rounded-md">
+      <div className=" m-2 rounded-md pb-10">
         <div className="h-[170px] md:h-[400px]  ring-1 rounded-md ring-slate-700 relative w-full  mb-8 md:mb-14">
           <Image
             src={company.data?.data.backgroundPath}
             w={"100%"}
             className="h-full w-full rounded-md overflow-hidden"
           />
-          <div className="top-[150px] absolute flex items-start gap-3 md:-bottom-12  left-4 md:left-8">
-            <div className="md:size-24 size-10  bg-white rounded-full content-center ring p-2 ring-secondary-500  ">
+          <div className="top-[150px] md:top-[355px] absolute flex items-start gap-3 md:-bottom-12  left-4 md:left-8">
+            <div className="md:size-24 size-10  bg-white rounded-full content-center ring p-2 md:p-4 ring-secondary-500  ">
               <Image src={company.data?.data.imagePath} fit="contain" className="rounded-sm " />
             </div>
             <div className="mt-3">
-            <Text className="font-serif pt-3 md:text-3xl">
+            <Text className="font-serif pt-3 md:pt-12 md:text-3xl">
               {company.data?.data.shortname} / {company.data?.data.phone}{" "}
             </Text>
             </div>
@@ -47,7 +47,7 @@ export const CompanyDetails = () => {
         </div>
         {/* FIXME: Company Detail */}
         <div className="h-1"></div>
-        <div className="flex flex-col   p-2 mt-5  items-start jus  ring-1 rounded-md ring-gray-600">
+        <div className="flex flex-col   p-2   items-start jus  ring-1 rounded-md ring-gray-600">
           <div className="flex w-full items-center justify-between">
             <Text className="font-bold md:text-2xl">
               {company.data?.data.name}
