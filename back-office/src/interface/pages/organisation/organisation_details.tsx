@@ -2,26 +2,24 @@ import { useGetCompanyByIdQuery } from "../../../core/features/company.slice";
 import { useParams } from "react-router-dom";
 import { Img } from "../../components/image_updatable";
 import { Title } from "../../components/title";
-import { Alert } from "../../components/alert_success";
+import { Fetchingdata } from "../../components/fetching_data";
+import { ShowHtml } from "../../components/show_html";
 
 export const OrganisationDetails = ({}:{type?:string}) => {
   
   const { id } = useParams();
-  const {
-    data: company,
-    isLoading,
-  } = useGetCompanyByIdQuery(id!);
-  return (<> <Alert isOpen={isLoading} type="loading" />
-   { company&&<div>
+  const company= useGetCompanyByIdQuery(id!);
+  return (<Fetchingdata {...company}> 
+   
       <div className="flex gap-x-3 shrink-0 items-center">
         <Img
           className="h-8  md:h-20"
-          hasImg={company!.data.imagePath!==null}
-          imgPath={company?.data.imagePath}
+          hasImg={company.data?.data?.imagePath!==null}
+          imgPath={company.data?.data.imagePath}
         />
         <Title
-          title={company?.data.name}
-          subTitle={`les details du restaurant ${company?.data.name}`}
+          title={company.data?.data.name}
+          subTitle={`les details du restaurant ${company.data?.data.name}`}
         />
       </div>
       <div className="mt-6 border-t text-left border-gray-500">
@@ -31,7 +29,7 @@ export const OrganisationDetails = ({}:{type?:string}) => {
               Nom 
             </dt>
             <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0 text value">
-              {company?.data.name}
+              {company.data?.data.name}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -39,7 +37,7 @@ export const OrganisationDetails = ({}:{type?:string}) => {
               Email
             </dt>
             <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0  text value">
-              {company?.data.email}
+              {company.data?.data.email}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -47,7 +45,7 @@ export const OrganisationDetails = ({}:{type?:string}) => {
               Addresse
             </dt>
             <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0  text value">
-              {company?.data.address}
+              {company.data?.data.address}
             </dd>
           </div>
           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -63,7 +61,8 @@ export const OrganisationDetails = ({}:{type?:string}) => {
               Description
             </dt>
             <dd className="mt-1 text-sm leading-6  sm:col-span-2 sm:mt-0 text value">
-              {company?.data.description}
+              <ShowHtml content={company.data?.data?.description! }/>
+              
             </dd>
           </div>
           {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -103,6 +102,6 @@ export const OrganisationDetails = ({}:{type?:string}) => {
           </div> */}
         </dl>
       </div>
-    </div>}
-  </>);
+    
+  </Fetchingdata>);
 };

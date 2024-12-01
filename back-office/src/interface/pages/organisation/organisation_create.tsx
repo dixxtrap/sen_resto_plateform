@@ -4,12 +4,12 @@ import { useCreateCompanyMutation } from "../../../core/features/company.slice";
 import { CustomForm } from "../../components/custom_form";
 import { TextConstant } from "../../../core/data/textConstant";
 import { Select, TextInput } from "@mantine/core";
-import { AppTextarea } from "../../components/form/app_textarea";
 import { handlePreviewV2 } from "../../utils/handle_preview";
 import { ImgWithHandler } from "../../components/img_with_handler";
 import { TimeInput } from "@mantine/dates";
 import { PlaceAddressForm } from "../../components/form/google_place_address";
 import { establishmentTypeApi } from "../../../core/features/establishment_type.slice";
+import { RichTextEditorApp } from "../../components/form/rich_text_description";
 
 export const OrganisationCreate = () => {
   const { data: establishmentType } = establishmentTypeApi.useGetAllQuery("");
@@ -89,7 +89,7 @@ export const OrganisationCreate = () => {
           />
         )}
 
-        <AppTextarea form={form} />
+        <RichTextEditorApp value={''} onChange={(value)=>form.setFieldValue('description', value)} />
 
         <PlaceAddressForm form={form} />
         {/* <AddressForm form={ form} /> */}

@@ -8,6 +8,7 @@ import { useAddProductMutation } from "../../../../cores/apis/order.slice";
 import { Button, Text, Image, ActionIcon } from "@mantine/core";
 import { priceFormated, reductionPrice } from "../../../../utils/calcul";
 import { OrderProduct } from "../../../../cores/models/order.dto";
+import { ShowHtml } from "../../../components/show_html";
 
 export const PlateItemPoppup = ({
   product,close, orderProduct
@@ -71,14 +72,7 @@ export const PlateItemPoppup = ({
           </div>
 
           {/* Reviews */}
-          <div className="">
-            <h4 className="sr-only">Reviews</h4>
-            <div className="flex items-center">
-              <div className="ml-1 flex items-center">
-                {product.description}
-              </div>
-            </div>
-          </div>
+          <ShowHtml content={product.description!}/>
         </section>
 
         <section

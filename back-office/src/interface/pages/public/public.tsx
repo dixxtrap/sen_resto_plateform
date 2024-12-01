@@ -14,12 +14,12 @@ export default function Public() {
   const [opened, {  close, toggle }] = useDisclosure(false);
 
   return (
-    <AppShell header={{height:'60px'}} navbar={{width:280, breakpoint:"md",   collapsed: { mobile: !opened , },}}>
+    <AppShell header={{height:'60px'}} classNames={{navbar:'', }} navbar={{width:280, breakpoint:"md",collapsed: { mobile: !opened , },  }}>
       <AppShellHeader>
       
         <Header toggle={toggle} opened={opened} />
       </AppShellHeader>
-      <AppShellNavbar>
+      <AppShellNavbar >
         <Navigation close={close} opened={true} />
       </AppShellNavbar>
       <AppShellMain >

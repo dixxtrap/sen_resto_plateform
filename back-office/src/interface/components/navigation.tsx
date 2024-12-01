@@ -20,7 +20,7 @@ export const Navigation: FC<{
     isSuccess && (
      
         <ThemeProvider>
-          <div className="relative h-[100vh] overflow-hidden  flex w-full max-w-xs flex-1">
+          <div className="relative h-[100vh] overflow-hidden dark:bg-zinc-950 flex w-full max-w-xs flex-1">
             <div className="flex grow flex-col gap-y-5 overflow-hidden   pb-2  ">
               <nav className="flex flex-1 flex-col px-2 ">
                 <ul className="-mx-2 flex-1 space-y-1 px-2 pt-5">

@@ -1,0 +1,23 @@
+.prose span {
+   
+  }
+  .porse, textarea,input {
+    color: none !important;
+    list-style-type: none !important;
+  }
+  .prose li {
+    color: inherit !important;
+    margin-bottom: 0.5rem !important;
+  
+  }
+
+  .prose ul, .prose ol{
+    list-style-position: inherit;
+  }
+  .prose ul {
+  list-style-type: circle;
+ 
+  }
+  .prose ol {
+    list-style-type: decimal-leading-zero;
+    }

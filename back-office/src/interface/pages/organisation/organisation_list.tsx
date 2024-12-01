@@ -63,7 +63,7 @@ export const OrganisationList = () => {
               <Table.Tr className=" " key={company.id! + company.name!}>
                 <Table.Td className="">
                   <div className="flex items-center">
-                    <div className=" pl-2 flex-shrink-0  h-16 mr-2 content-center  ">
+                    <div className=" pl-2 flex-shrink-0  h-10 mr-2 content-center  ">
                       <Image
                         src={`${company.imagePath!}`}
                         className="w-10 h-auto rounded-md"

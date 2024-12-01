@@ -2,11 +2,11 @@ import { useParams } from "react-router-dom";
 import { baseApi } from "../../../cores/apis/api";
 import { Fetchingdata } from "../../components/fetching_data";
 import { Image, Alert, Text, Spoiler, Badge } from "@mantine/core";
-import clsx from "clsx";
 import CompanyProduct from "./widget/company_product_item";
 import { useEffect, useState } from "react";
 import { useDocumentTitle, useFavicon } from "@mantine/hooks";
 import { logoIco } from "../../../utils/constant";
+import { ShowHtml } from "../../components/show_html";
 
 export const CompanyDetails = () => {
   const { id } = useParams();
@@ -58,16 +58,15 @@ export const CompanyDetails = () => {
               )}/${company.data?.data.closingTime?.slice(0, 5)}`}</Text>
             </Badge>
           </div>
-          <Spoiler hideLabel={"voir plus"} showLabel={"voir moins"}>
-            <Text
-              fw={400}
-              className={clsx(
-                " text-xs overflow-hidden leading-5 text-gray-700  text-ellipsis md:text-base"
-              )}
-            >
-              {company.data?.data.description}
-            </Text>
+          <Spoiler fw={'none'} showLabel={"voir plus"} hideLabel={"voir moins"}>
+          <ShowHtml
+              
+              content={company.data?.data.description!}
+              
+            />
+              
           </Spoiler>
+          
         </div>
         {/* TODO: filter */}
 

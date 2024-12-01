@@ -1,0 +1,18 @@
+.prose span {
+   
+  }
+  .porse, textarea,input {
+    color: none !important;
+  }
+  .prose li {
+    color: inherit !important;
+    @apply list-item
+    
+  }
+  .prose ul {
+ @apply list-disc  pl-4
+  }
+  .prose ol {
+    @apply list-decimal pl-10
+
+    }

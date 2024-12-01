@@ -3,12 +3,12 @@ import { useForm } from "@mantine/form";
 import { ProductDto } from '../../../core/models/product';
 import {  NumberInput, Select, TextInput } from "@mantine/core";
 import { TextConstant } from "../../../core/data/textConstant";
-import { AppTextarea } from "../../components/form/app_textarea";
 import { TimeInput } from "@mantine/dates";
 import { companyCategoryApi } from "../../../core/features/company_category.slice";
 import { handlePreviewV2 } from "../../utils/handle_preview";
 import { ImgWithHandler } from "../../components/img_with_handler";
 import { productApi } from "../../../core/features/product.slice";
+import { RichTextEditorApp } from "../../components/form/rich_text_description";
 
 
 export const PlateCreate = () => {
@@ -46,7 +46,7 @@ export const PlateCreate = () => {
       <TextInput label={TextConstant.label} {...form.getInputProps("name")} error={form.errors["name"]} key={form.key("name")} />
 
         
-      <AppTextarea  form={form} />
+      <RichTextEditorApp value={''} onChange={(value)=>form.setFieldValue('description', value)} />
 
       
       <NumberInput label={TextConstant.price} {...form.getInputProps("price")} error={form.errors["price"]} key={form.key("price")} />

@@ -8,6 +8,7 @@ import {
   ActionIcon,
   Space,
   Pill,
+  Spoiler,
 } from "@mantine/core";
 
 import { PlateItemPoppup } from "./order_poppup";
@@ -18,6 +19,7 @@ import { reductionPrice } from "../../../../utils/calcul";
 import { ProtectedAction } from "../../../components/login/login_form";
 import { useDisclosure } from "@mantine/hooks";
 import { OrderProduct } from "../../../../cores/models/order.dto";
+import { ShowHtml } from "../../../components/show_html";
 
 export const ProductItem = ({
   product,
@@ -80,9 +82,10 @@ export const ProductItem = ({
               )}
             </div>
             <div className=" text-gray-600 ">
-              <Text lineClamp={3} className="text-xs  md:text-base">
-                {product.description}
-              </Text>
+              <Spoiler fw={'none'} showLabel={"voir plus"} hideLabel={"voir moins"} >
+              <ShowHtml content={product.description!}/>
+                
+              </Spoiler>
             </div>
             <Space flex={3} />
             <Group gap={0} justify="space-between grow bg-red-500 w-full">

@@ -9,22 +9,21 @@ import { useForm } from "@mantine/form";
 import { CompanyDto } from "../../../core/models/company.dto";
 import { useParams } from "react-router-dom";
 import { Alert } from "../../components/alert_success";
-import {  handlePreviewV2 } from "../../utils/handle_preview";
-import { Select, TextInput } from "@mantine/core"; 
+import { handlePreviewV2 } from "../../utils/handle_preview";
+import { Select, TextInput } from "@mantine/core";
 import { TextConstant } from "../../../core/data/textConstant";
 import { AddressForm } from "../../components/form/address_form";
 import { CustomSwitchInput } from "../../components/switch";
 import { establishmentTypeApi } from "../../../core/features/establishment_type.slice";
-import { AppTextarea } from "../../components/form/app_textarea";
 import { ImgWithHandler } from "../../components/img_with_handler";
 import { TimeInput } from "@mantine/dates";
 import { PlaceAddressForm } from "../../components/form/google_place_address";
+import { RichTextEditorApp } from "../../components/form/rich_text_description";
 
 export const OrganisationEdit = () => {
   const id = useParams().id!;
 
   const { data: establishmentType } = establishmentTypeApi.useGetAllQuery("");
-
 
   const {
     data: old,
@@ -41,7 +40,7 @@ export const OrganisationEdit = () => {
     useUpdateCompanyByIdMutation();
   const form = useForm<CompanyDto>({});
   useEffect(() => {
-    if (old) {
+    if (isOldSuccess) {
       front.setPreview(old.data.imagePath);
       back.setPreview(old.data.backgroundPath);
       console.log(old);
@@ -55,15 +54,29 @@ export const OrganisationEdit = () => {
         closingTime: old.data.closingTime,
         openingTime: old.data.openingTime,
         establishmentTypeId: `${old.data.establishmentTypeId}`,
-        location:{latitude:old.data.location!.latitude,longitude:old.data.location!.longitude}
+        location: {
+          latitude: old.data.location!.latitude,
+          longitude: old.data.location!.longitude,
+        },
       });
     }
   }, [isOldSuccess]);
 
   const _onSubmit = form.onSubmit(async (data: CompanyDto) => {
     console.log(data);
-   
-    update({ id: parseInt(id), company: {...data, establishmentTypeId:data.establishmentTypeId!==""?data.establishmentTypeId:undefined} as CompanyDto, file: front.file!, background: back.file! });
+
+    update({
+      id: parseInt(id),
+      company: {
+        ...data,
+        establishmentTypeId:
+          data.establishmentTypeId !== ""
+            ? data.establishmentTypeId
+            : undefined,
+      } as CompanyDto,
+      file: front.file!,
+      background: back.file!,
+    });
   });
   return !isOldSuccess ? (
     <Alert isOpen={isOldLoading} type="loading" title="Recuperation" />
@@ -74,7 +87,6 @@ export const OrganisationEdit = () => {
         <div className="flex gap-3 md:gap-8 py-3">
           <ImgWithHandler htmlFor="Profile" {...front} />
           <ImgWithHandler htmlFor="Couverture" {...back} />
-
         </div>
 
         <CustomForm
@@ -92,7 +104,6 @@ export const OrganisationEdit = () => {
             error={form.errors["name"]}
             key={form.key("name")}
           />
-
           <TextInput
             label={TextConstant.shortname}
             {...form.getInputProps("shortname")}
@@ -114,31 +125,47 @@ export const OrganisationEdit = () => {
             key={form.key("phone")}
           />
 
-          <AppTextarea form={form} />
+          <RichTextEditorApp
+            // value={form.getValues().description!}
+            value={old.data.description!}
+            onChange={(value) => form.setFieldValue("description", value)}
+          />
+
           {establishmentType && (
             <Select
               {...form.getInputProps("establishmentTypeId")}
               error={form.errors["establishmentTypeId"]}
               key={form.key("establishmentTypeId")}
               label={"Type"}
-              data={[{label:"Aucun",value:""}].concat(establishmentType!.data!.map((e) => ({
-                label: e.name!,
-                value: `${e.id}`,
-              })))}
+              data={[{ label: "Aucun", value: "" }].concat(
+                establishmentType!.data!.map((e) => ({
+                  label: e.name!,
+                  value: `${e.id}`,
+                }))
+              )}
             />
           )}
           {old && isOldSuccess && (
             <>
               {" "}
-              <PlaceAddressForm form={form}/>
+              <PlaceAddressForm form={form} />
               <AddressForm form={form} isUpdatable />
               {/* <LaltitudeLongituide form={form} /> */}
             </>
           )}
           <div className="flex gap-4">
-            <TimeInput label={"Ouverture"} {...form.getInputProps("openingTime")} error={form.errors["openingTime"]} key={form.key("openingTime")} />
-            <TimeInput label={"Fermuture"} {...form.getInputProps("closingTime")} error={form.errors["closingTime"]} key={form.key("closingTime")} />
-
+            <TimeInput
+              label={"Ouverture"}
+              {...form.getInputProps("openingTime")}
+              error={form.errors["openingTime"]}
+              key={form.key("openingTime")}
+            />
+            <TimeInput
+              label={"Fermuture"}
+              {...form.getInputProps("closingTime")}
+              error={form.errors["closingTime"]}
+              key={form.key("closingTime")}
+            />
           </div>
           <CustomSwitchInput label="Status" itemKey="isActive" form={form} />
         </CustomForm>

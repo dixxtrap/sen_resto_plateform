@@ -10,10 +10,10 @@ import { ProductCreateFile } from "./product_file_create";
 import { ProductFileUpdate } from "./product_file_update";
 import { Select, TextInput } from "@mantine/core";
 import { TextConstant } from "../../../core/data/textConstant";
-import { AppTextarea } from "../../components/form/app_textarea";
 import { CustomSwitchInput } from "../../components/switch";
 import { companyCategoryApi } from "../../../core/features/company_category.slice";
 import { productApi } from "../../../core/features/product.slice";
+import { RichTextEditorApp } from "../../components/form/rich_text_description";
 export const PlatesEdit = () => {
   const id = parseInt(useParams().id!);
   // const { data: categories, isLoading: isTagLoading } = useGetCategoryQuery("");
@@ -94,7 +94,11 @@ export const PlatesEdit = () => {
               key={form.key("reduction")}
             />
 
-            <AppTextarea form={form} />
+            <RichTextEditorApp
+              // value={form.getValues().description!}
+              value={old.data.data.description!}
+              onChange={(value) => form.setFieldValue("description", value)}
+            />
 
             <Select
               error={form.errors["companyCategoryId"]}
