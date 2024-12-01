@@ -82,7 +82,7 @@ const CompanyProduct = ({
               ?.map((cat, index) => (
                 <>
                   <div key={"category-"+cat.id} className="mb-3  md:hidden md:mb-3">
-                    <Text className=" sticky top-[4.5rem]  z-50 text-lg mx-4  font-bold">
+                    <Text className=" sticky top-[4.5rem]  z-50 text-sm mx-4  font-bold">
                       {cat.name}
                     </Text>
                     <SimpleGrid
