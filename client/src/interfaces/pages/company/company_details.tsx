@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { baseApi } from "../../../cores/apis/api";
 import { Fetchingdata } from "../../components/fetching_data";
-import { Image, Alert, Text, Spoiler, Badge } from "@mantine/core";
+import { Image, Alert, Text, Spoiler } from "@mantine/core";
 import CompanyProduct from "./widget/company_product_item";
 import { useEffect, useState } from "react";
 import { useDocumentTitle, useFavicon } from "@mantine/hooks";
