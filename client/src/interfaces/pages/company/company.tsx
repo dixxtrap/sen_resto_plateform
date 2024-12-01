@@ -26,7 +26,7 @@ export const Company = () => {
           className=" rounded-md"
           src={companyApi.data?.data.backgroundPath!}
         >
-          <div className=" content-center h-[150px] md:h-[400px] relative    mb-12 md:mb-16 ">
+          <div className=" content-center h-[150px] md:h-[400px] relative    mb-4 md:mb-16 ">
             <div className=" text-center   ">
               <div className="max-w-3xl mx-auto"></div>
             </div>
