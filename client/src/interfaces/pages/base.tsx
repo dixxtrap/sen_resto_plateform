@@ -33,9 +33,9 @@ export const BasePage = () => {
           {/* {inconnue.toString()} */}
         
       </AppShell.Main>
-      <AppShell.Header className="bottom-0 sticky w-full md:hidden  ">
+      <AppShell.Footer className="bottom-0   w-full md:hidden  ">
         <UserDetailsMobile />
-      </AppShell.Header>
+      </AppShell.Footer>
     </AppShell>
   );
 };

@@ -73,21 +73,21 @@ export const Story = () => {
       <Fetchingdata {...storyGroup}>
         {storyGroup.data?.data?.length! > 0 && (
           <Carousel
-            h={{ base: rem(120), sm: rem(350) }}
+            h={{ base: '60px', sm: rem(350) }}
+           m={10}
            
-            pt={10}
             className="bg-transparent"
-            slideSize={{ base: rem(90), sm: rem(250) }}
+            slideSize={{ base: '60px', sm: rem(250) }}
             // classNames={{slide:"size-[200px]"}}
             slideGap="lg"
             classNames={{ indicator: "bg-secondary-500 mt-10 bottom-0" }}
-            align="start"
-            slidesToScroll={1}
+            align="center"
+            slidesToScroll={"auto"}
           >
             {storyGroup.data?.data.map((g, i) => (
               <Carousel.Slide
-                p={4}
-                mx={8}
+                
+                
                 onClick={() => {
                   open();
                   setCurrent(i);

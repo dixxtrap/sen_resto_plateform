@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { CompanyDto } from "../../../cores/models/company.dto";
 import { useNavigate } from "react-router-dom";
 import { CoordonatesDto } from "../../../cores/models/coordonates.dto";
+import './mas_view.css'
 const containerStyle = {
   width: "fit",
-  height: "calc(100vh - 180px)",
+  height: "fit",
 };
 
 const center = {
@@ -22,27 +23,26 @@ export const MapView = () => {
   const nav = useNavigate();
 
   const { data: ets, ...estState } = baseApi.useGetEtsCompanyQuery("");
-  console.log(ets)
+  console.log(ets);
   const [restos, setResto] = useState<CompanyDto[]>([]);
   useEffect(() => {
     if (estState.isSuccess) {
-      const r: Array<{id:number, location:CoordonatesDto,name:string}> = [];
+      const r: Array<{ id: number; location: CoordonatesDto; name: string }> =
+        [];
       ets?.data.forEach((e) => {
         e.company.forEach((c) => {
           r.push({
-            location:c.location!,
-             name: c.shortname!,
-             id: c.id!,
-           
-           });
+            location: c.location!,
+            name: c.shortname!,
+            id: c.id!,
+          });
           if (c.shop?.length! >= 0) {
             c.shop?.forEach((shop) => {
               r.push({
-               location:shop.location!,
+                location: shop.location!,
                 name: shop.name!,
-                
+
                 id: c.id!,
-              
               });
             });
           }
@@ -56,10 +56,10 @@ export const MapView = () => {
     googleMapsApiKey: "AIzaSyAkkKGmA3OpeRzTdTzy_o48pp1MlK2hiZ4",
   });
   return (
-    <div className="relative ring top-0 h-[100%]:">
+    <div className=" ring-1 absolute top-14 bg-red-500 bottom-14 left-0 right-0 ">
       {loadScript.isLoaded && (
         <GoogleMap
-        mapContainerClassName="sticky top-0"
+          mapContainerClassName="absolute  top-15 w-full h-full"
           mapContainerStyle={containerStyle}
           center={center}
           zoom={13.18}
@@ -80,9 +80,7 @@ export const MapView = () => {
               }}
               title={e.name}
               onClick={() => {
-                nav(
-                  `/company/details/${e.id}`
-                );
+                nav(`/company/details/${e.id}`);
               }}
             />
           ))}
