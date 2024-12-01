@@ -17,7 +17,7 @@ export const HomeCompanyItem = ({ company }: { company: CompanyDto }) => {
         <div className="flex gap-1.5 md:gap-3 flex-col">
           <div className="flex gap-0 items-center  md:gap-2 relative justify-between">
            
-              <Image src={company.imagePath} fit="contain" className="w-6 h-6 rounded-sm"/>
+              <Image src={company.imagePath} fit="contain" className="size-6 md:size-10 rounded-sm"/>
            
             <Text className=" md:text-xl line-clamp-1 text-sm  text-ellipsis break-words font-normal pl-1 md:font-bold ">
               {company.shortname}
