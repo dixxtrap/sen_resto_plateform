@@ -26,15 +26,15 @@ export const Company = () => {
           className=" rounded-md"
           src={companyApi.data?.data.backgroundPath!}
         >
-          <div className=" content-center h-[200px] md:h-[400px] relative    mb-12 md:mb-16 ">
+          <div className=" content-center h-[150px] md:h-[400px] relative    mb-12 md:mb-16 ">
             <div className=" text-center   ">
               <div className="max-w-3xl mx-auto"></div>
             </div>
-            <div className="-bottom-10 absolute flex items-end gap-3 md:-bottom-12  left-2 md:left-8">
-              <div className="md:size-24 size-20  bg-white rounded-full content-center ring p-4 ring-gray-500  ">
+            <div className="top-[130px] absolute flex items-end gap-3 md:-bottom-12  left-4 md:left-8">
+              <div className="md:size-24 size-10  bg-white rounded-full content-center ring p-1.5 ring-secondary-500  ">
                 <Image src={companyApi.data?.data.imagePath} className="" />
               </div>
-              <Text className="font-serif md:text-3xl">
+              <Text className="font-serif  md:text-3xl">
                 {companyApi.data?.data.name}{" "}
               </Text>
             </div>

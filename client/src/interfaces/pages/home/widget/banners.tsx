@@ -12,22 +12,22 @@ export const Banners = () => {
 <div className='bg-white/20 backdrop-blur-sm '>
 <Carousel
       withIndicators
-    h={{base:180,md:240}}
+    h={{base:125,md:240}}
       // p={10}
       // pt={20}
       // px={10}
       classNames={{indicator:"bg-secondary-400 bottom-0", }}
      className='bg-transparent content-center '
-      slideSize={{base:'100%', md:"48%"}}
+      slideSize={{base:'100%', md:"49%"}}
       slideGap="sm"
       
-     
+     withControls={false}
       align="start"
       slidesToScroll={"auto"}
       
       
     >
-    {banners.data?.data.map(banner=><Carousel.Slide px={10} h={{base:170, md:220}}><BannerItem banner={banner}/></Carousel.Slide>
+    {banners.data?.data.map(banner=><Carousel.Slide px={10} h={{base:125, md:220}}><BannerItem banner={banner}/></Carousel.Slide>
     )}
     </Carousel>
     </div>

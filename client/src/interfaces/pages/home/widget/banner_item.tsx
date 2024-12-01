@@ -17,12 +17,12 @@ export const BannerItem=({banner}:{banner:BannerDto})=> {
         {/* </div> */}
         </div>
         <div className='flex flex-col col-span-12 md:col-span-8'>
-          <Flex justify={"left"} gap={5} align={"center"} p={{base:10}}>
+          <Flex justify={"left"} gap={{base:3, md:5}} align={"center"} p={{base:1}}>
           <Image src={banner.imageUrl} display={{base:"block", md:"none"}} w={{base:40,}} className='w-[200px]  rounded-md  h-auto' />
           <Title className='text-lg'>{banner.title}</Title>
           </Flex>
           <Box h={{base:300}} p={3} w={{md:"100%"}}>
-          <Text truncate="end" className='text-wrap text-xs md:text-base  md:line-clamp-6 line-clamp-6' >{banner.description}</Text>
+          <Text truncate="end" className='text-wrap text-xs md:text-base  md:line-clamp-6 line-clamp-4' >{banner.description}</Text>
           </Box>
         </div>
       </div>

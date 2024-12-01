@@ -25,11 +25,11 @@ export const HomeCompanyItem = ({ company }: { company: CompanyDto }) => {
             <div className="grow"></div>
             <div
              
-              className={clsx('size-2 md:h-auto absolute right-0 md:w-auto rounded-md ',
-                company.isOpen ? "bg-secondary-500" : "bg-primary-500"
+              className={clsx('size-2 md:h-auto absolute ring-1  right-0 ring-slate-900 md:relative md:px-1  md:w-auto rounded-sm ',
+                company.isOpen ? "bg-secondary-500/20" : "bg-primary-500/20"
               )}
             >
-              <span className="hidden md:block">{company.isOpen ? "Ouvert" : "Fermer"}</span>
+              <span className="hidden text-xs  md:block">{company.isOpen ? "Ouvert" : "Fermer"}</span>
             </div>
           </div>
           <Text dangerouslySetInnerHTML={{__html:company.description!}} className="text-xs pt-1 md:text-base line-clamp-2  ">
