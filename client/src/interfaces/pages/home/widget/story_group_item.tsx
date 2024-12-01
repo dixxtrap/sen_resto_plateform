@@ -1,4 +1,4 @@
-import { Avatar, Text, Image, UnstyledButton, Box } from "@mantine/core";
+import { Avatar, Text, Image, UnstyledButton } from "@mantine/core";
 import { StoryGroup } from "../../../../cores/models/story.dto";
 
 export const StoryGroupItem = ({ storyGroup }: { storyGroup: StoryGroup }) => {
