@@ -8,7 +8,6 @@ import {
   ActionIcon,
   Space,
   Pill,
-  Spoiler,
 } from "@mantine/core";
 
 import { PlateItemPoppup } from "./order_poppup";
@@ -82,10 +81,9 @@ export const ProductItem = ({
               )}
             </div>
             <div className=" text-gray-600 ">
-              <Spoiler fw={'none'} showLabel={"voir plus"} hideLabel={"voir moins"} >
-              <ShowHtml content={product.description!}/>
-                
-              </Spoiler>
+              
+              <ShowHtml className="line-clamp-3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              *:" content={product.description!}/>
+           
             </div>
             <Space flex={3} />
             <Group gap={0} justify="space-between grow bg-red-500 w-full">

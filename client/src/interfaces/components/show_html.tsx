@@ -1,8 +1,8 @@
 import './show_html.css'
-export const ShowHtml = ({content}:{content:string}) => {
+export const ShowHtml = ({content, className}:{content:string, className?:string}) => {
   return (
     <div className='prose '>
-    <div dangerouslySetInnerHTML={{__html:content}} ></div>
+    <div dangerouslySetInnerHTML={{__html:content}} className={className}></div>
 
     </div>
   )
