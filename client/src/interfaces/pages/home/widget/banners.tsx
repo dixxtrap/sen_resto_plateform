@@ -16,12 +16,13 @@ export const Banners = () => {
               // p={10}
               // pt={20}
               // px={10}
-              classNames={{ indicator: "bg-secondary-400/0 bottom-0" }}
+              classNames={{ indicator: "bg-primary-600  -bottom-12 " }}
               className="bg-transparent content-center "
-              slideSize={{ base: "100%", md: "49%" ,lg:'35%'}}
+              slideSize={{ base: "98%", md: "49%" ,lg:'35%'}}
               slideGap="sm"
               withControls={false}
               align="start"
+              initialSlide={0}
               slidesToScroll={"auto"}
             >
               {banners.data?.data.map((banner) => (

@@ -5,10 +5,10 @@ export const StoryGroupItem = ({ storyGroup }: { storyGroup: StoryGroup }) => {
   return (
     <>
       <div className="content-center cursor-pointer flex items-center justify-center">
-        <div className=" rounded-full ring-1 ring-inset size-10 flex items-center justify-center  backdrop-blur-sm content-center bg-slate-50  md:hidden">
+        <div className=" rounded-full ring-1 ring-inset size-14 flex items-center justify-center  backdrop-blur-sm content-center bg-slate-100  md:hidden">
           <Image
             fit="contain"
-            className=" z-30 rounded-md  size-8  "
+            className=" z-30 rounded-md  size-10  "
             src={storyGroup.partner?.imagePath}
           />
         </div>
@@ -18,7 +18,7 @@ export const StoryGroupItem = ({ storyGroup }: { storyGroup: StoryGroup }) => {
         <div className=" flex   justify-start  z-30  p-2 w-full">
           <Image
             radius={3}
-            fit="cover"
+            fit="contain"
             className=" z-30    size-8"
             src={storyGroup.partner?.imagePath}
           />

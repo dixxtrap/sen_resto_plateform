@@ -22,7 +22,7 @@ export const BannerItem=({banner}:{banner:BannerDto})=> {
           <Title className='text-lg'>{banner.title}</Title>
           </Flex>
           <Box h={{base:300}} p={3} w={{md:"100%"}}>
-          <Text truncate="end" className='text-wrap  text-xs md:text-base   line-clamp-4' >{banner.description}</Text>
+          <Text truncate="end" className='text-wrap  text-xs md:text-base   line-clamp-3 md:line-clamp-4' >{banner.description}</Text>
           </Box>
         </div>
       </div>
