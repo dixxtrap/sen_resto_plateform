@@ -10,7 +10,7 @@ export const HomeCompany = () => {
         <div className="flex flex-col md:gap-8 ">
           {ets.data.map((et) => (
             <div className="flex flex-col mt-1 md:mt-5">
-              <div className="flex md:my-4 items-center gap-2">
+              <div className="flex md:my-4 my-1 mt-2 items-center gap-2">
                 {/* <Image className='h-20 w-auto' src={et.imagePath}/> */}
                 <span className="md:text-3xl ml-3 text-lg font-bold">{et.name}</span>
               </div>

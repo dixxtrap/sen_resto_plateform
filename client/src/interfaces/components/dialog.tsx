@@ -20,9 +20,9 @@ const [opened,{close}]=useDisclosure(isOpen)
 
   return (
  
-  <Modal opened={opened} title={  <Text size='xl' className="text-2xl  font-semibold leading-6 ">
+  <Modal opened={opened} classNames={{overlay:'bg-transparent backdrop-blur-sm'}} title={  <Text size='xl' className="text-2xl  font-semibold leading-6 ">
     {title}
-    </Text>} withCloseButton={type==="faillure"} classNames={{body:'bgInput', header:"bgInput"}}  onClose={close} >
+    </Text>} withCloseButton={type==="faillure"}   onClose={close} >
 
                 <div>
                   {type==="succeedded"&&<div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">

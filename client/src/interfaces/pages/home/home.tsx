@@ -20,8 +20,11 @@ const Home = () => {
           <div className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-transparent dark:bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
       <AfterHeader />
+      <div className="md:h-20 h-4"></div>
       <Story />
+      <div className="md:h-20 h-4"></div>
       <Banners />
+      <div className="md:h-20 h-4"></div>
 
       
       <div className="bg-white/80 ">
@@ -32,10 +35,10 @@ const Home = () => {
       <div className="hidden md:block ">
         <MapView />
       </div>
-      <div className="h-20"></div>
+     
 
       <AllYouNeed/>
-      <div className="h-20"></div>
+      <div className="md:h-20 h-4"></div>
       
       <FastDeliver />
 
