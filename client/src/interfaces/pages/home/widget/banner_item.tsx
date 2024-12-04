@@ -6,12 +6,12 @@ import clsx from 'clsx';
 export const BannerItem=({banner}:{banner:BannerDto})=> {
   return (
     <div   className={clsx(classes.card,'relative p-1  h-full pr-3 rounded-md ')}>
-      <div className=' flex  bg-secondary-500/5 ring-1 ring-gray-300 rounded-md   overflow-hidden  w-full h-full'>
+      <div className=' flex  bg-slate-50 ring-1 ring-gray-300 rounded-md   overflow-hidden  w-full h-full'>
         
 
          
            
-        <Image radius={0} src={banner.imageUrl}  fit='contain'  className='size-20 px-3 rounded-md  hidden md:block  mx-auto' />
+        <Image radius={0} src={banner.imageUrl}  fit='contain'  className='size-20 lg:size-24 px-3 rounded-md  hidden md:block  mx-auto' />
      
        
         {/* </div> */}
@@ -22,7 +22,7 @@ export const BannerItem=({banner}:{banner:BannerDto})=> {
           <Title className='text-lg'>{banner.title}</Title>
           </Flex>
           <Box h={{base:300}} p={3} w={{md:"100%"}}>
-          <Text truncate="end" className='text-wrap  text-xs md:text-base   line-clamp-3 md:line-clamp-4' >{banner.description}</Text>
+          <Text truncate="end" className='text-wrap font-serif text-xs md:text-base   line-clamp-3 md:line-clamp-4' >{banner.description}</Text>
           </Box>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { Str } from "../../../../cores/constantes/str"
 
 export const SafePaid = () => {
   return (
-    <div className='bg-gray-50  py-12 md:py-16 flex flex-row-reverse  items-center relative'>
+    <div className='bg-white  py-3 md:py-10  border-y-slate-300 border-y flex flex-row-reverse  items-center relative'>
     <div className='flex  flex-col  md:flex-row-reverse  max-w-7xl mx-auto items-start'>
     <div className="  right mx-auto min-w-[340px]  h-80 w-auto hidden md:block desc  ">
    

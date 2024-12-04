@@ -34,8 +34,8 @@ export const CompanyDetails = () => {
             className="h-full w-full rounded-md overflow-hidden"
           />
           <div className="top-[150px] md:top-[355px] absolute flex items-start gap-3 md:-bottom-12  left-4 md:left-8">
-            <div className="md:size-24 size-10  bg-white rounded-full content-center ring p-2 md:p-4 ring-secondary-500  ">
-              <Image src={company.data?.data.imagePath} fit="contain" className="rounded-sm " />
+            <div className="md:size-24 size-12  bg-white rounded-full content-center ring p-0.5 md:p-4 ring-secondary-500  ">
+              <Image src={company.data?.data.imagePath} fit="contain" className="rounded-sm size-full " />
             </div>
             <div className="mt-3">
             <Text className="font-serif pt-3 md:pt-12 md:text-3xl">
@@ -74,6 +74,7 @@ export const CompanyDetails = () => {
         {/* TODO: filter */}
 
         <CompanyProduct category={company.data?.data.category!} />
+        <div className="h-20 "></div>
 
         {company.data?.data.productManagement?.length === 0 && (
           <Alert

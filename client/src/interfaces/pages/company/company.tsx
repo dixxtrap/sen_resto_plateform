@@ -31,8 +31,8 @@ export const Company = () => {
               <div className="max-w-3xl mx-auto"></div>
             </div>
             <div className="top-[150px] md:top-[355px] absolute flex items-start gap-3 md:-bottom-12  left-4 md:left-8">
-              <div className="md:size-24 size-10  bg-white rounded-full content-center ring p-1.5 md:p-4 ring-secondary-500  ">
-                <Image src={companyApi.data?.data.imagePath} className="" />
+              <div className="md:size-24 size-12  bg-white rounded-full content-center ring-1 p-05 md:p-4 ring-secondary-500  ">
+                <Image src={companyApi.data?.data.imagePath}fit="contain" className="size-[39px] m-auto" />
               </div>
               <Text className="font-serif pt-2 md:pt-12 mt-3 font-bold md:text-3xl">
                 {companyApi.data?.data.name}{" "}

@@ -8,7 +8,7 @@ export const Banners = () => {
   return (
     <Fetchingdata {...banners}>
       {banners.data?.data && banners.data?.data?.length > 0 && (
-        <div className="bg-transparent bg-amber-100 ">
+        <div className="bg-transparent bg-white ">
           <div className="bg-white/20 backdrop-blur-sm ">
             <Carousel
               withIndicators

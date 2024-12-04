@@ -5,7 +5,7 @@ import { Str } from "../../../../cores/constantes/str"
 
 export const FastDeliver = () => {
   return (
-    <div className='bg-gray-50  py-3 md:py-16 flex flex-wrap    items-center relative'>
+    <div className='bg-white border-y-slate-300 border-y  py-3 md:py-10 flex flex-wrap    items-center relative'>
       <div className='flex  flex-col md:flex-row  max-w-7xl mx-auto items-start'>
         <img src={deliverImg} className='illus  left    desc  ring-1 ring-inset ring-primary-100  hidden md:block' title='deliver' />
         <div className='w-10'></div>
