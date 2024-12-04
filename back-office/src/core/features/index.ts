@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { userApi } from "./auth.slice";
 import themeReducer from "../features/theme.slice";
-import {  shopApi } from "./shop.slice";
+import { shopApi } from "./shop.slice";
 import { companyApi } from "./company.slice";
 import { roleApi } from "./role.slice";
 import { productApi } from "./product.slice";
@@ -26,6 +26,7 @@ import { storyApi } from "./story.slice";
 import { establishmentTypeApi } from "./establishment_type.slice";
 import { companyCategoryApi } from "./company_category.slice";
 import { seatingApi } from "./seating.slice";
+import { iconApi } from "./icon.slice";
 const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
@@ -54,6 +55,7 @@ const store = configureStore({
     [establishmentTypeApi.reducerPath]: establishmentTypeApi.reducer,
     [companyCategoryApi.reducerPath]: companyCategoryApi.reducer,
     [seatingApi.reducerPath]: seatingApi.reducer,
+    [iconApi.reducerPath]: iconApi.reducer,
 
     theme: themeReducer,
   },
@@ -83,7 +85,9 @@ const store = configureStore({
       giftApi.middleware,
       storyApi.middleware,
       establishmentTypeApi.middleware,
-      companyCategoryApi.middleware,seatingApi.middleware
+      companyCategoryApi.middleware,
+       seatingApi.middleware,
+        iconApi.middleware
     ),
 });
 

@@ -15,16 +15,18 @@
 html, body{
   @apply  h-screen;
 }
-
-tr:first-child(td){
-  @apply px-10
+.table tr{
+  @apply hover:bg-slate-500/10;
+}
+.table td:first-child{
+  @apply px-2 font-bold
 }
 td,
 th {
   @apply text-left  whitespace-nowrap   text-sm text-gray-500 dark:text-kdark-text/80;
 }
 .app_table td{
-  @apply py-2 pl-2
+  @apply py-0 pl-2
 }
 .bgInput, input, select {
 color:light-dark(#040508 ,#f3f4f6d2 )!important ;
@@ -42,7 +44,8 @@ background-color: light-dark(#f3f4f6, #171b22)!important;
 }
 .darkBg{
   /* @apply dark:bg-[#1e1f21] */
-  @apply  dark:bg-kdark-kdarkbg
+  /* color :#0d11174d, */
+  @apply bg-gradient-to-b from-white/5 via-white/20 to-white/90 dark:to-[#0d1117ed] dark:from-kdark-kdarkbg/70
 }
 .input {
   @apply block w-full rounded-md bgInput border-0 py-1.5   px-2   shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-kdark-divider/50 placeholder:text-gray-400 focus:ring-[1.0px] focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;

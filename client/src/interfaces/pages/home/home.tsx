@@ -8,6 +8,7 @@ import { MapView } from "../map/map_view";
 import {useDocumentTitle, useFavicon} from '@mantine/hooks'
 
 import { logoIco } from "../../../utils/constant";
+import { AllYouNeed } from "./widget/all_you_need";
 const Home = () => {
   console.log("------------------------ coordonner -----------------");
   useDocumentTitle(import.meta.env.VITE_APP_NAME);
@@ -16,6 +17,8 @@ const Home = () => {
 
   return (
     <div className="relative">
+          <div className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-transparent dark:bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
       <AfterHeader />
       <Story />
       <Banners />
@@ -29,6 +32,9 @@ const Home = () => {
       <div className="hidden md:block ">
         <MapView />
       </div>
+      <div className="h-20"></div>
+
+      <AllYouNeed/>
       <div className="h-20"></div>
       
       <FastDeliver />

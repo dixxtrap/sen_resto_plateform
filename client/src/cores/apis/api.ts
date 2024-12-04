@@ -8,6 +8,7 @@ import { StoryGroup } from "../models/story.dto";
 import { PaymentType } from "../models/payment_type";
 import { City } from "../models/city.dto";
 import { EstablishmentTypeDto } from "../models/establishment_type.dto";
+import { IconDto } from "../models/icon.dto";
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/v1" }),
@@ -16,6 +17,9 @@ export const baseApi = createApi({
   endpoints: (builder) => ({
     getCompany: builder.query<BaseResponse<CompanyDto[]>, void>({
       query: () => `/ws/company/all`,
+    }),
+    getIcon: builder.query<BaseResponse<IconDto[]>, void>({
+      query: () => `/ws/default/icon/all`,
     }),
     city: builder.query<BaseResponse<City[]>, void>({
       query: () => `/city/all?perPage=1000&page=1`,

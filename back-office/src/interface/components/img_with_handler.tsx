@@ -36,7 +36,7 @@ export const ImgWithHandler = (handler:{
     )}
      </div>
     {/* <IconCamera className=" p-3 rounded-md ring-1  " /> */}
-    <Text className="font-serif">{handler.htmlFor}</Text>
+    <Text className="font-serif text-center">{handler.htmlFor}</Text>
   </label>
     </div>
     

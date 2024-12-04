@@ -23,7 +23,9 @@ export const App = () => {
       <DatesProvider settings={{ consistentWeeks: true }}>
         <Provider store={store}>
           <ThemeProvider>
-            <div className="App   bg-white dark:text-slate-100 darkBg  ">
+          <div className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-transparent dark:bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+            <div className="App   darkBg ">
               <RouterProvider router={router} />
             </div>
           </ThemeProvider>

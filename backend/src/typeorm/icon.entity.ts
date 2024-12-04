@@ -5,22 +5,26 @@ import { CreationDetailsWithoutBy } from "./details.entity";
 import { ApiProperty } from "@nestjs/swagger/dist/decorators/api-property.decorator";
 
 @Entity()
-export class Icon extends CreationDetailsWithoutBy{
+export class Icon extends CreationDetailsWithoutBy {
     @PrimaryGeneratedColumn()
-    id:number;
+    id: number;
     @Column()
-    imagePath:string
+    imagePath: string
     @Column()
-    name:string
+    name: string
+    @Column({ unique: true })
+    code: string
     @Column()
-    description:string
+    description: string
 }
 
-export class IconDto{
+export class IconDto {
     @ApiProperty()
-name:string;
-@ApiProperty()
-description:string;
-@ApiProperty()
-imagePath?:string;
+    name: string;
+    @ApiProperty()
+    description: string;
+    @ApiProperty()
+    code: string;
+    @ApiProperty()
+    imagePath?: string;
 }

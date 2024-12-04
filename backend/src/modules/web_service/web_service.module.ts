@@ -25,6 +25,8 @@ import { WsStoryController } from './story/story.controller';
 import { WsStoryService } from './story/story.service';
 import { WsDeliverService } from './deliver/deliver.service';
 import { WsDeliverController } from './deliver/deliver.controller';
+import { WsController } from './web_service.controller';
+import { WsService } from './web_service.service';
 
 @Module({
   imports: [
@@ -39,7 +41,7 @@ import { WsDeliverController } from './deliver/deliver.controller';
     WsProductController,
     WsCustomerController,
     WsBannerController,
-    WsOrderController, WsDeliverController,
+    WsOrderController, WsDeliverController, WsController,
     // WsPaymentTypeController,
     WsStoryController
   ],
@@ -48,7 +50,7 @@ import { WsDeliverController } from './deliver/deliver.controller';
     WsCompanyService,
     WsCustomerService,
     WsBannerService,
-    WsOrderService, WsDeliverService,
+    WsOrderService, WsDeliverService, WsService,
     // WsPaymentTypeService,
     WsStoryService,
   ],

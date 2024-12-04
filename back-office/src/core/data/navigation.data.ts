@@ -13,6 +13,7 @@ import {
   IconFile3d,
   IconGift,
   IconHome,
+  IconIcons,
   IconMotorbike,
   IconNotification,
   IconPrison,
@@ -44,8 +45,14 @@ export const navigationData: INavigation[] = [
   {
     name: "Type d'Etablissement",
     href: "/establishment_type",
-    icon: IconAdjustments,
+    icon: IconAdjustments ,
     permissions: [{ code: "establishment_type", type: PermisisionTypeEnum.ALL }],
+  },
+  {
+    name: "Icons",
+    href: "/icon",
+    icon: IconIcons,
+    permissions: [{ code: "icon", type: PermisisionTypeEnum.ALL }],
   },
   {
     name: "Produit Categories",

@@ -26,6 +26,7 @@ import { cityRouter } from "./city.router";
 import { establishmentTypeRouter } from "./establishment_type.router";
 import { companyCategoryRouter } from "./company_category.router";
 import { SeatingList } from "../pages/seating/seating_list";
+import { AppIconList } from "../pages/icon/app_icon_list";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +54,11 @@ export const router = createBrowserRouter([
       {
         path: "seating",
         element: <SeatingList/>,
+      },
+      {
+        path: "icon",
+        element: <AppIconList
+        />,
       },
       organisationRouter,
       userRouter,

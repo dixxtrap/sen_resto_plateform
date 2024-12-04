@@ -20,8 +20,8 @@ export const Navigation: FC<{
     isSuccess && (
      
         <ThemeProvider>
-          <div className="relative h-[100vh] overflow-hidden dark:bg-zinc-950 flex w-full max-w-xs flex-1">
-            <div className="flex grow flex-col gap-y-5 overflow-hidden   pb-2  ">
+          <div className="relative h-[100vh] overflow-hidden bgDark flex w-full max-w-xs flex-1">
+           <div className="flex grow flex-col gap-y-5 overflow-hidden   pb-2  ">
               <nav className="flex flex-1 flex-col px-2 ">
                 <ul className="-mx-2 flex-1 space-y-1 px-2 pt-5">
                   {navigationData.map((item) => (
@@ -37,9 +37,9 @@ export const Navigation: FC<{
                           className={({ isActive }) =>
                             classNames(
                               isActive
-                                ? "bg-gradient-to-tr text-white bg-secondary-500  "
+                                ? "bg-gradient-to-tr to-secondary-600 ring-1 ring-inset  ring-secondary-900  text-white from-secondary-500  "
                                 : " hover:text-black hover:bg-gray-300/50",
-                              "group flex gap-x-3 rounded-md p-2 text-sm leading-6 "
+                              "group flex  gap-x-3 rounded-md p-2 text-sm leading-6 "
                             )
                           }
                         >
