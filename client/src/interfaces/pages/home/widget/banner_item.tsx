@@ -6,17 +6,17 @@ import clsx from 'clsx';
 export const BannerItem=({banner}:{banner:BannerDto})=> {
   return (
     <div   className={clsx(classes.card,'relative p-1  h-full pr-3 rounded-md ')}>
-      <div className=' flex  bg-secondary-500/5 ring-1 ring-gray-300 rounded-md overflow-hidden  w-full h-full'>
+      <div className=' flex  bg-secondary-500/5 ring-1 ring-gray-300 rounded-md   overflow-hidden  w-full h-full'>
         
 
          
            
-        <Image radius={0} src={banner.imageUrl} p={0} m={0} fit='contain'  className='size-20 lg:size-32 mx-auto' />
+        <Image radius={0} src={banner.imageUrl}  fit='contain'  className='size-20 px-3 rounded-md  hidden md:block  mx-auto' />
      
        
         {/* </div> */}
         
-        <div className='flex flex-col grow '>
+        <div className='flex flex-col grow  item-start justify-start'>
           <Flex justify={"left"} gap={{base:3, md:5}} align={"center"} p={{base:1}}>
           <Image src={banner.imageUrl} display={{base:"block", md:"none"}} w={{base:40,}} className='w-[200px]  rounded-md  h-auto' />
           <Title className='text-lg'>{banner.title}</Title>
