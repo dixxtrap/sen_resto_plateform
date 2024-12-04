@@ -4,7 +4,7 @@ import { HomeCompanyItem } from "./home_company_item";
 export const HomeCompany = () => {
   const { data: ets, isLoading, isSuccess } = baseApi.useGetEtsCompanyQuery("");
   return (
-    <div className="md:py-8 lg:px-10">
+    <div className="md:py-1 lg:px-10">
       {isLoading && <span>Chargement....</span>}
       {ets && isSuccess && (
         <div className="flex flex-col md:gap-8 ">

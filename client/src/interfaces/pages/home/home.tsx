@@ -24,7 +24,7 @@ const Home = () => {
       <Banners />
 
       
-      <div className="bg-white ">
+      <div className="bg-white/80 ">
         <HomeCompany />
       </div>
       <SafePaid />
@@ -42,7 +42,7 @@ const Home = () => {
       {/* <div className="bg-white min-h-[20px]">
         <ProductDiscountedWidget />
       </div> */}
-      <div className="bg-white h-40"></div>
+      <div className=" h-40"></div>
     </div>
   );
 };

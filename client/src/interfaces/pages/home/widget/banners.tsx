@@ -12,7 +12,7 @@ export const Banners = () => {
           <div className="bg-white/20 backdrop-blur-sm ">
             <Carousel
               withIndicators
-              h={{ base: 125, md: 240 ,lg:200 }}
+              h={{ base: 125, md: 200 ,lg:200 }}
               // p={10}
               // pt={20}
               // px={10}

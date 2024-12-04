@@ -73,14 +73,14 @@ export const Story = () => {
       <Fetchingdata {...storyGroup}>
         {storyGroup.data?.data?.length! > 0 && (
           <Carousel
-            h={{ base: '60px', sm: rem(350) }}
-           m={10}
+            h={{ base: '60px', md: rem(200) }}
+          
            
             className="bg-transparent"
-            slideSize={{ base: '60px', sm: rem(250) }}
+            slideSize={{ base: '60px', md: rem(250) }}
             // classNames={{slide:"size-[200px]"}}
             slideGap="lg"
-            classNames={{ indicator: "bg-secondary-500 mt-10 bottom-0" }}
+            classNames={{ indicator: "bg-secondary-500" }}
             align="center"
             slidesToScroll={"auto"}
           >
