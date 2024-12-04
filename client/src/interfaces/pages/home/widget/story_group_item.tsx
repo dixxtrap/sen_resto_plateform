@@ -14,7 +14,7 @@ export const StoryGroupItem = ({ storyGroup }: { storyGroup: StoryGroup }) => {
         </div>
       </div>
 
-      <div className=" hidden cursor-pointer md:block ring-1 ring-slate-400 m-0.5 ring-inset relative border-green-300 w-full  bg-slate-50  rounded-md     ">
+      <div className=" hidden cursor-pointer md:block ring-1 ring-slate-500 m-0.5  relative w-full  bg-slate-50  rounded-md     ">
         <div className=" flex   justify-start  z-30  p-2 w-full">
           <Image
             radius={3}
