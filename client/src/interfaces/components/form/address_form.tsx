@@ -121,7 +121,7 @@ export const AddressForm = ({
               setAddress(e.target.value);
             }}
           />
-          {!isSelected  && (
+          {isSelected==false&& address.length>3  && (
             <div className="ring-1 ring-slate-300/60 rounded-md p-2 flex flex-col  gap-0.5">
               {[
                 prediction.map((e) => (
