@@ -26,6 +26,7 @@ export class TextConstant {
   static city: string = "Ville";
   static label: string = "Label";
   static  description: string = "Description";
+  static  displayname: string = "Nom Complet";
   static  logo: string = "Logo";
   static coorporateStr: string = "Coorporates";
   static Pan: string = "pan";

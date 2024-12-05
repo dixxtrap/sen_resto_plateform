@@ -1,6 +1,6 @@
 import { Logo } from "../logo";
 import { TextConstant } from "../../../cores/constant/textConstant";
-import { FC, useState } from "react";
+import { FC, } from "react";
 import { securityApi } from "../../../cores/apis/security.slice";
 import { Customer } from "../../../cores/models/customer";
 import { useForm } from "@mantine/form";
@@ -17,40 +17,17 @@ type SetProfileFormProps = {
 };
 export const Signup: FC<SetProfileFormProps> = ({ phone, action }) => {
   const [signup, signupState] = securityApi.useSignupMutation();
-  const [position, setPosition] = useState<{
-    latitude: number;
-    longitude: number;
-  }>();
-  const form = useForm<Customer>({ initialValues: { phone } });
-  const handleGetLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (positionResult) => {
-          setPosition({
-            latitude: positionResult.coords.latitude,
-            longitude: positionResult.coords.longitude,
-          });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
-  };
-  handleGetLocation();
+ 
+  const form = useForm<Customer>({ initialValues: { phone,location:{latitude:0, longitude:0} } });
+ 
   const _onSubmit = form.onSubmit(async (data) => {
     signup({
       ...data,
       phone: `221${data.phone}`,
-      coordonates: {
-        latitude: position?.latitude,
-        longitude: position?.longitude,
-      },
+     
     } as Customer)
       .unwrap()
-      .then((result) => {
+      .then((result: any) => {
         console.log(result);
         action();
       });
@@ -79,7 +56,7 @@ export const Signup: FC<SetProfileFormProps> = ({ phone, action }) => {
             w={"100%"}
           />
           <TextInput
-            label={TextConstant.firstname}
+            label={TextConstant.displayname}
             {...form.getInputProps("displayname")}
             key={form.key("displayname")}
             error={form.errors['displayname']}

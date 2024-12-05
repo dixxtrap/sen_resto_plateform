@@ -11,7 +11,7 @@ export class Customer {
         cityId?: number;
        address?:AddressDto
     details?:CreationDetailDto
-    coordonates?:CoordonatesDto
+    location?:CoordonatesDto
       }
 
 
