@@ -86,7 +86,7 @@ export const UserEdit = () => {
             key={form.key("phone")}
           />
 
-          <PlaceAddressForm isUpdatable form={form} />
+          <PlaceAddressForm  form={form} />
 
           <Select
             label={"Compagnie"}

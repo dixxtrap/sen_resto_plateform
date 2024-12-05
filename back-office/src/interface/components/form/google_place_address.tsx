@@ -1,50 +1,49 @@
 import { Checkbox, TextInput } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
 import { useEffect, useState } from "react";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import {
   setKey,
+  // setDefaults,
   // setLanguage,
   // setRegion,
   // fromAddress,
   fromLatLng,
-  fromPlaceId,
+
   // setLocationType,
   // geocode,
   // RequestType,
 } from "react-geocode";
-const loadGoogleMapsScript = (apiKey: string) => {
-  const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-  script.async = true;
-  document.body.appendChild(script);
-};
+
+import { useDebouncedValue } from "@mantine/hooks";
 export const PlaceAddressForm = ({
   form,
-
+ 
 }: {
   form: UseFormReturnType<any, any>;
-  isUpdatable?: boolean;
+  
 }) => {
   setKey(import.meta.env.VITE_GOOGLE_KEY);
   const [useMyPosition, setUseMyPosition] = useState<boolean>(false);
-
+  const [address, setAddress] = useState("");
+  const [prediction, setPredictiuon] = useState<Array<any>>([]);
+  const [debouncedAddress] = useDebouncedValue(address, 200);
+  const [isSelected, setIsSelected] = useState(false);
   const getLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       fromLatLng(
         position.coords.latitude,
         position.coords.longitude,
-        import.meta.env.VITE_GOOGLE_KEY,
+        "",
         "",
         "",
         "APPROXIMATE"
       ).then((pred) => {
-        console.log(pred)
         const address: any = (pred.results as []).find(
           (e: any) => e.geometry.location_type === "APPROXIMATE"
         );
-        form.setValues({ address: address.formatted_address ,location:{latitude:position.coords.latitude, longitude:position.coords.longitude}});
-
+        form.setValues({ address: address.formatted_address });
+        form.setFieldValue("location.latitude", position.coords.latitude);
+        form.setFieldValue("location.longitude", position.coords.longitude);
         console.log(
           "=====================prediction====================",
           address.formatted_address
@@ -53,13 +52,49 @@ export const PlaceAddressForm = ({
     });
   };
 
-useEffect(() => {
-  loadGoogleMapsScript(import.meta.env.VITE_GOOGLE_KEY)
-}, [])
+  useEffect(() => {
+    const headers: Headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("X-Goog-Api-Key", import.meta.env.VITE_GOOGLE_KEY);
+    fetch("https://places.googleapis.com/v1/places:autocomplete", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({
+        input: debouncedAddress,
+        includedRegionCodes: ["sn"],
+      }),
+    }).then(async (val) => {
+      val.json().then((data) => {
+        const places = data.suggestions.map((e: any) => ({
+          placeId: e.placePrediction.placeId,
+          placeName: e.placePrediction.text.text,
+        }));
+        console.log(places);
+        setPredictiuon(places);
+      });
+    });
+  }, [debouncedAddress]);
+  const getLocationById = (id: string, name: string) => {
+    const headers: Headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("X-Goog-FieldMask", "id,displayName,location");
+    headers.append("X-Goog-Api-Key", import.meta.env.VITE_GOOGLE_KEY);
+    return fetch(`https://places.googleapis.com/v1/places/${id}`, {
+      headers,
+    }).then((val) => {
+      val.json().then((data) => {
+        console.log(data.location);
+        form.setFieldValue("location.latitude", data.location.latitude);
+        form.setFieldValue("location.longitude", data.location.longitude);
+        form.setFieldValue("address", name);
+        setIsSelected(true);
+        setAddress(name);
+      });
+    });
+  };
   return (
     <>
       {/* <Checkbox  onChange={getLocation}></Checkbox> */}
-
       <Checkbox
         checked={useMyPosition}
         variant="filled"
@@ -67,7 +102,7 @@ useEffect(() => {
         color="secondary"
         pb={4}
         label="utiliser mon adresse actuelle"
-        classNames={{ label: "text-slate-900 dark:text-slate-50" }}
+        classNames={{ label: "text-slate-900" }}
         onChange={(event) => {
           setUseMyPosition(event.currentTarget.checked);
           if (event.currentTarget.checked == true) getLocation();
@@ -77,46 +112,36 @@ useEffect(() => {
       {useMyPosition ? (
         <TextInput readOnly value={form.getValues().address} />
       ) : (
-        <GooglePlacesAutocomplete 
-          apiKey={import.meta.env.VITE_GOOGLE_KEY}
-          selectProps={{
-            // value:form.getValues().address,
-            // onInputChange: (newValue) => {
-            //   // setAddress( newValue!);
-            //   on
-            // },
-            // inputValue:address,
-          
-            onChange: (newValue, actionMeta) => {
-              form.setFieldValue("address", newValue!.label);
-
-              console.log(newValue), console.log(actionMeta);
-              fromPlaceId(
-                newValue?.value.place_id,
-              
-              )
-                .then(({ results }) => {
-                  const { lat, lng } = results[0].geometry.location;
-                  console.log(lat, lng);
-                  form.setFieldValue("location.latitude", lat);
-                  form.setFieldValue("location.longitude", lng);
-                })
-                .catch(console.error);
-            },
-            className: "bg-transparent   p-0 ring-0 ring-none",
-            classNames: {valueContainer:()=>' bgInput ring-none  ring-gray-500/50 ' ,
-              container: () => "bg-red-500  rounded-md ring-none ring-gray-500/50  ",
-              input: () => "bg-red-500/0 text-white ml-5",placeholder:({})=>"bgInput",indicatorsContainer:()=>"text-white",
-              dropdownIndicator: ({}) => "z-[2300] ",option:({})=>" bgInput hover:bg-primary-500",
-              menuList: ({}) =>
-                "z-[10000] bgInput hover:bg-red-500 h-[150px] ring-1 relative overflow-y-scroll",
-            },
-          }}
-          apiOptions={{ region: "sn", apiKey:import.meta.env.VITE_GOOGLE_KEY }}
-        />
+        <>
+          <TextInput
+            label="addresse"
+            value={address??form.getValues().address}
+            onChange={(e) => {
+              setIsSelected(false);
+              setAddress(e.target.value);
+            }}
+          />
+          {isSelected==false&& address.length>3  && (
+            <div className="ring-1 ring-slate-300/60 rounded-md p-2 flex flex-col  gap-0.5">
+              {[
+                prediction.map((e) => (
+                  <div
+                    key={e.placeId}
+                    onClick={() => {
+                      getLocationById(e.placeId, e.placeName);
+                    }}
+                    className="text-sm py-2 hover:bg-slate-200/20 "
+                  >
+                    {e.placeName}
+                  </div>
+                )),
+              ]}
+            </div>
+          )}
+        </>
       )}
 
-    
+      
     </>
   );
 };

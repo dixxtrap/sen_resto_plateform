@@ -91,7 +91,7 @@ description:oldaData.description,
           />
 
           <AppTextarea form={form} />
-          <PlaceAddressForm form={form} isUpdatable />
+          <PlaceAddressForm form={form} />
 
           <CustomSwitchInput itemKey="isActive" form={form} />
           <div className="flex gap-8 w-full flex-wrap">

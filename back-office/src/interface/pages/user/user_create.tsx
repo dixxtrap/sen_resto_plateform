@@ -59,7 +59,7 @@ export const UserCreate = () => {
           key={form.key("phone")}
         />
 
-        <PlaceAddressForm isUpdatable form={form} />
+        <PlaceAddressForm form={form} />
 
         <Select
           label={"Organisation"}
