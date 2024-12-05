@@ -20,11 +20,13 @@ const Home = () => {
           <div className="absolute inset-0 -z-10 h-full w-full bg-slate-50 dark:bg-transparent dark:bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
       <AfterHeader />
-      <div className="md:h-10 h-4"></div>
+      <div className="md:py-10 md:bg-transparent bg-white py-4">
       <Story />
-      <div className="md:h-10 h-4"></div>
+      </div>
+      <div className="md:py-10 bg-white md:bg-transparent py-4">
       <Banners />
-      <div className="md:h-10 h-4"></div>
+      </div>
+      
 
       
       <div className="bg-slate-100/10 ">

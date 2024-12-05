@@ -76,7 +76,7 @@ export const Story = () => {
             h={{ base: '60px', md: rem(200) }}
           
            
-            className="bg-white md:bg-transparent"
+            className=" md:bg-transparent"
             slideSize={{ base: '60px', md: rem(250) }}
             // classNames={{slide:"size-[200px]"}}
             slideGap="lg"

@@ -43,7 +43,7 @@ const CompanyProduct = ({
   return (
     <>
      
-      <div className="grid grid-cols-12 grid-rows-1 px-2 w-full  mt-4   justify-stretch  ">
+      <div className="grid grid-cols-12 grid-rows-1 px-2 w-full  mt-4  relative justify-stretch  ">
         <div className="  h-[100%important] col-span-2  grow hidden lg:inline-block">
           <div className=" hidden md:flex py-2 sticky h-auto  w-full  top-16 gap-4 flex-col">
             <Text className="text-3xl font-bold">Categories</Text>
@@ -68,7 +68,7 @@ const CompanyProduct = ({
           </div>
         </div>
 
-        <div className="grow  col-span-12 lg:col-span-7 ">
+        <div className="grow  relative col-span-12 lg:col-span-7 ">
           <div className="flex p-2 grow justify-end sticky bg-white  border-b z-50 top-14">
             <TextInput
               rightSection={<MagnifyingGlassIcon className="size-4" />}
@@ -76,7 +76,7 @@ const CompanyProduct = ({
             />
           </div>
 
-          <div>
+          <div className="relative">
             {category
               ?.filter((e) => e.product.length > 0)
               ?.map((cat, index) => (

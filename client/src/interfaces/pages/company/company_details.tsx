@@ -26,15 +26,15 @@ export const CompanyDetails = () => {
   useFavicon(ico);
   return (
     <Fetchingdata {...company}>
-      <div className=" m-2 rounded-md pb-10">
-        <div className="h-[170px] md:h-[400px]  ring-1 rounded-md ring-slate-700 relative w-full  mb-8 md:mb-14">
+      <div className="   pb-10 bg-white">
+        <div className="h-[170px] md:h-[400px]  ring-1 rounded-md ring-slate-300 relative w-full  mb-8 md:mb-14">
           <Image
             src={company.data?.data.backgroundPath}
             w={"100%"}
-            className="h-full w-full rounded-md overflow-hidden"
+            className="h-full w-full  overflow-hidden"
           />
           <div className="top-[150px] md:top-[355px] absolute flex items-start gap-3 md:-bottom-12  left-4 md:left-8">
-            <div className="md:size-24 size-12  bg-white rounded-full content-center ring p-0.5 md:p-4 ring-secondary-500  ">
+            <div className="md:size-24 size-12  bg-white rounded-full content-center ring-1 p-1.5 overflow-hidden md:p-4 ring-slate-400  ">
               <Image src={company.data?.data.imagePath} fit="contain" className="rounded-sm size-full " />
             </div>
             <div className="mt-3">
@@ -47,7 +47,7 @@ export const CompanyDetails = () => {
         </div>
         {/* FIXME: Company Detail */}
         <div className="h-1"></div>
-        <div className="flex flex-col   p-2   items-start jus  ring-1 rounded-md ring-gray-600">
+        <div className="flex flex-col   p-2   items-start jus   rounded-md ">
           <div className="flex w-full items-center justify-between">
             <Text className="font-bold md:text-2xl">
               {company.data?.data.name}
@@ -72,8 +72,10 @@ export const CompanyDetails = () => {
           
         </div>
         {/* TODO: filter */}
+<div className="relative">
+<CompanyProduct category={company.data?.data.category!} />
 
-        <CompanyProduct category={company.data?.data.category!} />
+</div>
         <div className="h-20 "></div>
 
         {company.data?.data.productManagement?.length === 0 && (

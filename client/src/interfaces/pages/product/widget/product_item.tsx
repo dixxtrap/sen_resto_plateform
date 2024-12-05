@@ -51,11 +51,11 @@ export const ProductItem = ({
 
       <Card
         className={clsx(
-          "bg-table flex  p-1  md:p-3 border-b md:border-none group  sm:ring-1  ring-slate-300/60  rounded-none sm:rounded-md  border-gray-400/40 bg-[#f5f8fc58] h-full   duration-500  "
+          "bg-table flex  p-1  md:p-3 border-b md:border-none group  sm:ring-1  ring-slate-300/60  rounded-none sm:rounded-md  border-gray-400/40 bg-white h-full   duration-500  "
         )}
       >
         <Group className="w-full grid grid-cols-12  grow pb-2 lg:pb-0 md:border-b-none  lg:rounded-md ">
-          <div className="h-[100px] xs:h-[100px] md:col-span-4   lg:h-[120px] col-span-4  overflow-hidden rounded-md ring-1 content-center box-border ring-gray-300/40  ">
+          <div className="h-[100px] xs:h-[100px] md:col-span-4 bg-slate-50  lg:h-[120px] col-span-4  overflow-hidden rounded-md ring-1 content-center box-border ring-gray-300/40  ">
             <Image
               className="   h-full w-auto transform transition-transform duration-500 ease-in-out group-hover:scale-125 mx-auto"
               src={product.file![0].path}
