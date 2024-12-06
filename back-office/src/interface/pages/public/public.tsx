@@ -19,7 +19,7 @@ export default function Public() {
       
         <Header toggle={toggle} opened={opened} />
       </AppShellHeader>
-      <AppShellNavbar className="bg-transparent">
+      <AppShellNavbar className="md:bg-transparent">
         <Navigation close={close} opened={true} />
       </AppShellNavbar>
       <AppShellMain >
