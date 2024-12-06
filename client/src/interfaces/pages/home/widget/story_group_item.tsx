@@ -14,8 +14,8 @@ export const StoryGroupItem = ({ storyGroup }: { storyGroup: StoryGroup }) => {
         </div>
       </div>
 
-      <div className=" hidden cursor-pointer md:block ring-1 ring-slate-500 m-0.5  relative w-full  bg-slate-50  rounded-md     ">
-        <div className=" flex   justify-start  z-30  p-2 w-full">
+      <div className=" hidden cursor-pointer md:block ring-1 ring-slate-500/60 m-0.5  relative w-full  bg-slate-50  rounded-md     ">
+        <div className=" flex absolute rounded-md justify-start backdrop-blur-lg z-30  p-1 w-full">
           <Image
             radius={3}
             fit="contain"
@@ -32,7 +32,7 @@ export const StoryGroupItem = ({ storyGroup }: { storyGroup: StoryGroup }) => {
         </div>
 
         <Image
-          className="m-auto h-[144px]  rounded-b-md"
+          className="m-auto h-[184px]  rounded-md"
           src={`${storyGroup?.story![0].imagePath}`}
         />
       </div>
