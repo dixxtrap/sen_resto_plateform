@@ -40,7 +40,7 @@ export const Header: FC<{
       <Alert isOpen={isDisconnecteLoading} type="loading" />
       <Alert isOpen={isDisconnecteError} type="faillure" />
       {isDisconnecteSuccess && <Navigate to={"/"} />}
-      <div className="flex h-full shrink-0 items-center gap-x-4   shadow-sm sm:gap-x-2  bg-transparent   darkDivider  px-3">
+      <div className="flex h-full shrink-0 items-center gap-x-4 backdrop-blur-2xl   shadow-sm sm:gap-x-2  bg-transparent   darkDivider  px-3">
         {isSuccess && (
           <>
             <div className="flex items-center  ">
