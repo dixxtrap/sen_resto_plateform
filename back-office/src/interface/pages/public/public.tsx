@@ -15,7 +15,7 @@ export default function Public() {
 
   return (
     <AppShell  header={{height:'60px'}} classNames={{root:'darkBg',navbar:'bg-transparent dark:bg-transparent',header:'bg-transparent dark:bg-transparent', }} navbar={{width:280, breakpoint:"md",collapsed: { mobile: !opened , },  }}>
-      <AppShellHeader className="bg-transparent">
+      <AppShellHeader className="bg-transparent backdrop-blur-lg">
       
         <Header toggle={toggle} opened={opened} />
       </AppShellHeader>
