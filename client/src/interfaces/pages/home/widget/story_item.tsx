@@ -1,4 +1,4 @@
-import { Paper, Avatar } from "@mantine/core";
+import { Paper, Image } from "@mantine/core";
 import classes from "../styles/story_item.module.css";
 import { Story } from "../../../../cores/models/story.dto";
 import { CompanyDto } from "../../../../cores/models/company.dto";
@@ -11,7 +11,7 @@ export const StoryItem = ({ story }: { story: Story; company: CompanyDto }) => {
     >
       <div className="flex justify-between items-center content-center w-full backdrop-blur-2xl h-full bg-black/5 ">
         <center className="w-full h-auto md:h-full md:w-auto  m-auto">
-          <Avatar radius={0} h={"100%"} w={"100%"} src={story.imagePath} />
+          <Image radius={0} fit={'contain'} className='h-full' src={story.imagePath} />
         </center>
       </div>
       {/* <Button variant="white" color="dark">
