@@ -57,9 +57,11 @@ export class WsCompanyService {
         },
       })
       .then((result) => {
-        result.category = result.category.sort(
-          (a, b) => b.priority - a.priority,
-        );
+        if (result?.category) {
+          result.category = result.category.sort(
+            (a, b) => b.priority - a.priority,
+          );
+        }
         return BaseResponse.success(result);
       });
   }
@@ -80,7 +82,7 @@ export class WsCompanyService {
     return this.repos
       .find({
         where: {
-          name: Like(name), 
+          name: Like(name),
         },
         relations: { establishmentType: true },
       })

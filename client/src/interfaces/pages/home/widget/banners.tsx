@@ -6,7 +6,7 @@ import { Carousel } from "@mantine/carousel";
 export const Banners = () => {
   const banners = useGetBannerQuery("");
   return (
-    <Fetchingdata {...banners}>
+    <Fetchingdata withLoader={false} {...banners}>
       {banners.data?.data && banners.data?.data?.length > 0 && (
         <div className=" ">
           <div className=" backdrop-blur-sm ">

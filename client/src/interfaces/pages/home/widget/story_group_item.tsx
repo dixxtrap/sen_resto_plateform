@@ -1,4 +1,4 @@
-import {  Text, Image } from "@mantine/core";
+import {   Image } from "@mantine/core";
 import { StoryGroup } from "../../../../cores/models/story.dto";
 
 export const StoryGroupItem = ({ storyGroup }: { storyGroup: StoryGroup }) => {
@@ -14,21 +14,16 @@ export const StoryGroupItem = ({ storyGroup }: { storyGroup: StoryGroup }) => {
         </div>
       </div>
 
-      <div className=" hidden cursor-pointer md:block ring-1 ring-slate-500/60 m-0.5  relative w-full  bg-slate-50  rounded-md     ">
-        <div className=" flex absolute rounded-md justify-start backdrop-blur-lg z-30  p-1 w-full">
+      <div className=" hidden cursor-pointer md:block ring-1 ring-black/80 m-0.5  relative w-full  bg-slate-50  rounded-md     ">
+        <div className=" flex absolute  ring ring-slate-500 bg-white dark:bg-black/60 rounded-full justify-start backdrop-blur-lgz-30 m-1.5   p-1.5 ">
           <Image
             radius={3}
             fit="contain"
-            className=" z-30    size-8"
+            className=" z-30   size-8"
             src={storyGroup.partner?.imagePath}
           />
 
-          <Text
-            lineClamp={1}
-            className=" line-clamp-1 ml-2 overflow-hidden  text-ellipsis font-bold"
-          >
-            {storyGroup.partner?.shortname}
-          </Text>
+       
         </div>
 
         <Image

@@ -70,7 +70,7 @@ export const Story = () => {
         </div>
       </Modal>
 
-      <Fetchingdata {...storyGroup}>
+      <Fetchingdata withLoader={false}  {...storyGroup}>
         {storyGroup.data?.data?.length! > 0 && (
           <Carousel
             h={{ base: '60px', md: rem(200) }}

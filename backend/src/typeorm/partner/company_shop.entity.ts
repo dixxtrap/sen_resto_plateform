@@ -16,7 +16,6 @@ import { BeforeInsert, BeforeUpdate } from 'typeorm';
 export class CompanyShop {
   @PrimaryGeneratedColumn()
   id: number;
-
   @Column({ nullable: true, default: true })
   backgroundPath: string;
   @ManyToOne(() => Company, (alias)=> alias.shop)

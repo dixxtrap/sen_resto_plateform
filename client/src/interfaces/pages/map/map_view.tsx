@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { CompanyDto } from "../../../cores/models/company.dto";
 import { useNavigate } from "react-router-dom";
 import { CoordonatesDto } from "../../../cores/models/coordonates.dto";
+import PinIcon from '../../../../assets/img/placeholder.png'
 import './mas_view.css'
 const containerStyle = {
   width: "fit",
@@ -63,12 +64,15 @@ export const MapView = () => {
           mapContainerStyle={containerStyle}
           center={center}
           zoom={13.18}
+        
           clickableIcons={true}
         >
           {/* Marker */}
           {restos?.map((e, i) => (
             <MarkerF
               key={`key_${e.name}_${i}`}
+              icon={PinIcon}
+              
               position={{
                 lat: Number(e.location?.latitude!) ?? 17,
                 lng: Number(e.location?.longitude!) ?? 14,
