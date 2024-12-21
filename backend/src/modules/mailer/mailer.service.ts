@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator';
 import { MailerService } from '@nestjs-modules/mailer';
-import { basedire } from 'src/mysql.config';
 import { join, resolve } from 'path';
 import * as Mustache from 'mustache';
 import { readFileSync } from 'fs';
@@ -17,24 +16,29 @@ export class EmailerService {
     @Inject(EntityProviderEnum.MESSAGE) private message: Repository<Message>,
     private config: ConfigService,
   ) {}
-  async senOtp({ to, message }: { to: String; message: String }) {
+  async senOtp({ to, message }: { to: string; message: string }) {
     console.log(message);
     return `${to} ${message}`;
   }
-  sendMessage({ to, message }: { to: String; message: String }) {
-     if(process.env.ENV!==Env.LOCAL) return fetch(this.config.getOrThrow<string>('LAM_URL'), {
-      method: 'POST',
-      body: JSON.stringify({
-        accountid: this.config.getOrThrow<string>('LAM_ACCESS_KEY'),
-        password: this.config.getOrThrow<string>('LAM_ACCESS_PASSWORD'), 
-        sender: this.config.getOrThrow<string>('LAM_SENDER_NAME'),
-        to: to,
-        text: message,
-      }),
-    });
+  sendMessage({ to, message }: { to: string; message: string }) {
+    if (process.env.ENV !== Env.LOCAL)
+      return fetch(this.config.getOrThrow<string>('LAM_URL'), {
+        method: 'POST',
+        body: JSON.stringify({
+          accountid: this.config.getOrThrow<string>('LAM_ACCESS_KEY'),
+          password: this.config.getOrThrow<string>('LAM_ACCESS_PASSWORD'),
+          sender: this.config.getOrThrow<string>('LAM_SENDER_NAME'),
+          to: to,
+          text: message,
+        }),
+      });
     return this.senOtp({ to, message });
   }
   async sendUserConfirmation({ user, token }: { user: any; token: string }) {
+    console.log(this.config.get<string>('SYSTEM_EMAIL_HOSTNAME'));
+    console.log(this.config.get<string>('SYSTEM_EMAIL_PORT'));
+    console.log(this.config.get<string>('SYSTEM_EMAIL_ADDRESS'));
+    console.log(this.config.get<string>('SYSTEM_EMAIL_PASSWORD'));
     const content = await Mustache.render(
       readFileSync(
         resolve(join('src/utils/mustache/activation.mail.mustache')),

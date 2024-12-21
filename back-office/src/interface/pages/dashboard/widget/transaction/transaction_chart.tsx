@@ -3,67 +3,67 @@ import "chart.js/auto"; // Import the chart.js auto-registering component
 import "@mantine/charts/styles.css";
 import classes from "./chart.module.css";
 import clsx from "clsx";
-import { Text } from '@mantine/core';
+import { Text } from "@mantine/core";
 const data = [
   {
     date: "Mar 17",
-    divorce: 2890,
-    celibataire: 38,
-    marier: 2452,
+    order: 2890,
+    delivered: 38,
+    returned: 2452,
   },
   {
     date: "Mar 18",
-    divorce: 2756,
-    celibataire: 103,
-    marier: 2402,
+    order: 2756,
+    delivered: 103,
+    returned: 2402,
   },
   {
     date: "Mar 19",
-    divorce: 3322,
-    celibataire: 86,
-    marier: 1821,
+    order: 3322,
+    delivered: 86,
+    returned: 1821,
   },
   {
     date: "Mar 20",
-    divorce: 3470,
-    celibataire: 208,
-    marier: 2809,
+    order: 3470,
+    delivered: 208,
+    returned: 2809,
   },
   {
     date: "Mar 21",
-    divorce: 3129,
-    celibataire: 26,
-    marier: 2290,
+    order: 3129,
+    delivered: 26,
+    returned: 2290,
   },
   {
     date: "Mar 22",
-    divorce: 2890,
-    celibataire: 38,
-    marier: 3452,
+    order: 2890,
+    delivered: 38,
+    returned: 3452,
   },
   {
     date: "Mar 23",
-    divorce: 2756,
-    celibataire: 103,
-    marier: 2402,
+    order: 2756,
+    delivered: 103,
+    returned: 2402,
   },
   {
     date: "Mar 24",
-    divorce: 1322,
-    celibataire: 186,
-    marier: 5821,
+    order: 1322,
+    delivered: 186,
+    returned: 5821,
   },
   {
     date: "Mar 25",
-    divorce: 3470,
-    celibataire: 708,
-    marier: 2809,
+    order: 3470,
+    delivered: 708,
+    returned: 2809,
   },
   {
     date: "Mar 26",
-    divorce: 3129,
-    celibataire: 2326,
-    marier: 2290,
+    order: 3129,
+    delivered: 2326,
+    returned: 2290,
   },
 ];
 
@@ -74,24 +74,26 @@ export const TransactionChart = () => {
         className={clsx(
           " flex  flex-col grow bgInput  p-3 ring-1 ring-gray-400/20 rounded-md",
           classes.bg
-        )}
-      >
-        <span className=" text-left font-semibold text-xl pb-6" > Evolutions des Commandes</span>
+        )}>
+        <span className=" text-left font-semibold text-xl pb-6">
+          {" "}
+          Evolutions des Commandes
+        </span>
         <BarChart
           data={data}
           h={{ base: 300, md: 400 }}
-          yAxisProps={{ tickMargin: 15, orientation: 'left' }}
-          xAxisProps={{ tickMargin: 15, orientation: 'bottom'  }}
+          yAxisProps={{ tickMargin: 15, orientation: "left" }}
+          xAxisProps={{ tickMargin: 15, orientation: "bottom" }}
           dataKey="date"
-          radioGroup=""
-          
-          barProps={{ className:'rounded-t-lg ', radius:[5,5,0,0] }}
+          radioGroup="10"
+
+          barProps={{ className: "rounded-t-lg ", radius: [5, 5, 0, 0] , }}
           // xAxisLabel="Date"
           // yAxisLabel="Amount"
           series={[
-            { name: "divorce", color: "indigo.7" },
-            { name: "celibataire", color: "red.6" },
-            { name: "marier", color: "teal.6" },
+            { name: "order", color: "indigo.7" },
+            { name: "delivered", color: "red.6" },
+            { name: "returned", color: "teal.6" },
           ]}
           // curveType="step"
         />
@@ -100,9 +102,11 @@ export const TransactionChart = () => {
         className={clsx(
           " flex flex-col  p-3 ring-1 ring-gray-400/20 bgInput w-[350px] rounded-md",
           classes.bg
-        )}
-      >
-        <Text className="text-xl text-left font-semibold pb-3" > Situation Matrimoniale</Text>
+        )}>
+        <Text className="text-xl text-left font-semibold pb-3">
+          {" "}
+          Situation Matrimoniale
+        </Text>
 
         {/* <DonutChart
           h={"100%"}
@@ -122,7 +126,7 @@ export const TransactionChart = () => {
             {
               name: "Divorcer",
     
-              value: data.map((e) => e.divorce).reduce((p, n) => p + n),
+              value: data.map((e) => e.order).reduce((p, n) => p + n),
               color: "teal.6",
             },
             {
@@ -131,8 +135,8 @@ export const TransactionChart = () => {
               color: "red.6",
             },
             {
-              name: "marier",
-              value: data.map((e) => e.marier).reduce((p, n) => p + n),
+              name: "returned",
+              value: data.map((e) => e.returned).reduce((p, n) => p + n),
               color: "indigo.6",
             },
           ]}

@@ -24,11 +24,10 @@ export class WsDeliverService {
         const { password, ...rest } = result;
 
         if (true) {
-          const token = this.securityService.sign({ payload: rest }); 
-        return BaseResponse.success({user:rest, token});
+          const token = this.securityService.sign({ payload: rest });
+          return BaseResponse.success({ user: rest, token });
         }
         throw new WsMessage(HttpExceptionCode.LOGIN_FAILLURE);
-       
       })
       .catch(WsCatch);
   }

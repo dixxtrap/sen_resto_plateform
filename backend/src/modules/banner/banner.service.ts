@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Banner, BannerDto } from 'src/typeorm/banner.entity';
-import { CreateUserDto, UserDto } from 'src/typeorm/user.entity';
+import { UserDto } from 'src/typeorm/user.entity';
 import { Repository } from 'typeorm';
 import { S3Service } from '../s3/s3.service';
 import { HttpExceptionCode, WsMessage } from 'src/utils/http_exception_code';
@@ -12,7 +11,8 @@ import { EntityProviderEnum } from 'src/typeorm/entity_provider_enum';
 @Injectable()
 export class BannerService {
   constructor(
-    @Inject(EntityProviderEnum.BANNER) private readonly repos: Repository<Banner>,
+    @Inject(EntityProviderEnum.BANNER)
+    private readonly repos: Repository<Banner>,
     private s3Service: S3Service,
   ) {}
 

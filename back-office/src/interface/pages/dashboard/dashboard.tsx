@@ -45,26 +45,26 @@ export const GoogleMapComponent: React.FC = () => {
         <div className="  grid   grid-cols-2    gap-4 ">
           {[
             {
-              number: 12005600,
+              number: 0.00,
               label: "Solde",
               color: "card0",
               icon: <IconCashBanknote className="h-full" />,
             },
 
             {
-              number: 16870,
+              number: 0,
               label: "Commandes",
               color: "card1",
               icon: <IconWallet className="h-full" />,
             },
             {
-              number: 150,
+              number: 0,
               label: "Produits",
               color: "card2",
               icon: <IconBrandProducthunt className="h-full" />,
             },
             {
-              number: 2768,
+              number: 0,
               label: "Transactions",
               color: "card3",
               icon: <IconList className="h-full" />,

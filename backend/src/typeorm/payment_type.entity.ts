@@ -12,7 +12,6 @@
 //   @Column('double')
 //   invertFees: number;
 // }
- 
 // export class PaymentTypeDto extends CompanyRestaurantBaseDto {
 //   @ApiProperty()
 //   fees: number;
