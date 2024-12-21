@@ -17,7 +17,6 @@ import { PERMISSSION_CODE } from "../../utils/permission_code";
 
 export const ShopList = () => {
   const { data: shops, ...state } = shopApi.useGetShopQuery("");
-  console.log(shops);
   return (
     <div>
       <TablePagination

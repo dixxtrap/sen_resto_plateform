@@ -13,15 +13,15 @@ import { ConfigModule } from '@nestjs/config/dist/config.module';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         transport: {
-          host: configService.get<string>('SMTP_HOST'),
-          port: configService.get<number>('SMTP_PORT'),
+          host: configService.get<string>('SYSTEM_EMAIL_ADDRESS'),
+          port: configService.get<number>('SYSTEM_EMAIL_PORT'),
           auth: {
-            user: configService.get<string>('SMTP_USER'),
-            pass: configService.get<string>('SMTP_PASS'),
+            user: configService.get<string>('SYSTEM_EMAIL_ADDRESS'),
+            pass: configService.get<string>('SYSTEM_EMAIL_PASSWORD'),
           },
         },
         defaults: {
-          from: `"No Reply"<${configService.get<string>('SMTP_USER')}>`,
+          from: `"No Reply"<${configService.get<string>('SYSTEM_EMAIL_USERNAME')}>`,
         },
       }),
       inject: [ConfigService],
