@@ -25,7 +25,7 @@ server:{
 preview:{
   port:3001,
   proxy:{
-    "/v1":"http://184.73.166.128:3000"
+    "/v1":"backend"
   }
 }
 })

@@ -1,11 +1,11 @@
-FROM node:21 as build
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install
+FROM node
+WORKDIR /app
+COPY package.json ./
+RUN npm install  --legacy-peer-deps
 COPY . .
-RUN npm run build
+RUN npm run build 
 EXPOSE 3000
-CMD ["npm" , "run", "start:dev"]
+CMD [ "node", "dist/main" ]
 # Étape d'exécution
 # FROM node:21
 # WORKDIR /Users/djigasalane/Documents/Personnel/sen_resto_plateform/backend/docker

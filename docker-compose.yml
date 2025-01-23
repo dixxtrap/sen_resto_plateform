@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  frontend:
+    build: 
+      context: ./back-office
+    ports:
+      - "3001:80"
+    dns:
+      - 8.8.8.8
+    depends_on:
+      - backend
+  backend:
+    build:
+      context: ./backend
+    dns:
+      - 8.8.8.8
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=docker-db-1
+      - DB_PORT=3307
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=sen_resto
+    depends_on:
+      - database
+  database:
+    image: mariadb:latest
+    container_name: mariadb
+    dns:
+      - 8.8.8.8
+    ports:
+      - "3307:3307"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: root
+    
